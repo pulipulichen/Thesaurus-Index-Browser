@@ -59,7 +59,7 @@ let Index = {
       if (this.localConfig.termFocus) {
         output.push(this.localConfig.termFocus)
       }
-      if (this.localConfig.graphTerm) {
+      else if (this.localConfig.graphTerm) {
         output.push(this.localConfig.graphTerm)
       }
       else {

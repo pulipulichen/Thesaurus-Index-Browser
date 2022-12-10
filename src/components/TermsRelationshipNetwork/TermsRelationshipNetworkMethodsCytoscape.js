@@ -1,4 +1,16 @@
 const defaultStylesheet = require('./CytoscapeStyle.js')
+
+const cytoscape = require('cytoscape');
+
+// https://github.com/iVis-at-Bilkent/cytoscape.js-layout-utilities
+const layoutUtilities = require('cytoscape-layout-utilities');
+cytoscape.use( layoutUtilities ); // register extension
+
+// https://www.npmjs.com/package/cytoscape-qtip
+const cyqtip = require('cytoscape-qtip');
+cyqtip( cytoscape );
+
+// console.log(cyqtip)
 // console.log(defaultStylesheet)
 
 module.exports = function (app) {
@@ -37,9 +49,9 @@ module.exports = function (app) {
     initialLayout.run();
   }
 
+  // cyqtip(cytoscape)
   app.methods.initCytoscapeVis = function () {
     let vue = this
-    
     cy = window.cy = cytoscape({
       container: this.$refs.cy,
       ready: function () {
@@ -83,15 +95,28 @@ module.exports = function (app) {
     });
 
     cy.on('mouseover', 'node', function (e) {
-      // console.log(this.data('classes'))
-      if (!this.data('classes') || this.data('classes').indexOf('term') === -1) {
+      // console.log(this.classes())
+      if (!this.classes() || this.classes().indexOf('term') === -1) {
         return false
       }
+      // console.log('aaa')
       $('body').css('cursor', 'pointer');
+
+      var node = e.cyTarget;
+      node.qtip({
+           content: 'hello',
+           show: {
+              event: e.type,
+              ready: true
+           },
+           hide: {
+              event: 'mouseout unfocus'
+           }
+      }, e);
     });
 
     cy.on('mouseout', 'node', function (e) {
-      if (!this.data('classes') || this.data('classes').indexOf('term') === -1) {
+      if (!this.classes() || this.classes().indexOf('term') === -1) {
         return false
       }
       // console.log(this.data('classes'))
@@ -100,14 +125,16 @@ module.exports = function (app) {
   }
 
   app.methods.setupCYNodeHTML = function (cy) {
-    
+    return false
+
     cy.nodeHtmlLabel([
       {
         query: 'node.term',
         tpl: function(data){
           console.log(data)
-          return '<p class="line1">line 1</p><p class="line1">line 2</p>'}
-        },
+          return '<pre>' + data.id.split(' ').join('\n') + '</pre>'
+        }
+      },
     ]);
   }
 
@@ -122,7 +149,7 @@ module.exports = function (app) {
         ref.length === 0) {
       return false      
     }
-    return ref
+    return ref.map(r => this.nodeBreakLine(r))
   }
 
   app.methods.setupCrossReference = function (keyword, nodes, edges, isIngoing = false) {
@@ -174,5 +201,9 @@ module.exports = function (app) {
     setTimeout(() => {
       this.initCytoscapeVis()
     }, 100)
+  }
+
+  app.methods.nodeBreakLine = function (term) {
+    return term.split(' ').join('\n')
   }
 }

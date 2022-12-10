@@ -19,6 +19,8 @@ WORKDIR /app
 #COPY .babelrc ./
 COPY postcss.config.js ./
 
+CMD ["npm","run", "4.webpack-build-production"]
+
 # package.Install the package described in json.
 COPY package.json ./
 RUN npm i
@@ -27,5 +29,3 @@ RUN npm i
 #COPY . .
 
 #RUN ls /app/*
-
-CMD ["npm","run", "4.webpack-build-production"]

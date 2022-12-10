@@ -37,6 +37,8 @@ module.exports = function (app) {
       this.setupCrossReference(keyword, nodes, edges, (ingoingKeywords.indexOf(keyword) > -1))
     })
 
+    // console.log(nodes)
+
     return {
       nodes,
       edges
@@ -71,6 +73,8 @@ module.exports = function (app) {
       return false
     }
     let text = this.graphData.term
+
+    text = this.nodeBreakLine(text)
 
     return text
   }

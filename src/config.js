@@ -1,5 +1,5 @@
 let config = {
-  appName: 'HTML-Simple-Classifier',
+  appName: 'Thesaurus-Index-Browser',
   debug: {
     ErrorHandler: {
       verbose: true
@@ -8,22 +8,9 @@ let config = {
   },
   
   inited: false,
-  loadingProgress: 1,
-  urlGithub: 'https://github.com/pulipulichen/HTML-Simple-Classifier/',
-  urlIssue: 'https://github.com/pulipulichen/HTML-Simple-Classifier/issues/new',
-  openFromAPI: false,
+  urlGithub: 'https://github.com/pulipulichen/Thesaurus-Index-Browser/',
+  urlIssue: 'https://github.com/pulipulichen/Thesaurus-Index-Browser/issues/new',
   
-  demoDataList: [
-    'weather.play.ods',
-    'weather.class.csv',
-    'iris.ods',
-    'labor.csv'
-  ],
-  isDataProcessing: false,
-  modelBuildedTime: null
-  //demoData: 'weather.play.ods'
-  //demoData: 'labor.csv'
-  //demoData: 'unbalanced.csv'
 }
 
 import styleConfig from './styles/style.config.js'

@@ -11,8 +11,10 @@
     -->
     <a class="item" :class="{'active': (localConfig.view === 'browse')}" @click="localConfig.view = 'browse'">{{
       $t("BROWSE") }}</a>
+    <a class="item" :class="{'active': (localConfig.view === 'author')}" @click="localConfig.view = 'author'">{{
+      $t("ABOUT") }}</a>
 
-    <div class="right menu">
+    <div class="right menu" v-if="localConfig.view === 'browse'">
       <div class="item">
         <div class="ui transparent icon input">
           <input type="text" 

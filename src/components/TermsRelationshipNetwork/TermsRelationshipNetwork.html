@@ -1,12 +1,12 @@
 <div class="TermsRelationshipNetwork" v-show="localConfig.termFocus">
   
-  <div class="ui message">
+  <div class="ui message" v-if="graphData">
     <div class="header-row">
-      <div class="header ellipsis">
+      <h1 class="header ellipsis">
         {{ localConfig.termFocus}}
-      </div>
+      </h1>
       <div class="locators"
-        v-if="graphData.locators">
+        v-if="graphData && graphData.locators">
         <template v-for="loc in graphData.locators">
           <a type="button" 
              v-if="utils.URLUtils.isURL(loc)"
@@ -21,7 +21,7 @@
       </div>
     </div>
       
-    <p class="sn" v-if="graphData.sn">{{ graphData.sn }}</p>
+    <p class="sn" v-if="graphData && graphData.sn">{{ graphData.sn }}</p>
   </div>
   
   

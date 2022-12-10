@@ -1,5 +1,5 @@
 /* global Node */
-//import $ from 'jquery'
+import $ from 'jquery'
 
 let app = {
   props: ['config', 'localConfig', 'utils'],
@@ -8,6 +8,7 @@ let app = {
     return {
       postMessageAPI: null,
       graphData: null,
+      cyTimer: null
       // cy: null
     }
   },
@@ -22,7 +23,9 @@ let app = {
     // setTimeout(() => {
     //   this.initCytoscapeVis()
     // }, 500)
-
+    $(window).on('resize', () => {
+      this.initCytoscapeVis()
+    })
   },
   methods: {
   }

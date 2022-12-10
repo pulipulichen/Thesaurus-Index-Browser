@@ -1,16 +1,22 @@
 module.exports = function (app) {
 
   app.methods.setDefaultTermFocus = function () {
+    if (this.config.inited === false || this.localConfig.view !== 'browse') {
+      return false
+    }
     if (this.localConfig.termFocus) {
       return false
     }
 
     // await this.utils.AsyncUtils.sleep(100)
 
+    // console.log(this.$parent.$refs.ListThesaurus.list)
     if (this.$parent.$refs.ListThesaurus.list.length > 0) {
+      console.log(1)
       this.localConfig.termFocus = this.$parent.$refs.ListThesaurus.complexest.term
     }
     else if (this.$parent.$refs.ListIndex.list.length > 0) {
+      console.log(2)
       this.localConfig.termFocus = this.$parent.$refs.ListIndex.complexest.term
     }
   }

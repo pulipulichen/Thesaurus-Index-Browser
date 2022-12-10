@@ -10,6 +10,10 @@ cytoscape.use( layoutUtilities ); // register extension
 const fcose = require('cytoscape-fcose');
 cytoscape.use( fcose ); // register extension
 
+// https://www.npmjs.com/package/cytoscape-cose-bilkent
+// let coseBilkent = require('cytoscape-cose-bilkent');
+// cytoscape.use( coseBilkent ); // register extension
+
 // https://www.npmjs.com/package/cytoscape-popper
 // const popper = require('cytoscape-popper');
 // cyqtip( popper );
@@ -35,7 +39,9 @@ module.exports = function (app) {
     // });
 
     let initialLayout = cy.layout({
+      // name: 'fcose',
       name: 'fcose',
+
       // step: 'all', 
       // animationEasing: 'ease-out',
       relativePlacementConstraint,
@@ -43,7 +49,7 @@ module.exports = function (app) {
       // nestingFactor: 0.1,
       // gravity: 100,
       gravityCompound: 5,
-      gravityRangeCompound: 0.5,
+      gravityRangeCompound: 0.7,
       // tilingPaddingVertical: 10,
       step: "all",
       animationDuration: 500,
@@ -62,20 +68,25 @@ module.exports = function (app) {
       return false
     }
 
-    let vue = this
-    cy = window.cy = cytoscape({
-      container: this.$refs.cy,
-      ready: function () {
-        ready(this, vue)
-      },
-      layout: { name: 'preset' },
-      style: defaultStylesheet(),
-      elements: this.graphElements,
-      wheelSensitivity: 0.3,
-    });
+    clearTimeout(this.cyTimer)
 
-    this.setupCYEvents(cy)
-    this.setupCYNodeHTML(cy)
+    this.cyTimer = setTimeout(() => {
+      let vue = this
+      cy = window.cy = cytoscape({
+        container: this.$refs.cy,
+        ready: function () {
+          ready(this, vue)
+        },
+        layout: { name: 'preset' },
+        style: defaultStylesheet(),
+        elements: this.graphElements,
+        wheelSensitivity: 0.3,
+      });
+
+      this.setupCYEvents(cy)
+      this.setupCYNodeHTML(cy)
+    }, 100)
+      
 
     // set nodeHtmlLabel for your Cy instance
     

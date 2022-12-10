@@ -6,6 +6,7 @@ import TopMenu from './TopMenu/TopMenu.vue'
 import ViewBrowse from './ViewBrowse/ViewBrowse.vue'
 import ViewConfiguration from './ViewConfiguration/ViewConfiguration.vue'
 import ViewData from './ViewData/ViewData.vue'
+import Author from './Author/Author.vue'
 
 let Index = {
   props: ['config', 'localConfig', 'utils'],
@@ -20,7 +21,8 @@ let Index = {
     TopMenu,
     ViewBrowse,
     ViewConfiguration,
-    ViewData
+    ViewData,
+    Author
   },
   computed: {
   },

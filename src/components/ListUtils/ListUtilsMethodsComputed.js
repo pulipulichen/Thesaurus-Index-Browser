@@ -44,16 +44,21 @@ module.exports = function (List) {
       
       let score = 0
       let types = Object.keys(list[i].crossReference)
-      score = score + (types.length * types.length)
+      score = score + (types.length * types.length * types.length)
+
 
       types.forEach(type => {
-        score = score + list[i].crossReference[type].length
+        let count = list[i].crossReference[type].length
+        count = Math.sqrt(count) * 10
+        score = score + count
       })
 
+      // console.log(score, list[i].term, types.length, list[i].crossReference)
       if (i === 0 || 
           score > maxScore) {
         maxScore = score
         complexest = list[i]
+        // console.log(score, complexest.term)
       }
     }
 

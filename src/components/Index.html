@@ -31,4 +31,12 @@
     v-bind:utils="utils">
   </ViewBrowse>
 
+  <Author 
+    v-show="localConfig.view === 'author'"
+    ref="Author"
+    v-bind:config="config"
+    v-bind:localConfig="localConfig"
+    v-bind:utils="utils">
+  </Author>
+
 </div>

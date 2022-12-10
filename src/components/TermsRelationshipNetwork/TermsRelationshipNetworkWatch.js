@@ -36,7 +36,7 @@ module.exports = function (app) {
     if (this.localConfig.view !== 'browse') {
       return false
     }
-
+    this.setDefaultTermFocus()
     this.scrollToTermFocus()
     this.setupGraphData()
     // setTimeout(() => {

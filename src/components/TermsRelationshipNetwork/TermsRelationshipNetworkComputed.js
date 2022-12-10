@@ -1,3 +1,3 @@
-module.exports = function (app) {
+export default function (app) {
   
 }

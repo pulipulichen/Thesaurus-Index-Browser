@@ -1,4 +1,4 @@
-module.exports = function (app) {
+export default function (app) {
 
   app.methods.setDefaultTermFocus = function () {
     if (this.config.inited === false || this.localConfig.view !== 'browse') {
@@ -12,11 +12,11 @@ module.exports = function (app) {
 
     // console.log(this.$parent.$refs.ListThesaurus.list)
     if (this.$parent.$refs.ListThesaurus.list.length > 0) {
-      console.log(1)
+      // console.log(1)
       this.localConfig.termFocus = this.$parent.$refs.ListThesaurus.complexest.term
     }
     else if (this.$parent.$refs.ListIndex.list.length > 0) {
-      console.log(2)
+      // console.log(2)
       this.localConfig.termFocus = this.$parent.$refs.ListIndex.complexest.term
     }
   }

@@ -23,7 +23,7 @@ const $ = require('jquery')
 // console.log(cyqtip)
 // console.log(defaultStylesheet)
 
-module.exports = function (app) {
+export default function (app) {
 
   let ready = function (cy, vue) {
     let {relativePlacementConstraint, alignmentConstraint} = vue

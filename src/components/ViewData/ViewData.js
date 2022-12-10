@@ -22,12 +22,21 @@ let app = {
     init: async function () {
       await this.utils.AsyncUtils.sleep(1000)
       
+      let initCount = 0
       if (this.localConfig.dataIndex.trim() === '') {
         this.resetIndex()
+        initCount++
       }
 
       if (this.localConfig.dataThesaurus.trim() === '') {
         this.resetThesaurus()
+        initCount++
+      }
+
+      if (initCount === 2) {
+        setTimeout(() => {
+          this.localConfig.view = 'browse'
+        }, 3000)
       }
     },
     resetIndex: function () {

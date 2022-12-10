@@ -87,6 +87,10 @@ module.exports = function (List) {
     //   inline: "nearest"
     // })
 
+    if (!this.$refs.item) {
+      return false
+    }
+
     let ele = this.$refs.item[pos]
     if (ele === undefined) {
       return false

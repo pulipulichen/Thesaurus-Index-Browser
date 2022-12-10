@@ -1,4 +1,4 @@
-module.exports = function (app) {
+export default function (app) {
   app.watch['config.inited'] = function () {
     if (this.config.inited === false) {
       return false

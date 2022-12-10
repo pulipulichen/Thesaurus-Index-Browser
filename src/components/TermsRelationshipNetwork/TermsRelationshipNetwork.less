@@ -2,7 +2,38 @@
   display: block;
   // width: 100vw;
   // height: 100vh;
-  height: calc(100vh - 161px);
+  // height: calc(100vh - 161px - 10rem);
+  height: calc(100vh - 162px - 92px);
   width: 100%;
 }
 
+.header-row {
+  display:flex;
+  align-items: center;
+
+  .header {
+    width: 100%;
+  }
+
+  .ellipsis {
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .locators {
+    width: fit-content;
+    white-space: nowrap;
+  }
+}
+
+.sn {
+  height: 5rem;
+  max-height: 5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.message {
+  margin-top: 0.5rem !important;
+}

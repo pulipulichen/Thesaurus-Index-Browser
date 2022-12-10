@@ -40,12 +40,13 @@
 
         <template v-for="(l, i) in item.locators">
           <span v-if="i > 0">, </span><a class="locator" v-if="!utils.URLUtils.isURL(l)">
-            {{ l }}
+            {{ displayLocator(l) }}
           </a><a class="locator" 
              v-if="utils.URLUtils.isURL(l)"
              :href="l"
+             :title="l"
              target="_blank">
-            {{ l }}
+             {{ displayLocator(l) }}
           </a>
         </template>
 

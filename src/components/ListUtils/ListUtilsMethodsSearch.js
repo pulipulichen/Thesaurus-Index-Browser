@@ -88,10 +88,24 @@ module.exports = function (List) {
     // })
 
     let ele = this.$refs.item[pos]
-    let offsetTop = (ele.offsetTop + ele.offsetHeight / 2)
+    if (ele === undefined) {
+      return false
+    }
+
+    let eleHalf = ele.offsetHeight / 2
+    let containerHalf = (this.$refs.container.offsetHeight / 2)
+
+    if (eleHalf > containerHalf) {
+      eleHalf = containerHalf - 30
+    }
+    let offsetTop = (ele.offsetTop + eleHalf)
 
     // let scrollTop = this.$refs.container.scrollTop
-    offsetTop = offsetTop - (this.$refs.container.offsetHeight / 2)
+    
+
+    offsetTop = offsetTop - containerHalf
+
+
     // console.log(offsetTop)
     this.$refs.container.scrollTo({top: offsetTop, behavior: "smooth"})
   }

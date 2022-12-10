@@ -1,3 +1,5 @@
+const $ = require('jquery')
+
 let app = {
   props: ['config', 'localConfig', 'utils'],
   data () {    

@@ -58,6 +58,9 @@ let app = {
     graphData () {
       return this.getGraphData(this.list)
     },
+    complexest () {
+      return this.getComplexestTerm(this.list)
+    },
     searchMatched () {
       if (this.localConfig.searchThesaurus === '') {
         this.localConfig.searchThesaurusCurrent = -1

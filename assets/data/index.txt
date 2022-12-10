@@ -4,7 +4,7 @@ Associative Relationship, sd3JB
  see also Equivalence Relationship
  see also Hierarchical Relationship
  see also Related Term
-Authority File, M3qgT
+Authority File, M3qgT, http://blog.pulipuli.info
  see also Synonym Equivalence List
 Broader Term, 7kF2a
  see also Hierarchical Relationship

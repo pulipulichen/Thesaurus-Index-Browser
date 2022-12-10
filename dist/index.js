@@ -2169,6 +2169,3105 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/cose-base/cose-base.js":
+/*!*********************************************!*\
+  !*** ./node_modules/cose-base/cose-base.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(/*! layout-base */ "./node_modules/layout-base/layout-base.js"));
+	else {}
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var FDLayoutConstants = __webpack_require__(0).FDLayoutConstants;
+
+function CoSEConstants() {}
+
+//CoSEConstants inherits static props in FDLayoutConstants
+for (var prop in FDLayoutConstants) {
+  CoSEConstants[prop] = FDLayoutConstants[prop];
+}
+
+CoSEConstants.DEFAULT_USE_MULTI_LEVEL_SCALING = false;
+CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+CoSEConstants.DEFAULT_COMPONENT_SEPERATION = 60;
+CoSEConstants.TILE = true;
+CoSEConstants.TILING_PADDING_VERTICAL = 10;
+CoSEConstants.TILING_PADDING_HORIZONTAL = 10;
+CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;
+CoSEConstants.ENFORCE_CONSTRAINTS = true;
+CoSEConstants.APPLY_LAYOUT = true;
+CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS = true;
+CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = true; // this should be set to false if there will be a constraint
+// This constant is for differentiating whether actual layout algorithm that uses cose-base wants to apply only incremental layout or 
+// an incremental layout on top of a randomized layout. If it is only incremental layout, then this constant should be true.
+CoSEConstants.PURE_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL;
+
+module.exports = CoSEConstants;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var FDLayoutEdge = __webpack_require__(0).FDLayoutEdge;
+
+function CoSEEdge(source, target, vEdge) {
+  FDLayoutEdge.call(this, source, target, vEdge);
+}
+
+CoSEEdge.prototype = Object.create(FDLayoutEdge.prototype);
+for (var prop in FDLayoutEdge) {
+  CoSEEdge[prop] = FDLayoutEdge[prop];
+}
+
+module.exports = CoSEEdge;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraph = __webpack_require__(0).LGraph;
+
+function CoSEGraph(parent, graphMgr, vGraph) {
+  LGraph.call(this, parent, graphMgr, vGraph);
+}
+
+CoSEGraph.prototype = Object.create(LGraph.prototype);
+for (var prop in LGraph) {
+  CoSEGraph[prop] = LGraph[prop];
+}
+
+module.exports = CoSEGraph;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraphManager = __webpack_require__(0).LGraphManager;
+
+function CoSEGraphManager(layout) {
+  LGraphManager.call(this, layout);
+}
+
+CoSEGraphManager.prototype = Object.create(LGraphManager.prototype);
+for (var prop in LGraphManager) {
+  CoSEGraphManager[prop] = LGraphManager[prop];
+}
+
+module.exports = CoSEGraphManager;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var FDLayoutNode = __webpack_require__(0).FDLayoutNode;
+var IMath = __webpack_require__(0).IMath;
+
+function CoSENode(gm, loc, size, vNode) {
+  FDLayoutNode.call(this, gm, loc, size, vNode);
+}
+
+CoSENode.prototype = Object.create(FDLayoutNode.prototype);
+for (var prop in FDLayoutNode) {
+  CoSENode[prop] = FDLayoutNode[prop];
+}
+
+CoSENode.prototype.calculateDisplacement = function () {
+  var layout = this.graphManager.getLayout();
+  // this check is for compound nodes that contain fixed nodes
+  if (this.getChild() != null && this.fixedNodeWeight) {
+    this.displacementX += layout.coolingFactor * (this.springForceX + this.repulsionForceX + this.gravitationForceX) / this.fixedNodeWeight;
+    this.displacementY += layout.coolingFactor * (this.springForceY + this.repulsionForceY + this.gravitationForceY) / this.fixedNodeWeight;
+  } else {
+    this.displacementX += layout.coolingFactor * (this.springForceX + this.repulsionForceX + this.gravitationForceX) / this.noOfChildren;
+    this.displacementY += layout.coolingFactor * (this.springForceY + this.repulsionForceY + this.gravitationForceY) / this.noOfChildren;
+  }
+
+  if (Math.abs(this.displacementX) > layout.coolingFactor * layout.maxNodeDisplacement) {
+    this.displacementX = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementX);
+  }
+
+  if (Math.abs(this.displacementY) > layout.coolingFactor * layout.maxNodeDisplacement) {
+    this.displacementY = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementY);
+  }
+
+  // non-empty compound node, propogate movement to children as well
+  if (this.child && this.child.getNodes().length > 0) {
+    this.propogateDisplacementToChildren(this.displacementX, this.displacementY);
+  }
+};
+
+CoSENode.prototype.propogateDisplacementToChildren = function (dX, dY) {
+  var nodes = this.getChild().getNodes();
+  var node;
+  for (var i = 0; i < nodes.length; i++) {
+    node = nodes[i];
+    if (node.getChild() == null) {
+      node.displacementX += dX;
+      node.displacementY += dY;
+    } else {
+      node.propogateDisplacementToChildren(dX, dY);
+    }
+  }
+};
+
+CoSENode.prototype.move = function () {
+  var layout = this.graphManager.getLayout();
+
+  // a simple node or an empty compound node, move it
+  if (this.child == null || this.child.getNodes().length == 0) {
+    this.moveBy(this.displacementX, this.displacementY);
+
+    layout.totalDisplacement += Math.abs(this.displacementX) + Math.abs(this.displacementY);
+  }
+
+  this.springForceX = 0;
+  this.springForceY = 0;
+  this.repulsionForceX = 0;
+  this.repulsionForceY = 0;
+  this.gravitationForceX = 0;
+  this.gravitationForceY = 0;
+  this.displacementX = 0;
+  this.displacementY = 0;
+};
+
+CoSENode.prototype.setPred1 = function (pred1) {
+  this.pred1 = pred1;
+};
+
+CoSENode.prototype.getPred1 = function () {
+  return pred1;
+};
+
+CoSENode.prototype.getPred2 = function () {
+  return pred2;
+};
+
+CoSENode.prototype.setNext = function (next) {
+  this.next = next;
+};
+
+CoSENode.prototype.getNext = function () {
+  return next;
+};
+
+CoSENode.prototype.setProcessed = function (processed) {
+  this.processed = processed;
+};
+
+CoSENode.prototype.isProcessed = function () {
+  return processed;
+};
+
+module.exports = CoSENode;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var CoSEConstants = __webpack_require__(1);
+var LinkedList = __webpack_require__(0).LinkedList;
+var Matrix = __webpack_require__(0).Matrix;
+var SVD = __webpack_require__(0).SVD;
+
+function ConstraintHandler() {}
+
+ConstraintHandler.handleConstraints = function (layout) {
+  //  let layout = this.graphManager.getLayout();
+
+  // get constraints from layout
+  var constraints = {};
+  constraints.fixedNodeConstraint = layout.constraints.fixedNodeConstraint;
+  constraints.alignmentConstraint = layout.constraints.alignmentConstraint;
+  constraints.relativePlacementConstraint = layout.constraints.relativePlacementConstraint;
+
+  var idToNodeMap = new Map();
+  var nodeIndexes = new Map();
+  var xCoords = [];
+  var yCoords = [];
+
+  var allNodes = layout.getAllNodes();
+  var index = 0;
+  // fill index map and coordinates
+  for (var i = 0; i < allNodes.length; i++) {
+    var node = allNodes[i];
+    if (node.getChild() == null) {
+      nodeIndexes.set(node.id, index++);
+      xCoords.push(node.getCenterX());
+      yCoords.push(node.getCenterY());
+      idToNodeMap.set(node.id, node);
+    }
+  }
+
+  // if there exists relative placement constraint without gap value, set it to default 
+  if (constraints.relativePlacementConstraint) {
+    constraints.relativePlacementConstraint.forEach(function (constraint) {
+      if (!constraint.gap && constraint.gap != 0) {
+        if (constraint.left) {
+          constraint.gap = CoSEConstants.DEFAULT_EDGE_LENGTH + idToNodeMap.get(constraint.left).getWidth() / 2 + idToNodeMap.get(constraint.right).getWidth() / 2;
+        } else {
+          constraint.gap = CoSEConstants.DEFAULT_EDGE_LENGTH + idToNodeMap.get(constraint.top).getHeight() / 2 + idToNodeMap.get(constraint.bottom).getHeight() / 2;
+        }
+      }
+    });
+  }
+
+  /* auxiliary functions */
+
+  // calculate difference between two position objects
+  var calculatePositionDiff = function calculatePositionDiff(pos1, pos2) {
+    return { x: pos1.x - pos2.x, y: pos1.y - pos2.y };
+  };
+
+  // calculate average position of the nodes
+  var calculateAvgPosition = function calculateAvgPosition(nodeIdSet) {
+    var xPosSum = 0;
+    var yPosSum = 0;
+    nodeIdSet.forEach(function (nodeId) {
+      xPosSum += xCoords[nodeIndexes.get(nodeId)];
+      yPosSum += yCoords[nodeIndexes.get(nodeId)];
+    });
+
+    return { x: xPosSum / nodeIdSet.size, y: yPosSum / nodeIdSet.size };
+  };
+
+  // find an appropriate positioning for the nodes in a given graph according to relative placement constraints
+  // this function also takes the fixed nodes and alignment constraints into account
+  // graph: dag to be evaluated, direction: "horizontal" or "vertical", 
+  // fixedNodes: set of fixed nodes to consider during evaluation, dummyPositions: appropriate coordinates of the dummy nodes  
+  var findAppropriatePositionForRelativePlacement = function findAppropriatePositionForRelativePlacement(graph, direction, fixedNodes, dummyPositions, componentSources) {
+
+    // find union of two sets
+    function setUnion(setA, setB) {
+      var union = new Set(setA);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = setB[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var elem = _step.value;
+
+          union.add(elem);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return union;
+    }
+
+    // find indegree count for each node
+    var inDegrees = new Map();
+
+    graph.forEach(function (value, key) {
+      inDegrees.set(key, 0);
+    });
+    graph.forEach(function (value, key) {
+      value.forEach(function (adjacent) {
+        inDegrees.set(adjacent.id, inDegrees.get(adjacent.id) + 1);
+      });
+    });
+
+    var positionMap = new Map(); // keeps the position for each node
+    var pastMap = new Map(); // keeps the predecessors(past) of a node
+    var queue = new LinkedList();
+    inDegrees.forEach(function (value, key) {
+      if (value == 0) {
+        queue.push(key);
+        if (!fixedNodes) {
+          if (direction == "horizontal") {
+            positionMap.set(key, nodeIndexes.has(key) ? xCoords[nodeIndexes.get(key)] : dummyPositions.get(key));
+          } else {
+            positionMap.set(key, nodeIndexes.has(key) ? yCoords[nodeIndexes.get(key)] : dummyPositions.get(key));
+          }
+        }
+      } else {
+        positionMap.set(key, Number.NEGATIVE_INFINITY);
+      }
+      if (fixedNodes) {
+        pastMap.set(key, new Set([key]));
+      }
+    });
+
+    // align sources of each component in enforcement phase
+    if (fixedNodes) {
+      componentSources.forEach(function (component) {
+        var fixedIds = [];
+        component.forEach(function (nodeId) {
+          if (fixedNodes.has(nodeId)) {
+            fixedIds.push(nodeId);
+          }
+        });
+        if (fixedIds.length > 0) {
+          var position = 0;
+          fixedIds.forEach(function (fixedId) {
+            if (direction == "horizontal") {
+              positionMap.set(fixedId, nodeIndexes.has(fixedId) ? xCoords[nodeIndexes.get(fixedId)] : dummyPositions.get(fixedId));
+              position += positionMap.get(fixedId);
+            } else {
+              positionMap.set(fixedId, nodeIndexes.has(fixedId) ? yCoords[nodeIndexes.get(fixedId)] : dummyPositions.get(fixedId));
+              position += positionMap.get(fixedId);
+            }
+          });
+          position = position / fixedIds.length;
+          component.forEach(function (nodeId) {
+            if (!fixedNodes.has(nodeId)) {
+              positionMap.set(nodeId, position);
+            }
+          });
+        } else {
+          var _position = 0;
+          component.forEach(function (nodeId) {
+            if (direction == "horizontal") {
+              _position += nodeIndexes.has(nodeId) ? xCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+            } else {
+              _position += nodeIndexes.has(nodeId) ? yCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+            }
+          });
+          _position = _position / component.length;
+          component.forEach(function (nodeId) {
+            positionMap.set(nodeId, _position);
+          });
+        }
+      });
+    }
+
+    // calculate positions of the nodes
+
+    var _loop = function _loop() {
+      var currentNode = queue.shift();
+      var neighbors = graph.get(currentNode);
+      neighbors.forEach(function (neighbor) {
+        if (positionMap.get(neighbor.id) < positionMap.get(currentNode) + neighbor.gap) {
+          if (fixedNodes && fixedNodes.has(neighbor.id)) {
+            var fixedPosition = void 0;
+            if (direction == "horizontal") {
+              fixedPosition = nodeIndexes.has(neighbor.id) ? xCoords[nodeIndexes.get(neighbor.id)] : dummyPositions.get(neighbor.id);
+            } else {
+              fixedPosition = nodeIndexes.has(neighbor.id) ? yCoords[nodeIndexes.get(neighbor.id)] : dummyPositions.get(neighbor.id);
+            }
+            positionMap.set(neighbor.id, fixedPosition); // TODO: may do unnecessary work
+            if (fixedPosition < positionMap.get(currentNode) + neighbor.gap) {
+              var diff = positionMap.get(currentNode) + neighbor.gap - fixedPosition;
+              pastMap.get(currentNode).forEach(function (nodeId) {
+                positionMap.set(nodeId, positionMap.get(nodeId) - diff);
+              });
+            }
+          } else {
+            positionMap.set(neighbor.id, positionMap.get(currentNode) + neighbor.gap);
+          }
+        }
+        inDegrees.set(neighbor.id, inDegrees.get(neighbor.id) - 1);
+        if (inDegrees.get(neighbor.id) == 0) {
+          queue.push(neighbor.id);
+        }
+        if (fixedNodes) {
+          pastMap.set(neighbor.id, setUnion(pastMap.get(currentNode), pastMap.get(neighbor.id)));
+        }
+      });
+    };
+
+    while (queue.length != 0) {
+      _loop();
+    }
+
+    // readjust position of the nodes after enforcement
+    if (fixedNodes) {
+      // find indegree count for each node
+      var sinkNodes = new Set();
+
+      graph.forEach(function (value, key) {
+        if (value.length == 0) {
+          sinkNodes.add(key);
+        }
+      });
+
+      var _components = [];
+      pastMap.forEach(function (value, key) {
+        if (sinkNodes.has(key)) {
+          var isFixedComponent = false;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = value[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var nodeId = _step2.value;
+
+              if (fixedNodes.has(nodeId)) {
+                isFixedComponent = true;
+              }
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+
+          if (!isFixedComponent) {
+            var isExist = false;
+            var existAt = void 0;
+            _components.forEach(function (component, index) {
+              if (component.has([].concat(_toConsumableArray(value))[0])) {
+                isExist = true;
+                existAt = index;
+              }
+            });
+            if (!isExist) {
+              _components.push(new Set(value));
+            } else {
+              value.forEach(function (ele) {
+                _components[existAt].add(ele);
+              });
+            }
+          }
+        }
+      });
+
+      _components.forEach(function (component, index) {
+        var minBefore = Number.POSITIVE_INFINITY;
+        var minAfter = Number.POSITIVE_INFINITY;
+        var maxBefore = Number.NEGATIVE_INFINITY;
+        var maxAfter = Number.NEGATIVE_INFINITY;
+
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = component[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var nodeId = _step3.value;
+
+            var posBefore = void 0;
+            if (direction == "horizontal") {
+              posBefore = nodeIndexes.has(nodeId) ? xCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+            } else {
+              posBefore = nodeIndexes.has(nodeId) ? yCoords[nodeIndexes.get(nodeId)] : dummyPositions.get(nodeId);
+            }
+            var posAfter = positionMap.get(nodeId);
+            if (posBefore < minBefore) {
+              minBefore = posBefore;
+            }
+            if (posBefore > maxBefore) {
+              maxBefore = posBefore;
+            }
+            if (posAfter < minAfter) {
+              minAfter = posAfter;
+            }
+            if (posAfter > maxAfter) {
+              maxAfter = posAfter;
+            }
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+
+        var diff = (minBefore + maxBefore) / 2 - (minAfter + maxAfter) / 2;
+
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = component[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var _nodeId = _step4.value;
+
+            positionMap.set(_nodeId, positionMap.get(_nodeId) + diff);
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+              _iterator4.return();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+      });
+    }
+
+    return positionMap;
+  };
+
+  // find transformation based on rel. placement constraints if there are both alignment and rel. placement constraints
+  // or if there are only rel. placement contraints where the largest component isn't sufficiently large
+  var applyReflectionForRelativePlacement = function applyReflectionForRelativePlacement(relativePlacementConstraints) {
+    // variables to count votes
+    var reflectOnY = 0,
+        notReflectOnY = 0;
+    var reflectOnX = 0,
+        notReflectOnX = 0;
+
+    relativePlacementConstraints.forEach(function (constraint) {
+      if (constraint.left) {
+        xCoords[nodeIndexes.get(constraint.left)] - xCoords[nodeIndexes.get(constraint.right)] >= 0 ? reflectOnY++ : notReflectOnY++;
+      } else {
+        yCoords[nodeIndexes.get(constraint.top)] - yCoords[nodeIndexes.get(constraint.bottom)] >= 0 ? reflectOnX++ : notReflectOnX++;
+      }
+    });
+
+    if (reflectOnY > notReflectOnY && reflectOnX > notReflectOnX) {
+      for (var _i = 0; _i < nodeIndexes.size; _i++) {
+        xCoords[_i] = -1 * xCoords[_i];
+        yCoords[_i] = -1 * yCoords[_i];
+      }
+    } else if (reflectOnY > notReflectOnY) {
+      for (var _i2 = 0; _i2 < nodeIndexes.size; _i2++) {
+        xCoords[_i2] = -1 * xCoords[_i2];
+      }
+    } else if (reflectOnX > notReflectOnX) {
+      for (var _i3 = 0; _i3 < nodeIndexes.size; _i3++) {
+        yCoords[_i3] = -1 * yCoords[_i3];
+      }
+    }
+  };
+
+  // find weakly connected components in undirected graph
+  var findComponents = function findComponents(graph) {
+    // find weakly connected components in dag
+    var components = [];
+    var queue = new LinkedList();
+    var visited = new Set();
+    var count = 0;
+
+    graph.forEach(function (value, key) {
+      if (!visited.has(key)) {
+        components[count] = [];
+        var _currentNode = key;
+        queue.push(_currentNode);
+        visited.add(_currentNode);
+        components[count].push(_currentNode);
+
+        while (queue.length != 0) {
+          _currentNode = queue.shift();
+          var neighbors = graph.get(_currentNode);
+          neighbors.forEach(function (neighbor) {
+            if (!visited.has(neighbor.id)) {
+              queue.push(neighbor.id);
+              visited.add(neighbor.id);
+              components[count].push(neighbor.id);
+            }
+          });
+        }
+        count++;
+      }
+    });
+    return components;
+  };
+
+  // return undirected version of given dag
+  var dagToUndirected = function dagToUndirected(dag) {
+    var undirected = new Map();
+
+    dag.forEach(function (value, key) {
+      undirected.set(key, []);
+    });
+
+    dag.forEach(function (value, key) {
+      value.forEach(function (adjacent) {
+        undirected.get(key).push(adjacent);
+        undirected.get(adjacent.id).push({ id: key, gap: adjacent.gap, direction: adjacent.direction });
+      });
+    });
+
+    return undirected;
+  };
+
+  // return reversed (directions inverted) version of given dag
+  var dagToReversed = function dagToReversed(dag) {
+    var reversed = new Map();
+
+    dag.forEach(function (value, key) {
+      reversed.set(key, []);
+    });
+
+    dag.forEach(function (value, key) {
+      value.forEach(function (adjacent) {
+        reversed.get(adjacent.id).push({ id: key, gap: adjacent.gap, direction: adjacent.direction });
+      });
+    });
+
+    return reversed;
+  };
+
+  /****  apply transformation to the initial draft layout to better align with constrained nodes ****/
+  // solve the Orthogonal Procrustean Problem to rotate and/or reflect initial draft layout
+  // here we follow the solution in Chapter 20.2 of Borg, I. & Groenen, P. (2005) Modern Multidimensional Scaling: Theory and Applications 
+
+  /* construct source and target configurations */
+
+  var targetMatrix = []; // A - target configuration
+  var sourceMatrix = []; // B - source configuration 
+  var standardTransformation = false; // false for no transformation, true for standart (Procrustes) transformation (rotation and/or reflection)
+  var reflectionType = false; // false/true for reflection check, 'reflectOnX', 'reflectOnY' or 'reflectOnBoth' for reflection type if necessary
+  var fixedNodes = new Set();
+  var dag = new Map(); // adjacency list to keep directed acyclic graph (dag) that consists of relative placement constraints
+  var dagUndirected = new Map(); // undirected version of the dag
+  var components = []; // weakly connected components
+
+  // fill fixedNodes collection to use later
+  if (constraints.fixedNodeConstraint) {
+    constraints.fixedNodeConstraint.forEach(function (nodeData) {
+      fixedNodes.add(nodeData.nodeId);
+    });
+  }
+
+  // construct dag from relative placement constraints 
+  if (constraints.relativePlacementConstraint) {
+    // construct both directed and undirected version of the dag
+    constraints.relativePlacementConstraint.forEach(function (constraint) {
+      if (constraint.left) {
+        if (dag.has(constraint.left)) {
+          dag.get(constraint.left).push({ id: constraint.right, gap: constraint.gap, direction: "horizontal" });
+        } else {
+          dag.set(constraint.left, [{ id: constraint.right, gap: constraint.gap, direction: "horizontal" }]);
+        }
+        if (!dag.has(constraint.right)) {
+          dag.set(constraint.right, []);
+        }
+      } else {
+        if (dag.has(constraint.top)) {
+          dag.get(constraint.top).push({ id: constraint.bottom, gap: constraint.gap, direction: "vertical" });
+        } else {
+          dag.set(constraint.top, [{ id: constraint.bottom, gap: constraint.gap, direction: "vertical" }]);
+        }
+        if (!dag.has(constraint.bottom)) {
+          dag.set(constraint.bottom, []);
+        }
+      }
+    });
+
+    dagUndirected = dagToUndirected(dag);
+    components = findComponents(dagUndirected);
+  }
+
+  if (CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING) {
+    // first check fixed node constraint
+    if (constraints.fixedNodeConstraint && constraints.fixedNodeConstraint.length > 1) {
+      constraints.fixedNodeConstraint.forEach(function (nodeData, i) {
+        targetMatrix[i] = [nodeData.position.x, nodeData.position.y];
+        sourceMatrix[i] = [xCoords[nodeIndexes.get(nodeData.nodeId)], yCoords[nodeIndexes.get(nodeData.nodeId)]];
+      });
+      standardTransformation = true;
+    } else if (constraints.alignmentConstraint) {
+      (function () {
+        // then check alignment constraint
+        var count = 0;
+        if (constraints.alignmentConstraint.vertical) {
+          var verticalAlign = constraints.alignmentConstraint.vertical;
+
+          var _loop2 = function _loop2(_i4) {
+            var alignmentSet = new Set();
+            verticalAlign[_i4].forEach(function (nodeId) {
+              alignmentSet.add(nodeId);
+            });
+            var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function (x) {
+              return fixedNodes.has(x);
+            }));
+            var xPos = void 0;
+            if (intersection.size > 0) xPos = xCoords[nodeIndexes.get(intersection.values().next().value)];else xPos = calculateAvgPosition(alignmentSet).x;
+
+            verticalAlign[_i4].forEach(function (nodeId) {
+              targetMatrix[count] = [xPos, yCoords[nodeIndexes.get(nodeId)]];
+              sourceMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+              count++;
+            });
+          };
+
+          for (var _i4 = 0; _i4 < verticalAlign.length; _i4++) {
+            _loop2(_i4);
+          }
+          standardTransformation = true;
+        }
+        if (constraints.alignmentConstraint.horizontal) {
+          var horizontalAlign = constraints.alignmentConstraint.horizontal;
+
+          var _loop3 = function _loop3(_i5) {
+            var alignmentSet = new Set();
+            horizontalAlign[_i5].forEach(function (nodeId) {
+              alignmentSet.add(nodeId);
+            });
+            var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function (x) {
+              return fixedNodes.has(x);
+            }));
+            var yPos = void 0;
+            if (intersection.size > 0) yPos = xCoords[nodeIndexes.get(intersection.values().next().value)];else yPos = calculateAvgPosition(alignmentSet).y;
+
+            horizontalAlign[_i5].forEach(function (nodeId) {
+              targetMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yPos];
+              sourceMatrix[count] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+              count++;
+            });
+          };
+
+          for (var _i5 = 0; _i5 < horizontalAlign.length; _i5++) {
+            _loop3(_i5);
+          }
+          standardTransformation = true;
+        }
+        if (constraints.relativePlacementConstraint) {
+          reflectionType = true;
+        }
+      })();
+    } else if (constraints.relativePlacementConstraint) {
+      // finally check relative placement constraint
+      // find largest component in dag
+      var largestComponentSize = 0;
+      var largestComponentIndex = 0;
+      for (var _i6 = 0; _i6 < components.length; _i6++) {
+        if (components[_i6].length > largestComponentSize) {
+          largestComponentSize = components[_i6].length;
+          largestComponentIndex = _i6;
+        }
+      }
+      // if largest component isn't dominant, then take the votes for reflection
+      if (largestComponentSize < dagUndirected.size / 2) {
+        applyReflectionForRelativePlacement(constraints.relativePlacementConstraint);
+        standardTransformation = false;
+        reflectionType = false;
+      } else {
+        // use largest component for transformation
+        // construct horizontal and vertical subgraphs in the largest component
+        var subGraphOnHorizontal = new Map();
+        var subGraphOnVertical = new Map();
+        var constraintsInlargestComponent = [];
+
+        components[largestComponentIndex].forEach(function (nodeId) {
+          dag.get(nodeId).forEach(function (adjacent) {
+            if (adjacent.direction == "horizontal") {
+              if (subGraphOnHorizontal.has(nodeId)) {
+                subGraphOnHorizontal.get(nodeId).push(adjacent);
+              } else {
+                subGraphOnHorizontal.set(nodeId, [adjacent]);
+              }
+              if (!subGraphOnHorizontal.has(adjacent.id)) {
+                subGraphOnHorizontal.set(adjacent.id, []);
+              }
+              constraintsInlargestComponent.push({ left: nodeId, right: adjacent.id });
+            } else {
+              if (subGraphOnVertical.has(nodeId)) {
+                subGraphOnVertical.get(nodeId).push(adjacent);
+              } else {
+                subGraphOnVertical.set(nodeId, [adjacent]);
+              }
+              if (!subGraphOnVertical.has(adjacent.id)) {
+                subGraphOnVertical.set(adjacent.id, []);
+              }
+              constraintsInlargestComponent.push({ top: nodeId, bottom: adjacent.id });
+            }
+          });
+        });
+
+        applyReflectionForRelativePlacement(constraintsInlargestComponent);
+        reflectionType = false;
+
+        // calculate appropriate positioning for subgraphs
+        var positionMapHorizontal = findAppropriatePositionForRelativePlacement(subGraphOnHorizontal, "horizontal");
+        var positionMapVertical = findAppropriatePositionForRelativePlacement(subGraphOnVertical, "vertical");
+
+        // construct source and target configuration
+        components[largestComponentIndex].forEach(function (nodeId, i) {
+          sourceMatrix[i] = [xCoords[nodeIndexes.get(nodeId)], yCoords[nodeIndexes.get(nodeId)]];
+          targetMatrix[i] = [];
+          if (positionMapHorizontal.has(nodeId)) {
+            targetMatrix[i][0] = positionMapHorizontal.get(nodeId);
+          } else {
+            targetMatrix[i][0] = xCoords[nodeIndexes.get(nodeId)];
+          }
+          if (positionMapVertical.has(nodeId)) {
+            targetMatrix[i][1] = positionMapVertical.get(nodeId);
+          } else {
+            targetMatrix[i][1] = yCoords[nodeIndexes.get(nodeId)];
+          }
+        });
+
+        standardTransformation = true;
+      }
+    }
+
+    // if transformation is required, then calculate and apply transformation matrix
+    if (standardTransformation) {
+      /* calculate transformation matrix */
+      var transformationMatrix = void 0;
+      var targetMatrixTranspose = Matrix.transpose(targetMatrix); // A'
+      var sourceMatrixTranspose = Matrix.transpose(sourceMatrix); // B'
+
+      // centralize transpose matrices
+      for (var _i7 = 0; _i7 < targetMatrixTranspose.length; _i7++) {
+        targetMatrixTranspose[_i7] = Matrix.multGamma(targetMatrixTranspose[_i7]);
+        sourceMatrixTranspose[_i7] = Matrix.multGamma(sourceMatrixTranspose[_i7]);
+      }
+
+      // do actual calculation for transformation matrix
+      var tempMatrix = Matrix.multMat(targetMatrixTranspose, Matrix.transpose(sourceMatrixTranspose)); // tempMatrix = A'B
+      var SVDResult = SVD.svd(tempMatrix); // SVD(A'B) = USV', svd function returns U, S and V 
+      transformationMatrix = Matrix.multMat(SVDResult.V, Matrix.transpose(SVDResult.U)); // transformationMatrix = T = VU'
+
+      /* apply found transformation matrix to obtain final draft layout */
+      for (var _i8 = 0; _i8 < nodeIndexes.size; _i8++) {
+        var temp1 = [xCoords[_i8], yCoords[_i8]];
+        var temp2 = [transformationMatrix[0][0], transformationMatrix[1][0]];
+        var temp3 = [transformationMatrix[0][1], transformationMatrix[1][1]];
+        xCoords[_i8] = Matrix.dotProduct(temp1, temp2);
+        yCoords[_i8] = Matrix.dotProduct(temp1, temp3);
+      }
+
+      // applied only both alignment and rel. placement constraints exist
+      if (reflectionType) {
+        applyReflectionForRelativePlacement(constraints.relativePlacementConstraint);
+      }
+    }
+  }
+
+  if (CoSEConstants.ENFORCE_CONSTRAINTS) {
+    /****  enforce constraints on the transformed draft layout ****/
+
+    /* first enforce fixed node constraint */
+
+    if (constraints.fixedNodeConstraint && constraints.fixedNodeConstraint.length > 0) {
+      var translationAmount = { x: 0, y: 0 };
+      constraints.fixedNodeConstraint.forEach(function (nodeData, i) {
+        var posInTheory = { x: xCoords[nodeIndexes.get(nodeData.nodeId)], y: yCoords[nodeIndexes.get(nodeData.nodeId)] };
+        var posDesired = nodeData.position;
+        var posDiff = calculatePositionDiff(posDesired, posInTheory);
+        translationAmount.x += posDiff.x;
+        translationAmount.y += posDiff.y;
+      });
+      translationAmount.x /= constraints.fixedNodeConstraint.length;
+      translationAmount.y /= constraints.fixedNodeConstraint.length;
+
+      xCoords.forEach(function (value, i) {
+        xCoords[i] += translationAmount.x;
+      });
+
+      yCoords.forEach(function (value, i) {
+        yCoords[i] += translationAmount.y;
+      });
+
+      constraints.fixedNodeConstraint.forEach(function (nodeData) {
+        xCoords[nodeIndexes.get(nodeData.nodeId)] = nodeData.position.x;
+        yCoords[nodeIndexes.get(nodeData.nodeId)] = nodeData.position.y;
+      });
+    }
+
+    /* then enforce alignment constraint */
+
+    if (constraints.alignmentConstraint) {
+      if (constraints.alignmentConstraint.vertical) {
+        var xAlign = constraints.alignmentConstraint.vertical;
+
+        var _loop4 = function _loop4(_i9) {
+          var alignmentSet = new Set();
+          xAlign[_i9].forEach(function (nodeId) {
+            alignmentSet.add(nodeId);
+          });
+          var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function (x) {
+            return fixedNodes.has(x);
+          }));
+          var xPos = void 0;
+          if (intersection.size > 0) xPos = xCoords[nodeIndexes.get(intersection.values().next().value)];else xPos = calculateAvgPosition(alignmentSet).x;
+
+          alignmentSet.forEach(function (nodeId) {
+            if (!fixedNodes.has(nodeId)) xCoords[nodeIndexes.get(nodeId)] = xPos;
+          });
+        };
+
+        for (var _i9 = 0; _i9 < xAlign.length; _i9++) {
+          _loop4(_i9);
+        }
+      }
+      if (constraints.alignmentConstraint.horizontal) {
+        var yAlign = constraints.alignmentConstraint.horizontal;
+
+        var _loop5 = function _loop5(_i10) {
+          var alignmentSet = new Set();
+          yAlign[_i10].forEach(function (nodeId) {
+            alignmentSet.add(nodeId);
+          });
+          var intersection = new Set([].concat(_toConsumableArray(alignmentSet)).filter(function (x) {
+            return fixedNodes.has(x);
+          }));
+          var yPos = void 0;
+          if (intersection.size > 0) yPos = yCoords[nodeIndexes.get(intersection.values().next().value)];else yPos = calculateAvgPosition(alignmentSet).y;
+
+          alignmentSet.forEach(function (nodeId) {
+            if (!fixedNodes.has(nodeId)) yCoords[nodeIndexes.get(nodeId)] = yPos;
+          });
+        };
+
+        for (var _i10 = 0; _i10 < yAlign.length; _i10++) {
+          _loop5(_i10);
+        }
+      }
+    }
+
+    /* finally enforce relative placement constraint */
+
+    if (constraints.relativePlacementConstraint) {
+      (function () {
+        var nodeToDummyForVerticalAlignment = new Map();
+        var nodeToDummyForHorizontalAlignment = new Map();
+        var dummyToNodeForVerticalAlignment = new Map();
+        var dummyToNodeForHorizontalAlignment = new Map();
+        var dummyPositionsForVerticalAlignment = new Map();
+        var dummyPositionsForHorizontalAlignment = new Map();
+        var fixedNodesOnHorizontal = new Set();
+        var fixedNodesOnVertical = new Set();
+
+        // fill maps and sets      
+        fixedNodes.forEach(function (nodeId) {
+          fixedNodesOnHorizontal.add(nodeId);
+          fixedNodesOnVertical.add(nodeId);
+        });
+
+        if (constraints.alignmentConstraint) {
+          if (constraints.alignmentConstraint.vertical) {
+            var verticalAlignment = constraints.alignmentConstraint.vertical;
+
+            var _loop6 = function _loop6(_i11) {
+              dummyToNodeForVerticalAlignment.set("dummy" + _i11, []);
+              verticalAlignment[_i11].forEach(function (nodeId) {
+                nodeToDummyForVerticalAlignment.set(nodeId, "dummy" + _i11);
+                dummyToNodeForVerticalAlignment.get("dummy" + _i11).push(nodeId);
+                if (fixedNodes.has(nodeId)) {
+                  fixedNodesOnHorizontal.add("dummy" + _i11);
+                }
+              });
+              dummyPositionsForVerticalAlignment.set("dummy" + _i11, xCoords[nodeIndexes.get(verticalAlignment[_i11][0])]);
+            };
+
+            for (var _i11 = 0; _i11 < verticalAlignment.length; _i11++) {
+              _loop6(_i11);
+            }
+          }
+          if (constraints.alignmentConstraint.horizontal) {
+            var horizontalAlignment = constraints.alignmentConstraint.horizontal;
+
+            var _loop7 = function _loop7(_i12) {
+              dummyToNodeForHorizontalAlignment.set("dummy" + _i12, []);
+              horizontalAlignment[_i12].forEach(function (nodeId) {
+                nodeToDummyForHorizontalAlignment.set(nodeId, "dummy" + _i12);
+                dummyToNodeForHorizontalAlignment.get("dummy" + _i12).push(nodeId);
+                if (fixedNodes.has(nodeId)) {
+                  fixedNodesOnVertical.add("dummy" + _i12);
+                }
+              });
+              dummyPositionsForHorizontalAlignment.set("dummy" + _i12, yCoords[nodeIndexes.get(horizontalAlignment[_i12][0])]);
+            };
+
+            for (var _i12 = 0; _i12 < horizontalAlignment.length; _i12++) {
+              _loop7(_i12);
+            }
+          }
+        }
+
+        // construct horizontal and vertical dags (subgraphs) from overall dag
+        var dagOnHorizontal = new Map();
+        var dagOnVertical = new Map();
+
+        var _loop8 = function _loop8(nodeId) {
+          dag.get(nodeId).forEach(function (adjacent) {
+            var sourceId = void 0;
+            var targetNode = void 0;
+            if (adjacent["direction"] == "horizontal") {
+              sourceId = nodeToDummyForVerticalAlignment.get(nodeId) ? nodeToDummyForVerticalAlignment.get(nodeId) : nodeId;
+              if (nodeToDummyForVerticalAlignment.get(adjacent.id)) {
+                targetNode = { id: nodeToDummyForVerticalAlignment.get(adjacent.id), gap: adjacent.gap, direction: adjacent.direction };
+              } else {
+                targetNode = adjacent;
+              }
+              if (dagOnHorizontal.has(sourceId)) {
+                dagOnHorizontal.get(sourceId).push(targetNode);
+              } else {
+                dagOnHorizontal.set(sourceId, [targetNode]);
+              }
+              if (!dagOnHorizontal.has(targetNode.id)) {
+                dagOnHorizontal.set(targetNode.id, []);
+              }
+            } else {
+              sourceId = nodeToDummyForHorizontalAlignment.get(nodeId) ? nodeToDummyForHorizontalAlignment.get(nodeId) : nodeId;
+              if (nodeToDummyForHorizontalAlignment.get(adjacent.id)) {
+                targetNode = { id: nodeToDummyForHorizontalAlignment.get(adjacent.id), gap: adjacent.gap, direction: adjacent.direction };
+              } else {
+                targetNode = adjacent;
+              }
+              if (dagOnVertical.has(sourceId)) {
+                dagOnVertical.get(sourceId).push(targetNode);
+              } else {
+                dagOnVertical.set(sourceId, [targetNode]);
+              }
+              if (!dagOnVertical.has(targetNode.id)) {
+                dagOnVertical.set(targetNode.id, []);
+              }
+            }
+          });
+        };
+
+        var _iteratorNormalCompletion5 = true;
+        var _didIteratorError5 = false;
+        var _iteratorError5 = undefined;
+
+        try {
+          for (var _iterator5 = dag.keys()[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+            var nodeId = _step5.value;
+
+            _loop8(nodeId);
+          }
+
+          // find source nodes of each component in horizontal and vertical dags
+        } catch (err) {
+          _didIteratorError5 = true;
+          _iteratorError5 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion5 && _iterator5.return) {
+              _iterator5.return();
+            }
+          } finally {
+            if (_didIteratorError5) {
+              throw _iteratorError5;
+            }
+          }
+        }
+
+        var undirectedOnHorizontal = dagToUndirected(dagOnHorizontal);
+        var undirectedOnVertical = dagToUndirected(dagOnVertical);
+        var componentsOnHorizontal = findComponents(undirectedOnHorizontal);
+        var componentsOnVertical = findComponents(undirectedOnVertical);
+        var reversedDagOnHorizontal = dagToReversed(dagOnHorizontal);
+        var reversedDagOnVertical = dagToReversed(dagOnVertical);
+        var componentSourcesOnHorizontal = [];
+        var componentSourcesOnVertical = [];
+
+        componentsOnHorizontal.forEach(function (component, index) {
+          componentSourcesOnHorizontal[index] = [];
+          component.forEach(function (nodeId) {
+            if (reversedDagOnHorizontal.get(nodeId).length == 0) {
+              componentSourcesOnHorizontal[index].push(nodeId);
+            }
+          });
+        });
+
+        componentsOnVertical.forEach(function (component, index) {
+          componentSourcesOnVertical[index] = [];
+          component.forEach(function (nodeId) {
+            if (reversedDagOnVertical.get(nodeId).length == 0) {
+              componentSourcesOnVertical[index].push(nodeId);
+            }
+          });
+        });
+
+        // calculate appropriate positioning for subgraphs
+        var positionMapHorizontal = findAppropriatePositionForRelativePlacement(dagOnHorizontal, "horizontal", fixedNodesOnHorizontal, dummyPositionsForVerticalAlignment, componentSourcesOnHorizontal);
+        var positionMapVertical = findAppropriatePositionForRelativePlacement(dagOnVertical, "vertical", fixedNodesOnVertical, dummyPositionsForHorizontalAlignment, componentSourcesOnVertical);
+
+        // update positions of the nodes based on relative placement constraints
+
+        var _loop9 = function _loop9(key) {
+          if (dummyToNodeForVerticalAlignment.get(key)) {
+            dummyToNodeForVerticalAlignment.get(key).forEach(function (nodeId) {
+              xCoords[nodeIndexes.get(nodeId)] = positionMapHorizontal.get(key);
+            });
+          } else {
+            xCoords[nodeIndexes.get(key)] = positionMapHorizontal.get(key);
+          }
+        };
+
+        var _iteratorNormalCompletion6 = true;
+        var _didIteratorError6 = false;
+        var _iteratorError6 = undefined;
+
+        try {
+          for (var _iterator6 = positionMapHorizontal.keys()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+            var key = _step6.value;
+
+            _loop9(key);
+          }
+        } catch (err) {
+          _didIteratorError6 = true;
+          _iteratorError6 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion6 && _iterator6.return) {
+              _iterator6.return();
+            }
+          } finally {
+            if (_didIteratorError6) {
+              throw _iteratorError6;
+            }
+          }
+        }
+
+        var _loop10 = function _loop10(key) {
+          if (dummyToNodeForHorizontalAlignment.get(key)) {
+            dummyToNodeForHorizontalAlignment.get(key).forEach(function (nodeId) {
+              yCoords[nodeIndexes.get(nodeId)] = positionMapVertical.get(key);
+            });
+          } else {
+            yCoords[nodeIndexes.get(key)] = positionMapVertical.get(key);
+          }
+        };
+
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
+
+        try {
+          for (var _iterator7 = positionMapVertical.keys()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+            var key = _step7.value;
+
+            _loop10(key);
+          }
+        } catch (err) {
+          _didIteratorError7 = true;
+          _iteratorError7 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion7 && _iterator7.return) {
+              _iterator7.return();
+            }
+          } finally {
+            if (_didIteratorError7) {
+              throw _iteratorError7;
+            }
+          }
+        }
+      })();
+    }
+  }
+
+  // assign new coordinates to nodes after constraint handling
+  for (var _i13 = 0; _i13 < allNodes.length; _i13++) {
+    var _node = allNodes[_i13];
+    if (_node.getChild() == null) {
+      _node.setCenter(xCoords[nodeIndexes.get(_node.id)], yCoords[nodeIndexes.get(_node.id)]);
+    }
+  }
+};
+
+module.exports = ConstraintHandler;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var FDLayout = __webpack_require__(0).FDLayout;
+var CoSEGraphManager = __webpack_require__(4);
+var CoSEGraph = __webpack_require__(3);
+var CoSENode = __webpack_require__(5);
+var CoSEEdge = __webpack_require__(2);
+var CoSEConstants = __webpack_require__(1);
+var ConstraintHandler = __webpack_require__(6);
+var FDLayoutConstants = __webpack_require__(0).FDLayoutConstants;
+var LayoutConstants = __webpack_require__(0).LayoutConstants;
+var Point = __webpack_require__(0).Point;
+var PointD = __webpack_require__(0).PointD;
+var DimensionD = __webpack_require__(0).DimensionD;
+var Layout = __webpack_require__(0).Layout;
+var Integer = __webpack_require__(0).Integer;
+var IGeometry = __webpack_require__(0).IGeometry;
+var LGraph = __webpack_require__(0).LGraph;
+var Transform = __webpack_require__(0).Transform;
+var LinkedList = __webpack_require__(0).LinkedList;
+
+function CoSELayout() {
+  FDLayout.call(this);
+
+  this.toBeTiled = {}; // Memorize if a node is to be tiled or is tiled
+  this.constraints = {}; // keep layout constraints
+}
+
+CoSELayout.prototype = Object.create(FDLayout.prototype);
+
+for (var prop in FDLayout) {
+  CoSELayout[prop] = FDLayout[prop];
+}
+
+CoSELayout.prototype.newGraphManager = function () {
+  var gm = new CoSEGraphManager(this);
+  this.graphManager = gm;
+  return gm;
+};
+
+CoSELayout.prototype.newGraph = function (vGraph) {
+  return new CoSEGraph(null, this.graphManager, vGraph);
+};
+
+CoSELayout.prototype.newNode = function (vNode) {
+  return new CoSENode(this.graphManager, vNode);
+};
+
+CoSELayout.prototype.newEdge = function (vEdge) {
+  return new CoSEEdge(null, null, vEdge);
+};
+
+CoSELayout.prototype.initParameters = function () {
+  FDLayout.prototype.initParameters.call(this, arguments);
+  if (!this.isSubLayout) {
+    if (CoSEConstants.DEFAULT_EDGE_LENGTH < 10) {
+      this.idealEdgeLength = 10;
+    } else {
+      this.idealEdgeLength = CoSEConstants.DEFAULT_EDGE_LENGTH;
+    }
+
+    this.useSmartIdealEdgeLengthCalculation = CoSEConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION;
+    this.gravityConstant = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH;
+    this.compoundGravityConstant = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH;
+    this.gravityRangeFactor = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR;
+    this.compoundGravityRangeFactor = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR;
+
+    // variables for tree reduction support
+    this.prunedNodesAll = [];
+    this.growTreeIterations = 0;
+    this.afterGrowthIterations = 0;
+    this.isTreeGrowing = false;
+    this.isGrowthFinished = false;
+  }
+};
+
+// This method is used to set CoSE related parameters used by spring embedder.
+CoSELayout.prototype.initSpringEmbedder = function () {
+  FDLayout.prototype.initSpringEmbedder.call(this);
+
+  // variables for cooling
+  this.coolingCycle = 0;
+  this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
+  this.finalTemperature = 0.04;
+  this.coolingAdjuster = 1;
+};
+
+CoSELayout.prototype.layout = function () {
+  var createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+  if (createBendsAsNeeded) {
+    this.createBendpoints();
+    this.graphManager.resetAllEdges();
+  }
+
+  this.level = 0;
+  return this.classicLayout();
+};
+
+CoSELayout.prototype.classicLayout = function () {
+  this.nodesWithGravity = this.calculateNodesToApplyGravitationTo();
+  this.graphManager.setAllNodesToApplyGravitation(this.nodesWithGravity);
+  this.calcNoOfChildrenForAllNodes();
+  this.graphManager.calcLowestCommonAncestors();
+  this.graphManager.calcInclusionTreeDepths();
+  this.graphManager.getRoot().calcEstimatedSize();
+  this.calcIdealEdgeLengths();
+
+  if (!this.incremental) {
+    var forest = this.getFlatForest();
+
+    // The graph associated with this layout is flat and a forest
+    if (forest.length > 0) {
+      this.positionNodesRadially(forest);
+    }
+    // The graph associated with this layout is not flat or a forest
+    else {
+        // Reduce the trees when incremental mode is not enabled and graph is not a forest 
+        this.reduceTrees();
+        // Update nodes that gravity will be applied
+        this.graphManager.resetAllNodesToApplyGravitation();
+        var allNodes = new Set(this.getAllNodes());
+        var intersection = this.nodesWithGravity.filter(function (x) {
+          return allNodes.has(x);
+        });
+        this.graphManager.setAllNodesToApplyGravitation(intersection);
+
+        this.positionNodesRandomly();
+      }
+  } else {
+    if (CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL) {
+      // Reduce the trees in incremental mode if only this constant is set to true 
+      this.reduceTrees();
+      // Update nodes that gravity will be applied
+      this.graphManager.resetAllNodesToApplyGravitation();
+      var allNodes = new Set(this.getAllNodes());
+      var intersection = this.nodesWithGravity.filter(function (x) {
+        return allNodes.has(x);
+      });
+      this.graphManager.setAllNodesToApplyGravitation(intersection);
+    }
+  }
+
+  if (Object.keys(this.constraints).length > 0) {
+    ConstraintHandler.handleConstraints(this);
+    this.initConstraintVariables();
+  }
+
+  this.initSpringEmbedder();
+  if (CoSEConstants.APPLY_LAYOUT) {
+    this.runSpringEmbedder();
+  }
+
+  return true;
+};
+
+CoSELayout.prototype.tick = function () {
+  this.totalIterations++;
+
+  if (this.totalIterations === this.maxIterations && !this.isTreeGrowing && !this.isGrowthFinished) {
+    if (this.prunedNodesAll.length > 0) {
+      this.isTreeGrowing = true;
+    } else {
+      return true;
+    }
+  }
+
+  if (this.totalIterations % FDLayoutConstants.CONVERGENCE_CHECK_PERIOD == 0 && !this.isTreeGrowing && !this.isGrowthFinished) {
+    if (this.isConverged()) {
+      if (this.prunedNodesAll.length > 0) {
+        this.isTreeGrowing = true;
+      } else {
+        return true;
+      }
+    }
+
+    this.coolingCycle++;
+
+    if (this.layoutQuality == 0) {
+      // quality - "draft"
+      this.coolingAdjuster = this.coolingCycle;
+    } else if (this.layoutQuality == 1) {
+      // quality - "default"
+      this.coolingAdjuster = this.coolingCycle / 3;
+    }
+
+    // cooling schedule is based on http://www.btluke.com/simanf1.html -> cooling schedule 3
+    this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
+    this.animationPeriod = Math.ceil(this.initialAnimationPeriod * Math.sqrt(this.coolingFactor));
+  }
+  // Operations while tree is growing again 
+  if (this.isTreeGrowing) {
+    if (this.growTreeIterations % 10 == 0) {
+      if (this.prunedNodesAll.length > 0) {
+        this.graphManager.updateBounds();
+        this.updateGrid();
+        this.growTree(this.prunedNodesAll);
+        // Update nodes that gravity will be applied
+        this.graphManager.resetAllNodesToApplyGravitation();
+        var allNodes = new Set(this.getAllNodes());
+        var intersection = this.nodesWithGravity.filter(function (x) {
+          return allNodes.has(x);
+        });
+        this.graphManager.setAllNodesToApplyGravitation(intersection);
+
+        this.graphManager.updateBounds();
+        this.updateGrid();
+        if (CoSEConstants.PURE_INCREMENTAL) this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL / 2;else this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+      } else {
+        this.isTreeGrowing = false;
+        this.isGrowthFinished = true;
+      }
+    }
+    this.growTreeIterations++;
+  }
+  // Operations after growth is finished
+  if (this.isGrowthFinished) {
+    if (this.isConverged()) {
+      return true;
+    }
+    if (this.afterGrowthIterations % 10 == 0) {
+      this.graphManager.updateBounds();
+      this.updateGrid();
+    }
+    if (CoSEConstants.PURE_INCREMENTAL) this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL / 2 * ((100 - this.afterGrowthIterations) / 100);else this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL * ((100 - this.afterGrowthIterations) / 100);
+    this.afterGrowthIterations++;
+  }
+
+  var gridUpdateAllowed = !this.isTreeGrowing && !this.isGrowthFinished;
+  var forceToNodeSurroundingUpdate = this.growTreeIterations % 10 == 1 && this.isTreeGrowing || this.afterGrowthIterations % 10 == 1 && this.isGrowthFinished;
+
+  this.totalDisplacement = 0;
+  this.graphManager.updateBounds();
+  this.calcSpringForces();
+  this.calcRepulsionForces(gridUpdateAllowed, forceToNodeSurroundingUpdate);
+  this.calcGravitationalForces();
+  this.moveNodes();
+  this.animate();
+
+  return false; // Layout is not ended yet return false
+};
+
+CoSELayout.prototype.getPositionsData = function () {
+  var allNodes = this.graphManager.getAllNodes();
+  var pData = {};
+  for (var i = 0; i < allNodes.length; i++) {
+    var rect = allNodes[i].rect;
+    var id = allNodes[i].id;
+    pData[id] = {
+      id: id,
+      x: rect.getCenterX(),
+      y: rect.getCenterY(),
+      w: rect.width,
+      h: rect.height
+    };
+  }
+
+  return pData;
+};
+
+CoSELayout.prototype.runSpringEmbedder = function () {
+  this.initialAnimationPeriod = 25;
+  this.animationPeriod = this.initialAnimationPeriod;
+  var layoutEnded = false;
+
+  // If aminate option is 'during' signal that layout is supposed to start iterating
+  if (FDLayoutConstants.ANIMATE === 'during') {
+    this.emit('layoutstarted');
+  } else {
+    // If aminate option is 'during' tick() function will be called on index.js
+    while (!layoutEnded) {
+      layoutEnded = this.tick();
+    }
+
+    this.graphManager.updateBounds();
+  }
+};
+
+// overrides moveNodes method in FDLayout
+CoSELayout.prototype.moveNodes = function () {
+  var lNodes = this.getAllNodes();
+  var node;
+
+  // calculate displacement for each node 
+  for (var i = 0; i < lNodes.length; i++) {
+    node = lNodes[i];
+    node.calculateDisplacement();
+  }
+
+  if (Object.keys(this.constraints).length > 0) {
+    this.updateDisplacements();
+  }
+
+  // move each node
+  for (var i = 0; i < lNodes.length; i++) {
+    node = lNodes[i];
+    node.move();
+  }
+};
+
+// constraint related methods: initConstraintVariables and updateDisplacements
+
+// initialize constraint related variables
+CoSELayout.prototype.initConstraintVariables = function () {
+  var self = this;
+  this.idToNodeMap = new Map();
+  this.fixedNodeSet = new Set();
+
+  var allNodes = this.graphManager.getAllNodes();
+
+  // fill idToNodeMap
+  for (var i = 0; i < allNodes.length; i++) {
+    var node = allNodes[i];
+    this.idToNodeMap.set(node.id, node);
+  }
+
+  // calculate fixed node weight for given compound node
+  var calculateCompoundWeight = function calculateCompoundWeight(compoundNode) {
+    var nodes = compoundNode.getChild().getNodes();
+    var node;
+    var fixedNodeWeight = 0;
+    for (var i = 0; i < nodes.length; i++) {
+      node = nodes[i];
+      if (node.getChild() == null) {
+        if (self.fixedNodeSet.has(node.id)) {
+          fixedNodeWeight += 100;
+        }
+      } else {
+        fixedNodeWeight += calculateCompoundWeight(node);
+      }
+    }
+    return fixedNodeWeight;
+  };
+
+  if (this.constraints.fixedNodeConstraint) {
+    // fill fixedNodeSet
+    this.constraints.fixedNodeConstraint.forEach(function (nodeData) {
+      self.fixedNodeSet.add(nodeData.nodeId);
+    });
+
+    // assign fixed node weights to compounds if they contain fixed nodes
+    var allNodes = this.graphManager.getAllNodes();
+    var node;
+
+    for (var i = 0; i < allNodes.length; i++) {
+      node = allNodes[i];
+      if (node.getChild() != null) {
+        var fixedNodeWeight = calculateCompoundWeight(node);
+        if (fixedNodeWeight > 0) {
+          node.fixedNodeWeight = fixedNodeWeight;
+        }
+      }
+    }
+  }
+
+  if (this.constraints.relativePlacementConstraint) {
+    var nodeToDummyForVerticalAlignment = new Map();
+    var nodeToDummyForHorizontalAlignment = new Map();
+    this.dummyToNodeForVerticalAlignment = new Map();
+    this.dummyToNodeForHorizontalAlignment = new Map();
+    this.fixedNodesOnHorizontal = new Set();
+    this.fixedNodesOnVertical = new Set();
+
+    // fill maps and sets
+    this.fixedNodeSet.forEach(function (nodeId) {
+      self.fixedNodesOnHorizontal.add(nodeId);
+      self.fixedNodesOnVertical.add(nodeId);
+    });
+
+    if (this.constraints.alignmentConstraint) {
+      if (this.constraints.alignmentConstraint.vertical) {
+        var verticalAlignment = this.constraints.alignmentConstraint.vertical;
+        for (var i = 0; i < verticalAlignment.length; i++) {
+          this.dummyToNodeForVerticalAlignment.set("dummy" + i, []);
+          verticalAlignment[i].forEach(function (nodeId) {
+            nodeToDummyForVerticalAlignment.set(nodeId, "dummy" + i);
+            self.dummyToNodeForVerticalAlignment.get("dummy" + i).push(nodeId);
+            if (self.fixedNodeSet.has(nodeId)) {
+              self.fixedNodesOnHorizontal.add("dummy" + i);
+            }
+          });
+        }
+      }
+      if (this.constraints.alignmentConstraint.horizontal) {
+        var horizontalAlignment = this.constraints.alignmentConstraint.horizontal;
+        for (var i = 0; i < horizontalAlignment.length; i++) {
+          this.dummyToNodeForHorizontalAlignment.set("dummy" + i, []);
+          horizontalAlignment[i].forEach(function (nodeId) {
+            nodeToDummyForHorizontalAlignment.set(nodeId, "dummy" + i);
+            self.dummyToNodeForHorizontalAlignment.get("dummy" + i).push(nodeId);
+            if (self.fixedNodeSet.has(nodeId)) {
+              self.fixedNodesOnVertical.add("dummy" + i);
+            }
+          });
+        }
+      }
+    }
+
+    if (CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS) {
+
+      this.shuffle = function (array) {
+        var j, x, i;
+        for (i = array.length - 1; i >= 2 * array.length / 3; i--) {
+          j = Math.floor(Math.random() * (i + 1));
+          x = array[i];
+          array[i] = array[j];
+          array[j] = x;
+        }
+        return array;
+      };
+
+      this.nodesInRelativeHorizontal = [];
+      this.nodesInRelativeVertical = [];
+      this.nodeToRelativeConstraintMapHorizontal = new Map();
+      this.nodeToRelativeConstraintMapVertical = new Map();
+      this.nodeToTempPositionMapHorizontal = new Map();
+      this.nodeToTempPositionMapVertical = new Map();
+
+      // fill arrays and maps
+      this.constraints.relativePlacementConstraint.forEach(function (constraint) {
+        if (constraint.left) {
+          var nodeIdLeft = nodeToDummyForVerticalAlignment.has(constraint.left) ? nodeToDummyForVerticalAlignment.get(constraint.left) : constraint.left;
+          var nodeIdRight = nodeToDummyForVerticalAlignment.has(constraint.right) ? nodeToDummyForVerticalAlignment.get(constraint.right) : constraint.right;
+
+          if (!self.nodesInRelativeHorizontal.includes(nodeIdLeft)) {
+            self.nodesInRelativeHorizontal.push(nodeIdLeft);
+            self.nodeToRelativeConstraintMapHorizontal.set(nodeIdLeft, []);
+            if (self.dummyToNodeForVerticalAlignment.has(nodeIdLeft)) {
+              self.nodeToTempPositionMapHorizontal.set(nodeIdLeft, self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeIdLeft)[0]).getCenterX());
+            } else {
+              self.nodeToTempPositionMapHorizontal.set(nodeIdLeft, self.idToNodeMap.get(nodeIdLeft).getCenterX());
+            }
+          }
+          if (!self.nodesInRelativeHorizontal.includes(nodeIdRight)) {
+            self.nodesInRelativeHorizontal.push(nodeIdRight);
+            self.nodeToRelativeConstraintMapHorizontal.set(nodeIdRight, []);
+            if (self.dummyToNodeForVerticalAlignment.has(nodeIdRight)) {
+              self.nodeToTempPositionMapHorizontal.set(nodeIdRight, self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeIdRight)[0]).getCenterX());
+            } else {
+              self.nodeToTempPositionMapHorizontal.set(nodeIdRight, self.idToNodeMap.get(nodeIdRight).getCenterX());
+            }
+          }
+
+          self.nodeToRelativeConstraintMapHorizontal.get(nodeIdLeft).push({ right: nodeIdRight, gap: constraint.gap });
+          self.nodeToRelativeConstraintMapHorizontal.get(nodeIdRight).push({ left: nodeIdLeft, gap: constraint.gap });
+        } else {
+          var nodeIdTop = nodeToDummyForHorizontalAlignment.has(constraint.top) ? nodeToDummyForHorizontalAlignment.get(constraint.top) : constraint.top;
+          var nodeIdBottom = nodeToDummyForHorizontalAlignment.has(constraint.bottom) ? nodeToDummyForHorizontalAlignment.get(constraint.bottom) : constraint.bottom;
+
+          if (!self.nodesInRelativeVertical.includes(nodeIdTop)) {
+            self.nodesInRelativeVertical.push(nodeIdTop);
+            self.nodeToRelativeConstraintMapVertical.set(nodeIdTop, []);
+            if (self.dummyToNodeForHorizontalAlignment.has(nodeIdTop)) {
+              self.nodeToTempPositionMapVertical.set(nodeIdTop, self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeIdTop)[0]).getCenterY());
+            } else {
+              self.nodeToTempPositionMapVertical.set(nodeIdTop, self.idToNodeMap.get(nodeIdTop).getCenterY());
+            }
+          }
+          if (!self.nodesInRelativeVertical.includes(nodeIdBottom)) {
+            self.nodesInRelativeVertical.push(nodeIdBottom);
+            self.nodeToRelativeConstraintMapVertical.set(nodeIdBottom, []);
+            if (self.dummyToNodeForHorizontalAlignment.has(nodeIdBottom)) {
+              self.nodeToTempPositionMapVertical.set(nodeIdBottom, self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeIdBottom)[0]).getCenterY());
+            } else {
+              self.nodeToTempPositionMapVertical.set(nodeIdBottom, self.idToNodeMap.get(nodeIdBottom).getCenterY());
+            }
+          }
+          self.nodeToRelativeConstraintMapVertical.get(nodeIdTop).push({ bottom: nodeIdBottom, gap: constraint.gap });
+          self.nodeToRelativeConstraintMapVertical.get(nodeIdBottom).push({ top: nodeIdTop, gap: constraint.gap });
+        }
+      });
+    } else {
+      var subGraphOnHorizontal = new Map(); // subgraph from vertical RP constraints
+      var subGraphOnVertical = new Map(); // subgraph from vertical RP constraints
+
+      // construct subgraphs from relative placement constraints 
+      this.constraints.relativePlacementConstraint.forEach(function (constraint) {
+        if (constraint.left) {
+          var left = nodeToDummyForVerticalAlignment.has(constraint.left) ? nodeToDummyForVerticalAlignment.get(constraint.left) : constraint.left;
+          var right = nodeToDummyForVerticalAlignment.has(constraint.right) ? nodeToDummyForVerticalAlignment.get(constraint.right) : constraint.right;
+          if (subGraphOnHorizontal.has(left)) {
+            subGraphOnHorizontal.get(left).push(right);
+          } else {
+            subGraphOnHorizontal.set(left, [right]);
+          }
+          if (subGraphOnHorizontal.has(right)) {
+            subGraphOnHorizontal.get(right).push(left);
+          } else {
+            subGraphOnHorizontal.set(right, [left]);
+          }
+        } else {
+          var top = nodeToDummyForHorizontalAlignment.has(constraint.top) ? nodeToDummyForHorizontalAlignment.get(constraint.top) : constraint.top;
+          var bottom = nodeToDummyForHorizontalAlignment.has(constraint.bottom) ? nodeToDummyForHorizontalAlignment.get(constraint.bottom) : constraint.bottom;
+          if (subGraphOnVertical.has(top)) {
+            subGraphOnVertical.get(top).push(bottom);
+          } else {
+            subGraphOnVertical.set(top, [bottom]);
+          }
+          if (subGraphOnVertical.has(bottom)) {
+            subGraphOnVertical.get(bottom).push(top);
+          } else {
+            subGraphOnVertical.set(bottom, [top]);
+          }
+        }
+      });
+
+      // function to construct components from a given graph 
+      // also returns an array that keeps whether each component contains fixed node
+      var constructComponents = function constructComponents(graph, fixedNodes) {
+        var components = [];
+        var isFixed = [];
+        var queue = new LinkedList();
+        var visited = new Set();
+        var count = 0;
+
+        graph.forEach(function (value, key) {
+          if (!visited.has(key)) {
+            components[count] = [];
+            isFixed[count] = false;
+            var currentNode = key;
+            queue.push(currentNode);
+            visited.add(currentNode);
+            components[count].push(currentNode);
+
+            while (queue.length != 0) {
+              currentNode = queue.shift();
+              if (fixedNodes.has(currentNode)) {
+                isFixed[count] = true;
+              }
+              var neighbors = graph.get(currentNode);
+              neighbors.forEach(function (neighbor) {
+                if (!visited.has(neighbor)) {
+                  queue.push(neighbor);
+                  visited.add(neighbor);
+                  components[count].push(neighbor);
+                }
+              });
+            }
+            count++;
+          }
+        });
+
+        return { components: components, isFixed: isFixed };
+      };
+
+      var resultOnHorizontal = constructComponents(subGraphOnHorizontal, self.fixedNodesOnHorizontal);
+      this.componentsOnHorizontal = resultOnHorizontal.components;
+      this.fixedComponentsOnHorizontal = resultOnHorizontal.isFixed;
+      var resultOnVertical = constructComponents(subGraphOnVertical, self.fixedNodesOnVertical);
+      this.componentsOnVertical = resultOnVertical.components;
+      this.fixedComponentsOnVertical = resultOnVertical.isFixed;
+    }
+  }
+};
+
+// updates node displacements based on constraints
+CoSELayout.prototype.updateDisplacements = function () {
+  var self = this;
+  if (this.constraints.fixedNodeConstraint) {
+    this.constraints.fixedNodeConstraint.forEach(function (nodeData) {
+      var fixedNode = self.idToNodeMap.get(nodeData.nodeId);
+      fixedNode.displacementX = 0;
+      fixedNode.displacementY = 0;
+    });
+  }
+
+  if (this.constraints.alignmentConstraint) {
+    if (this.constraints.alignmentConstraint.vertical) {
+      var allVerticalAlignments = this.constraints.alignmentConstraint.vertical;
+      for (var i = 0; i < allVerticalAlignments.length; i++) {
+        var totalDisplacementX = 0;
+        for (var j = 0; j < allVerticalAlignments[i].length; j++) {
+          if (this.fixedNodeSet.has(allVerticalAlignments[i][j])) {
+            totalDisplacementX = 0;
+            break;
+          }
+          totalDisplacementX += this.idToNodeMap.get(allVerticalAlignments[i][j]).displacementX;
+        }
+        var averageDisplacementX = totalDisplacementX / allVerticalAlignments[i].length;
+        for (var j = 0; j < allVerticalAlignments[i].length; j++) {
+          this.idToNodeMap.get(allVerticalAlignments[i][j]).displacementX = averageDisplacementX;
+        }
+      }
+    }
+    if (this.constraints.alignmentConstraint.horizontal) {
+      var allHorizontalAlignments = this.constraints.alignmentConstraint.horizontal;
+      for (var i = 0; i < allHorizontalAlignments.length; i++) {
+        var totalDisplacementY = 0;
+        for (var j = 0; j < allHorizontalAlignments[i].length; j++) {
+          if (this.fixedNodeSet.has(allHorizontalAlignments[i][j])) {
+            totalDisplacementY = 0;
+            break;
+          }
+          totalDisplacementY += this.idToNodeMap.get(allHorizontalAlignments[i][j]).displacementY;
+        }
+        var averageDisplacementY = totalDisplacementY / allHorizontalAlignments[i].length;
+        for (var j = 0; j < allHorizontalAlignments[i].length; j++) {
+          this.idToNodeMap.get(allHorizontalAlignments[i][j]).displacementY = averageDisplacementY;
+        }
+      }
+    }
+  }
+
+  if (this.constraints.relativePlacementConstraint) {
+
+    if (CoSEConstants.RELAX_MOVEMENT_ON_CONSTRAINTS) {
+      // shuffle array to randomize node processing order
+      if (this.totalIterations % 10 == 0) {
+        this.shuffle(this.nodesInRelativeHorizontal);
+        this.shuffle(this.nodesInRelativeVertical);
+      }
+
+      this.nodesInRelativeHorizontal.forEach(function (nodeId) {
+        if (!self.fixedNodesOnHorizontal.has(nodeId)) {
+          var displacement = 0;
+          if (self.dummyToNodeForVerticalAlignment.has(nodeId)) {
+            displacement = self.idToNodeMap.get(self.dummyToNodeForVerticalAlignment.get(nodeId)[0]).displacementX;
+          } else {
+            displacement = self.idToNodeMap.get(nodeId).displacementX;
+          }
+          self.nodeToRelativeConstraintMapHorizontal.get(nodeId).forEach(function (constraint) {
+            if (constraint.right) {
+              var diff = self.nodeToTempPositionMapHorizontal.get(constraint.right) - self.nodeToTempPositionMapHorizontal.get(nodeId) - displacement;
+              if (diff < constraint.gap) {
+                displacement -= constraint.gap - diff;
+              }
+            } else {
+              var diff = self.nodeToTempPositionMapHorizontal.get(nodeId) - self.nodeToTempPositionMapHorizontal.get(constraint.left) + displacement;
+              if (diff < constraint.gap) {
+                displacement += constraint.gap - diff;
+              }
+            }
+          });
+          self.nodeToTempPositionMapHorizontal.set(nodeId, self.nodeToTempPositionMapHorizontal.get(nodeId) + displacement);
+          if (self.dummyToNodeForVerticalAlignment.has(nodeId)) {
+            self.dummyToNodeForVerticalAlignment.get(nodeId).forEach(function (nodeId) {
+              self.idToNodeMap.get(nodeId).displacementX = displacement;
+            });
+          } else {
+            self.idToNodeMap.get(nodeId).displacementX = displacement;
+          }
+        }
+      });
+
+      this.nodesInRelativeVertical.forEach(function (nodeId) {
+        if (!self.fixedNodesOnHorizontal.has(nodeId)) {
+          var displacement = 0;
+          if (self.dummyToNodeForHorizontalAlignment.has(nodeId)) {
+            displacement = self.idToNodeMap.get(self.dummyToNodeForHorizontalAlignment.get(nodeId)[0]).displacementY;
+          } else {
+            displacement = self.idToNodeMap.get(nodeId).displacementY;
+          }
+          self.nodeToRelativeConstraintMapVertical.get(nodeId).forEach(function (constraint) {
+            if (constraint.bottom) {
+              var diff = self.nodeToTempPositionMapVertical.get(constraint.bottom) - self.nodeToTempPositionMapVertical.get(nodeId) - displacement;
+              if (diff < constraint.gap) {
+                displacement -= constraint.gap - diff;
+              }
+            } else {
+              var diff = self.nodeToTempPositionMapVertical.get(nodeId) - self.nodeToTempPositionMapVertical.get(constraint.top) + displacement;
+              if (diff < constraint.gap) {
+                displacement += constraint.gap - diff;
+              }
+            }
+          });
+          self.nodeToTempPositionMapVertical.set(nodeId, self.nodeToTempPositionMapVertical.get(nodeId) + displacement);
+          if (self.dummyToNodeForHorizontalAlignment.has(nodeId)) {
+            self.dummyToNodeForHorizontalAlignment.get(nodeId).forEach(function (nodeId) {
+              self.idToNodeMap.get(nodeId).displacementY = displacement;
+            });
+          } else {
+            self.idToNodeMap.get(nodeId).displacementY = displacement;
+          }
+        }
+      });
+    } else {
+      for (var i = 0; i < this.componentsOnHorizontal.length; i++) {
+        var component = this.componentsOnHorizontal[i];
+        if (this.fixedComponentsOnHorizontal[i]) {
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+              this.dummyToNodeForVerticalAlignment.get(component[j]).forEach(function (nodeId) {
+                self.idToNodeMap.get(nodeId).displacementX = 0;
+              });
+            } else {
+              this.idToNodeMap.get(component[j]).displacementX = 0;
+            }
+          }
+        } else {
+          var sum = 0;
+          var count = 0;
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+              var actualNodes = this.dummyToNodeForVerticalAlignment.get(component[j]);
+              sum += actualNodes.length * this.idToNodeMap.get(actualNodes[0]).displacementX;
+              count += actualNodes.length;
+            } else {
+              sum += this.idToNodeMap.get(component[j]).displacementX;
+              count++;
+            }
+          }
+          var averageDisplacement = sum / count;
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForVerticalAlignment.has(component[j])) {
+              this.dummyToNodeForVerticalAlignment.get(component[j]).forEach(function (nodeId) {
+                self.idToNodeMap.get(nodeId).displacementX = averageDisplacement;
+              });
+            } else {
+              this.idToNodeMap.get(component[j]).displacementX = averageDisplacement;
+            }
+          }
+        }
+      }
+
+      for (var i = 0; i < this.componentsOnVertical.length; i++) {
+        var component = this.componentsOnVertical[i];
+        if (this.fixedComponentsOnVertical[i]) {
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+              this.dummyToNodeForHorizontalAlignment.get(component[j]).forEach(function (nodeId) {
+                self.idToNodeMap.get(nodeId).displacementY = 0;
+              });
+            } else {
+              this.idToNodeMap.get(component[j]).displacementY = 0;
+            }
+          }
+        } else {
+          var sum = 0;
+          var count = 0;
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+              var actualNodes = this.dummyToNodeForHorizontalAlignment.get(component[j]);
+              sum += actualNodes.length * this.idToNodeMap.get(actualNodes[0]).displacementY;
+              count += actualNodes.length;
+            } else {
+              sum += this.idToNodeMap.get(component[j]).displacementY;
+              count++;
+            }
+          }
+          var averageDisplacement = sum / count;
+          for (var j = 0; j < component.length; j++) {
+            if (this.dummyToNodeForHorizontalAlignment.has(component[j])) {
+              this.dummyToNodeForHorizontalAlignment.get(component[j]).forEach(function (nodeId) {
+                self.idToNodeMap.get(nodeId).displacementY = averageDisplacement;
+              });
+            } else {
+              this.idToNodeMap.get(component[j]).displacementY = averageDisplacement;
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+CoSELayout.prototype.calculateNodesToApplyGravitationTo = function () {
+  var nodeList = [];
+  var graph;
+
+  var graphs = this.graphManager.getGraphs();
+  var size = graphs.length;
+  var i;
+  for (i = 0; i < size; i++) {
+    graph = graphs[i];
+
+    graph.updateConnected();
+
+    if (!graph.isConnected) {
+      nodeList = nodeList.concat(graph.getNodes());
+    }
+  }
+
+  return nodeList;
+};
+
+CoSELayout.prototype.createBendpoints = function () {
+  var edges = [];
+  edges = edges.concat(this.graphManager.getAllEdges());
+  var visited = new Set();
+  var i;
+  for (i = 0; i < edges.length; i++) {
+    var edge = edges[i];
+
+    if (!visited.has(edge)) {
+      var source = edge.getSource();
+      var target = edge.getTarget();
+
+      if (source == target) {
+        edge.getBendpoints().push(new PointD());
+        edge.getBendpoints().push(new PointD());
+        this.createDummyNodesForBendpoints(edge);
+        visited.add(edge);
+      } else {
+        var edgeList = [];
+
+        edgeList = edgeList.concat(source.getEdgeListToNode(target));
+        edgeList = edgeList.concat(target.getEdgeListToNode(source));
+
+        if (!visited.has(edgeList[0])) {
+          if (edgeList.length > 1) {
+            var k;
+            for (k = 0; k < edgeList.length; k++) {
+              var multiEdge = edgeList[k];
+              multiEdge.getBendpoints().push(new PointD());
+              this.createDummyNodesForBendpoints(multiEdge);
+            }
+          }
+          edgeList.forEach(function (edge) {
+            visited.add(edge);
+          });
+        }
+      }
+    }
+
+    if (visited.size == edges.length) {
+      break;
+    }
+  }
+};
+
+CoSELayout.prototype.positionNodesRadially = function (forest) {
+  // We tile the trees to a grid row by row; first tree starts at (0,0)
+  var currentStartingPoint = new Point(0, 0);
+  var numberOfColumns = Math.ceil(Math.sqrt(forest.length));
+  var height = 0;
+  var currentY = 0;
+  var currentX = 0;
+  var point = new PointD(0, 0);
+
+  for (var i = 0; i < forest.length; i++) {
+    if (i % numberOfColumns == 0) {
+      // Start of a new row, make the x coordinate 0, increment the
+      // y coordinate with the max height of the previous row
+      currentX = 0;
+      currentY = height;
+
+      if (i != 0) {
+        currentY += CoSEConstants.DEFAULT_COMPONENT_SEPERATION;
+      }
+
+      height = 0;
+    }
+
+    var tree = forest[i];
+
+    // Find the center of the tree
+    var centerNode = Layout.findCenterOfTree(tree);
+
+    // Set the staring point of the next tree
+    currentStartingPoint.x = currentX;
+    currentStartingPoint.y = currentY;
+
+    // Do a radial layout starting with the center
+    point = CoSELayout.radialLayout(tree, centerNode, currentStartingPoint);
+
+    if (point.y > height) {
+      height = Math.floor(point.y);
+    }
+
+    currentX = Math.floor(point.x + CoSEConstants.DEFAULT_COMPONENT_SEPERATION);
+  }
+
+  this.transform(new PointD(LayoutConstants.WORLD_CENTER_X - point.x / 2, LayoutConstants.WORLD_CENTER_Y - point.y / 2));
+};
+
+CoSELayout.radialLayout = function (tree, centerNode, startingPoint) {
+  var radialSep = Math.max(this.maxDiagonalInTree(tree), CoSEConstants.DEFAULT_RADIAL_SEPARATION);
+  CoSELayout.branchRadialLayout(centerNode, null, 0, 359, 0, radialSep);
+  var bounds = LGraph.calculateBounds(tree);
+
+  var transform = new Transform();
+  transform.setDeviceOrgX(bounds.getMinX());
+  transform.setDeviceOrgY(bounds.getMinY());
+  transform.setWorldOrgX(startingPoint.x);
+  transform.setWorldOrgY(startingPoint.y);
+
+  for (var i = 0; i < tree.length; i++) {
+    var node = tree[i];
+    node.transform(transform);
+  }
+
+  var bottomRight = new PointD(bounds.getMaxX(), bounds.getMaxY());
+
+  return transform.inverseTransformPoint(bottomRight);
+};
+
+CoSELayout.branchRadialLayout = function (node, parentOfNode, startAngle, endAngle, distance, radialSeparation) {
+  // First, position this node by finding its angle.
+  var halfInterval = (endAngle - startAngle + 1) / 2;
+
+  if (halfInterval < 0) {
+    halfInterval += 180;
+  }
+
+  var nodeAngle = (halfInterval + startAngle) % 360;
+  var teta = nodeAngle * IGeometry.TWO_PI / 360;
+
+  // Make polar to java cordinate conversion.
+  var cos_teta = Math.cos(teta);
+  var x_ = distance * Math.cos(teta);
+  var y_ = distance * Math.sin(teta);
+
+  node.setCenter(x_, y_);
+
+  // Traverse all neighbors of this node and recursively call this
+  // function.
+  var neighborEdges = [];
+  neighborEdges = neighborEdges.concat(node.getEdges());
+  var childCount = neighborEdges.length;
+
+  if (parentOfNode != null) {
+    childCount--;
+  }
+
+  var branchCount = 0;
+
+  var incEdgesCount = neighborEdges.length;
+  var startIndex;
+
+  var edges = node.getEdgesBetween(parentOfNode);
+
+  // If there are multiple edges, prune them until there remains only one
+  // edge.
+  while (edges.length > 1) {
+    //neighborEdges.remove(edges.remove(0));
+    var temp = edges[0];
+    edges.splice(0, 1);
+    var index = neighborEdges.indexOf(temp);
+    if (index >= 0) {
+      neighborEdges.splice(index, 1);
+    }
+    incEdgesCount--;
+    childCount--;
+  }
+
+  if (parentOfNode != null) {
+    //assert edges.length == 1;
+    startIndex = (neighborEdges.indexOf(edges[0]) + 1) % incEdgesCount;
+  } else {
+    startIndex = 0;
+  }
+
+  var stepAngle = Math.abs(endAngle - startAngle) / childCount;
+
+  for (var i = startIndex; branchCount != childCount; i = ++i % incEdgesCount) {
+    var currentNeighbor = neighborEdges[i].getOtherEnd(node);
+
+    // Don't back traverse to root node in current tree.
+    if (currentNeighbor == parentOfNode) {
+      continue;
+    }
+
+    var childStartAngle = (startAngle + branchCount * stepAngle) % 360;
+    var childEndAngle = (childStartAngle + stepAngle) % 360;
+
+    CoSELayout.branchRadialLayout(currentNeighbor, node, childStartAngle, childEndAngle, distance + radialSeparation, radialSeparation);
+
+    branchCount++;
+  }
+};
+
+CoSELayout.maxDiagonalInTree = function (tree) {
+  var maxDiagonal = Integer.MIN_VALUE;
+
+  for (var i = 0; i < tree.length; i++) {
+    var node = tree[i];
+    var diagonal = node.getDiagonal();
+
+    if (diagonal > maxDiagonal) {
+      maxDiagonal = diagonal;
+    }
+  }
+
+  return maxDiagonal;
+};
+
+CoSELayout.prototype.calcRepulsionRange = function () {
+  // formula is 2 x (level + 1) x idealEdgeLength
+  return 2 * (this.level + 1) * this.idealEdgeLength;
+};
+
+// Tiling methods
+
+// Group zero degree members whose parents are not to be tiled, create dummy parents where needed and fill memberGroups by their dummp parent id's
+CoSELayout.prototype.groupZeroDegreeMembers = function () {
+  var self = this;
+  // array of [parent_id x oneDegreeNode_id]
+  var tempMemberGroups = {}; // A temporary map of parent node and its zero degree members
+  this.memberGroups = {}; // A map of dummy parent node and its zero degree members whose parents are not to be tiled
+  this.idToDummyNode = {}; // A map of id to dummy node 
+
+  var zeroDegree = []; // List of zero degree nodes whose parents are not to be tiled
+  var allNodes = this.graphManager.getAllNodes();
+
+  // Fill zero degree list
+  for (var i = 0; i < allNodes.length; i++) {
+    var node = allNodes[i];
+    var parent = node.getParent();
+    // If a node has zero degree and its parent is not to be tiled if exists add that node to zeroDegres list
+    if (this.getNodeDegreeWithChildren(node) === 0 && (parent.id == undefined || !this.getToBeTiled(parent))) {
+      zeroDegree.push(node);
+    }
+  }
+
+  // Create a map of parent node and its zero degree members
+  for (var i = 0; i < zeroDegree.length; i++) {
+    var node = zeroDegree[i]; // Zero degree node itself
+    var p_id = node.getParent().id; // Parent id
+
+    if (typeof tempMemberGroups[p_id] === "undefined") tempMemberGroups[p_id] = [];
+
+    tempMemberGroups[p_id] = tempMemberGroups[p_id].concat(node); // Push node to the list belongs to its parent in tempMemberGroups
+  }
+
+  // If there are at least two nodes at a level, create a dummy compound for them
+  Object.keys(tempMemberGroups).forEach(function (p_id) {
+    if (tempMemberGroups[p_id].length > 1) {
+      var dummyCompoundId = "DummyCompound_" + p_id; // The id of dummy compound which will be created soon
+      self.memberGroups[dummyCompoundId] = tempMemberGroups[p_id]; // Add dummy compound to memberGroups
+
+      var parent = tempMemberGroups[p_id][0].getParent(); // The parent of zero degree nodes will be the parent of new dummy compound
+
+      // Create a dummy compound with calculated id
+      var dummyCompound = new CoSENode(self.graphManager);
+      dummyCompound.id = dummyCompoundId;
+      dummyCompound.paddingLeft = parent.paddingLeft || 0;
+      dummyCompound.paddingRight = parent.paddingRight || 0;
+      dummyCompound.paddingBottom = parent.paddingBottom || 0;
+      dummyCompound.paddingTop = parent.paddingTop || 0;
+
+      self.idToDummyNode[dummyCompoundId] = dummyCompound;
+
+      var dummyParentGraph = self.getGraphManager().add(self.newGraph(), dummyCompound);
+      var parentGraph = parent.getChild();
+
+      // Add dummy compound to parent the graph
+      parentGraph.add(dummyCompound);
+
+      // For each zero degree node in this level remove it from its parent graph and add it to the graph of dummy parent
+      for (var i = 0; i < tempMemberGroups[p_id].length; i++) {
+        var node = tempMemberGroups[p_id][i];
+
+        parentGraph.remove(node);
+        dummyParentGraph.add(node);
+      }
+    }
+  });
+};
+
+CoSELayout.prototype.clearCompounds = function () {
+  var childGraphMap = {};
+  var idToNode = {};
+
+  // Get compound ordering by finding the inner one first
+  this.performDFSOnCompounds();
+
+  for (var i = 0; i < this.compoundOrder.length; i++) {
+
+    idToNode[this.compoundOrder[i].id] = this.compoundOrder[i];
+    childGraphMap[this.compoundOrder[i].id] = [].concat(this.compoundOrder[i].getChild().getNodes());
+
+    // Remove children of compounds
+    this.graphManager.remove(this.compoundOrder[i].getChild());
+    this.compoundOrder[i].child = null;
+  }
+
+  this.graphManager.resetAllNodes();
+
+  // Tile the removed children
+  this.tileCompoundMembers(childGraphMap, idToNode);
+};
+
+CoSELayout.prototype.clearZeroDegreeMembers = function () {
+  var self = this;
+  var tiledZeroDegreePack = this.tiledZeroDegreePack = [];
+
+  Object.keys(this.memberGroups).forEach(function (id) {
+    var compoundNode = self.idToDummyNode[id]; // Get the dummy compound
+
+    tiledZeroDegreePack[id] = self.tileNodes(self.memberGroups[id], compoundNode.paddingLeft + compoundNode.paddingRight);
+
+    // Set the width and height of the dummy compound as calculated
+    compoundNode.rect.width = tiledZeroDegreePack[id].width;
+    compoundNode.rect.height = tiledZeroDegreePack[id].height;
+    compoundNode.setCenter(tiledZeroDegreePack[id].centerX, tiledZeroDegreePack[id].centerY);
+
+    // compound left and top margings for labels
+    // when node labels are included, these values may be set to different values below and are used in tilingPostLayout,
+    // otherwise they stay as zero
+    compoundNode.labelMarginLeft = 0;
+    compoundNode.labelMarginTop = 0;
+
+    // Update compound bounds considering its label properties and set label margins for left and top
+    if (CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+
+      var width = compoundNode.rect.width;
+      var height = compoundNode.rect.height;
+
+      if (compoundNode.labelWidth) {
+        if (compoundNode.labelPosHorizontal == "left") {
+          compoundNode.rect.x -= compoundNode.labelWidth;
+          compoundNode.setWidth(width + compoundNode.labelWidth);
+          compoundNode.labelMarginLeft = compoundNode.labelWidth;
+        } else if (compoundNode.labelPosHorizontal == "center" && compoundNode.labelWidth > width) {
+          compoundNode.rect.x -= (compoundNode.labelWidth - width) / 2;
+          compoundNode.setWidth(compoundNode.labelWidth);
+          compoundNode.labelMarginLeft = (compoundNode.labelWidth - width) / 2;
+        } else if (compoundNode.labelPosHorizontal == "right") {
+          compoundNode.setWidth(width + compoundNode.labelWidth);
+        }
+      }
+
+      if (compoundNode.labelHeight) {
+        if (compoundNode.labelPosVertical == "top") {
+          compoundNode.rect.y -= compoundNode.labelHeight;
+          compoundNode.setHeight(height + compoundNode.labelHeight);
+          compoundNode.labelMarginTop = compoundNode.labelHeight;
+        } else if (compoundNode.labelPosVertical == "center" && compoundNode.labelHeight > height) {
+          compoundNode.rect.y -= (compoundNode.labelHeight - height) / 2;
+          compoundNode.setHeight(compoundNode.labelHeight);
+          compoundNode.labelMarginTop = (compoundNode.labelHeight - height) / 2;
+        } else if (compoundNode.labelPosVertical == "bottom") {
+          compoundNode.setHeight(height + compoundNode.labelHeight);
+        }
+      }
+    }
+  });
+};
+
+CoSELayout.prototype.repopulateCompounds = function () {
+  for (var i = this.compoundOrder.length - 1; i >= 0; i--) {
+    var lCompoundNode = this.compoundOrder[i];
+    var id = lCompoundNode.id;
+    var horizontalMargin = lCompoundNode.paddingLeft;
+    var verticalMargin = lCompoundNode.paddingTop;
+    var labelMarginLeft = lCompoundNode.labelMarginLeft;
+    var labelMarginTop = lCompoundNode.labelMarginTop;
+
+    this.adjustLocations(this.tiledMemberPack[id], lCompoundNode.rect.x, lCompoundNode.rect.y, horizontalMargin, verticalMargin, labelMarginLeft, labelMarginTop);
+  }
+};
+
+CoSELayout.prototype.repopulateZeroDegreeMembers = function () {
+  var self = this;
+  var tiledPack = this.tiledZeroDegreePack;
+
+  Object.keys(tiledPack).forEach(function (id) {
+    var compoundNode = self.idToDummyNode[id]; // Get the dummy compound by its id
+    var horizontalMargin = compoundNode.paddingLeft;
+    var verticalMargin = compoundNode.paddingTop;
+    var labelMarginLeft = compoundNode.labelMarginLeft;
+    var labelMarginTop = compoundNode.labelMarginTop;
+
+    // Adjust the positions of nodes wrt its compound
+    self.adjustLocations(tiledPack[id], compoundNode.rect.x, compoundNode.rect.y, horizontalMargin, verticalMargin, labelMarginLeft, labelMarginTop);
+  });
+};
+
+CoSELayout.prototype.getToBeTiled = function (node) {
+  var id = node.id;
+  //firstly check the previous results
+  if (this.toBeTiled[id] != null) {
+    return this.toBeTiled[id];
+  }
+
+  //only compound nodes are to be tiled
+  var childGraph = node.getChild();
+  if (childGraph == null) {
+    this.toBeTiled[id] = false;
+    return false;
+  }
+
+  var children = childGraph.getNodes(); // Get the children nodes
+
+  //a compound node is not to be tiled if all of its compound children are not to be tiled
+  for (var i = 0; i < children.length; i++) {
+    var theChild = children[i];
+
+    if (this.getNodeDegree(theChild) > 0) {
+      this.toBeTiled[id] = false;
+      return false;
+    }
+
+    //pass the children not having the compound structure
+    if (theChild.getChild() == null) {
+      this.toBeTiled[theChild.id] = false;
+      continue;
+    }
+
+    if (!this.getToBeTiled(theChild)) {
+      this.toBeTiled[id] = false;
+      return false;
+    }
+  }
+  this.toBeTiled[id] = true;
+  return true;
+};
+
+// Get degree of a node depending of its edges and independent of its children
+CoSELayout.prototype.getNodeDegree = function (node) {
+  var id = node.id;
+  var edges = node.getEdges();
+  var degree = 0;
+
+  // For the edges connected
+  for (var i = 0; i < edges.length; i++) {
+    var edge = edges[i];
+    if (edge.getSource().id !== edge.getTarget().id) {
+      degree = degree + 1;
+    }
+  }
+  return degree;
+};
+
+// Get degree of a node with its children
+CoSELayout.prototype.getNodeDegreeWithChildren = function (node) {
+  var degree = this.getNodeDegree(node);
+  if (node.getChild() == null) {
+    return degree;
+  }
+  var children = node.getChild().getNodes();
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i];
+    degree += this.getNodeDegreeWithChildren(child);
+  }
+  return degree;
+};
+
+CoSELayout.prototype.performDFSOnCompounds = function () {
+  this.compoundOrder = [];
+  this.fillCompexOrderByDFS(this.graphManager.getRoot().getNodes());
+};
+
+CoSELayout.prototype.fillCompexOrderByDFS = function (children) {
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i];
+    if (child.getChild() != null) {
+      this.fillCompexOrderByDFS(child.getChild().getNodes());
+    }
+    if (this.getToBeTiled(child)) {
+      this.compoundOrder.push(child);
+    }
+  }
+};
+
+/**
+* This method places each zero degree member wrt given (x,y) coordinates (top left).
+*/
+CoSELayout.prototype.adjustLocations = function (organization, x, y, compoundHorizontalMargin, compoundVerticalMargin, compoundLabelMarginLeft, compoundLabelMarginTop) {
+  x += compoundHorizontalMargin + compoundLabelMarginLeft;
+  y += compoundVerticalMargin + compoundLabelMarginTop;
+
+  var left = x;
+
+  for (var i = 0; i < organization.rows.length; i++) {
+    var row = organization.rows[i];
+    x = left;
+    var maxHeight = 0;
+
+    for (var j = 0; j < row.length; j++) {
+      var lnode = row[j];
+
+      lnode.rect.x = x; // + lnode.rect.width / 2;
+      lnode.rect.y = y; // + lnode.rect.height / 2;
+
+      x += lnode.rect.width + organization.horizontalPadding;
+
+      if (lnode.rect.height > maxHeight) maxHeight = lnode.rect.height;
+    }
+
+    y += maxHeight + organization.verticalPadding;
+  }
+};
+
+CoSELayout.prototype.tileCompoundMembers = function (childGraphMap, idToNode) {
+  var self = this;
+  this.tiledMemberPack = [];
+
+  Object.keys(childGraphMap).forEach(function (id) {
+    // Get the compound node
+    var compoundNode = idToNode[id];
+
+    self.tiledMemberPack[id] = self.tileNodes(childGraphMap[id], compoundNode.paddingLeft + compoundNode.paddingRight);
+
+    compoundNode.rect.width = self.tiledMemberPack[id].width;
+    compoundNode.rect.height = self.tiledMemberPack[id].height;
+    compoundNode.setCenter(self.tiledMemberPack[id].centerX, self.tiledMemberPack[id].centerY);
+
+    // compound left and top margings for labels
+    // when node labels are included, these values may be set to different values below and are used in tilingPostLayout,
+    // otherwise they stay as zero
+    compoundNode.labelMarginLeft = 0;
+    compoundNode.labelMarginTop = 0;
+
+    // Update compound bounds considering its label properties and set label margins for left and top
+    if (CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+
+      var width = compoundNode.rect.width;
+      var height = compoundNode.rect.height;
+
+      if (compoundNode.labelWidth) {
+        if (compoundNode.labelPosHorizontal == "left") {
+          compoundNode.rect.x -= compoundNode.labelWidth;
+          compoundNode.setWidth(width + compoundNode.labelWidth);
+          compoundNode.labelMarginLeft = compoundNode.labelWidth;
+        } else if (compoundNode.labelPosHorizontal == "center" && compoundNode.labelWidth > width) {
+          compoundNode.rect.x -= (compoundNode.labelWidth - width) / 2;
+          compoundNode.setWidth(compoundNode.labelWidth);
+          compoundNode.labelMarginLeft = (compoundNode.labelWidth - width) / 2;
+        } else if (compoundNode.labelPosHorizontal == "right") {
+          compoundNode.setWidth(width + compoundNode.labelWidth);
+        }
+      }
+
+      if (compoundNode.labelHeight) {
+        if (compoundNode.labelPosVertical == "top") {
+          compoundNode.rect.y -= compoundNode.labelHeight;
+          compoundNode.setHeight(height + compoundNode.labelHeight);
+          compoundNode.labelMarginTop = compoundNode.labelHeight;
+        } else if (compoundNode.labelPosVertical == "center" && compoundNode.labelHeight > height) {
+          compoundNode.rect.y -= (compoundNode.labelHeight - height) / 2;
+          compoundNode.setHeight(compoundNode.labelHeight);
+          compoundNode.labelMarginTop = (compoundNode.labelHeight - height) / 2;
+        } else if (compoundNode.labelPosVertical == "bottom") {
+          compoundNode.setHeight(height + compoundNode.labelHeight);
+        }
+      }
+    }
+  });
+};
+
+CoSELayout.prototype.tileNodes = function (nodes, minWidth) {
+  var verticalPadding = CoSEConstants.TILING_PADDING_VERTICAL;
+  var horizontalPadding = CoSEConstants.TILING_PADDING_HORIZONTAL;
+  var organization = {
+    rows: [],
+    rowWidth: [],
+    rowHeight: [],
+    width: 0,
+    height: minWidth, // assume minHeight equals to minWidth
+    verticalPadding: verticalPadding,
+    horizontalPadding: horizontalPadding,
+    centerX: 0,
+    centerY: 0
+  };
+
+  // Sort the nodes in ascending order of their areas
+  nodes.sort(function (n1, n2) {
+    if (n1.rect.width * n1.rect.height > n2.rect.width * n2.rect.height) return -1;
+    if (n1.rect.width * n1.rect.height < n2.rect.width * n2.rect.height) return 1;
+    return 0;
+  });
+
+  // Create the organization -> calculate compound center
+  var sumCenterX = 0;
+  var sumCenterY = 0;
+  for (var i = 0; i < nodes.length; i++) {
+    var lNode = nodes[i];
+
+    sumCenterX += lNode.getCenterX();
+    sumCenterY += lNode.getCenterY();
+  }
+
+  organization.centerX = sumCenterX / nodes.length;
+  organization.centerY = sumCenterY / nodes.length;
+
+  // Create the organization -> tile members
+  for (var i = 0; i < nodes.length; i++) {
+    var lNode = nodes[i];
+
+    if (organization.rows.length == 0) {
+      this.insertNodeToRow(organization, lNode, 0, minWidth);
+    } else if (this.canAddHorizontal(organization, lNode.rect.width, lNode.rect.height)) {
+      this.insertNodeToRow(organization, lNode, this.getShortestRowIndex(organization), minWidth);
+    } else {
+      this.insertNodeToRow(organization, lNode, organization.rows.length, minWidth);
+    }
+
+    this.shiftToLastRow(organization);
+  }
+
+  return organization;
+};
+
+CoSELayout.prototype.insertNodeToRow = function (organization, node, rowIndex, minWidth) {
+  var minCompoundSize = minWidth;
+
+  // Add new row if needed
+  if (rowIndex == organization.rows.length) {
+    var secondDimension = [];
+
+    organization.rows.push(secondDimension);
+    organization.rowWidth.push(minCompoundSize);
+    organization.rowHeight.push(0);
+  }
+
+  // Update row width
+  var w = organization.rowWidth[rowIndex] + node.rect.width;
+
+  if (organization.rows[rowIndex].length > 0) {
+    w += organization.horizontalPadding;
+  }
+
+  organization.rowWidth[rowIndex] = w;
+  // Update compound width
+  if (organization.width < w) {
+    organization.width = w;
+  }
+
+  // Update height
+  var h = node.rect.height;
+  if (rowIndex > 0) h += organization.verticalPadding;
+
+  var extraHeight = 0;
+  if (h > organization.rowHeight[rowIndex]) {
+    extraHeight = organization.rowHeight[rowIndex];
+    organization.rowHeight[rowIndex] = h;
+    extraHeight = organization.rowHeight[rowIndex] - extraHeight;
+  }
+
+  organization.height += extraHeight;
+
+  // Insert node
+  organization.rows[rowIndex].push(node);
+};
+
+//Scans the rows of an organization and returns the one with the min width
+CoSELayout.prototype.getShortestRowIndex = function (organization) {
+  var r = -1;
+  var min = Number.MAX_VALUE;
+
+  for (var i = 0; i < organization.rows.length; i++) {
+    if (organization.rowWidth[i] < min) {
+      r = i;
+      min = organization.rowWidth[i];
+    }
+  }
+  return r;
+};
+
+//Scans the rows of an organization and returns the one with the max width
+CoSELayout.prototype.getLongestRowIndex = function (organization) {
+  var r = -1;
+  var max = Number.MIN_VALUE;
+
+  for (var i = 0; i < organization.rows.length; i++) {
+
+    if (organization.rowWidth[i] > max) {
+      r = i;
+      max = organization.rowWidth[i];
+    }
+  }
+
+  return r;
+};
+
+/**
+* This method checks whether adding extra width to the organization violates
+* the aspect ratio(1) or not.
+*/
+CoSELayout.prototype.canAddHorizontal = function (organization, extraWidth, extraHeight) {
+
+  var sri = this.getShortestRowIndex(organization);
+
+  if (sri < 0) {
+    return true;
+  }
+
+  var min = organization.rowWidth[sri];
+
+  if (min + organization.horizontalPadding + extraWidth <= organization.width) return true;
+
+  var hDiff = 0;
+
+  // Adding to an existing row
+  if (organization.rowHeight[sri] < extraHeight) {
+    if (sri > 0) hDiff = extraHeight + organization.verticalPadding - organization.rowHeight[sri];
+  }
+
+  var add_to_row_ratio;
+  if (organization.width - min >= extraWidth + organization.horizontalPadding) {
+    add_to_row_ratio = (organization.height + hDiff) / (min + extraWidth + organization.horizontalPadding);
+  } else {
+    add_to_row_ratio = (organization.height + hDiff) / organization.width;
+  }
+
+  // Adding a new row for this node
+  hDiff = extraHeight + organization.verticalPadding;
+  var add_new_row_ratio;
+  if (organization.width < extraWidth) {
+    add_new_row_ratio = (organization.height + hDiff) / extraWidth;
+  } else {
+    add_new_row_ratio = (organization.height + hDiff) / organization.width;
+  }
+
+  if (add_new_row_ratio < 1) add_new_row_ratio = 1 / add_new_row_ratio;
+
+  if (add_to_row_ratio < 1) add_to_row_ratio = 1 / add_to_row_ratio;
+
+  return add_to_row_ratio < add_new_row_ratio;
+};
+
+//If moving the last node from the longest row and adding it to the last
+//row makes the bounding box smaller, do it.
+CoSELayout.prototype.shiftToLastRow = function (organization) {
+  var longest = this.getLongestRowIndex(organization);
+  var last = organization.rowWidth.length - 1;
+  var row = organization.rows[longest];
+  var node = row[row.length - 1];
+
+  var diff = node.width + organization.horizontalPadding;
+
+  // Check if there is enough space on the last row
+  if (organization.width - organization.rowWidth[last] > diff && longest != last) {
+    // Remove the last element of the longest row
+    row.splice(-1, 1);
+
+    // Push it to the last row
+    organization.rows[last].push(node);
+
+    organization.rowWidth[longest] = organization.rowWidth[longest] - diff;
+    organization.rowWidth[last] = organization.rowWidth[last] + diff;
+    organization.width = organization.rowWidth[instance.getLongestRowIndex(organization)];
+
+    // Update heights of the organization
+    var maxHeight = Number.MIN_VALUE;
+    for (var i = 0; i < row.length; i++) {
+      if (row[i].height > maxHeight) maxHeight = row[i].height;
+    }
+    if (longest > 0) maxHeight += organization.verticalPadding;
+
+    var prevTotal = organization.rowHeight[longest] + organization.rowHeight[last];
+
+    organization.rowHeight[longest] = maxHeight;
+    if (organization.rowHeight[last] < node.height + organization.verticalPadding) organization.rowHeight[last] = node.height + organization.verticalPadding;
+
+    var finalTotal = organization.rowHeight[longest] + organization.rowHeight[last];
+    organization.height += finalTotal - prevTotal;
+
+    this.shiftToLastRow(organization);
+  }
+};
+
+CoSELayout.prototype.tilingPreLayout = function () {
+  if (CoSEConstants.TILE) {
+    // Find zero degree nodes and create a compound for each level
+    this.groupZeroDegreeMembers();
+    // Tile and clear children of each compound
+    this.clearCompounds();
+    // Separately tile and clear zero degree nodes for each level
+    this.clearZeroDegreeMembers();
+  }
+};
+
+CoSELayout.prototype.tilingPostLayout = function () {
+  if (CoSEConstants.TILE) {
+    this.repopulateZeroDegreeMembers();
+    this.repopulateCompounds();
+  }
+};
+
+// -----------------------------------------------------------------------------
+// Section: Tree Reduction methods
+// -----------------------------------------------------------------------------
+// Reduce trees 
+CoSELayout.prototype.reduceTrees = function () {
+  var prunedNodesAll = [];
+  var containsLeaf = true;
+  var node;
+
+  while (containsLeaf) {
+    var allNodes = this.graphManager.getAllNodes();
+    var prunedNodesInStepTemp = [];
+    containsLeaf = false;
+
+    for (var i = 0; i < allNodes.length; i++) {
+      node = allNodes[i];
+      if (node.getEdges().length == 1 && !node.getEdges()[0].isInterGraph && node.getChild() == null) {
+        if (CoSEConstants.PURE_INCREMENTAL) {
+          var otherEnd = node.getEdges()[0].getOtherEnd(node);
+          var relativePosition = new DimensionD(node.getCenterX() - otherEnd.getCenterX(), node.getCenterY() - otherEnd.getCenterY());
+          prunedNodesInStepTemp.push([node, node.getEdges()[0], node.getOwner(), relativePosition]);
+        } else {
+          prunedNodesInStepTemp.push([node, node.getEdges()[0], node.getOwner()]);
+        }
+        containsLeaf = true;
+      }
+    }
+    if (containsLeaf == true) {
+      var prunedNodesInStep = [];
+      for (var j = 0; j < prunedNodesInStepTemp.length; j++) {
+        if (prunedNodesInStepTemp[j][0].getEdges().length == 1) {
+          prunedNodesInStep.push(prunedNodesInStepTemp[j]);
+          prunedNodesInStepTemp[j][0].getOwner().remove(prunedNodesInStepTemp[j][0]);
+        }
+      }
+      prunedNodesAll.push(prunedNodesInStep);
+      this.graphManager.resetAllNodes();
+      this.graphManager.resetAllEdges();
+    }
+  }
+  this.prunedNodesAll = prunedNodesAll;
+};
+
+// Grow tree one step 
+CoSELayout.prototype.growTree = function (prunedNodesAll) {
+  var lengthOfPrunedNodesInStep = prunedNodesAll.length;
+  var prunedNodesInStep = prunedNodesAll[lengthOfPrunedNodesInStep - 1];
+
+  var nodeData;
+  for (var i = 0; i < prunedNodesInStep.length; i++) {
+    nodeData = prunedNodesInStep[i];
+
+    this.findPlaceforPrunedNode(nodeData);
+
+    nodeData[2].add(nodeData[0]);
+    nodeData[2].add(nodeData[1], nodeData[1].source, nodeData[1].target);
+  }
+
+  prunedNodesAll.splice(prunedNodesAll.length - 1, 1);
+  this.graphManager.resetAllNodes();
+  this.graphManager.resetAllEdges();
+};
+
+// Find an appropriate position to replace pruned node, this method can be improved
+CoSELayout.prototype.findPlaceforPrunedNode = function (nodeData) {
+
+  var gridForPrunedNode;
+  var nodeToConnect;
+  var prunedNode = nodeData[0];
+  if (prunedNode == nodeData[1].source) {
+    nodeToConnect = nodeData[1].target;
+  } else {
+    nodeToConnect = nodeData[1].source;
+  }
+
+  if (CoSEConstants.PURE_INCREMENTAL) {
+    prunedNode.setCenter(nodeToConnect.getCenterX() + nodeData[3].getWidth(), nodeToConnect.getCenterY() + nodeData[3].getHeight());
+  } else {
+    var startGridX = nodeToConnect.startX;
+    var finishGridX = nodeToConnect.finishX;
+    var startGridY = nodeToConnect.startY;
+    var finishGridY = nodeToConnect.finishY;
+
+    var upNodeCount = 0;
+    var downNodeCount = 0;
+    var rightNodeCount = 0;
+    var leftNodeCount = 0;
+    var controlRegions = [upNodeCount, rightNodeCount, downNodeCount, leftNodeCount];
+
+    if (startGridY > 0) {
+      for (var i = startGridX; i <= finishGridX; i++) {
+        controlRegions[0] += this.grid[i][startGridY - 1].length + this.grid[i][startGridY].length - 1;
+      }
+    }
+    if (finishGridX < this.grid.length - 1) {
+      for (var i = startGridY; i <= finishGridY; i++) {
+        controlRegions[1] += this.grid[finishGridX + 1][i].length + this.grid[finishGridX][i].length - 1;
+      }
+    }
+    if (finishGridY < this.grid[0].length - 1) {
+      for (var i = startGridX; i <= finishGridX; i++) {
+        controlRegions[2] += this.grid[i][finishGridY + 1].length + this.grid[i][finishGridY].length - 1;
+      }
+    }
+    if (startGridX > 0) {
+      for (var i = startGridY; i <= finishGridY; i++) {
+        controlRegions[3] += this.grid[startGridX - 1][i].length + this.grid[startGridX][i].length - 1;
+      }
+    }
+    var min = Integer.MAX_VALUE;
+    var minCount;
+    var minIndex;
+    for (var j = 0; j < controlRegions.length; j++) {
+      if (controlRegions[j] < min) {
+        min = controlRegions[j];
+        minCount = 1;
+        minIndex = j;
+      } else if (controlRegions[j] == min) {
+        minCount++;
+      }
+    }
+
+    if (minCount == 3 && min == 0) {
+      if (controlRegions[0] == 0 && controlRegions[1] == 0 && controlRegions[2] == 0) {
+        gridForPrunedNode = 1;
+      } else if (controlRegions[0] == 0 && controlRegions[1] == 0 && controlRegions[3] == 0) {
+        gridForPrunedNode = 0;
+      } else if (controlRegions[0] == 0 && controlRegions[2] == 0 && controlRegions[3] == 0) {
+        gridForPrunedNode = 3;
+      } else if (controlRegions[1] == 0 && controlRegions[2] == 0 && controlRegions[3] == 0) {
+        gridForPrunedNode = 2;
+      }
+    } else if (minCount == 2 && min == 0) {
+      var random = Math.floor(Math.random() * 2);
+      if (controlRegions[0] == 0 && controlRegions[1] == 0) {
+        ;
+        if (random == 0) {
+          gridForPrunedNode = 0;
+        } else {
+          gridForPrunedNode = 1;
+        }
+      } else if (controlRegions[0] == 0 && controlRegions[2] == 0) {
+        if (random == 0) {
+          gridForPrunedNode = 0;
+        } else {
+          gridForPrunedNode = 2;
+        }
+      } else if (controlRegions[0] == 0 && controlRegions[3] == 0) {
+        if (random == 0) {
+          gridForPrunedNode = 0;
+        } else {
+          gridForPrunedNode = 3;
+        }
+      } else if (controlRegions[1] == 0 && controlRegions[2] == 0) {
+        if (random == 0) {
+          gridForPrunedNode = 1;
+        } else {
+          gridForPrunedNode = 2;
+        }
+      } else if (controlRegions[1] == 0 && controlRegions[3] == 0) {
+        if (random == 0) {
+          gridForPrunedNode = 1;
+        } else {
+          gridForPrunedNode = 3;
+        }
+      } else {
+        if (random == 0) {
+          gridForPrunedNode = 2;
+        } else {
+          gridForPrunedNode = 3;
+        }
+      }
+    } else if (minCount == 4 && min == 0) {
+      var random = Math.floor(Math.random() * 4);
+      gridForPrunedNode = random;
+    } else {
+      gridForPrunedNode = minIndex;
+    }
+
+    if (gridForPrunedNode == 0) {
+      prunedNode.setCenter(nodeToConnect.getCenterX(), nodeToConnect.getCenterY() - nodeToConnect.getHeight() / 2 - FDLayoutConstants.DEFAULT_EDGE_LENGTH - prunedNode.getHeight() / 2);
+    } else if (gridForPrunedNode == 1) {
+      prunedNode.setCenter(nodeToConnect.getCenterX() + nodeToConnect.getWidth() / 2 + FDLayoutConstants.DEFAULT_EDGE_LENGTH + prunedNode.getWidth() / 2, nodeToConnect.getCenterY());
+    } else if (gridForPrunedNode == 2) {
+      prunedNode.setCenter(nodeToConnect.getCenterX(), nodeToConnect.getCenterY() + nodeToConnect.getHeight() / 2 + FDLayoutConstants.DEFAULT_EDGE_LENGTH + prunedNode.getHeight() / 2);
+    } else {
+      prunedNode.setCenter(nodeToConnect.getCenterX() - nodeToConnect.getWidth() / 2 - FDLayoutConstants.DEFAULT_EDGE_LENGTH - prunedNode.getWidth() / 2, nodeToConnect.getCenterY());
+    }
+  }
+};
+
+module.exports = CoSELayout;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var coseBase = {};
+
+coseBase.layoutBase = __webpack_require__(0);
+coseBase.CoSEConstants = __webpack_require__(1);
+coseBase.CoSEEdge = __webpack_require__(2);
+coseBase.CoSEGraph = __webpack_require__(3);
+coseBase.CoSEGraphManager = __webpack_require__(4);
+coseBase.CoSELayout = __webpack_require__(7);
+coseBase.CoSENode = __webpack_require__(5);
+coseBase.ConstraintHandler = __webpack_require__(6);
+
+module.exports = coseBase;
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js?sourceMap!./node_modules/less-loader/dist/cjs.js?!./src/styles/global.less":
 /*!*********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js?sourceMap!./node_modules/less-loader/dist/cjs.js??ref--1-2!./src/styles/global.less ***!
@@ -2248,7 +5347,7 @@ exports.push([module.i, ".list[data-v-c0d13eee] {\n  height: calc(100vh - 161px)
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(true);
 // Module
-exports.push([module.i, "#cy[data-v-0925c2a2] {\n  display: block;\n  height: calc(100vh - 161px);\n  width: 100%;\n}\n", "",{"version":3,"sources":["/app/src/components/TermsRelationshipNetwork/TermsRelationshipNetwork.less?vue&type=style&index=0&id=0925c2a2&lang=less&scoped=true&","TermsRelationshipNetwork.less"],"names":[],"mappings":"AAAA;EACE,cAAA;EAGA,2BAAA;EACA,WAAA;ACDF","file":"TermsRelationshipNetwork.less?vue&type=style&index=0&id=0925c2a2&lang=less&scoped=true&","sourcesContent":["#cy {\n  display: block;\n  // width: 100vw;\n  // height: 100vh;\n  height: calc(100vh - 161px);\n  width: 100%;\n}\n\n","#cy {\n  display: block;\n  height: calc(100vh - 161px);\n  width: 100%;\n}\n"]}]);
+exports.push([module.i, "#cy[data-v-0925c2a2] {\n  display: block;\n  height: calc(100vh - 162px - 92px);\n  width: 100%;\n}\n.header-row[data-v-0925c2a2] {\n  display: flex;\n  align-items: center;\n}\n.header-row .header[data-v-0925c2a2] {\n  width: 100%;\n}\n.header-row .ellipsis[data-v-0925c2a2] {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.header-row .locators[data-v-0925c2a2] {\n  width: fit-content;\n  white-space: nowrap;\n}\n.sn[data-v-0925c2a2] {\n  height: 5rem;\n  max-height: 5rem;\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.message[data-v-0925c2a2] {\n  margin-top: 0.5rem !important;\n}\n", "",{"version":3,"sources":["/app/src/components/TermsRelationshipNetwork/TermsRelationshipNetwork.less?vue&type=style&index=0&id=0925c2a2&lang=less&scoped=true&","TermsRelationshipNetwork.less"],"names":[],"mappings":"AAAA;EACE,cAAA;EAIA,kCAAA;EACA,WAAA;ACFF;ADKA;EACE,aAAA;EACA,mBAAA;ACHF;ADCA;EAKI,WAAA;ACHJ;ADFA;EASI,gBAAA;EACA,mBAAA;EACA,uBAAA;ACJJ;ADPA;EAeI,kBAAA;EACA,mBAAA;ACLJ;ADSA;EACE,YAAA;EACA,gBAAA;EACA,kBAAA;EACA,gBAAA;ACPF;ADUA;EACE,6BAAA;ACRF","file":"TermsRelationshipNetwork.less?vue&type=style&index=0&id=0925c2a2&lang=less&scoped=true&","sourcesContent":["#cy {\n  display: block;\n  // width: 100vw;\n  // height: 100vh;\n  // height: calc(100vh - 161px - 10rem);\n  height: calc(100vh - 162px - 92px);\n  width: 100%;\n}\n\n.header-row {\n  display:flex;\n  align-items: center;\n\n  .header {\n    width: 100%;\n  }\n\n  .ellipsis {\n    overflow:hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n  }\n\n  .locators {\n    width: fit-content;\n    white-space: nowrap;\n  }\n}\n\n.sn {\n  height: 5rem;\n  max-height: 5rem;\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n\n.message {\n  margin-top: 0.5rem !important;\n}","#cy {\n  display: block;\n  height: calc(100vh - 162px - 92px);\n  width: 100%;\n}\n.header-row {\n  display: flex;\n  align-items: center;\n}\n.header-row .header {\n  width: 100%;\n}\n.header-row .ellipsis {\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.header-row .locators {\n  width: fit-content;\n  white-space: nowrap;\n}\n.sn {\n  height: 5rem;\n  max-height: 5rem;\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.message {\n  margin-top: 0.5rem !important;\n}\n"]}]);
 
 
 /***/ }),
@@ -2410,6 +5509,1436 @@ function toComment(sourceMap) {
 
 /***/ }),
 
+/***/ "./node_modules/cytoscape-fcose/cytoscape-fcose.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/cytoscape-fcose/cytoscape-fcose.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(/*! cose-base */ "./node_modules/cose-base/cose-base.js"));
+	else {}
+})(self, function(__WEBPACK_EXTERNAL_MODULE__281__) {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 658:
+/***/ ((module) => {
+
+
+
+// Simple, internal Object.assign() polyfill for options objects etc.
+
+module.exports = Object.assign != null ? Object.assign.bind(Object) : function (tgt) {
+  for (var _len = arguments.length, srcs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    srcs[_key - 1] = arguments[_key];
+  }
+
+  srcs.forEach(function (src) {
+    Object.keys(src).forEach(function (k) {
+      return tgt[k] = src[k];
+    });
+  });
+
+  return tgt;
+};
+
+/***/ }),
+
+/***/ 548:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/*
+ * Auxiliary functions
+ */
+
+var LinkedList = __webpack_require__(281).layoutBase.LinkedList;
+
+var auxiliary = {};
+
+// get the top most nodes
+auxiliary.getTopMostNodes = function (nodes) {
+  var nodesMap = {};
+  for (var i = 0; i < nodes.length; i++) {
+    nodesMap[nodes[i].id()] = true;
+  }
+  var roots = nodes.filter(function (ele, i) {
+    if (typeof ele === "number") {
+      ele = i;
+    }
+    var parent = ele.parent()[0];
+    while (parent != null) {
+      if (nodesMap[parent.id()]) {
+        return false;
+      }
+      parent = parent.parent()[0];
+    }
+    return true;
+  });
+
+  return roots;
+};
+
+// find disconnected components and create dummy nodes that connect them
+auxiliary.connectComponents = function (cy, eles, topMostNodes, dummyNodes) {
+  var queue = new LinkedList();
+  var visited = new Set();
+  var visitedTopMostNodes = [];
+  var currentNeighbor = void 0;
+  var minDegreeNode = void 0;
+  var minDegree = void 0;
+
+  var isConnected = false;
+  var count = 1;
+  var nodesConnectedToDummy = [];
+  var components = [];
+
+  var _loop = function _loop() {
+    var cmpt = cy.collection();
+    components.push(cmpt);
+
+    var currentNode = topMostNodes[0];
+    var childrenOfCurrentNode = cy.collection();
+    childrenOfCurrentNode.merge(currentNode).merge(currentNode.descendants().intersection(eles));
+    visitedTopMostNodes.push(currentNode);
+
+    childrenOfCurrentNode.forEach(function (node) {
+      queue.push(node);
+      visited.add(node);
+      cmpt.merge(node);
+    });
+
+    var _loop2 = function _loop2() {
+      currentNode = queue.shift();
+
+      // Traverse all neighbors of this node
+      var neighborNodes = cy.collection();
+      currentNode.neighborhood().nodes().forEach(function (node) {
+        if (eles.intersection(currentNode.edgesWith(node)).length > 0) {
+          neighborNodes.merge(node);
+        }
+      });
+
+      for (var i = 0; i < neighborNodes.length; i++) {
+        var neighborNode = neighborNodes[i];
+        currentNeighbor = topMostNodes.intersection(neighborNode.union(neighborNode.ancestors()));
+        if (currentNeighbor != null && !visited.has(currentNeighbor[0])) {
+          var childrenOfNeighbor = currentNeighbor.union(currentNeighbor.descendants());
+
+          childrenOfNeighbor.forEach(function (node) {
+            queue.push(node);
+            visited.add(node);
+            cmpt.merge(node);
+            if (topMostNodes.has(node)) {
+              visitedTopMostNodes.push(node);
+            }
+          });
+        }
+      }
+    };
+
+    while (queue.length != 0) {
+      _loop2();
+    }
+
+    cmpt.forEach(function (node) {
+      eles.intersection(node.connectedEdges()).forEach(function (e) {
+        // connectedEdges() usually cached
+        if (cmpt.has(e.source()) && cmpt.has(e.target())) {
+          // has() is cheap
+          cmpt.merge(e); // forEach() only considers nodes -- sets N at call time
+        }
+      });
+    });
+
+    if (visitedTopMostNodes.length == topMostNodes.length) {
+      isConnected = true;
+    }
+
+    if (!isConnected || isConnected && count > 1) {
+      minDegreeNode = visitedTopMostNodes[0];
+      minDegree = minDegreeNode.connectedEdges().length;
+      visitedTopMostNodes.forEach(function (node) {
+        if (node.connectedEdges().length < minDegree) {
+          minDegree = node.connectedEdges().length;
+          minDegreeNode = node;
+        }
+      });
+      nodesConnectedToDummy.push(minDegreeNode.id());
+      // TO DO: Check efficiency of this part
+      var temp = cy.collection();
+      temp.merge(visitedTopMostNodes[0]);
+      visitedTopMostNodes.forEach(function (node) {
+        temp.merge(node);
+      });
+      visitedTopMostNodes = [];
+      topMostNodes = topMostNodes.difference(temp);
+      count++;
+    }
+  };
+
+  do {
+    _loop();
+  } while (!isConnected);
+
+  if (dummyNodes) {
+    if (nodesConnectedToDummy.length > 0) {
+      dummyNodes.set('dummy' + (dummyNodes.size + 1), nodesConnectedToDummy);
+    }
+  }
+  return components;
+};
+
+auxiliary.calcBoundingBox = function (parentNode, xCoords, yCoords, nodeIndexes) {
+  // calculate bounds
+  var left = Number.MAX_SAFE_INTEGER;
+  var right = Number.MIN_SAFE_INTEGER;
+  var top = Number.MAX_SAFE_INTEGER;
+  var bottom = Number.MIN_SAFE_INTEGER;
+  var nodeLeft = void 0;
+  var nodeRight = void 0;
+  var nodeTop = void 0;
+  var nodeBottom = void 0;
+
+  var nodes = parentNode.descendants().not(":parent");
+  var s = nodes.length;
+  for (var i = 0; i < s; i++) {
+    var node = nodes[i];
+
+    nodeLeft = xCoords[nodeIndexes.get(node.id())] - node.width() / 2;
+    nodeRight = xCoords[nodeIndexes.get(node.id())] + node.width() / 2;
+    nodeTop = yCoords[nodeIndexes.get(node.id())] - node.height() / 2;
+    nodeBottom = yCoords[nodeIndexes.get(node.id())] + node.height() / 2;
+
+    if (left > nodeLeft) {
+      left = nodeLeft;
+    }
+
+    if (right < nodeRight) {
+      right = nodeRight;
+    }
+
+    if (top > nodeTop) {
+      top = nodeTop;
+    }
+
+    if (bottom < nodeBottom) {
+      bottom = nodeBottom;
+    }
+  }
+
+  var boundingBox = {};
+  boundingBox.topLeftX = left;
+  boundingBox.topLeftY = top;
+  boundingBox.width = right - left;
+  boundingBox.height = bottom - top;
+  return boundingBox;
+};
+
+module.exports = auxiliary;
+
+/***/ }),
+
+/***/ 816:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/**
+  The implementation of the postprocessing part that applies CoSE layout over the spectral layout
+*/
+
+var aux = __webpack_require__(548);
+var CoSELayout = __webpack_require__(281).CoSELayout;
+var CoSENode = __webpack_require__(281).CoSENode;
+var PointD = __webpack_require__(281).layoutBase.PointD;
+var DimensionD = __webpack_require__(281).layoutBase.DimensionD;
+var LayoutConstants = __webpack_require__(281).layoutBase.LayoutConstants;
+var FDLayoutConstants = __webpack_require__(281).layoutBase.FDLayoutConstants;
+var CoSEConstants = __webpack_require__(281).CoSEConstants;
+
+// main function that cose layout is processed
+var coseLayout = function coseLayout(options, spectralResult) {
+
+  var eles = options.eles;
+  var nodes = eles.nodes();
+  var edges = eles.edges();
+
+  var nodeIndexes = void 0;
+  var xCoords = void 0;
+  var yCoords = void 0;
+  var idToLNode = {};
+
+  if (options.randomize) {
+    nodeIndexes = spectralResult["nodeIndexes"];
+    xCoords = spectralResult["xCoords"];
+    yCoords = spectralResult["yCoords"];
+  }
+
+  var isFn = function isFn(fn) {
+    return typeof fn === 'function';
+  };
+
+  var optFn = function optFn(opt, ele) {
+    if (isFn(opt)) {
+      return opt(ele);
+    } else {
+      return opt;
+    }
+  };
+
+  /**** Postprocessing functions ****/
+
+  // transfer cytoscape nodes to cose nodes
+  var processChildrenList = function processChildrenList(parent, children, layout, options) {
+    var size = children.length;
+    for (var i = 0; i < size; i++) {
+      var theChild = children[i];
+      var children_of_children = theChild.children();
+      var theNode = void 0;
+
+      var dimensions = theChild.layoutDimensions({
+        nodeDimensionsIncludeLabels: options.nodeDimensionsIncludeLabels
+      });
+
+      if (theChild.outerWidth() != null && theChild.outerHeight() != null) {
+        if (options.randomize) {
+          if (!theChild.isParent()) {
+            theNode = parent.add(new CoSENode(layout.graphManager, new PointD(xCoords[nodeIndexes.get(theChild.id())] - dimensions.w / 2, yCoords[nodeIndexes.get(theChild.id())] - dimensions.h / 2), new DimensionD(parseFloat(dimensions.w), parseFloat(dimensions.h))));
+          } else {
+            var parentInfo = aux.calcBoundingBox(theChild, xCoords, yCoords, nodeIndexes);
+            theNode = parent.add(new CoSENode(layout.graphManager, new PointD(parentInfo.topLeftX, parentInfo.topLeftY), new DimensionD(parentInfo.width, parentInfo.height)));
+          }
+        } else {
+          theNode = parent.add(new CoSENode(layout.graphManager, new PointD(theChild.position('x') - dimensions.w / 2, theChild.position('y') - dimensions.h / 2), new DimensionD(parseFloat(dimensions.w), parseFloat(dimensions.h))));
+        }
+      } else {
+        theNode = parent.add(new CoSENode(this.graphManager));
+      }
+      // Attach id to the layout node and repulsion value
+      theNode.id = theChild.data("id");
+      theNode.nodeRepulsion = optFn(options.nodeRepulsion, theChild);
+      // Attach the paddings of cy node to layout node
+      theNode.paddingLeft = parseInt(theChild.css('padding'));
+      theNode.paddingTop = parseInt(theChild.css('padding'));
+      theNode.paddingRight = parseInt(theChild.css('padding'));
+      theNode.paddingBottom = parseInt(theChild.css('padding'));
+
+      //Attach the label properties to both compound and simple nodes if labels will be included in node dimensions
+      //These properties will be used while updating bounds of compounds during iterations or tiling
+      //and will be used for simple nodes while transferring final positions to cytoscape
+      if (options.nodeDimensionsIncludeLabels) {
+        theNode.labelWidth = theChild.boundingBox({ includeLabels: true, includeNodes: false, includeOverlays: false }).w;
+        theNode.labelHeight = theChild.boundingBox({ includeLabels: true, includeNodes: false, includeOverlays: false }).h;
+        theNode.labelPosVertical = theChild.css("text-valign");
+        theNode.labelPosHorizontal = theChild.css("text-halign");
+      }
+
+      // Map the layout node
+      idToLNode[theChild.data("id")] = theNode;
+
+      if (isNaN(theNode.rect.x)) {
+        theNode.rect.x = 0;
+      }
+
+      if (isNaN(theNode.rect.y)) {
+        theNode.rect.y = 0;
+      }
+
+      if (children_of_children != null && children_of_children.length > 0) {
+        var theNewGraph = void 0;
+        theNewGraph = layout.getGraphManager().add(layout.newGraph(), theNode);
+        processChildrenList(theNewGraph, children_of_children, layout, options);
+      }
+    }
+  };
+
+  // transfer cytoscape edges to cose edges
+  var processEdges = function processEdges(layout, gm, edges) {
+    var idealLengthTotal = 0;
+    var edgeCount = 0;
+    for (var i = 0; i < edges.length; i++) {
+      var edge = edges[i];
+      var sourceNode = idToLNode[edge.data("source")];
+      var targetNode = idToLNode[edge.data("target")];
+      if (sourceNode !== targetNode && sourceNode.getEdgesBetween(targetNode).length == 0) {
+        var e1 = gm.add(layout.newEdge(), sourceNode, targetNode);
+        e1.id = edge.id();
+        e1.idealLength = optFn(options.idealEdgeLength, edge);
+        e1.edgeElasticity = optFn(options.edgeElasticity, edge);
+        idealLengthTotal += e1.idealLength;
+        edgeCount++;
+      }
+    }
+    // we need to update the ideal edge length constant with the avg. ideal length value after processing edges
+    // in case there is no edge, use other options
+    if (options.idealEdgeLength != null) {
+      if (edgeCount > 0) CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = idealLengthTotal / edgeCount;else if (!isFn(options.idealEdgeLength)) // in case there is no edge, but option gives a value to use
+        CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = options.idealEdgeLength;else // in case there is no edge and we cannot get a value from option (because it's a function)
+        CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+      // we need to update these constant values based on the ideal edge length constant
+      CoSEConstants.MIN_REPULSION_DIST = FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10.0;
+      CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+    }
+  };
+
+  // transfer cytoscape constraints to cose layout
+  var processConstraints = function processConstraints(layout, options) {
+    // get nodes to be fixed
+    if (options.fixedNodeConstraint) {
+      layout.constraints["fixedNodeConstraint"] = options.fixedNodeConstraint;
+    }
+    // get nodes to be aligned
+    if (options.alignmentConstraint) {
+      layout.constraints["alignmentConstraint"] = options.alignmentConstraint;
+    }
+    // get nodes to be relatively placed
+    if (options.relativePlacementConstraint) {
+      layout.constraints["relativePlacementConstraint"] = options.relativePlacementConstraint;
+    }
+  };
+
+  /**** Apply postprocessing ****/
+  if (options.nestingFactor != null) CoSEConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = options.nestingFactor;
+  if (options.gravity != null) CoSEConstants.DEFAULT_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = options.gravity;
+  if (options.numIter != null) CoSEConstants.MAX_ITERATIONS = FDLayoutConstants.MAX_ITERATIONS = options.numIter;
+  if (options.gravityRange != null) CoSEConstants.DEFAULT_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = options.gravityRange;
+  if (options.gravityCompound != null) CoSEConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = options.gravityCompound;
+  if (options.gravityRangeCompound != null) CoSEConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = options.gravityRangeCompound;
+  if (options.initialEnergyOnIncremental != null) CoSEConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = options.initialEnergyOnIncremental;
+
+  if (options.quality == 'proof') LayoutConstants.QUALITY = 2;else LayoutConstants.QUALITY = 0;
+
+  CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = options.nodeDimensionsIncludeLabels;
+  CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = !options.randomize;
+  CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = options.animate;
+  CoSEConstants.TILE = options.tile;
+  CoSEConstants.TILING_PADDING_VERTICAL = typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
+  CoSEConstants.TILING_PADDING_HORIZONTAL = typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+
+  CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = true;
+  CoSEConstants.PURE_INCREMENTAL = !options.randomize;
+  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+
+  // This part is for debug/demo purpose
+  if (options.step == "transformed") {
+    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;
+    CoSEConstants.ENFORCE_CONSTRAINTS = false;
+    CoSEConstants.APPLY_LAYOUT = false;
+  }
+  if (options.step == "enforced") {
+    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+    CoSEConstants.ENFORCE_CONSTRAINTS = true;
+    CoSEConstants.APPLY_LAYOUT = false;
+  }
+  if (options.step == "cose") {
+    CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+    CoSEConstants.ENFORCE_CONSTRAINTS = false;
+    CoSEConstants.APPLY_LAYOUT = true;
+  }
+  if (options.step == "all") {
+    if (options.randomize) CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = true;else CoSEConstants.TRANSFORM_ON_CONSTRAINT_HANDLING = false;
+    CoSEConstants.ENFORCE_CONSTRAINTS = true;
+    CoSEConstants.APPLY_LAYOUT = true;
+  }
+
+  if (options.fixedNodeConstraint || options.alignmentConstraint || options.relativePlacementConstraint) {
+    CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = false;
+  } else {
+    CoSEConstants.TREE_REDUCTION_ON_INCREMENTAL = true;
+  }
+
+  var coseLayout = new CoSELayout();
+  var gm = coseLayout.newGraphManager();
+
+  processChildrenList(gm.addRoot(), aux.getTopMostNodes(nodes), coseLayout, options);
+  processEdges(coseLayout, gm, edges);
+  processConstraints(coseLayout, options);
+
+  coseLayout.runLayout();
+
+  return idToLNode;
+};
+
+module.exports = { coseLayout: coseLayout };
+
+/***/ }),
+
+/***/ 212:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+  The implementation of the fcose layout algorithm
+*/
+
+var assign = __webpack_require__(658);
+var aux = __webpack_require__(548);
+
+var _require = __webpack_require__(657),
+    spectralLayout = _require.spectralLayout;
+
+var _require2 = __webpack_require__(816),
+    coseLayout = _require2.coseLayout;
+
+var defaults = Object.freeze({
+
+  // 'draft', 'default' or 'proof' 
+  // - 'draft' only applies spectral layout 
+  // - 'default' improves the quality with subsequent CoSE layout (fast cooling rate)
+  // - 'proof' improves the quality with subsequent CoSE layout (slow cooling rate) 
+  quality: "default",
+  // Use random node positions at beginning of layout
+  // if this is set to false, then quality option must be "proof"
+  randomize: true,
+  // Whether or not to animate the layout
+  animate: true,
+  // Duration of animation in ms, if enabled
+  animationDuration: 1000,
+  // Easing of animation, if enabled
+  animationEasing: undefined,
+  // Fit the viewport to the repositioned nodes
+  fit: true,
+  // Padding around layout
+  padding: 30,
+  // Whether to include labels in node dimensions. Valid in "proof" quality
+  nodeDimensionsIncludeLabels: false,
+  // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
+  uniformNodeDimensions: false,
+  // Whether to pack disconnected components - valid only if randomize: true
+  packComponents: true,
+  // Layout step - all, transformed, enforced, cose - for debug purpose only
+  step: "all",
+
+  /* spectral layout options */
+
+  // False for random, true for greedy
+  samplingType: true,
+  // Sample size to construct distance matrix
+  sampleSize: 25,
+  // Separation amount between nodes
+  nodeSeparation: 75,
+  // Power iteration tolerance
+  piTol: 0.0000001,
+
+  /* CoSE layout options */
+
+  // Node repulsion (non overlapping) multiplier
+  nodeRepulsion: function nodeRepulsion(node) {
+    return 4500;
+  },
+  // Ideal edge (non nested) length
+  idealEdgeLength: function idealEdgeLength(edge) {
+    return 50;
+  },
+  // Divisor to compute edge forces
+  edgeElasticity: function edgeElasticity(edge) {
+    return 0.45;
+  },
+  // Nesting factor (multiplier) to compute ideal edge length for nested edges
+  nestingFactor: 0.1,
+  // Gravity force (constant)
+  gravity: 0.25,
+  // Maximum number of iterations to perform
+  numIter: 2500,
+  // For enabling tiling
+  tile: true,
+  // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
+  tilingPaddingVertical: 10,
+  // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
+  tilingPaddingHorizontal: 10,
+  // Gravity range (constant) for compounds
+  gravityRangeCompound: 1.5,
+  // Gravity force (constant) for compounds
+  gravityCompound: 1.0,
+  // Gravity range (constant)
+  gravityRange: 3.8,
+  // Initial cooling factor for incremental layout  
+  initialEnergyOnIncremental: 0.3,
+
+  /* constraint options */
+
+  // Fix required nodes to predefined positions
+  // [{nodeId: 'n1', position: {x: 100, y: 200}, {...}]
+  fixedNodeConstraint: undefined,
+  // Align required nodes in vertical/horizontal direction
+  // {vertical: [['n1', 'n2')], ['n3', 'n4']], horizontal: ['n2', 'n4']}
+  alignmentConstraint: undefined,
+  // Place two nodes relatively in vertical/horizontal direction 
+  // [{top: 'n1', bottom: 'n2', gap: 100}, {left: 'n3', right: 'n4', gap: 75}]
+  relativePlacementConstraint: undefined,
+
+  /* layout event callbacks */
+  ready: function ready() {}, // on layoutready
+  stop: function stop() {} // on layoutstop
+});
+
+var Layout = function () {
+  function Layout(options) {
+    _classCallCheck(this, Layout);
+
+    this.options = assign({}, defaults, options);
+  }
+
+  _createClass(Layout, [{
+    key: 'run',
+    value: function run() {
+      var layout = this;
+      var options = this.options;
+      var cy = options.cy;
+      var eles = options.eles;
+
+      var spectralResult = [];
+      var xCoords = void 0;
+      var yCoords = void 0;
+      var coseResult = [];
+      var components = void 0;
+
+      // basic validity check for constraint inputs 
+      if (options.fixedNodeConstraint && (!Array.isArray(options.fixedNodeConstraint) || options.fixedNodeConstraint.length == 0)) {
+        options.fixedNodeConstraint = undefined;
+      }
+
+      if (options.alignmentConstraint) {
+        if (options.alignmentConstraint.vertical && (!Array.isArray(options.alignmentConstraint.vertical) || options.alignmentConstraint.vertical.length == 0)) {
+          options.alignmentConstraint.vertical = undefined;
+        }
+        if (options.alignmentConstraint.horizontal && (!Array.isArray(options.alignmentConstraint.horizontal) || options.alignmentConstraint.horizontal.length == 0)) {
+          options.alignmentConstraint.horizontal = undefined;
+        }
+      }
+
+      if (options.relativePlacementConstraint && (!Array.isArray(options.relativePlacementConstraint) || options.relativePlacementConstraint.length == 0)) {
+        options.relativePlacementConstraint = undefined;
+      }
+
+      // if any constraint exists, set some options
+      var constraintExist = options.fixedNodeConstraint || options.alignmentConstraint || options.relativePlacementConstraint;
+      if (constraintExist) {
+        // constraints work with these options
+        options.tile = false;
+        options.packComponents = false;
+      }
+
+      // decide component packing is enabled or not
+      var layUtil = void 0;
+      var packingEnabled = false;
+      if (cy.layoutUtilities && options.packComponents) {
+        layUtil = cy.layoutUtilities("get");
+        if (!layUtil) layUtil = cy.layoutUtilities();
+        packingEnabled = true;
+      }
+
+      if (eles.nodes().length > 0) {
+        // if packing is not enabled, perform layout on the whole graph
+        if (!packingEnabled) {
+          if (options.randomize) {
+            var result = spectralLayout(options); // apply spectral layout        
+            spectralResult.push(result);
+          }
+          // apply cose layout as postprocessing
+          if (options.quality == "default" || options.quality == "proof") {
+            coseResult.push(coseLayout(options, spectralResult[0]));
+          }
+        } else {
+          // packing is enabled
+          var topMostNodes = aux.getTopMostNodes(options.eles.nodes());
+          components = aux.connectComponents(cy, options.eles, topMostNodes);
+
+          //send each component to spectral layout
+          if (options.randomize) {
+            components.forEach(function (component) {
+              options.eles = component;
+              spectralResult.push(spectralLayout(options));
+            });
+          }
+
+          if (options.quality == "default" || options.quality == "proof") {
+            var toBeTiledNodes = cy.collection();
+            if (options.tile) {
+              // behave nodes to be tiled as one component
+              var nodeIndexes = new Map();
+              var _xCoords = [];
+              var _yCoords = [];
+              var count = 0;
+              var tempSpectralResult = { nodeIndexes: nodeIndexes, xCoords: _xCoords, yCoords: _yCoords };
+              var indexesToBeDeleted = [];
+              components.forEach(function (component, index) {
+                if (component.edges().length == 0) {
+                  component.nodes().forEach(function (node, i) {
+                    toBeTiledNodes.merge(component.nodes()[i]);
+                    if (!node.isParent()) {
+                      tempSpectralResult.nodeIndexes.set(component.nodes()[i].id(), count++);
+                      tempSpectralResult.xCoords.push(component.nodes()[0].position().x);
+                      tempSpectralResult.yCoords.push(component.nodes()[0].position().y);
+                    }
+                  });
+                  indexesToBeDeleted.push(index);
+                }
+              });
+              if (toBeTiledNodes.length > 1) {
+                components.push(toBeTiledNodes);
+                spectralResult.push(tempSpectralResult);
+                for (var i = indexesToBeDeleted.length - 1; i >= 0; i--) {
+                  components.splice(indexesToBeDeleted[i], 1);
+                  spectralResult.splice(indexesToBeDeleted[i], 1);
+                };
+              }
+            }
+            components.forEach(function (component, index) {
+              // send each component to cose layout
+              options.eles = component;
+              coseResult.push(coseLayout(options, spectralResult[index]));
+            });
+          }
+
+          // packing
+          if (components.length > 1) {
+            var subgraphs = [];
+            components.forEach(function (component, index) {
+              var nodeIndexes = void 0;
+              if (options.quality == "draft") {
+                nodeIndexes = spectralResult[index].nodeIndexes;
+              }
+              var subgraph = {};
+              subgraph.nodes = [];
+              subgraph.edges = [];
+              var nodeIndex = void 0;
+              component.nodes().forEach(function (node) {
+                if (options.quality == "draft") {
+                  if (!node.isParent()) {
+                    nodeIndex = nodeIndexes.get(node.id());
+                    subgraph.nodes.push({ x: spectralResult[index].xCoords[nodeIndex] - node.boundingbox().w / 2, y: spectralResult[index].yCoords[nodeIndex] - node.boundingbox().h / 2, width: node.boundingbox().w, height: node.boundingbox().h });
+                  } else {
+                    var parentInfo = aux.calcBoundingBox(node, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes);
+                    subgraph.nodes.push({ x: parentInfo.topLeftX, y: parentInfo.topLeftY, width: parentInfo.width, height: parentInfo.height });
+                  }
+                } else {
+                  subgraph.nodes.push({ x: coseResult[index][node.id()].getLeft(), y: coseResult[index][node.id()].getTop(), width: coseResult[index][node.id()].getWidth(), height: coseResult[index][node.id()].getHeight() });
+                }
+              });
+              component.edges().forEach(function (edge) {
+                var source = edge.source();
+                var target = edge.target();
+                if (options.quality == "draft") {
+                  var sourceNodeIndex = nodeIndexes.get(source.id());
+                  var targetNodeIndex = nodeIndexes.get(target.id());
+                  var sourceCenter = [];
+                  var targetCenter = [];
+                  if (source.isParent()) {
+                    var parentInfo = aux.calcBoundingBox(source, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes);
+                    sourceCenter.push(parentInfo.topLeftX + parentInfo.width / 2);
+                    sourceCenter.push(parentInfo.topLeftY + parentInfo.height / 2);
+                  } else {
+                    sourceCenter.push(spectralResult[index].xCoords[sourceNodeIndex]);
+                    sourceCenter.push(spectralResult[index].yCoords[sourceNodeIndex]);
+                  }
+                  if (target.isParent()) {
+                    var _parentInfo = aux.calcBoundingBox(target, spectralResult[index].xCoords, spectralResult[index].yCoords, nodeIndexes);
+                    targetCenter.push(_parentInfo.topLeftX + _parentInfo.width / 2);
+                    targetCenter.push(_parentInfo.topLeftY + _parentInfo.height / 2);
+                  } else {
+                    targetCenter.push(spectralResult[index].xCoords[targetNodeIndex]);
+                    targetCenter.push(spectralResult[index].yCoords[targetNodeIndex]);
+                  }
+                  subgraph.edges.push({ startX: sourceCenter[0], startY: sourceCenter[1], endX: targetCenter[0], endY: targetCenter[1] });
+                } else {
+                  subgraph.edges.push({ startX: coseResult[index][source.id()].getCenterX(), startY: coseResult[index][source.id()].getCenterY(), endX: coseResult[index][target.id()].getCenterX(), endY: coseResult[index][target.id()].getCenterY() });
+                }
+              });
+              subgraphs.push(subgraph);
+            });
+            var shiftResult = layUtil.packComponents(subgraphs, options.randomize).shifts;
+            if (options.quality == "draft") {
+              spectralResult.forEach(function (result, index) {
+                var newXCoords = result.xCoords.map(function (x) {
+                  return x + shiftResult[index].dx;
+                });
+                var newYCoords = result.yCoords.map(function (y) {
+                  return y + shiftResult[index].dy;
+                });
+                result.xCoords = newXCoords;
+                result.yCoords = newYCoords;
+              });
+            } else {
+              coseResult.forEach(function (result, index) {
+                Object.keys(result).forEach(function (item) {
+                  var nodeRectangle = result[item];
+                  nodeRectangle.setCenter(nodeRectangle.getCenterX() + shiftResult[index].dx, nodeRectangle.getCenterY() + shiftResult[index].dy);
+                });
+              });
+            }
+          }
+        }
+
+        // move graph to its original position because spectral moves it to origin
+        if (options.randomize && !options.fixedNodeConstraint) {
+          var minXCoord = Number.POSITIVE_INFINITY;
+          var maxXCoord = Number.NEGATIVE_INFINITY;
+          var minYCoord = Number.POSITIVE_INFINITY;
+          var maxYCoord = Number.NEGATIVE_INFINITY;
+          if (options.quality == "draft") {
+            spectralResult.forEach(function (result) {
+              result.xCoords.forEach(function (value) {
+                if (value < minXCoord) minXCoord = value;
+                if (value > maxXCoord) maxXCoord = value;
+              });
+              result.yCoords.forEach(function (value) {
+                if (value < minYCoord) minYCoord = value;
+                if (value > maxYCoord) maxYCoord = value;
+              });
+            });
+            var boundingBox = options.eles.boundingBox();
+            var diffOnX = boundingBox.x1 + boundingBox.w / 2 - (maxXCoord + minXCoord) / 2;
+            var diffOnY = boundingBox.y1 + boundingBox.h / 2 - (maxYCoord + minYCoord) / 2;
+            spectralResult.forEach(function (result) {
+              result.xCoords = result.xCoords.map(function (x) {
+                return x + diffOnX;
+              });
+              result.yCoords = result.yCoords.map(function (y) {
+                return y + diffOnY;
+              });
+            });
+          } else {
+            coseResult.forEach(function (result) {
+              Object.keys(result).forEach(function (item) {
+                var node = result[item];
+                if (node.getCenterX() < minXCoord) minXCoord = node.getCenterX();
+                if (node.getCenterX() > maxXCoord) maxXCoord = node.getCenterX();
+                if (node.getCenterY() < minYCoord) minYCoord = node.getCenterY();
+                if (node.getCenterY() > maxYCoord) maxYCoord = node.getCenterY();
+              });
+            });
+            var _boundingBox = options.eles.boundingBox();
+            var _diffOnX = _boundingBox.x1 + _boundingBox.w / 2 - (maxXCoord + minXCoord) / 2;
+            var _diffOnY = _boundingBox.y1 + _boundingBox.h / 2 - (maxYCoord + minYCoord) / 2;
+            coseResult.forEach(function (result, index) {
+              Object.keys(result).forEach(function (item) {
+                var node = result[item];
+                node.setCenter(node.getCenterX() + _diffOnX, node.getCenterY() + _diffOnY);
+              });
+            });
+          }
+        }
+      }
+
+      // get each element's calculated position
+      var getPositions = function getPositions(ele, i) {
+        if (options.quality == "default" || options.quality == "proof") {
+          if (typeof ele === "number") {
+            ele = i;
+          }
+          var pos = void 0;
+          var node = void 0;
+          var theId = ele.data('id');
+          coseResult.forEach(function (result) {
+            if (theId in result) {
+              pos = { x: result[theId].getRect().getCenterX(), y: result[theId].getRect().getCenterY() };
+              node = result[theId];
+            }
+          });
+          if (options.nodeDimensionsIncludeLabels) {
+            if (node.labelWidth) {
+              if (node.labelPosHorizontal == "left") {
+                pos.x += node.labelWidth / 2;
+              } else if (node.labelPosHorizontal == "right") {
+                pos.x -= node.labelWidth / 2;
+              }
+            }
+            if (node.labelHeight) {
+              if (node.labelPosVertical == "top") {
+                pos.y += node.labelHeight / 2;
+              } else if (node.labelPosVertical == "bottom") {
+                pos.y -= node.labelHeight / 2;
+              }
+            }
+          }
+          return {
+            x: pos.x,
+            y: pos.y
+          };
+        } else {
+          var _pos = void 0;
+          spectralResult.forEach(function (result) {
+            var index = result.nodeIndexes.get(ele.id());
+            if (index != undefined) {
+              _pos = { x: result.xCoords[index], y: result.yCoords[index] };
+            }
+          });
+          if (_pos == undefined) _pos = { x: ele.position("x"), y: ele.position("y") };
+          return {
+            x: _pos.x,
+            y: _pos.y
+          };
+        }
+      };
+
+      // quality = "draft" and randomize = false are contradictive so in that case positions don't change
+      if (options.quality == "default" || options.quality == "proof" || options.randomize) {
+        // transfer calculated positions to nodes (positions of only simple nodes are evaluated, compounds are positioned automatically)
+        options.eles = eles;
+        eles.nodes().not(":parent").layoutPositions(layout, options, getPositions);
+      } else {
+        console.log("If randomize option is set to false, then quality option must be 'default' or 'proof'.");
+      }
+    }
+  }]);
+
+  return Layout;
+}();
+
+module.exports = Layout;
+
+/***/ }),
+
+/***/ 657:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+/**
+  The implementation of the spectral layout that is the first part of the fcose layout algorithm
+*/
+
+var aux = __webpack_require__(548);
+var Matrix = __webpack_require__(281).layoutBase.Matrix;
+var SVD = __webpack_require__(281).layoutBase.SVD;
+
+// main function that spectral layout is processed
+var spectralLayout = function spectralLayout(options) {
+
+  var cy = options.cy;
+  var eles = options.eles;
+  var nodes = eles.nodes();
+  var parentNodes = eles.nodes(":parent");
+
+  var dummyNodes = new Map(); // map to keep dummy nodes and their neighbors
+  var nodeIndexes = new Map(); // map to keep indexes to nodes
+  var parentChildMap = new Map(); // mapping btw. compound and its representative node 
+  var allNodesNeighborhood = []; // array to keep neighborhood of all nodes
+  var xCoords = [];
+  var yCoords = [];
+
+  var samplesColumn = []; // sampled vertices
+  var minDistancesColumn = [];
+  var C = []; // column sampling matrix
+  var PHI = []; // intersection of column and row sampling matrices 
+  var INV = []; // inverse of PHI 
+
+  var firstSample = void 0; // the first sampled node
+  var nodeSize = void 0;
+
+  var infinity = 100000000;
+  var small = 0.000000001;
+
+  var piTol = options.piTol;
+  var samplingType = options.samplingType; // false for random, true for greedy
+  var nodeSeparation = options.nodeSeparation;
+  var sampleSize = void 0;
+
+  /**** Spectral-preprocessing functions ****/
+
+  /**** Spectral layout functions ****/
+
+  // determine which columns to be sampled
+  var randomSampleCR = function randomSampleCR() {
+    var sample = 0;
+    var count = 0;
+    var flag = false;
+
+    while (count < sampleSize) {
+      sample = Math.floor(Math.random() * nodeSize);
+
+      flag = false;
+      for (var i = 0; i < count; i++) {
+        if (samplesColumn[i] == sample) {
+          flag = true;
+          break;
+        }
+      }
+
+      if (!flag) {
+        samplesColumn[count] = sample;
+        count++;
+      } else {
+        continue;
+      }
+    }
+  };
+
+  // takes the index of the node(pivot) to initiate BFS as a parameter
+  var BFS = function BFS(pivot, index, samplingMethod) {
+    var path = []; // the front of the path
+    var front = 0; // the back of the path
+    var back = 0;
+    var current = 0;
+    var temp = void 0;
+    var distance = [];
+
+    var max_dist = 0; // the furthest node to be returned
+    var max_ind = 1;
+
+    for (var i = 0; i < nodeSize; i++) {
+      distance[i] = infinity;
+    }
+
+    path[back] = pivot;
+    distance[pivot] = 0;
+
+    while (back >= front) {
+      current = path[front++];
+      var neighbors = allNodesNeighborhood[current];
+      for (var _i = 0; _i < neighbors.length; _i++) {
+        temp = nodeIndexes.get(neighbors[_i]);
+        if (distance[temp] == infinity) {
+          distance[temp] = distance[current] + 1;
+          path[++back] = temp;
+        }
+      }
+      C[current][index] = distance[current] * nodeSeparation;
+    }
+
+    if (samplingMethod) {
+      for (var _i2 = 0; _i2 < nodeSize; _i2++) {
+        if (C[_i2][index] < minDistancesColumn[_i2]) minDistancesColumn[_i2] = C[_i2][index];
+      }
+
+      for (var _i3 = 0; _i3 < nodeSize; _i3++) {
+        if (minDistancesColumn[_i3] > max_dist) {
+          max_dist = minDistancesColumn[_i3];
+          max_ind = _i3;
+        }
+      }
+    }
+    return max_ind;
+  };
+
+  // apply BFS to all nodes or selected samples
+  var allBFS = function allBFS(samplingMethod) {
+
+    var sample = void 0;
+
+    if (!samplingMethod) {
+      randomSampleCR();
+
+      // call BFS
+      for (var i = 0; i < sampleSize; i++) {
+        BFS(samplesColumn[i], i, samplingMethod, false);
+      }
+    } else {
+      sample = Math.floor(Math.random() * nodeSize);
+      firstSample = sample;
+
+      for (var _i4 = 0; _i4 < nodeSize; _i4++) {
+        minDistancesColumn[_i4] = infinity;
+      }
+
+      for (var _i5 = 0; _i5 < sampleSize; _i5++) {
+        samplesColumn[_i5] = sample;
+        sample = BFS(sample, _i5, samplingMethod);
+      }
+    }
+
+    // form the squared distances for C
+    for (var _i6 = 0; _i6 < nodeSize; _i6++) {
+      for (var j = 0; j < sampleSize; j++) {
+        C[_i6][j] *= C[_i6][j];
+      }
+    }
+
+    // form PHI
+    for (var _i7 = 0; _i7 < sampleSize; _i7++) {
+      PHI[_i7] = [];
+    }
+
+    for (var _i8 = 0; _i8 < sampleSize; _i8++) {
+      for (var _j = 0; _j < sampleSize; _j++) {
+        PHI[_i8][_j] = C[samplesColumn[_j]][_i8];
+      }
+    }
+  };
+
+  // perform the SVD algorithm and apply a regularization step
+  var sample = function sample() {
+
+    var SVDResult = SVD.svd(PHI);
+
+    var a_q = SVDResult.S;
+    var a_u = SVDResult.U;
+    var a_v = SVDResult.V;
+
+    var max_s = a_q[0] * a_q[0] * a_q[0];
+
+    var a_Sig = [];
+
+    //  regularization
+    for (var i = 0; i < sampleSize; i++) {
+      a_Sig[i] = [];
+      for (var j = 0; j < sampleSize; j++) {
+        a_Sig[i][j] = 0;
+        if (i == j) {
+          a_Sig[i][j] = a_q[i] / (a_q[i] * a_q[i] + max_s / (a_q[i] * a_q[i]));
+        }
+      }
+    }
+
+    INV = Matrix.multMat(Matrix.multMat(a_v, a_Sig), Matrix.transpose(a_u));
+  };
+
+  // calculate final coordinates 
+  var powerIteration = function powerIteration() {
+    // two largest eigenvalues
+    var theta1 = void 0;
+    var theta2 = void 0;
+
+    // initial guesses for eigenvectors
+    var Y1 = [];
+    var Y2 = [];
+
+    var V1 = [];
+    var V2 = [];
+
+    for (var i = 0; i < nodeSize; i++) {
+      Y1[i] = Math.random();
+      Y2[i] = Math.random();
+    }
+
+    Y1 = Matrix.normalize(Y1);
+    Y2 = Matrix.normalize(Y2);
+
+    var count = 0;
+    // to keep track of the improvement ratio in power iteration
+    var current = small;
+    var previous = small;
+
+    var temp = void 0;
+
+    while (true) {
+      count++;
+
+      for (var _i9 = 0; _i9 < nodeSize; _i9++) {
+        V1[_i9] = Y1[_i9];
+      }
+
+      Y1 = Matrix.multGamma(Matrix.multL(Matrix.multGamma(V1), C, INV));
+      theta1 = Matrix.dotProduct(V1, Y1);
+      Y1 = Matrix.normalize(Y1);
+
+      current = Matrix.dotProduct(V1, Y1);
+
+      temp = Math.abs(current / previous);
+
+      if (temp <= 1 + piTol && temp >= 1) {
+        break;
+      }
+
+      previous = current;
+    }
+
+    for (var _i10 = 0; _i10 < nodeSize; _i10++) {
+      V1[_i10] = Y1[_i10];
+    }
+
+    count = 0;
+    previous = small;
+    while (true) {
+      count++;
+
+      for (var _i11 = 0; _i11 < nodeSize; _i11++) {
+        V2[_i11] = Y2[_i11];
+      }
+
+      V2 = Matrix.minusOp(V2, Matrix.multCons(V1, Matrix.dotProduct(V1, V2)));
+      Y2 = Matrix.multGamma(Matrix.multL(Matrix.multGamma(V2), C, INV));
+      theta2 = Matrix.dotProduct(V2, Y2);
+      Y2 = Matrix.normalize(Y2);
+
+      current = Matrix.dotProduct(V2, Y2);
+
+      temp = Math.abs(current / previous);
+
+      if (temp <= 1 + piTol && temp >= 1) {
+        break;
+      }
+
+      previous = current;
+    }
+
+    for (var _i12 = 0; _i12 < nodeSize; _i12++) {
+      V2[_i12] = Y2[_i12];
+    }
+
+    // theta1 now contains dominant eigenvalue
+    // theta2 now contains the second-largest eigenvalue
+    // V1 now contains theta1's eigenvector
+    // V2 now contains theta2's eigenvector
+
+    //populate the two vectors
+    xCoords = Matrix.multCons(V1, Math.sqrt(Math.abs(theta1)));
+    yCoords = Matrix.multCons(V2, Math.sqrt(Math.abs(theta2)));
+  };
+
+  /**** Preparation for spectral layout (Preprocessing) ****/
+
+  // connect disconnected components (first top level, then inside of each compound node)
+  aux.connectComponents(cy, eles, aux.getTopMostNodes(nodes), dummyNodes);
+
+  parentNodes.forEach(function (ele) {
+    aux.connectComponents(cy, eles, aux.getTopMostNodes(ele.descendants().intersection(eles)), dummyNodes);
+  });
+
+  // assign indexes to nodes (first real, then dummy nodes)
+  var index = 0;
+  for (var i = 0; i < nodes.length; i++) {
+    if (!nodes[i].isParent()) {
+      nodeIndexes.set(nodes[i].id(), index++);
+    }
+  }
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = dummyNodes.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var key = _step.value;
+
+      nodeIndexes.set(key, index++);
+    }
+
+    // instantiate the neighborhood matrix
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  for (var _i13 = 0; _i13 < nodeIndexes.size; _i13++) {
+    allNodesNeighborhood[_i13] = [];
+  }
+
+  // form a parent-child map to keep representative node of each compound node  
+  parentNodes.forEach(function (ele) {
+    var children = ele.children().intersection(eles);
+
+    //      let random = 0;
+    while (children.nodes(":childless").length == 0) {
+      //        random = Math.floor(Math.random() * children.nodes().length); // if all children are compound then proceed randomly
+      children = children.nodes()[0].children().intersection(eles);
+    }
+    //  select the representative node - we can apply different methods here
+    //      random = Math.floor(Math.random() * children.nodes(":childless").length);
+    var index = 0;
+    var min = children.nodes(":childless")[0].connectedEdges().length;
+    children.nodes(":childless").forEach(function (ele2, i) {
+      if (ele2.connectedEdges().length < min) {
+        min = ele2.connectedEdges().length;
+        index = i;
+      }
+    });
+    parentChildMap.set(ele.id(), children.nodes(":childless")[index].id());
+  });
+
+  // add neighborhood relations (first real, then dummy nodes)
+  nodes.forEach(function (ele) {
+    var eleIndex = void 0;
+
+    if (ele.isParent()) eleIndex = nodeIndexes.get(parentChildMap.get(ele.id()));else eleIndex = nodeIndexes.get(ele.id());
+
+    ele.neighborhood().nodes().forEach(function (node) {
+      if (eles.intersection(ele.edgesWith(node)).length > 0) {
+        if (node.isParent()) allNodesNeighborhood[eleIndex].push(parentChildMap.get(node.id()));else allNodesNeighborhood[eleIndex].push(node.id());
+      }
+    });
+  });
+
+  var _loop = function _loop(_key) {
+    var eleIndex = nodeIndexes.get(_key);
+    var disconnectedId = void 0;
+    dummyNodes.get(_key).forEach(function (id) {
+      if (cy.getElementById(id).isParent()) disconnectedId = parentChildMap.get(id);else disconnectedId = id;
+
+      allNodesNeighborhood[eleIndex].push(disconnectedId);
+      allNodesNeighborhood[nodeIndexes.get(disconnectedId)].push(_key);
+    });
+  };
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = dummyNodes.keys()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _key = _step2.value;
+
+      _loop(_key);
+    }
+
+    // nodeSize now only considers the size of transformed graph
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  nodeSize = nodeIndexes.size;
+
+  var spectralResult = void 0;
+
+  // If number of nodes in transformed graph is 1 or 2, either SVD or powerIteration causes problem
+  // So skip spectral and layout the graph with cose
+  if (nodeSize > 2) {
+    // if # of nodes in transformed graph is smaller than sample size,
+    // then use # of nodes as sample size
+    sampleSize = nodeSize < options.sampleSize ? nodeSize : options.sampleSize;
+
+    // instantiates the partial matrices that will be used in spectral layout
+    for (var _i14 = 0; _i14 < nodeSize; _i14++) {
+      C[_i14] = [];
+    }
+    for (var _i15 = 0; _i15 < sampleSize; _i15++) {
+      INV[_i15] = [];
+    }
+
+    /**** Apply spectral layout ****/
+
+    if (options.quality == "draft" || options.step == "all") {
+      allBFS(samplingType);
+      sample();
+      powerIteration();
+
+      spectralResult = { nodeIndexes: nodeIndexes, xCoords: xCoords, yCoords: yCoords };
+    } else {
+      nodeIndexes.forEach(function (value, key) {
+        xCoords.push(cy.getElementById(key).position("x"));
+        yCoords.push(cy.getElementById(key).position("y"));
+      });
+      spectralResult = { nodeIndexes: nodeIndexes, xCoords: xCoords, yCoords: yCoords };
+    }
+    return spectralResult;
+  } else {
+    var iterator = nodeIndexes.keys();
+    var firstNode = cy.getElementById(iterator.next().value);
+    var firstNodePos = firstNode.position();
+    var firstNodeWidth = firstNode.outerWidth();
+    xCoords.push(firstNodePos.x);
+    yCoords.push(firstNodePos.y);
+    if (nodeSize == 2) {
+      var secondNode = cy.getElementById(iterator.next().value);
+      var secondNodeWidth = secondNode.outerWidth();
+      xCoords.push(firstNodePos.x + firstNodeWidth / 2 + secondNodeWidth / 2 + options.idealEdgeLength);
+      yCoords.push(firstNodePos.y);
+    }
+
+    spectralResult = { nodeIndexes: nodeIndexes, xCoords: xCoords, yCoords: yCoords };
+    return spectralResult;
+  }
+};
+
+module.exports = { spectralLayout: spectralLayout };
+
+/***/ }),
+
+/***/ 579:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+var impl = __webpack_require__(212);
+
+// registers the extension on a cytoscape lib ref
+var register = function register(cytoscape) {
+  if (!cytoscape) {
+    return;
+  } // can't register if cytoscape unspecified
+
+  cytoscape('layout', 'fcose', impl); // register with cytoscape.js
+};
+
+if (typeof cytoscape !== 'undefined') {
+  // expose to global cytoscape (i.e. window.cytoscape)
+  register(cytoscape);
+}
+
+module.exports = register;
+
+/***/ }),
+
+/***/ 281:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__281__;
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(579);
+/******/ 	
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
+
+/***/ }),
+
 /***/ "./node_modules/cytoscape-layout-utilities/cytoscape-layout-utilities.js":
 /*!*******************************************************************************!*\
   !*** ./node_modules/cytoscape-layout-utilities/cytoscape-layout-utilities.js ***!
@@ -2418,433 +6947,6 @@ function toComment(sourceMap) {
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(t,e){ true?module.exports=e():undefined}(window,(function(){return function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(i,r,function(e){return t[e]}.bind(null,r));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e){class n{constructor(t,e){this.x=t,this.y=e}diff(t){return new n(t.x-this.x,t.y-this.y)}}class i{constructor(t,e,n,i){this.x1=t,this.x2=n,this.y1=e,this.y2=i}center(){return new n((this.x2-this.x1)/2,(this.y2-this.y1)/2)}}class r{constructor(t,e){this.occupied=t,this.visited=e}}t.exports={Grid:class{constructor(t,e,o){this.width=t,this.height=e,this.step=o,this.grid=Array.from({length:this.stepWidth},t=>Array.from({length:this.stepHeight},t=>new r(!1,!1))),this.center=new n(Math.floor(this.stepWidth/2),Math.floor(this.stepHeight/2)),this.occupiedRectangle=new i(Number.MAX_VALUE,Number.MAX_VALUE,-Number.MAX_VALUE,-Number.MAX_VALUE),this.numberOfOccupiredCells=0}get stepWidth(){return Math.floor(this.width/this.step)+1}get stepHeight(){return Math.floor(this.height/this.step)+1}getDirectNeighbors(t,e){var n=[];if(0==t.length){for(var i=0;i<this.stepWidth;i++)for(var r=0;r<this.stepHeight;r++)this.grid[i][r].occupied&&(n=n.concat(this.getCellNeighbors(i,r)));var o=0,s=n.length-1;for(i=2;i<=e;i++){if(s>=o)for(r=o;r<=s;r++)n=n.concat(this.getCellNeighbors(n[r].x,n[r].y));o=s+1,s=n.length-1}}else t.forEach(function(t){n=n.concat(this.getCellNeighbors(t.x,t.y))}.bind(this));return n}getCellNeighbors(t,e){var n=[];return t-1>=0&&(this.grid[t-1][e].occupied||this.grid[t-1][e].visited||(n.push({x:t-1,y:e}),this.grid[t-1][e].visited=!0)),t+1<this.stepWidth&&(this.grid[t+1][e].occupied||this.grid[t+1][e].visited||(n.push({x:t+1,y:e}),this.grid[t+1][e].visited=!0)),e-1>=0&&(this.grid[t][e-1].occupied||this.grid[t][e-1].visited||(n.push({x:t,y:e-1}),this.grid[t][e-1].visited=!0)),e+1<this.stepHeight&&(this.grid[t][e+1].occupied||this.grid[t][e+1].visited||(n.push({x:t,y:e+1}),this.grid[t][e+1].visited=!0)),t-1>=0&&(this.grid[t-1][e].occupied||this.grid[t-1][e].visited||(n.push({x:t-1,y:e}),this.grid[t-1][e].visited=!0)),t-1>=0&&e-1>=0&&(this.grid[t-1][e-1].occupied||this.grid[t-1][e-1].visited||(n.push({x:t-1,y:e-1}),this.grid[t-1][e-1].visited=!0)),t+1<this.stepWidth&&e-1>=0&&(this.grid[t+1][e-1].occupied||this.grid[t+1][e-1].visited||(n.push({x:t+1,y:e-1}),this.grid[t+1][e-1].visited=!0)),t-1>=0&&e+1<this.stepHeight&&(this.grid[t-1][e+1].occupied||this.grid[t-1][e+1].visited||(n.push({x:t-1,y:e+1}),this.grid[t-1][e+1].visited=!0)),t+1<this.stepWidth&&e+1<this.stepHeight&&(this.grid[t+1][e+1].occupied||this.grid[t+1][e+1].visited||(n.push({x:t+1,y:e+1}),this.grid[t+1][e+1].visited=!0)),n}placePolyomino(t,e,n){t.location.x=e,t.location.y=n;for(let i=0;i<t.stepWidth;i++)for(let r=0;r<t.stepHeight;r++)t.grid[i][r]&&(this.grid[i-t.center.x+e][r-t.center.y+n].occupied=!0);this.numberOfOccupiredCells+=t.numberOfOccupiredCells,this.updateBounds(t);for(let t=0;t<this.stepWidth;t++)for(let e=0;e<this.stepHeight;e++)this.grid[t][e].visited=!1}updateBounds(t){let e=t.getBoundingRectangle();this.occupiedRectangle.x1=Math.min(this.occupiedRectangle.x1,e.x1),this.occupiedRectangle.x2=Math.max(this.occupiedRectangle.x2,e.x2),this.occupiedRectangle.y1=Math.min(this.occupiedRectangle.y1,e.y1),this.occupiedRectangle.y2=Math.max(this.occupiedRectangle.y2,e.y2)}tryPlacingPolyomino(t,e,n){for(var i=0;i<t.stepWidth;i++)for(var r=0;r<t.stepHeight;r++){if(i-t.center.x+e>=this.stepWidth||i-t.center.x+e<0||r-t.center.y+n>=this.stepHeight||r-t.center.y+n<0)return!1;if(t.grid[i][r]&&this.grid[i-t.center.x+e][r-t.center.y+n].occupied)return!1}return!0}calculateUtilityOfPlacing(t,e,n,i){var r,o,s={},a=1,u=this.occupiedRectangle.x1,l=this.occupiedRectangle.x2,c=this.occupiedRectangle.y1,h=this.occupiedRectangle.y2;e-t.center.x<u&&(u=e-t.center.x),n-t.center.y<c&&(c=n-t.center.y),t.stepWidth-1-t.center.x+e>l&&(l=t.stepWidth-1-t.center.x+e),t.stepHeight-1-t.center.y+n>h&&(h=t.stepHeight-1-t.center.y+n);var p=l-u+1,f=h-c+1;return r=p/f,o=(this.numberOfOccupiredCells+t.numberOfOccupiredCells)/(p*f),a=r>i?(this.numberOfOccupiredCells+t.numberOfOccupiredCells)/(p*(p/i)):(this.numberOfOccupiredCells+t.numberOfOccupiredCells)/(f*i*f),s.actualAspectRatio=r,s.fullness=o,s.adjustedFullness=a,s}},Polyomino:class{constructor(t,e,i,r,o,s){this.width=i,this.height=r,this.gridStep=o,this.grid=new Array(this.stepWidth);for(var a=0;a<this.stepWidth;a++){this.grid[a]=new Array(this.stepHeight);for(var u=0;u<this.stepHeight;u++)this.grid[a][u]=!1}this.index=s,this.x1=t,this.y1=e,this.location=new n(-1,-1),this.center=new n(Math.floor(this.stepWidth/2),Math.floor(this.stepHeight/2)),this.numberOfOccupiredCells=0}get stepWidth(){return Math.floor(this.width/this.gridStep)+1}get stepHeight(){return Math.floor(this.height/this.gridStep)+1}get x2(){return this.x1+this.width}get y2(){return this.y1+this.height}get gridStepCenter(){return this.center.diff(this.location)}getBoundingRectangle(){const t=this.location.x-this.center.x,e=this.location.y-this.center.y;return new i(t,e,t+this.stepWidth-1,e+this.stepHeight-1)}},BoundingRectangle:i,Point:n}},function(t,e,n){var i={},r=n(0);const{Point:o}=n(0);i.uniqueArray=function(t){var e={};return t.forEach((function(t){e[t+"::"+typeof t]=t})),Object.keys(e).map((function(t){return e[t]}))},i.LineSuperCover=function(t,e){for(var n=e.x-t.x,i=e.y-t.y,o=Math.floor(Math.abs(n)),s=Math.floor(Math.abs(i)),a=n>0?1:-1,u=i>0?1:-1,l=new r.Point(t.x,t.y),c=[new r.Point(l.x,l.y)],h=0,p=0;h<o||p<s;)(.5+h)/o==(.5+p)/s?(l.x+=a,l.y+=u,h++,p++):(.5+h)/o<(.5+p)/s?(l.x+=a,h++):(l.y+=u,p++),c.push(new r.Point(l.x,l.y));return c},i.getCenter=function(t){void 0===Array.prototype.flatMap&&(Array.prototype.flatMap=function(t){const e=(t,e)=>t.concat(e);return((t,n)=>n.map(t).reduce(e,[]))(t,this)});let e=t.flatMap(t=>t.nodes).map(t=>({left:t.x,top:t.y,right:t.x+t.width-1,bottom:t.y+t.height-1})).reduce((t,e)=>({left:Math.min(e.left,t.left),right:Math.max(e.right,t.right),top:Math.min(e.top,t.top),bottom:Math.max(e.bottom,t.bottom)}),{left:Number.MAX_VALUE,right:-Number.MAX_VALUE,top:Number.MAX_VALUE,bottom:-Number.MAX_VALUE});return new o((e.left+e.right)/2,(e.top+e.bottom)/2)},t.exports=i},function(t,e,n){var i;!function(){"use strict";var r=function(t){if(t){var e={idealEdgeLength:50,offset:20,desiredAspectRatio:1,polyominoGridSizeFactor:1,utilityFunction:1,componentSpacing:80},i=n(3);t("core","layoutUtilities",(function(t){var n=this;if("get"===t)return r(n).instance;function r(t){return t.scratch("_layoutUtilities")||t.scratch("_layoutUtilities",{}),t.scratch("_layoutUtilities")}e=function t(e){e=e||{};for(var n=1;n<arguments.length;n++){var i=arguments[n];if(i)for(var r in i)i.hasOwnProperty(r)&&(Array.isArray(i[r])?e[r]=i[r].slice():"object"==typeof i[r]?e[r]=t(e[r],i[r]):e[r]=i[r])}return e}({},e,t);var o=i(n,e);return r(n).instance=o,r(n).initialized||(r(n).initialized=!0),r(n).instance}))}};t.exports&&(t.exports=r),void 0===(i=function(){return r}.call(e,n,e,t))||(t.exports=i),"undefined"!=typeof cytoscape&&r(cytoscape)}()},function(t,e,n){var i=n(1),r=n(0);const{Point:o,Polyomino:s}=n(0),{getCenter:a}=n(1),u=n(4);t.exports=function(t,e){var n={};return n.setOption=function(t,n){e[t]=n},n.placeHiddenNodes=function(t){t.forEach((function(t){t.neighborhood().nodes(":hidden").forEach((function(e){e.neighborhood().nodes(":visible").length>1?n.nodeWithMultipleNeighbors(e):n.nodeWithOneNeighbor(t,e)}))}))},n.placeNewNodes=function(t){for(var i=this.findComponents(t),r=[],o=0;o<i.length;o++){for(var s,a=!1,u=!1,l=[],c=[],h=0,p=0,f=!1,g=0;g<i[o].length;g++){var d=i[o][g].neighborhood().nodes().difference(t);c.push(!1),d.length>1&&!f?(u=!0,c[g]=!0,l=d,n.nodeWithMultipleNeighbors(i[o][g],l),h=i[o][g].position("x"),p=i[o][g].position("y"),f=!0):1!=d.length||f||(a=!0,s=d[0],c[g]=!0,n.nodeWithOneNeighbor(s,i[o][g],t),h=i[o][g].position("x"),p=i[o][g].position("y"),f=!0)}if(a||u){for(g=0;g<i[o].length;g++)if(0==c[g]){d=i[o][g].neighborhood().nodes();var y=[];i[o][g].neighborhood().nodes().difference(t).forEach((function(t){y.push(t)}));for(var _=0;_<d.length;_++)c[i[o].indexOf(d[_])]&&y.push(d[_]);if(y.length>1)n.nodeWithMultipleNeighbors(i[o][g],y);else if(1==y.length)n.nodeWithOneNeighbor(y[0],i[o][g]);else{var m=n.generateRandom(e.offset,2*e.offset,0),v=n.generateRandom(e.offset,2*e.offset,0);i[o][g].position("x",h+m),i[o][g].position("y",p+v)}c[g]=!0}}else r.push(i[o])}r.length>=1&&n.disconnectedNodes(r)},n.disconnectedNodes=function(i){var r=Number.MAX_VALUE,o=-Number.MAX_VALUE,s=Number.MAX_VALUE,a=-Number.MAX_VALUE;t.nodes(":visible").forEach((function(t){var e=t.outerWidth()/2,n=t.outerHeight()/2;t.position("x")-e<r&&(r=t.position("x")-e),t.position("x")+e>o&&(o=t.position("x")+e),t.position("y")-n<s&&(s=t.position("y")-n),t.position("y")+n>a&&(a=t.position("y")+n)}));var u=s-a,l=o-r,c=Math.sqrt(l*l+u*u)/2,h=(r+o)/2,p=(s+a)/2,f=360/i.length,g=1;i.forEach((function(t){var i=n.generateRandom(c+6*e.offset,c+8*e.offset,1),r=f*g*Math.PI/180,o=h+i*Math.cos(r),s=p+i*Math.sin(r);if(1==t.length)t[0].position("x",o),t[0].position("y",s);else{for(var a=[],u=0;u<t.length;u++)a.push(!1);a[0]=!0,t[0].position("x",o),t[0].position("y",s);for(u=1;u<t.length;u++){for(var l=t[u].neighborhood().nodes(),d=[],y=0;y<l.length;y++)a[t.indexOf(l[y])]&&d.push(l[y]);if(d.length>1)n.nodeWithMultipleNeighbors(t[u],d);else if(1==d.length)n.nodeWithOneNeighbor(d[0],t[u]);else{var _=n.generateRandom(e.offset,2*e.offset,0),m=n.generateRandom(e.offset,2*e.offset,0);t[u].position("x",o+_),t[u].position("y",s+m)}a[u]=!0}}g++}))},n.findComponents=function(e){var n=[],i=t.nodes().difference(e);e.forEach((function(t){var r=t.neighborhood().nodes().difference(i),o=[];r.forEach((function(t){var n=e.indexOf(t);o.push(n)})),n.push(o)}));for(var r=[],o=0;o<e.length;o++)r.push(!1);var s=[];for(o=0;o<e.length;o++){var a=[];0==r[o]&&(this.DFSUtil(o,r,n,e,a),s.push(a))}return s},n.DFSUtil=function(t,e,n,i,r){e[t]=!0,r.push(i[t]);for(var o=0;o<n[t].length;o++)e[n[t][o]]||this.DFSUtil(n[t][o],e,n,i,r)},n.nodeWithOneNeighbor=function(t,i,r){var o,s,a=n.checkOccupiedQuadrants(t,i,r),u=[];for(var l in a)"free"===a[l]&&u.push(l);if(u.length>0)if(3===u.length)u.includes("first")&&u.includes("second")&&u.includes("third")?(o=-1,s=-1):u.includes("first")&&u.includes("second")&&u.includes("fourth")?(o=1,s=-1):u.includes("first")&&u.includes("third")&&u.includes("fourth")?(o=1,s=1):u.includes("second")&&u.includes("third")&&u.includes("fourth")&&(o=-1,s=1);else{var c=u[Math.floor(Math.random()*u.length)];"first"===c?(o=1,s=-1):"second"===c?(o=-1,s=-1):"third"===c?(o=-1,s=1):"fourth"===c&&(o=1,s=1)}else o=0,s=0;var h=n.generateRandom(e.idealEdgeLength-e.offset,e.idealEdgeLength+e.offset,o),p=n.generateRandom(e.idealEdgeLength-e.offset,e.idealEdgeLength+e.offset,s),f=t.position("x")+h,g=t.position("y")+p;i.position("x",f),i.position("y",g)},n.nodeWithMultipleNeighbors=function(t,i){if(null==i)i=t.neighborhood().nodes(":visible");var r=0,o=0,s=0;i.forEach((function(t){r+=t.position("x"),o+=t.position("y"),s++})),r/=s,o/=s;var a=n.generateRandom(0,e.offset/2,0),u=n.generateRandom(0,e.offset/2,0);t.position("x",r+a),t.position("y",o+u)},n.generateRandom=function(t,e,n){var i=[-1,1];return 0===n&&(n=i[Math.floor(Math.random()*i.length)]),(Math.floor(Math.random()*(e-t+1))+t)*n},n.checkOccupiedQuadrants=function(t,e,n){var i=t.neighborhood().difference(e).difference(n).nodes(),r={first:"free",second:"free",third:"free",fourth:"free"};return i.forEach((function(e){"compartment"!=e.data("class")&&"complex"!=e.data("class")&&(e.position("x")<t.position("x")&&e.position("y")<t.position("y")?r.second="occupied":e.position("x")>t.position("x")&&e.position("y")<t.position("y")?r.first="occupied":e.position("x")<t.position("x")&&e.position("y")>t.position("y")?r.third="occupied":e.position("x")>t.position("x")&&e.position("y")>t.position("y")&&(r.fourth="occupied"))})),r},n.packComponents=function(t,n=!0){var o=e.componentSpacing;void 0!==o&&(n&&(o-=52),o=Math.max(1,o));let s=i.getCenter(t);var l;let c;if(n){var h=0,p=0;t.forEach((function(t){p+=t.nodes.length,t.nodes.forEach((function(t){h+=t.width+t.height}))})),h/=2*p,h=Math.floor(h*e.polyominoGridSizeFactor),t.forEach((function(t){t.nodes.forEach((function(t){t.x=t.x-o,t.y=t.y-o,t.width=t.width+2*o,t.height=t.height+2*o}))}));var f=0,g=0,d=[],y=Number.MAX_VALUE,_=-Number.MAX_VALUE,m=Number.MAX_VALUE,v=-Number.MAX_VALUE;t.forEach((function(t,e){var n=Number.MAX_VALUE,o=-Number.MAX_VALUE,s=Number.MAX_VALUE,a=-Number.MAX_VALUE;t.nodes.forEach((function(t){t.x<=n&&(n=t.x),t.y<=s&&(s=t.y),t.x+t.width>=o&&(o=t.x+t.width),t.y+t.height>=a&&(a=t.y+t.height)})),t.edges.forEach((function(t){t.startX<=n&&(n=t.startX),t.startY<=s&&(s=t.startY),t.endX>=o&&(o=t.endX),t.endY>=a&&(a=t.endY)})),n<y&&(y=n),o>_&&(_=o),s<m&&(m=s),a>v&&(v=a);let u=o-n,l=a-s;f+=u,g+=l;var c=new r.Polyomino(n,s,u,l,h,e);t.nodes.forEach((function(t){for(var e=Math.floor((t.x-n)/h),i=Math.floor((t.y-s)/h),r=Math.floor((t.x+t.width-n)/h),o=Math.floor((t.y+t.height-s)/h),a=e;a<=r;a++)for(var u=i;u<=o;u++)c.grid[a][u]=!0})),t.edges.forEach((function(t){var e={},r={};e.x=(t.startX-n)/h,e.y=(t.startY-s)/h,r.x=(t.endX-n)/h,r.y=(t.endY-s)/h,i.LineSuperCover(e,r).forEach((function(t){var e=Math.floor(t.x),n=Math.floor(t.y);e>=0&&e<c.stepWidth&&n>=0&&n<c.stepHeight&&(c.grid[Math.floor(t.x)][Math.floor(t.y)]=!0)}))}));for(var p=0;p<c.stepWidth;p++)for(var x=0;x<c.stepHeight;x++)c.grid[p][x]&&c.numberOfOccupiredCells++;d.push(c)})),d.sort((function(t,e){var n=t.stepWidth*t.stepHeight,i=e.stepWidth*e.stepHeight;return n>i?-1:n<i?1:0})),c=new r.Grid(2*f+h,2*g+h,h),c.placePolyomino(d[0],c.center.x,c.center.y);for(var x=1;x<d.length;x++){for(var E=0,I=0,N=0,C=1e6,b=!1,S=[],w={};!b;)(S=c.getDirectNeighbors(S,Math.ceil(Math.max(d[x].stepWidth,d[x].stepHeight)/2))).forEach((function(t){if(c.tryPlacingPolyomino(d[x],t.x,t.y)){b=!0;var n=c.calculateUtilityOfPlacing(d[x],t.x,t.y,e.desiredAspectRatio),i=!1;if(1==e.utilityFunction)(n.adjustedFullness>I||n.adjustedFullness==I&&(n.fullness>E||n.fullness==E&&Math.abs(n.actualAspectRatio-e.desiredAspectRatio)<=C))&&(i=!0),i&&(I=n.adjustedFullness,C=Math.abs(n.actualAspectRatio-e.desiredAspectRatio),E=n.fullness,w.x=t.x,w.y=t.y);else if(2==e.utilityFunction){var r=Math.abs(n.actualAspectRatio-e.desiredAspectRatio),o=.5*n.fullness+(1-r/Math.max(n.actualAspectRatio,e.desiredAspectRatio)*.5);o>N&&(N=o,w.x=t.x,w.y=t.y)}}}));c.placePolyomino(d[x],w.x,w.y)}d.sort((function(t,e){return t.index<e.index?-1:t.index>e.index?1:0})),l={shifts:[]},d.forEach((function(t){var e=(t.location.x-t.center.x-c.occupiedRectangle.x1)*h-t.x1,n=(t.location.y-t.center.y-c.occupiedRectangle.y1)*h-t.y1;l.shifts.push({dx:e,dy:n})}))}else l=u.packComponents(t,{componentSpacing:o});let L=function(t,e){return t.forEach((t,n)=>{t.nodes.forEach(t=>{t.x+=e[n].dx,t.y+=e[n].dy})}),a(t)}(t,l.shifts).diff(s);for(let t of l.shifts)t.dx+=L.x,t.dy+=L.y;if(n)if(l.aspectRatio=Math.round((c.occupiedRectangle.x2-c.occupiedRectangle.x1+1)/(c.occupiedRectangle.y2-c.occupiedRectangle.y1+1)*100)/100,l.fullness=Math.round(c.numberOfOccupiredCells/((c.occupiedRectangle.x2-c.occupiedRectangle.x1+1)*(c.occupiedRectangle.y2-c.occupiedRectangle.y1+1))*100*100)/100,l.aspectRatio>e.desiredAspectRatio){var O=c.occupiedRectangle.x2-c.occupiedRectangle.x1+1;l.adjustedFullness=Math.round(c.numberOfOccupiredCells/(O*(O/e.desiredAspectRatio))*100*100)/100}else{var R=c.occupiedRectangle.y2-c.occupiedRectangle.y1+1;l.adjustedFullness=Math.round(c.numberOfOccupiredCells/(R*e.desiredAspectRatio*R)*100*100)/100}return l},n}},function(t,e,n){var i;window,i=function(){return function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(i,r,function(e){return t[e]}.bind(null,r));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=1)}([function(t,e,n){!function(t){"use strict";function e(){}function n(t){this.message=t||""}function i(t){this.message=t||""}function r(t){this.message=t||""}function o(){}function s(t){return null===t?Dt:t.color}function a(t){return null===t?null:t.parent}function u(t,e){null!==t&&(t.color=e)}function l(t){return null===t?null:t.left}function c(t){return null===t?null:t.right}function h(){this.root_=null,this.size_=0}function p(){}function f(){this.array_=[],arguments[0]instanceof xt&&this.addAll(arguments[0])}function g(){}function d(t){this.message=t||""}function y(){this.array_=[]}"fill"in Array.prototype||Object.defineProperty(Array.prototype,"fill",{configurable:!0,value:function(t){if(null==this)throw new TypeError(this+" is not an object");var e=Object(this),n=Math.max(Math.min(e.length,9007199254740991),0)||0,i=1 in arguments&&parseInt(Number(arguments[1]),10)||0;i=i<0?Math.max(n+i,0):Math.min(i,n);var r=2 in arguments&&void 0!==arguments[2]?parseInt(Number(arguments[2]),10)||0:n;for(r=r<0?Math.max(n+arguments[2],0):Math.min(r,n);i<r;)e[i]=t,++i;return e},writable:!0}),Number.isFinite=Number.isFinite||function(t){return"number"==typeof t&&isFinite(t)},Number.isInteger=Number.isInteger||function(t){return"number"==typeof t&&isFinite(t)&&Math.floor(t)===t},Number.parseFloat=Number.parseFloat||parseFloat,Number.isNaN=Number.isNaN||function(t){return t!=t},Math.trunc=Math.trunc||function(t){return t<0?Math.ceil(t):Math.floor(t)};var _=function(){};_.prototype.interfaces_=function(){return[]},_.prototype.getClass=function(){return _},_.prototype.equalsWithTolerance=function(t,e,n){return Math.abs(t-e)<=n};var m=function(t){function e(e){t.call(this,e),this.name="IllegalArgumentException",this.message=e,this.stack=(new t).stack}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e}(Error),v=function(){},x={MAX_VALUE:{configurable:!0}};v.isNaN=function(t){return Number.isNaN(t)},v.doubleToLongBits=function(t){return t},v.longBitsToDouble=function(t){return t},v.isInfinite=function(t){return!Number.isFinite(t)},x.MAX_VALUE.get=function(){return Number.MAX_VALUE},Object.defineProperties(v,x);var E=function(){},I=function(){},N=function(){},C=function t(){if(this.x=null,this.y=null,this.z=null,0===arguments.length)this.x=0,this.y=0,this.z=t.NULL_ORDINATE;else if(1===arguments.length){var e=arguments[0];this.x=e.x,this.y=e.y,this.z=e.z}else 2===arguments.length?(this.x=arguments[0],this.y=arguments[1],this.z=t.NULL_ORDINATE):3===arguments.length&&(this.x=arguments[0],this.y=arguments[1],this.z=arguments[2])},b={DimensionalComparator:{configurable:!0},serialVersionUID:{configurable:!0},NULL_ORDINATE:{configurable:!0},X:{configurable:!0},Y:{configurable:!0},Z:{configurable:!0}};C.prototype.setOrdinate=function(t,e){switch(t){case C.X:this.x=e;break;case C.Y:this.y=e;break;case C.Z:this.z=e;break;default:throw new m("Invalid ordinate index: "+t)}},C.prototype.equals2D=function(){if(1===arguments.length){var t=arguments[0];return this.x===t.x&&this.y===t.y}if(2===arguments.length){var e=arguments[0],n=arguments[1];return!!_.equalsWithTolerance(this.x,e.x,n)&&!!_.equalsWithTolerance(this.y,e.y,n)}},C.prototype.getOrdinate=function(t){switch(t){case C.X:return this.x;case C.Y:return this.y;case C.Z:return this.z}throw new m("Invalid ordinate index: "+t)},C.prototype.equals3D=function(t){return this.x===t.x&&this.y===t.y&&(this.z===t.z||v.isNaN(this.z))&&v.isNaN(t.z)},C.prototype.equals=function(t){return t instanceof C&&this.equals2D(t)},C.prototype.equalInZ=function(t,e){return _.equalsWithTolerance(this.z,t.z,e)},C.prototype.compareTo=function(t){var e=t;return this.x<e.x?-1:this.x>e.x?1:this.y<e.y?-1:this.y>e.y?1:0},C.prototype.clone=function(){},C.prototype.copy=function(){return new C(this)},C.prototype.toString=function(){return"("+this.x+", "+this.y+", "+this.z+")"},C.prototype.distance3D=function(t){var e=this.x-t.x,n=this.y-t.y,i=this.z-t.z;return Math.sqrt(e*e+n*n+i*i)},C.prototype.distance=function(t){var e=this.x-t.x,n=this.y-t.y;return Math.sqrt(e*e+n*n)},C.prototype.hashCode=function(){var t=17;return 37*(t=37*t+C.hashCode(this.x))+C.hashCode(this.y)},C.prototype.setCoordinate=function(t){this.x=t.x,this.y=t.y,this.z=t.z},C.prototype.interfaces_=function(){return[E,I,e]},C.prototype.getClass=function(){return C},C.hashCode=function(){if(1===arguments.length){var t=arguments[0],e=v.doubleToLongBits(t);return Math.trunc((e^e)>>>32)}},b.DimensionalComparator.get=function(){return S},b.serialVersionUID.get=function(){return 0x5cbf2c235c7e5800},b.NULL_ORDINATE.get=function(){return v.NaN},b.X.get=function(){return 0},b.Y.get=function(){return 1},b.Z.get=function(){return 2},Object.defineProperties(C,b);var S=function(t){if(this._dimensionsToTest=2,0===arguments.length);else if(1===arguments.length){var e=arguments[0];if(2!==e&&3!==e)throw new m("only 2 or 3 dimensions may be specified");this._dimensionsToTest=e}};S.prototype.compare=function(t,e){var n=t,i=e,r=S.compare(n.x,i.x);if(0!==r)return r;var o=S.compare(n.y,i.y);return 0!==o?o:this._dimensionsToTest<=2?0:S.compare(n.z,i.z)},S.prototype.interfaces_=function(){return[N]},S.prototype.getClass=function(){return S},S.compare=function(t,e){return t<e?-1:t>e?1:v.isNaN(t)?v.isNaN(e)?0:-1:v.isNaN(e)?1:0};var w=function(){};w.prototype.create=function(){},w.prototype.interfaces_=function(){return[]},w.prototype.getClass=function(){return w};var L=function(){},O={INTERIOR:{configurable:!0},BOUNDARY:{configurable:!0},EXTERIOR:{configurable:!0},NONE:{configurable:!0}};L.prototype.interfaces_=function(){return[]},L.prototype.getClass=function(){return L},L.toLocationSymbol=function(t){switch(t){case L.EXTERIOR:return"e";case L.BOUNDARY:return"b";case L.INTERIOR:return"i";case L.NONE:return"-"}throw new m("Unknown location value: "+t)},O.INTERIOR.get=function(){return 0},O.BOUNDARY.get=function(){return 1},O.EXTERIOR.get=function(){return 2},O.NONE.get=function(){return-1},Object.defineProperties(L,O);var R=function(t,e){return t.interfaces_&&t.interfaces_().indexOf(e)>-1},T=function(){},P={LOG_10:{configurable:!0}};T.prototype.interfaces_=function(){return[]},T.prototype.getClass=function(){return T},T.log10=function(t){var e=Math.log(t);return v.isInfinite(e)||v.isNaN(e)?e:e/T.LOG_10},T.min=function(t,e,n,i){var r=t;return e<r&&(r=e),n<r&&(r=n),i<r&&(r=i),r},T.clamp=function(){if("number"==typeof arguments[2]&&"number"==typeof arguments[0]&&"number"==typeof arguments[1]){var t=arguments[0],e=arguments[1],n=arguments[2];return t<e?e:t>n?n:t}if(Number.isInteger(arguments[2])&&Number.isInteger(arguments[0])&&Number.isInteger(arguments[1])){var i=arguments[0],r=arguments[1],o=arguments[2];return i<r?r:i>o?o:i}},T.wrap=function(t,e){return t<0?e- -t%e:t%e},T.max=function(){if(3===arguments.length){var t=arguments[0],e=arguments[1],n=arguments[2],i=t;return e>i&&(i=e),n>i&&(i=n),i}if(4===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2],a=arguments[3],u=r;return o>u&&(u=o),s>u&&(u=s),a>u&&(u=a),u}},T.average=function(t,e){return(t+e)/2},P.LOG_10.get=function(){return Math.log(10)},Object.defineProperties(T,P);var M=function(t){this.str=t};M.prototype.append=function(t){this.str+=t},M.prototype.setCharAt=function(t,e){this.str=this.str.substr(0,t)+e+this.str.substr(t+1)},M.prototype.toString=function(t){return this.str};var D=function(t){this.value=t};D.prototype.intValue=function(){return this.value},D.prototype.compareTo=function(t){return this.value<t?-1:this.value>t?1:0},D.isNaN=function(t){return Number.isNaN(t)};var A=function(){};A.isWhitespace=function(t){return t<=32&&t>=0||127===t},A.toUpperCase=function(t){return t.toUpperCase()};var F=function t(){if(this._hi=0,this._lo=0,0===arguments.length)this.init(0);else if(1===arguments.length){if("number"==typeof arguments[0]){var e=arguments[0];this.init(e)}else if(arguments[0]instanceof t){var n=arguments[0];this.init(n)}else if("string"==typeof arguments[0]){var i=arguments[0];t.call(this,t.parse(i))}}else if(2===arguments.length){var r=arguments[0],o=arguments[1];this.init(r,o)}},G={PI:{configurable:!0},TWO_PI:{configurable:!0},PI_2:{configurable:!0},E:{configurable:!0},NaN:{configurable:!0},EPS:{configurable:!0},SPLIT:{configurable:!0},MAX_PRINT_DIGITS:{configurable:!0},TEN:{configurable:!0},ONE:{configurable:!0},SCI_NOT_EXPONENT_CHAR:{configurable:!0},SCI_NOT_ZERO:{configurable:!0}};F.prototype.le=function(t){return(this._hi<t._hi||this._hi===t._hi)&&this._lo<=t._lo},F.prototype.extractSignificantDigits=function(t,e){var n=this.abs(),i=F.magnitude(n._hi),r=F.TEN.pow(i);(n=n.divide(r)).gt(F.TEN)?(n=n.divide(F.TEN),i+=1):n.lt(F.ONE)&&(n=n.multiply(F.TEN),i-=1);for(var o=i+1,s=new M,a=F.MAX_PRINT_DIGITS-1,u=0;u<=a;u++){t&&u===o&&s.append(".");var l=Math.trunc(n._hi);if(l<0)break;var c=!1,h=0;l>9?(c=!0,h="9"):h="0"+l,s.append(h),n=n.subtract(F.valueOf(l)).multiply(F.TEN),c&&n.selfAdd(F.TEN);var p=!0,f=F.magnitude(n._hi);if(f<0&&Math.abs(f)>=a-u&&(p=!1),!p)break}return e[0]=i,s.toString()},F.prototype.sqr=function(){return this.multiply(this)},F.prototype.doubleValue=function(){return this._hi+this._lo},F.prototype.subtract=function(){if(arguments[0]instanceof F){var t=arguments[0];return this.add(t.negate())}if("number"==typeof arguments[0]){var e=arguments[0];return this.add(-e)}},F.prototype.equals=function(){if(1===arguments.length){var t=arguments[0];return this._hi===t._hi&&this._lo===t._lo}},F.prototype.isZero=function(){return 0===this._hi&&0===this._lo},F.prototype.selfSubtract=function(){if(arguments[0]instanceof F){var t=arguments[0];return this.isNaN()?this:this.selfAdd(-t._hi,-t._lo)}if("number"==typeof arguments[0]){var e=arguments[0];return this.isNaN()?this:this.selfAdd(-e,0)}},F.prototype.getSpecialNumberString=function(){return this.isZero()?"0.0":this.isNaN()?"NaN ":null},F.prototype.min=function(t){return this.le(t)?this:t},F.prototype.selfDivide=function(){if(1===arguments.length){if(arguments[0]instanceof F){var t=arguments[0];return this.selfDivide(t._hi,t._lo)}if("number"==typeof arguments[0]){var e=arguments[0];return this.selfDivide(e,0)}}else if(2===arguments.length){var n=arguments[0],i=arguments[1],r=null,o=null,s=null,a=null,u=null,l=null,c=null,h=null;return u=this._hi/n,h=(r=(l=F.SPLIT*u)-(r=l-u))*(s=(h=F.SPLIT*n)-(s=h-n))-(c=u*n)+r*(a=n-s)+(o=u-r)*s+o*a,h=u+(l=(this._hi-c-h+this._lo-u*i)/n),this._hi=h,this._lo=u-h+l,this}},F.prototype.dump=function(){return"DD<"+this._hi+", "+this._lo+">"},F.prototype.divide=function(){if(arguments[0]instanceof F){var t=arguments[0],e=null,n=null,i=null,r=null,o=null,s=null,a=null,u=null;return n=(o=this._hi/t._hi)-(e=(s=F.SPLIT*o)-(e=s-o)),u=e*(i=(u=F.SPLIT*t._hi)-(i=u-t._hi))-(a=o*t._hi)+e*(r=t._hi-i)+n*i+n*r,s=(this._hi-a-u+this._lo-o*t._lo)/t._hi,new F(u=o+s,o-u+s)}if("number"==typeof arguments[0]){var l=arguments[0];return v.isNaN(l)?F.createNaN():F.copy(this).selfDivide(l,0)}},F.prototype.ge=function(t){return(this._hi>t._hi||this._hi===t._hi)&&this._lo>=t._lo},F.prototype.pow=function(t){if(0===t)return F.valueOf(1);var e=new F(this),n=F.valueOf(1),i=Math.abs(t);if(i>1)for(;i>0;)i%2==1&&n.selfMultiply(e),(i/=2)>0&&(e=e.sqr());else n=e;return t<0?n.reciprocal():n},F.prototype.ceil=function(){if(this.isNaN())return F.NaN;var t=Math.ceil(this._hi),e=0;return t===this._hi&&(e=Math.ceil(this._lo)),new F(t,e)},F.prototype.compareTo=function(t){var e=t;return this._hi<e._hi?-1:this._hi>e._hi?1:this._lo<e._lo?-1:this._lo>e._lo?1:0},F.prototype.rint=function(){return this.isNaN()?this:this.add(.5).floor()},F.prototype.setValue=function(){if(arguments[0]instanceof F){var t=arguments[0];return this.init(t),this}if("number"==typeof arguments[0]){var e=arguments[0];return this.init(e),this}},F.prototype.max=function(t){return this.ge(t)?this:t},F.prototype.sqrt=function(){if(this.isZero())return F.valueOf(0);if(this.isNegative())return F.NaN;var t=1/Math.sqrt(this._hi),e=this._hi*t,n=F.valueOf(e),i=this.subtract(n.sqr())._hi*(.5*t);return n.add(i)},F.prototype.selfAdd=function(){if(1===arguments.length){if(arguments[0]instanceof F){var t=arguments[0];return this.selfAdd(t._hi,t._lo)}if("number"==typeof arguments[0]){var e=arguments[0],n=null,i=null,r=null,o=null,s=null,a=null;return o=(r=this._hi+e)-(s=r-this._hi),i=(a=(o=e-s+(this._hi-o))+this._lo)+(r-(n=r+a)),this._hi=n+i,this._lo=i+(n-this._hi),this}}else if(2===arguments.length){var u=arguments[0],l=arguments[1],c=null,h=null,p=null,f=null,g=null,d=null,y=null;f=this._hi+u,h=this._lo+l,g=f-(d=f-this._hi),p=h-(y=h-this._lo);var _=(c=f+(d=(g=u-d+(this._hi-g))+h))+(d=(p=l-y+(this._lo-p))+(d+(f-c))),m=d+(c-_);return this._hi=_,this._lo=m,this}},F.prototype.selfMultiply=function(){if(1===arguments.length){if(arguments[0]instanceof F){var t=arguments[0];return this.selfMultiply(t._hi,t._lo)}if("number"==typeof arguments[0]){var e=arguments[0];return this.selfMultiply(e,0)}}else if(2===arguments.length){var n=arguments[0],i=arguments[1],r=null,o=null,s=null,a=null,u=null,l=null;r=(u=F.SPLIT*this._hi)-this._hi,l=F.SPLIT*n,r=u-r,o=this._hi-r,s=l-n;var c=(u=this._hi*n)+(l=r*(s=l-s)-u+r*(a=n-s)+o*s+o*a+(this._hi*i+this._lo*n)),h=l+(r=u-c);return this._hi=c,this._lo=h,this}},F.prototype.selfSqr=function(){return this.selfMultiply(this)},F.prototype.floor=function(){if(this.isNaN())return F.NaN;var t=Math.floor(this._hi),e=0;return t===this._hi&&(e=Math.floor(this._lo)),new F(t,e)},F.prototype.negate=function(){return this.isNaN()?this:new F(-this._hi,-this._lo)},F.prototype.clone=function(){},F.prototype.multiply=function(){if(arguments[0]instanceof F){var t=arguments[0];return t.isNaN()?F.createNaN():F.copy(this).selfMultiply(t)}if("number"==typeof arguments[0]){var e=arguments[0];return v.isNaN(e)?F.createNaN():F.copy(this).selfMultiply(e,0)}},F.prototype.isNaN=function(){return v.isNaN(this._hi)},F.prototype.intValue=function(){return Math.trunc(this._hi)},F.prototype.toString=function(){var t=F.magnitude(this._hi);return t>=-3&&t<=20?this.toStandardNotation():this.toSciNotation()},F.prototype.toStandardNotation=function(){var t=this.getSpecialNumberString();if(null!==t)return t;var e=new Array(1).fill(null),n=this.extractSignificantDigits(!0,e),i=e[0]+1,r=n;if("."===n.charAt(0))r="0"+n;else if(i<0)r="0."+F.stringOfChar("0",-i)+n;else if(-1===n.indexOf(".")){var o=i-n.length;r=n+F.stringOfChar("0",o)+".0"}return this.isNegative()?"-"+r:r},F.prototype.reciprocal=function(){var t,e,n,i,r=null,o=null,s=null,a=null;t=(n=1/this._hi)-(r=(s=F.SPLIT*n)-(r=s-n)),o=(a=F.SPLIT*this._hi)-this._hi;var u=n+(s=(1-(i=n*this._hi)-(a=r*(o=a-o)-i+r*(e=this._hi-o)+t*o+t*e)-n*this._lo)/this._hi);return new F(u,n-u+s)},F.prototype.toSciNotation=function(){if(this.isZero())return F.SCI_NOT_ZERO;var t=this.getSpecialNumberString();if(null!==t)return t;var e=new Array(1).fill(null),n=this.extractSignificantDigits(!1,e),i=F.SCI_NOT_EXPONENT_CHAR+e[0];if("0"===n.charAt(0))throw new Error("Found leading zero: "+n);var r="";n.length>1&&(r=n.substring(1));var o=n.charAt(0)+"."+r;return this.isNegative()?"-"+o+i:o+i},F.prototype.abs=function(){return this.isNaN()?F.NaN:this.isNegative()?this.negate():new F(this)},F.prototype.isPositive=function(){return(this._hi>0||0===this._hi)&&this._lo>0},F.prototype.lt=function(t){return(this._hi<t._hi||this._hi===t._hi)&&this._lo<t._lo},F.prototype.add=function(){if(arguments[0]instanceof F){var t=arguments[0];return F.copy(this).selfAdd(t)}if("number"==typeof arguments[0]){var e=arguments[0];return F.copy(this).selfAdd(e)}},F.prototype.init=function(){if(1===arguments.length){if("number"==typeof arguments[0]){var t=arguments[0];this._hi=t,this._lo=0}else if(arguments[0]instanceof F){var e=arguments[0];this._hi=e._hi,this._lo=e._lo}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this._hi=n,this._lo=i}},F.prototype.gt=function(t){return(this._hi>t._hi||this._hi===t._hi)&&this._lo>t._lo},F.prototype.isNegative=function(){return(this._hi<0||0===this._hi)&&this._lo<0},F.prototype.trunc=function(){return this.isNaN()?F.NaN:this.isPositive()?this.floor():this.ceil()},F.prototype.signum=function(){return this._hi>0?1:this._hi<0?-1:this._lo>0?1:this._lo<0?-1:0},F.prototype.interfaces_=function(){return[e,E,I]},F.prototype.getClass=function(){return F},F.sqr=function(t){return F.valueOf(t).selfMultiply(t)},F.valueOf=function(){if("string"==typeof arguments[0]){var t=arguments[0];return F.parse(t)}if("number"==typeof arguments[0]){var e=arguments[0];return new F(e)}},F.sqrt=function(t){return F.valueOf(t).sqrt()},F.parse=function(t){for(var e=0,n=t.length;A.isWhitespace(t.charAt(e));)e++;var i=!1;if(e<n){var r=t.charAt(e);"-"!==r&&"+"!==r||(e++,"-"===r&&(i=!0))}for(var o=new F,s=0,a=0,u=0;!(e>=n);){var l=t.charAt(e);if(e++,A.isDigit(l)){var c=l-"0";o.selfMultiply(F.TEN),o.selfAdd(c),s++}else{if("."!==l){if("e"===l||"E"===l){var h=t.substring(e);try{u=D.parseInt(h)}catch(e){throw e instanceof Error?new Error("Invalid exponent "+h+" in string "+t):e}break}throw new Error("Unexpected character '"+l+"' at position "+e+" in string "+t)}a=s}}var p=o,f=s-a-u;if(0===f)p=o;else if(f>0){var g=F.TEN.pow(f);p=o.divide(g)}else if(f<0){var d=F.TEN.pow(-f);p=o.multiply(d)}return i?p.negate():p},F.createNaN=function(){return new F(v.NaN,v.NaN)},F.copy=function(t){return new F(t)},F.magnitude=function(t){var e=Math.abs(t),n=Math.log(e)/Math.log(10),i=Math.trunc(Math.floor(n));return 10*Math.pow(10,i)<=e&&(i+=1),i},F.stringOfChar=function(t,e){for(var n=new M,i=0;i<e;i++)n.append(t);return n.toString()},G.PI.get=function(){return new F(3.141592653589793,12246467991473532e-32)},G.TWO_PI.get=function(){return new F(6.283185307179586,24492935982947064e-32)},G.PI_2.get=function(){return new F(1.5707963267948966,6123233995736766e-32)},G.E.get=function(){return new F(2.718281828459045,14456468917292502e-32)},G.NaN.get=function(){return new F(v.NaN,v.NaN)},G.EPS.get=function(){return 123259516440783e-46},G.SPLIT.get=function(){return 134217729},G.MAX_PRINT_DIGITS.get=function(){return 32},G.TEN.get=function(){return F.valueOf(10)},G.ONE.get=function(){return F.valueOf(1)},G.SCI_NOT_EXPONENT_CHAR.get=function(){return"E"},G.SCI_NOT_ZERO.get=function(){return"0.0E0"},Object.defineProperties(F,G);var B=function(){},U={DP_SAFE_EPSILON:{configurable:!0}};B.prototype.interfaces_=function(){return[]},B.prototype.getClass=function(){return B},B.orientationIndex=function(t,e,n){var i=B.orientationIndexFilter(t,e,n);if(i<=1)return i;var r=F.valueOf(e.x).selfAdd(-t.x),o=F.valueOf(e.y).selfAdd(-t.y),s=F.valueOf(n.x).selfAdd(-e.x),a=F.valueOf(n.y).selfAdd(-e.y);return r.selfMultiply(a).selfSubtract(o.selfMultiply(s)).signum()},B.signOfDet2x2=function(t,e,n,i){return t.multiply(i).selfSubtract(e.multiply(n)).signum()},B.intersection=function(t,e,n,i){var r=F.valueOf(i.y).selfSubtract(n.y).selfMultiply(F.valueOf(e.x).selfSubtract(t.x)),o=F.valueOf(i.x).selfSubtract(n.x).selfMultiply(F.valueOf(e.y).selfSubtract(t.y)),s=r.subtract(o),a=F.valueOf(i.x).selfSubtract(n.x).selfMultiply(F.valueOf(t.y).selfSubtract(n.y)),u=F.valueOf(i.y).selfSubtract(n.y).selfMultiply(F.valueOf(t.x).selfSubtract(n.x)),l=a.subtract(u).selfDivide(s).doubleValue(),c=F.valueOf(t.x).selfAdd(F.valueOf(e.x).selfSubtract(t.x).selfMultiply(l)).doubleValue(),h=F.valueOf(e.x).selfSubtract(t.x).selfMultiply(F.valueOf(t.y).selfSubtract(n.y)),p=F.valueOf(e.y).selfSubtract(t.y).selfMultiply(F.valueOf(t.x).selfSubtract(n.x)),f=h.subtract(p).selfDivide(s).doubleValue(),g=F.valueOf(n.y).selfAdd(F.valueOf(i.y).selfSubtract(n.y).selfMultiply(f)).doubleValue();return new C(c,g)},B.orientationIndexFilter=function(t,e,n){var i=null,r=(t.x-n.x)*(e.y-n.y),o=(t.y-n.y)*(e.x-n.x),s=r-o;if(r>0){if(o<=0)return B.signum(s);i=r+o}else{if(!(r<0))return B.signum(s);if(o>=0)return B.signum(s);i=-r-o}var a=B.DP_SAFE_EPSILON*i;return s>=a||-s>=a?B.signum(s):2},B.signum=function(t){return t>0?1:t<0?-1:0},U.DP_SAFE_EPSILON.get=function(){return 1e-15},Object.defineProperties(B,U);var V=function(){},q={X:{configurable:!0},Y:{configurable:!0},Z:{configurable:!0},M:{configurable:!0}};q.X.get=function(){return 0},q.Y.get=function(){return 1},q.Z.get=function(){return 2},q.M.get=function(){return 3},V.prototype.setOrdinate=function(t,e,n){},V.prototype.size=function(){},V.prototype.getOrdinate=function(t,e){},V.prototype.getCoordinate=function(){},V.prototype.getCoordinateCopy=function(t){},V.prototype.getDimension=function(){},V.prototype.getX=function(t){},V.prototype.clone=function(){},V.prototype.expandEnvelope=function(t){},V.prototype.copy=function(){},V.prototype.getY=function(t){},V.prototype.toCoordinateArray=function(){},V.prototype.interfaces_=function(){return[I]},V.prototype.getClass=function(){return V},Object.defineProperties(V,q);var z=function(){},X=function(t){function e(){t.call(this,"Projective point not representable on the Cartesian plane.")}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(z),Y=function(){};Y.arraycopy=function(t,e,n,i,r){for(var o=0,s=e;s<e+r;s++)n[i+o]=t[s],o++},Y.getProperty=function(t){return{"line.separator":"\n"}[t]};var k=function t(){if(this.x=null,this.y=null,this.w=null,0===arguments.length)this.x=0,this.y=0,this.w=1;else if(1===arguments.length){var e=arguments[0];this.x=e.x,this.y=e.y,this.w=1}else if(2===arguments.length){if("number"==typeof arguments[0]&&"number"==typeof arguments[1]){var n=arguments[0],i=arguments[1];this.x=n,this.y=i,this.w=1}else if(arguments[0]instanceof t&&arguments[1]instanceof t){var r=arguments[0],o=arguments[1];this.x=r.y*o.w-o.y*r.w,this.y=o.x*r.w-r.x*o.w,this.w=r.x*o.y-o.x*r.y}else if(arguments[0]instanceof C&&arguments[1]instanceof C){var s=arguments[0],a=arguments[1];this.x=s.y-a.y,this.y=a.x-s.x,this.w=s.x*a.y-a.x*s.y}}else if(3===arguments.length){var u=arguments[0],l=arguments[1],c=arguments[2];this.x=u,this.y=l,this.w=c}else if(4===arguments.length){var h=arguments[0],p=arguments[1],f=arguments[2],g=arguments[3],d=h.y-p.y,y=p.x-h.x,_=h.x*p.y-p.x*h.y,m=f.y-g.y,v=g.x-f.x,x=f.x*g.y-g.x*f.y;this.x=y*x-v*_,this.y=m*_-d*x,this.w=d*v-m*y}};k.prototype.getY=function(){var t=this.y/this.w;if(v.isNaN(t)||v.isInfinite(t))throw new X;return t},k.prototype.getX=function(){var t=this.x/this.w;if(v.isNaN(t)||v.isInfinite(t))throw new X;return t},k.prototype.getCoordinate=function(){var t=new C;return t.x=this.getX(),t.y=this.getY(),t},k.prototype.interfaces_=function(){return[]},k.prototype.getClass=function(){return k},k.intersection=function(t,e,n,i){var r=t.y-e.y,o=e.x-t.x,s=t.x*e.y-e.x*t.y,a=n.y-i.y,u=i.x-n.x,l=n.x*i.y-i.x*n.y,c=r*u-a*o,h=(o*l-u*s)/c,p=(a*s-r*l)/c;if(v.isNaN(h)||v.isInfinite(h)||v.isNaN(p)||v.isInfinite(p))throw new X;return new C(h,p)};var j=function t(){if(this._minx=null,this._maxx=null,this._miny=null,this._maxy=null,0===arguments.length)this.init();else if(1===arguments.length){if(arguments[0]instanceof C){var e=arguments[0];this.init(e.x,e.x,e.y,e.y)}else if(arguments[0]instanceof t){var n=arguments[0];this.init(n)}}else if(2===arguments.length){var i=arguments[0],r=arguments[1];this.init(i.x,r.x,i.y,r.y)}else if(4===arguments.length){var o=arguments[0],s=arguments[1],a=arguments[2],u=arguments[3];this.init(o,s,a,u)}},H={serialVersionUID:{configurable:!0}};j.prototype.getArea=function(){return this.getWidth()*this.getHeight()},j.prototype.equals=function(t){if(!(t instanceof j))return!1;var e=t;return this.isNull()?e.isNull():this._maxx===e.getMaxX()&&this._maxy===e.getMaxY()&&this._minx===e.getMinX()&&this._miny===e.getMinY()},j.prototype.intersection=function(t){if(this.isNull()||t.isNull()||!this.intersects(t))return new j;var e=this._minx>t._minx?this._minx:t._minx,n=this._miny>t._miny?this._miny:t._miny,i=this._maxx<t._maxx?this._maxx:t._maxx,r=this._maxy<t._maxy?this._maxy:t._maxy;return new j(e,i,n,r)},j.prototype.isNull=function(){return this._maxx<this._minx},j.prototype.getMaxX=function(){return this._maxx},j.prototype.covers=function(){if(1===arguments.length){if(arguments[0]instanceof C){var t=arguments[0];return this.covers(t.x,t.y)}if(arguments[0]instanceof j){var e=arguments[0];return!this.isNull()&&!e.isNull()&&e.getMinX()>=this._minx&&e.getMaxX()<=this._maxx&&e.getMinY()>=this._miny&&e.getMaxY()<=this._maxy}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];return!this.isNull()&&n>=this._minx&&n<=this._maxx&&i>=this._miny&&i<=this._maxy}},j.prototype.intersects=function(){if(1===arguments.length){if(arguments[0]instanceof j){var t=arguments[0];return!this.isNull()&&!t.isNull()&&!(t._minx>this._maxx||t._maxx<this._minx||t._miny>this._maxy||t._maxy<this._miny)}if(arguments[0]instanceof C){var e=arguments[0];return this.intersects(e.x,e.y)}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];return!this.isNull()&&!(n>this._maxx||n<this._minx||i>this._maxy||i<this._miny)}},j.prototype.getMinY=function(){return this._miny},j.prototype.getMinX=function(){return this._minx},j.prototype.expandToInclude=function(){if(1===arguments.length){if(arguments[0]instanceof C){var t=arguments[0];this.expandToInclude(t.x,t.y)}else if(arguments[0]instanceof j){var e=arguments[0];if(e.isNull())return null;this.isNull()?(this._minx=e.getMinX(),this._maxx=e.getMaxX(),this._miny=e.getMinY(),this._maxy=e.getMaxY()):(e._minx<this._minx&&(this._minx=e._minx),e._maxx>this._maxx&&(this._maxx=e._maxx),e._miny<this._miny&&(this._miny=e._miny),e._maxy>this._maxy&&(this._maxy=e._maxy))}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this.isNull()?(this._minx=n,this._maxx=n,this._miny=i,this._maxy=i):(n<this._minx&&(this._minx=n),n>this._maxx&&(this._maxx=n),i<this._miny&&(this._miny=i),i>this._maxy&&(this._maxy=i))}},j.prototype.minExtent=function(){if(this.isNull())return 0;var t=this.getWidth(),e=this.getHeight();return t<e?t:e},j.prototype.getWidth=function(){return this.isNull()?0:this._maxx-this._minx},j.prototype.compareTo=function(t){var e=t;return this.isNull()?e.isNull()?0:-1:e.isNull()?1:this._minx<e._minx?-1:this._minx>e._minx?1:this._miny<e._miny?-1:this._miny>e._miny?1:this._maxx<e._maxx?-1:this._maxx>e._maxx?1:this._maxy<e._maxy?-1:this._maxy>e._maxy?1:0},j.prototype.translate=function(t,e){if(this.isNull())return null;this.init(this.getMinX()+t,this.getMaxX()+t,this.getMinY()+e,this.getMaxY()+e)},j.prototype.toString=function(){return"Env["+this._minx+" : "+this._maxx+", "+this._miny+" : "+this._maxy+"]"},j.prototype.setToNull=function(){this._minx=0,this._maxx=-1,this._miny=0,this._maxy=-1},j.prototype.getHeight=function(){return this.isNull()?0:this._maxy-this._miny},j.prototype.maxExtent=function(){if(this.isNull())return 0;var t=this.getWidth(),e=this.getHeight();return t>e?t:e},j.prototype.expandBy=function(){if(1===arguments.length){var t=arguments[0];this.expandBy(t,t)}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(this.isNull())return null;this._minx-=e,this._maxx+=e,this._miny-=n,this._maxy+=n,(this._minx>this._maxx||this._miny>this._maxy)&&this.setToNull()}},j.prototype.contains=function(){if(1===arguments.length){if(arguments[0]instanceof j){var t=arguments[0];return this.covers(t)}if(arguments[0]instanceof C){var e=arguments[0];return this.covers(e)}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];return this.covers(n,i)}},j.prototype.centre=function(){return this.isNull()?null:new C((this.getMinX()+this.getMaxX())/2,(this.getMinY()+this.getMaxY())/2)},j.prototype.init=function(){if(0===arguments.length)this.setToNull();else if(1===arguments.length){if(arguments[0]instanceof C){var t=arguments[0];this.init(t.x,t.x,t.y,t.y)}else if(arguments[0]instanceof j){var e=arguments[0];this._minx=e._minx,this._maxx=e._maxx,this._miny=e._miny,this._maxy=e._maxy}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this.init(n.x,i.x,n.y,i.y)}else if(4===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2],a=arguments[3];r<o?(this._minx=r,this._maxx=o):(this._minx=o,this._maxx=r),s<a?(this._miny=s,this._maxy=a):(this._miny=a,this._maxy=s)}},j.prototype.getMaxY=function(){return this._maxy},j.prototype.distance=function(t){if(this.intersects(t))return 0;var e=0;this._maxx<t._minx?e=t._minx-this._maxx:this._minx>t._maxx&&(e=this._minx-t._maxx);var n=0;return this._maxy<t._miny?n=t._miny-this._maxy:this._miny>t._maxy&&(n=this._miny-t._maxy),0===e?n:0===n?e:Math.sqrt(e*e+n*n)},j.prototype.hashCode=function(){var t=17;return 37*(t=37*(t=37*(t=37*t+C.hashCode(this._minx))+C.hashCode(this._maxx))+C.hashCode(this._miny))+C.hashCode(this._maxy)},j.prototype.interfaces_=function(){return[E,e]},j.prototype.getClass=function(){return j},j.intersects=function(){if(3===arguments.length){var t=arguments[0],e=arguments[1],n=arguments[2];return n.x>=(t.x<e.x?t.x:e.x)&&n.x<=(t.x>e.x?t.x:e.x)&&n.y>=(t.y<e.y?t.y:e.y)&&n.y<=(t.y>e.y?t.y:e.y)}if(4===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2],s=arguments[3],a=Math.min(o.x,s.x),u=Math.max(o.x,s.x),l=Math.min(i.x,r.x),c=Math.max(i.x,r.x);return!(l>u||c<a||(a=Math.min(o.y,s.y),u=Math.max(o.y,s.y),l=Math.min(i.y,r.y),c=Math.max(i.y,r.y),l>u||c<a))}},H.serialVersionUID.get=function(){return 0x51845cd552189800},Object.defineProperties(j,H);var W={typeStr:/^\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/,emptyTypeStr:/^\s*(\w+)\s*EMPTY\s*$/,spaces:/\s+/,parenComma:/\)\s*,\s*\(/,doubleParenComma:/\)\s*\)\s*,\s*\(\s*\(/,trimParens:/^\s*\(?(.*?)\)?\s*$/},K=function(t){this.geometryFactory=t||new _e};K.prototype.read=function(t){var e,n,i;t=t.replace(/[\n\r]/g," ");var r=W.typeStr.exec(t);if(-1!==t.search("EMPTY")&&((r=W.emptyTypeStr.exec(t))[2]=void 0),r&&(n=r[1].toLowerCase(),i=r[2],Q[n]&&(e=Q[n].apply(this,[i]))),void 0===e)throw new Error("Could not parse WKT "+t);return e},K.prototype.write=function(t){return this.extractGeometry(t)},K.prototype.extractGeometry=function(t){var e=t.getGeometryType().toLowerCase();if(!J[e])return null;var n=e.toUpperCase();return t.isEmpty()?n+" EMPTY":n+"("+J[e].apply(this,[t])+")"};var J={coordinate:function(t){return t.x+" "+t.y},point:function(t){return J.coordinate.call(this,t._coordinates._coordinates[0])},multipoint:function(t){for(var e=[],n=0,i=t._geometries.length;n<i;++n)e.push("("+J.point.apply(this,[t._geometries[n]])+")");return e.join(",")},linestring:function(t){for(var e=[],n=0,i=t._points._coordinates.length;n<i;++n)e.push(J.coordinate.apply(this,[t._points._coordinates[n]]));return e.join(",")},linearring:function(t){for(var e=[],n=0,i=t._points._coordinates.length;n<i;++n)e.push(J.coordinate.apply(this,[t._points._coordinates[n]]));return e.join(",")},multilinestring:function(t){for(var e=[],n=0,i=t._geometries.length;n<i;++n)e.push("("+J.linestring.apply(this,[t._geometries[n]])+")");return e.join(",")},polygon:function(t){var e=[];e.push("("+J.linestring.apply(this,[t._shell])+")");for(var n=0,i=t._holes.length;n<i;++n)e.push("("+J.linestring.apply(this,[t._holes[n]])+")");return e.join(",")},multipolygon:function(t){for(var e=[],n=0,i=t._geometries.length;n<i;++n)e.push("("+J.polygon.apply(this,[t._geometries[n]])+")");return e.join(",")},geometrycollection:function(t){for(var e=[],n=0,i=t._geometries.length;n<i;++n)e.push(this.extractGeometry(t._geometries[n]));return e.join(",")}},Q={point:function(t){if(void 0===t)return this.geometryFactory.createPoint();var e=t.trim().split(W.spaces);return this.geometryFactory.createPoint(new C(Number.parseFloat(e[0]),Number.parseFloat(e[1])))},multipoint:function(t){if(void 0===t)return this.geometryFactory.createMultiPoint();for(var e,n=t.trim().split(","),i=[],r=0,o=n.length;r<o;++r)e=n[r].replace(W.trimParens,"$1"),i.push(Q.point.apply(this,[e]));return this.geometryFactory.createMultiPoint(i)},linestring:function(t){if(void 0===t)return this.geometryFactory.createLineString();for(var e,n=t.trim().split(","),i=[],r=0,o=n.length;r<o;++r)e=n[r].trim().split(W.spaces),i.push(new C(Number.parseFloat(e[0]),Number.parseFloat(e[1])));return this.geometryFactory.createLineString(i)},linearring:function(t){if(void 0===t)return this.geometryFactory.createLinearRing();for(var e,n=t.trim().split(","),i=[],r=0,o=n.length;r<o;++r)e=n[r].trim().split(W.spaces),i.push(new C(Number.parseFloat(e[0]),Number.parseFloat(e[1])));return this.geometryFactory.createLinearRing(i)},multilinestring:function(t){if(void 0===t)return this.geometryFactory.createMultiLineString();for(var e,n=t.trim().split(W.parenComma),i=[],r=0,o=n.length;r<o;++r)e=n[r].replace(W.trimParens,"$1"),i.push(Q.linestring.apply(this,[e]));return this.geometryFactory.createMultiLineString(i)},polygon:function(t){if(void 0===t)return this.geometryFactory.createPolygon();for(var e,n,i,r,o=t.trim().split(W.parenComma),s=[],a=0,u=o.length;a<u;++a)e=o[a].replace(W.trimParens,"$1"),n=Q.linestring.apply(this,[e]),i=this.geometryFactory.createLinearRing(n._points),0===a?r=i:s.push(i);return this.geometryFactory.createPolygon(r,s)},multipolygon:function(t){if(void 0===t)return this.geometryFactory.createMultiPolygon();for(var e,n=t.trim().split(W.doubleParenComma),i=[],r=0,o=n.length;r<o;++r)e=n[r].replace(W.trimParens,"$1"),i.push(Q.polygon.apply(this,[e]));return this.geometryFactory.createMultiPolygon(i)},geometrycollection:function(t){if(void 0===t)return this.geometryFactory.createGeometryCollection();for(var e=(t=t.replace(/,\s*([A-Za-z])/g,"|$1")).trim().split("|"),n=[],i=0,r=e.length;i<r;++i)n.push(this.read(e[i]));return this.geometryFactory.createGeometryCollection(n)}},Z=function(t){this.parser=new K(t)};Z.prototype.write=function(t){return this.parser.write(t)},Z.toLineString=function(t,e){if(2!==arguments.length)throw new Error("Not implemented");return"LINESTRING ( "+t.x+" "+t.y+", "+e.x+" "+e.y+" )"};var $=function(t){function e(e){t.call(this,e),this.name="RuntimeException",this.message=e,this.stack=(new t).stack}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e}(Error),tt=function(t){function e(){if(t.call(this),0===arguments.length)t.call(this);else if(1===arguments.length){var e=arguments[0];t.call(this,e)}}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}($),et=function(){};et.prototype.interfaces_=function(){return[]},et.prototype.getClass=function(){return et},et.shouldNeverReachHere=function(){if(0===arguments.length)et.shouldNeverReachHere(null);else if(1===arguments.length){var t=arguments[0];throw new tt("Should never reach here"+(null!==t?": "+t:""))}},et.isTrue=function(){var t;if(1===arguments.length)et.isTrue(arguments[0],null);else if(2===arguments.length&&(t=arguments[1],!arguments[0]))throw null===t?new tt:new tt(t)},et.equals=function(){var t,e,n;if(2===arguments.length)et.equals(t=arguments[0],e=arguments[1],null);else if(3===arguments.length&&(t=arguments[0],n=arguments[2],!(e=arguments[1]).equals(t)))throw new tt("Expected "+t+" but encountered "+e+(null!==n?": "+n:""))};var nt=function(){this._result=null,this._inputLines=Array(2).fill().map((function(){return Array(2)})),this._intPt=new Array(2).fill(null),this._intLineIndex=null,this._isProper=null,this._pa=null,this._pb=null,this._precisionModel=null,this._intPt[0]=new C,this._intPt[1]=new C,this._pa=this._intPt[0],this._pb=this._intPt[1],this._result=0},it={DONT_INTERSECT:{configurable:!0},DO_INTERSECT:{configurable:!0},COLLINEAR:{configurable:!0},NO_INTERSECTION:{configurable:!0},POINT_INTERSECTION:{configurable:!0},COLLINEAR_INTERSECTION:{configurable:!0}};nt.prototype.getIndexAlongSegment=function(t,e){return this.computeIntLineIndex(),this._intLineIndex[t][e]},nt.prototype.getTopologySummary=function(){var t=new M;return this.isEndPoint()&&t.append(" endpoint"),this._isProper&&t.append(" proper"),this.isCollinear()&&t.append(" collinear"),t.toString()},nt.prototype.computeIntersection=function(t,e,n,i){this._inputLines[0][0]=t,this._inputLines[0][1]=e,this._inputLines[1][0]=n,this._inputLines[1][1]=i,this._result=this.computeIntersect(t,e,n,i)},nt.prototype.getIntersectionNum=function(){return this._result},nt.prototype.computeIntLineIndex=function(){if(0===arguments.length)null===this._intLineIndex&&(this._intLineIndex=Array(2).fill().map((function(){return Array(2)})),this.computeIntLineIndex(0),this.computeIntLineIndex(1));else if(1===arguments.length){var t=arguments[0];this.getEdgeDistance(t,0)>this.getEdgeDistance(t,1)?(this._intLineIndex[t][0]=0,this._intLineIndex[t][1]=1):(this._intLineIndex[t][0]=1,this._intLineIndex[t][1]=0)}},nt.prototype.isProper=function(){return this.hasIntersection()&&this._isProper},nt.prototype.setPrecisionModel=function(t){this._precisionModel=t},nt.prototype.isInteriorIntersection=function(){if(0===arguments.length)return!!this.isInteriorIntersection(0)||!!this.isInteriorIntersection(1);if(1===arguments.length){for(var t=arguments[0],e=0;e<this._result;e++)if(!this._intPt[e].equals2D(this._inputLines[t][0])&&!this._intPt[e].equals2D(this._inputLines[t][1]))return!0;return!1}},nt.prototype.getIntersection=function(t){return this._intPt[t]},nt.prototype.isEndPoint=function(){return this.hasIntersection()&&!this._isProper},nt.prototype.hasIntersection=function(){return this._result!==nt.NO_INTERSECTION},nt.prototype.getEdgeDistance=function(t,e){return nt.computeEdgeDistance(this._intPt[e],this._inputLines[t][0],this._inputLines[t][1])},nt.prototype.isCollinear=function(){return this._result===nt.COLLINEAR_INTERSECTION},nt.prototype.toString=function(){return Z.toLineString(this._inputLines[0][0],this._inputLines[0][1])+" - "+Z.toLineString(this._inputLines[1][0],this._inputLines[1][1])+this.getTopologySummary()},nt.prototype.getEndpoint=function(t,e){return this._inputLines[t][e]},nt.prototype.isIntersection=function(t){for(var e=0;e<this._result;e++)if(this._intPt[e].equals2D(t))return!0;return!1},nt.prototype.getIntersectionAlongSegment=function(t,e){return this.computeIntLineIndex(),this._intPt[this._intLineIndex[t][e]]},nt.prototype.interfaces_=function(){return[]},nt.prototype.getClass=function(){return nt},nt.computeEdgeDistance=function(t,e,n){var i=Math.abs(n.x-e.x),r=Math.abs(n.y-e.y),o=-1;if(t.equals(e))o=0;else if(t.equals(n))o=i>r?i:r;else{var s=Math.abs(t.x-e.x),a=Math.abs(t.y-e.y);0!==(o=i>r?s:a)||t.equals(e)||(o=Math.max(s,a))}return et.isTrue(!(0===o&&!t.equals(e)),"Bad distance calculation"),o},nt.nonRobustComputeEdgeDistance=function(t,e,n){var i=t.x-e.x,r=t.y-e.y,o=Math.sqrt(i*i+r*r);return et.isTrue(!(0===o&&!t.equals(e)),"Invalid distance calculation"),o},it.DONT_INTERSECT.get=function(){return 0},it.DO_INTERSECT.get=function(){return 1},it.COLLINEAR.get=function(){return 2},it.NO_INTERSECTION.get=function(){return 0},it.POINT_INTERSECTION.get=function(){return 1},it.COLLINEAR_INTERSECTION.get=function(){return 2},Object.defineProperties(nt,it);var rt=function(t){function e(){t.apply(this,arguments)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.isInSegmentEnvelopes=function(t){var e=new j(this._inputLines[0][0],this._inputLines[0][1]),n=new j(this._inputLines[1][0],this._inputLines[1][1]);return e.contains(t)&&n.contains(t)},e.prototype.computeIntersection=function(){if(3!==arguments.length)return t.prototype.computeIntersection.apply(this,arguments);var e=arguments[0],n=arguments[1],i=arguments[2];if(this._isProper=!1,j.intersects(n,i,e)&&0===at.orientationIndex(n,i,e)&&0===at.orientationIndex(i,n,e))return this._isProper=!0,(e.equals(n)||e.equals(i))&&(this._isProper=!1),this._result=t.POINT_INTERSECTION,null;this._result=t.NO_INTERSECTION},e.prototype.normalizeToMinimum=function(t,e,n,i,r){r.x=this.smallestInAbsValue(t.x,e.x,n.x,i.x),r.y=this.smallestInAbsValue(t.y,e.y,n.y,i.y),t.x-=r.x,t.y-=r.y,e.x-=r.x,e.y-=r.y,n.x-=r.x,n.y-=r.y,i.x-=r.x,i.y-=r.y},e.prototype.safeHCoordinateIntersection=function(t,n,i,r){var o=null;try{o=k.intersection(t,n,i,r)}catch(s){if(!(s instanceof X))throw s;o=e.nearestEndpoint(t,n,i,r)}return o},e.prototype.intersection=function(t,n,i,r){var o=this.intersectionWithNormalization(t,n,i,r);return this.isInSegmentEnvelopes(o)||(o=new C(e.nearestEndpoint(t,n,i,r))),null!==this._precisionModel&&this._precisionModel.makePrecise(o),o},e.prototype.smallestInAbsValue=function(t,e,n,i){var r=t,o=Math.abs(r);return Math.abs(e)<o&&(r=e,o=Math.abs(e)),Math.abs(n)<o&&(r=n,o=Math.abs(n)),Math.abs(i)<o&&(r=i),r},e.prototype.checkDD=function(t,e,n,i,r){var o=B.intersection(t,e,n,i),s=this.isInSegmentEnvelopes(o);Y.out.println("DD in env = "+s+"  --------------------- "+o),r.distance(o)>1e-4&&Y.out.println("Distance = "+r.distance(o))},e.prototype.intersectionWithNormalization=function(t,e,n,i){var r=new C(t),o=new C(e),s=new C(n),a=new C(i),u=new C;this.normalizeToEnvCentre(r,o,s,a,u);var l=this.safeHCoordinateIntersection(r,o,s,a);return l.x+=u.x,l.y+=u.y,l},e.prototype.computeCollinearIntersection=function(e,n,i,r){var o=j.intersects(e,n,i),s=j.intersects(e,n,r),a=j.intersects(i,r,e),u=j.intersects(i,r,n);return o&&s?(this._intPt[0]=i,this._intPt[1]=r,t.COLLINEAR_INTERSECTION):a&&u?(this._intPt[0]=e,this._intPt[1]=n,t.COLLINEAR_INTERSECTION):o&&a?(this._intPt[0]=i,this._intPt[1]=e,!i.equals(e)||s||u?t.COLLINEAR_INTERSECTION:t.POINT_INTERSECTION):o&&u?(this._intPt[0]=i,this._intPt[1]=n,!i.equals(n)||s||a?t.COLLINEAR_INTERSECTION:t.POINT_INTERSECTION):s&&a?(this._intPt[0]=r,this._intPt[1]=e,!r.equals(e)||o||u?t.COLLINEAR_INTERSECTION:t.POINT_INTERSECTION):s&&u?(this._intPt[0]=r,this._intPt[1]=n,!r.equals(n)||o||a?t.COLLINEAR_INTERSECTION:t.POINT_INTERSECTION):t.NO_INTERSECTION},e.prototype.normalizeToEnvCentre=function(t,e,n,i,r){var o=t.x<e.x?t.x:e.x,s=t.y<e.y?t.y:e.y,a=t.x>e.x?t.x:e.x,u=t.y>e.y?t.y:e.y,l=n.x<i.x?n.x:i.x,c=n.y<i.y?n.y:i.y,h=n.x>i.x?n.x:i.x,p=n.y>i.y?n.y:i.y,f=((o>l?o:l)+(a<h?a:h))/2,g=((s>c?s:c)+(u<p?u:p))/2;r.x=f,r.y=g,t.x-=r.x,t.y-=r.y,e.x-=r.x,e.y-=r.y,n.x-=r.x,n.y-=r.y,i.x-=r.x,i.y-=r.y},e.prototype.computeIntersect=function(e,n,i,r){if(this._isProper=!1,!j.intersects(e,n,i,r))return t.NO_INTERSECTION;var o=at.orientationIndex(e,n,i),s=at.orientationIndex(e,n,r);if(o>0&&s>0||o<0&&s<0)return t.NO_INTERSECTION;var a=at.orientationIndex(i,r,e),u=at.orientationIndex(i,r,n);return a>0&&u>0||a<0&&u<0?t.NO_INTERSECTION:0===o&&0===s&&0===a&&0===u?this.computeCollinearIntersection(e,n,i,r):(0===o||0===s||0===a||0===u?(this._isProper=!1,e.equals2D(i)||e.equals2D(r)?this._intPt[0]=e:n.equals2D(i)||n.equals2D(r)?this._intPt[0]=n:0===o?this._intPt[0]=new C(i):0===s?this._intPt[0]=new C(r):0===a?this._intPt[0]=new C(e):0===u&&(this._intPt[0]=new C(n))):(this._isProper=!0,this._intPt[0]=this.intersection(e,n,i,r)),t.POINT_INTERSECTION)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e.nearestEndpoint=function(t,e,n,i){var r=t,o=at.distancePointLine(t,n,i),s=at.distancePointLine(e,n,i);return s<o&&(o=s,r=e),(s=at.distancePointLine(n,t,e))<o&&(o=s,r=n),(s=at.distancePointLine(i,t,e))<o&&(o=s,r=i),r},e}(nt),ot=function(){};ot.prototype.interfaces_=function(){return[]},ot.prototype.getClass=function(){return ot},ot.orientationIndex=function(t,e,n){var i=e.x-t.x,r=e.y-t.y,o=n.x-e.x,s=n.y-e.y;return ot.signOfDet2x2(i,r,o,s)},ot.signOfDet2x2=function(t,e,n,i){var r=null,o=null,s=null;if(r=1,0===t||0===i)return 0===e||0===n?0:e>0?n>0?-r:r:n>0?r:-r;if(0===e||0===n)return i>0?t>0?r:-r:t>0?-r:r;if(e>0?i>0?e<=i||(r=-r,o=t,t=n,n=o,o=e,e=i,i=o):e<=-i?(r=-r,n=-n,i=-i):(o=t,t=-n,n=o,o=e,e=-i,i=o):i>0?-e<=i?(r=-r,t=-t,e=-e):(o=-t,t=n,n=o,o=-e,e=i,i=o):e>=i?(t=-t,e=-e,n=-n,i=-i):(r=-r,o=-t,t=-n,n=o,o=-e,e=-i,i=o),t>0){if(!(n>0))return r;if(!(t<=n))return r}else{if(n>0)return-r;if(!(t>=n))return-r;r=-r,t=-t,n=-n}for(;;){if((i-=(s=Math.floor(n/t))*e)<0)return-r;if(i>e)return r;if(t>(n-=s*t)+n){if(e<i+i)return r}else{if(e>i+i)return-r;n=t-n,i=e-i,r=-r}if(0===i)return 0===n?0:-r;if(0===n)return r;if((e-=(s=Math.floor(t/n))*i)<0)return r;if(e>i)return-r;if(n>(t-=s*n)+t){if(i<e+e)return-r}else{if(i>e+e)return r;t=n-t,e=i-e,r=-r}if(0===e)return 0===t?0:r;if(0===t)return-r}};var st=function(){this._p=null,this._crossingCount=0,this._isPointOnSegment=!1;var t=arguments[0];this._p=t};st.prototype.countSegment=function(t,e){if(t.x<this._p.x&&e.x<this._p.x)return null;if(this._p.x===e.x&&this._p.y===e.y)return this._isPointOnSegment=!0,null;if(t.y===this._p.y&&e.y===this._p.y){var n=t.x,i=e.x;return n>i&&(n=e.x,i=t.x),this._p.x>=n&&this._p.x<=i&&(this._isPointOnSegment=!0),null}if(t.y>this._p.y&&e.y<=this._p.y||e.y>this._p.y&&t.y<=this._p.y){var r=t.x-this._p.x,o=t.y-this._p.y,s=e.x-this._p.x,a=e.y-this._p.y,u=ot.signOfDet2x2(r,o,s,a);if(0===u)return this._isPointOnSegment=!0,null;a<o&&(u=-u),u>0&&this._crossingCount++}},st.prototype.isPointInPolygon=function(){return this.getLocation()!==L.EXTERIOR},st.prototype.getLocation=function(){return this._isPointOnSegment?L.BOUNDARY:this._crossingCount%2==1?L.INTERIOR:L.EXTERIOR},st.prototype.isOnSegment=function(){return this._isPointOnSegment},st.prototype.interfaces_=function(){return[]},st.prototype.getClass=function(){return st},st.locatePointInRing=function(){if(arguments[0]instanceof C&&R(arguments[1],V)){for(var t=arguments[0],e=arguments[1],n=new st(t),i=new C,r=new C,o=1;o<e.size();o++)if(e.getCoordinate(o,i),e.getCoordinate(o-1,r),n.countSegment(i,r),n.isOnSegment())return n.getLocation();return n.getLocation()}if(arguments[0]instanceof C&&arguments[1]instanceof Array){for(var s=arguments[0],a=arguments[1],u=new st(s),l=1;l<a.length;l++){var c=a[l],h=a[l-1];if(u.countSegment(c,h),u.isOnSegment())return u.getLocation()}return u.getLocation()}};var at=function(){},ut={CLOCKWISE:{configurable:!0},RIGHT:{configurable:!0},COUNTERCLOCKWISE:{configurable:!0},LEFT:{configurable:!0},COLLINEAR:{configurable:!0},STRAIGHT:{configurable:!0}};at.prototype.interfaces_=function(){return[]},at.prototype.getClass=function(){return at},at.orientationIndex=function(t,e,n){return B.orientationIndex(t,e,n)},at.signedArea=function(){if(arguments[0]instanceof Array){var t=arguments[0];if(t.length<3)return 0;for(var e=0,n=t[0].x,i=1;i<t.length-1;i++){var r=t[i].x-n,o=t[i+1].y;e+=r*(t[i-1].y-o)}return e/2}if(R(arguments[0],V)){var s=arguments[0],a=s.size();if(a<3)return 0;var u=new C,l=new C,c=new C;s.getCoordinate(0,l),s.getCoordinate(1,c);var h=l.x;c.x-=h;for(var p=0,f=1;f<a-1;f++)u.y=l.y,l.x=c.x,l.y=c.y,s.getCoordinate(f+1,c),c.x-=h,p+=l.x*(u.y-c.y);return p/2}},at.distanceLineLine=function(t,e,n,i){if(t.equals(e))return at.distancePointLine(t,n,i);if(n.equals(i))return at.distancePointLine(i,t,e);var r=!1;if(j.intersects(t,e,n,i)){var o=(e.x-t.x)*(i.y-n.y)-(e.y-t.y)*(i.x-n.x);if(0===o)r=!0;else{var s=(t.y-n.y)*(i.x-n.x)-(t.x-n.x)*(i.y-n.y),a=((t.y-n.y)*(e.x-t.x)-(t.x-n.x)*(e.y-t.y))/o,u=s/o;(u<0||u>1||a<0||a>1)&&(r=!0)}}else r=!0;return r?T.min(at.distancePointLine(t,n,i),at.distancePointLine(e,n,i),at.distancePointLine(n,t,e),at.distancePointLine(i,t,e)):0},at.isPointInRing=function(t,e){return at.locatePointInRing(t,e)!==L.EXTERIOR},at.computeLength=function(t){var e=t.size();if(e<=1)return 0;var n=0,i=new C;t.getCoordinate(0,i);for(var r=i.x,o=i.y,s=1;s<e;s++){t.getCoordinate(s,i);var a=i.x,u=i.y,l=a-r,c=u-o;n+=Math.sqrt(l*l+c*c),r=a,o=u}return n},at.isCCW=function(t){var e=t.length-1;if(e<3)throw new m("Ring has fewer than 4 points, so orientation cannot be determined");for(var n=t[0],i=0,r=1;r<=e;r++){var o=t[r];o.y>n.y&&(n=o,i=r)}var s=i;do{(s-=1)<0&&(s=e)}while(t[s].equals2D(n)&&s!==i);var a=i;do{a=(a+1)%e}while(t[a].equals2D(n)&&a!==i);var u=t[s],l=t[a];if(u.equals2D(n)||l.equals2D(n)||u.equals2D(l))return!1;var c=at.computeOrientation(u,n,l);return 0===c?u.x>l.x:c>0},at.locatePointInRing=function(t,e){return st.locatePointInRing(t,e)},at.distancePointLinePerpendicular=function(t,e,n){var i=(n.x-e.x)*(n.x-e.x)+(n.y-e.y)*(n.y-e.y),r=((e.y-t.y)*(n.x-e.x)-(e.x-t.x)*(n.y-e.y))/i;return Math.abs(r)*Math.sqrt(i)},at.computeOrientation=function(t,e,n){return at.orientationIndex(t,e,n)},at.distancePointLine=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];if(0===e.length)throw new m("Line array must contain at least one vertex");for(var n=t.distance(e[0]),i=0;i<e.length-1;i++){var r=at.distancePointLine(t,e[i],e[i+1]);r<n&&(n=r)}return n}if(3===arguments.length){var o=arguments[0],s=arguments[1],a=arguments[2];if(s.x===a.x&&s.y===a.y)return o.distance(s);var u=(a.x-s.x)*(a.x-s.x)+(a.y-s.y)*(a.y-s.y),l=((o.x-s.x)*(a.x-s.x)+(o.y-s.y)*(a.y-s.y))/u;if(l<=0)return o.distance(s);if(l>=1)return o.distance(a);var c=((s.y-o.y)*(a.x-s.x)-(s.x-o.x)*(a.y-s.y))/u;return Math.abs(c)*Math.sqrt(u)}},at.isOnLine=function(t,e){for(var n=new rt,i=1;i<e.length;i++){var r=e[i-1],o=e[i];if(n.computeIntersection(t,r,o),n.hasIntersection())return!0}return!1},ut.CLOCKWISE.get=function(){return-1},ut.RIGHT.get=function(){return at.CLOCKWISE},ut.COUNTERCLOCKWISE.get=function(){return 1},ut.LEFT.get=function(){return at.COUNTERCLOCKWISE},ut.COLLINEAR.get=function(){return 0},ut.STRAIGHT.get=function(){return at.COLLINEAR},Object.defineProperties(at,ut);var lt=function(){};lt.prototype.filter=function(t){},lt.prototype.interfaces_=function(){return[]},lt.prototype.getClass=function(){return lt};var ct=function(){var t=arguments[0];this._envelope=null,this._factory=null,this._SRID=null,this._userData=null,this._factory=t,this._SRID=t.getSRID()},ht={serialVersionUID:{configurable:!0},SORTINDEX_POINT:{configurable:!0},SORTINDEX_MULTIPOINT:{configurable:!0},SORTINDEX_LINESTRING:{configurable:!0},SORTINDEX_LINEARRING:{configurable:!0},SORTINDEX_MULTILINESTRING:{configurable:!0},SORTINDEX_POLYGON:{configurable:!0},SORTINDEX_MULTIPOLYGON:{configurable:!0},SORTINDEX_GEOMETRYCOLLECTION:{configurable:!0},geometryChangedFilter:{configurable:!0}};ct.prototype.isGeometryCollection=function(){return this.getSortIndex()===ct.SORTINDEX_GEOMETRYCOLLECTION},ct.prototype.getFactory=function(){return this._factory},ct.prototype.getGeometryN=function(t){return this},ct.prototype.getArea=function(){return 0},ct.prototype.isRectangle=function(){return!1},ct.prototype.equals=function(){if(arguments[0]instanceof ct){var t=arguments[0];return null!==t&&this.equalsTopo(t)}if(arguments[0]instanceof Object){var e=arguments[0];if(!(e instanceof ct))return!1;var n=e;return this.equalsExact(n)}},ct.prototype.equalsExact=function(t){return this===t||this.equalsExact(t,0)},ct.prototype.geometryChanged=function(){this.apply(ct.geometryChangedFilter)},ct.prototype.geometryChangedAction=function(){this._envelope=null},ct.prototype.equalsNorm=function(t){return null!==t&&this.norm().equalsExact(t.norm())},ct.prototype.getLength=function(){return 0},ct.prototype.getNumGeometries=function(){return 1},ct.prototype.compareTo=function(){if(1===arguments.length){var t=arguments[0],e=t;return this.getSortIndex()!==e.getSortIndex()?this.getSortIndex()-e.getSortIndex():this.isEmpty()&&e.isEmpty()?0:this.isEmpty()?-1:e.isEmpty()?1:this.compareToSameClass(t)}if(2===arguments.length){var n=arguments[0],i=arguments[1];return this.getSortIndex()!==n.getSortIndex()?this.getSortIndex()-n.getSortIndex():this.isEmpty()&&n.isEmpty()?0:this.isEmpty()?-1:n.isEmpty()?1:this.compareToSameClass(n,i)}},ct.prototype.getUserData=function(){return this._userData},ct.prototype.getSRID=function(){return this._SRID},ct.prototype.getEnvelope=function(){return this.getFactory().toGeometry(this.getEnvelopeInternal())},ct.prototype.checkNotGeometryCollection=function(t){if(t.getSortIndex()===ct.SORTINDEX_GEOMETRYCOLLECTION)throw new m("This method does not support GeometryCollection arguments")},ct.prototype.equal=function(t,e,n){return 0===n?t.equals(e):t.distance(e)<=n},ct.prototype.norm=function(){var t=this.copy();return t.normalize(),t},ct.prototype.getPrecisionModel=function(){return this._factory.getPrecisionModel()},ct.prototype.getEnvelopeInternal=function(){return null===this._envelope&&(this._envelope=this.computeEnvelopeInternal()),new j(this._envelope)},ct.prototype.setSRID=function(t){this._SRID=t},ct.prototype.setUserData=function(t){this._userData=t},ct.prototype.compare=function(t,e){for(var n=t.iterator(),i=e.iterator();n.hasNext()&&i.hasNext();){var r=n.next(),o=i.next(),s=r.compareTo(o);if(0!==s)return s}return n.hasNext()?1:i.hasNext()?-1:0},ct.prototype.hashCode=function(){return this.getEnvelopeInternal().hashCode()},ct.prototype.isGeometryCollectionOrDerived=function(){return this.getSortIndex()===ct.SORTINDEX_GEOMETRYCOLLECTION||this.getSortIndex()===ct.SORTINDEX_MULTIPOINT||this.getSortIndex()===ct.SORTINDEX_MULTILINESTRING||this.getSortIndex()===ct.SORTINDEX_MULTIPOLYGON},ct.prototype.interfaces_=function(){return[I,E,e]},ct.prototype.getClass=function(){return ct},ct.hasNonEmptyElements=function(t){for(var e=0;e<t.length;e++)if(!t[e].isEmpty())return!0;return!1},ct.hasNullElements=function(t){for(var e=0;e<t.length;e++)if(null===t[e])return!0;return!1},ht.serialVersionUID.get=function(){return 0x799ea46522854c00},ht.SORTINDEX_POINT.get=function(){return 0},ht.SORTINDEX_MULTIPOINT.get=function(){return 1},ht.SORTINDEX_LINESTRING.get=function(){return 2},ht.SORTINDEX_LINEARRING.get=function(){return 3},ht.SORTINDEX_MULTILINESTRING.get=function(){return 4},ht.SORTINDEX_POLYGON.get=function(){return 5},ht.SORTINDEX_MULTIPOLYGON.get=function(){return 6},ht.SORTINDEX_GEOMETRYCOLLECTION.get=function(){return 7},ht.geometryChangedFilter.get=function(){return pt},Object.defineProperties(ct,ht);var pt=function(){};pt.interfaces_=function(){return[lt]},pt.filter=function(t){t.geometryChangedAction()};var ft=function(){};ft.prototype.filter=function(t){},ft.prototype.interfaces_=function(){return[]},ft.prototype.getClass=function(){return ft};var gt=function(){},dt={Mod2BoundaryNodeRule:{configurable:!0},EndPointBoundaryNodeRule:{configurable:!0},MultiValentEndPointBoundaryNodeRule:{configurable:!0},MonoValentEndPointBoundaryNodeRule:{configurable:!0},MOD2_BOUNDARY_RULE:{configurable:!0},ENDPOINT_BOUNDARY_RULE:{configurable:!0},MULTIVALENT_ENDPOINT_BOUNDARY_RULE:{configurable:!0},MONOVALENT_ENDPOINT_BOUNDARY_RULE:{configurable:!0},OGC_SFS_BOUNDARY_RULE:{configurable:!0}};gt.prototype.isInBoundary=function(t){},gt.prototype.interfaces_=function(){return[]},gt.prototype.getClass=function(){return gt},dt.Mod2BoundaryNodeRule.get=function(){return yt},dt.EndPointBoundaryNodeRule.get=function(){return _t},dt.MultiValentEndPointBoundaryNodeRule.get=function(){return mt},dt.MonoValentEndPointBoundaryNodeRule.get=function(){return vt},dt.MOD2_BOUNDARY_RULE.get=function(){return new yt},dt.ENDPOINT_BOUNDARY_RULE.get=function(){return new _t},dt.MULTIVALENT_ENDPOINT_BOUNDARY_RULE.get=function(){return new mt},dt.MONOVALENT_ENDPOINT_BOUNDARY_RULE.get=function(){return new vt},dt.OGC_SFS_BOUNDARY_RULE.get=function(){return gt.MOD2_BOUNDARY_RULE},Object.defineProperties(gt,dt);var yt=function(){};yt.prototype.isInBoundary=function(t){return t%2==1},yt.prototype.interfaces_=function(){return[gt]},yt.prototype.getClass=function(){return yt};var _t=function(){};_t.prototype.isInBoundary=function(t){return t>0},_t.prototype.interfaces_=function(){return[gt]},_t.prototype.getClass=function(){return _t};var mt=function(){};mt.prototype.isInBoundary=function(t){return t>1},mt.prototype.interfaces_=function(){return[gt]},mt.prototype.getClass=function(){return mt};var vt=function(){};vt.prototype.isInBoundary=function(t){return 1===t},vt.prototype.interfaces_=function(){return[gt]},vt.prototype.getClass=function(){return vt};var xt=function(){};xt.prototype.add=function(){},xt.prototype.addAll=function(){},xt.prototype.isEmpty=function(){},xt.prototype.iterator=function(){},xt.prototype.size=function(){},xt.prototype.toArray=function(){},xt.prototype.remove=function(){},(n.prototype=new Error).name="IndexOutOfBoundsException";var Et=function(){};Et.prototype.hasNext=function(){},Et.prototype.next=function(){},Et.prototype.remove=function(){};var It=function(t){function e(){t.apply(this,arguments)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.get=function(){},e.prototype.set=function(){},e.prototype.isEmpty=function(){},e}(xt);(i.prototype=new Error).name="NoSuchElementException";var Nt=function(t){function e(){t.call(this),this.array_=[],arguments[0]instanceof xt&&this.addAll(arguments[0])}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.ensureCapacity=function(){},e.prototype.interfaces_=function(){return[t,xt]},e.prototype.add=function(t){return 1===arguments.length?this.array_.push(t):this.array_.splice(arguments[0],arguments[1]),!0},e.prototype.clear=function(){this.array_=[]},e.prototype.addAll=function(t){for(var e=t.iterator();e.hasNext();)this.add(e.next());return!0},e.prototype.set=function(t,e){var n=this.array_[t];return this.array_[t]=e,n},e.prototype.iterator=function(){return new Ct(this)},e.prototype.get=function(t){if(t<0||t>=this.size())throw new n;return this.array_[t]},e.prototype.isEmpty=function(){return 0===this.array_.length},e.prototype.size=function(){return this.array_.length},e.prototype.toArray=function(){for(var t=[],e=0,n=this.array_.length;e<n;e++)t.push(this.array_[e]);return t},e.prototype.remove=function(t){for(var e=!1,n=0,i=this.array_.length;n<i;n++)if(this.array_[n]===t){this.array_.splice(n,1),e=!0;break}return e},e}(It),Ct=function(t){function e(e){t.call(this),this.arrayList_=e,this.position_=0}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.next=function(){if(this.position_===this.arrayList_.size())throw new i;return this.arrayList_.get(this.position_++)},e.prototype.hasNext=function(){return this.position_<this.arrayList_.size()},e.prototype.set=function(t){return this.arrayList_.set(this.position_-1,t)},e.prototype.remove=function(){this.arrayList_.remove(this.arrayList_.get(this.position_))},e}(Et),bt=function(t){function e(){if(t.call(this),0===arguments.length);else if(1===arguments.length){var e=arguments[0];this.ensureCapacity(e.length),this.add(e,!0)}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this.ensureCapacity(n.length),this.add(n,i)}}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={coordArrayType:{configurable:!0}};return n.coordArrayType.get=function(){return new Array(0).fill(null)},e.prototype.getCoordinate=function(t){return this.get(t)},e.prototype.addAll=function(){if(2===arguments.length){for(var e=arguments[0],n=arguments[1],i=!1,r=e.iterator();r.hasNext();)this.add(r.next(),n),i=!0;return i}return t.prototype.addAll.apply(this,arguments)},e.prototype.clone=function(){for(var e=t.prototype.clone.call(this),n=0;n<this.size();n++)e.add(n,this.get(n).copy());return e},e.prototype.toCoordinateArray=function(){return this.toArray(e.coordArrayType)},e.prototype.add=function(){if(1===arguments.length){var e=arguments[0];t.prototype.add.call(this,e)}else if(2===arguments.length){if(arguments[0]instanceof Array&&"boolean"==typeof arguments[1]){var n=arguments[0],i=arguments[1];return this.add(n,i,!0),!0}if(arguments[0]instanceof C&&"boolean"==typeof arguments[1]){var r=arguments[0];if(!arguments[1]&&this.size()>=1&&this.get(this.size()-1).equals2D(r))return null;t.prototype.add.call(this,r)}else if(arguments[0]instanceof Object&&"boolean"==typeof arguments[1]){var o=arguments[0],s=arguments[1];return this.add(o,s),!0}}else if(3===arguments.length){if("boolean"==typeof arguments[2]&&arguments[0]instanceof Array&&"boolean"==typeof arguments[1]){var a=arguments[0],u=arguments[1];if(arguments[2])for(var l=0;l<a.length;l++)this.add(a[l],u);else for(var c=a.length-1;c>=0;c--)this.add(a[c],u);return!0}if("boolean"==typeof arguments[2]&&Number.isInteger(arguments[0])&&arguments[1]instanceof C){var h=arguments[0],p=arguments[1];if(!arguments[2]){var f=this.size();if(f>0){if(h>0&&this.get(h-1).equals2D(p))return null;if(h<f&&this.get(h).equals2D(p))return null}}t.prototype.add.call(this,h,p)}}else if(4===arguments.length){var g=arguments[0],d=arguments[1],y=arguments[2],_=arguments[3],m=1;y>_&&(m=-1);for(var v=y;v!==_;v+=m)this.add(g[v],d);return!0}},e.prototype.closeRing=function(){this.size()>0&&this.add(new C(this.get(0)),!1)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},Object.defineProperties(e,n),e}(Nt),St=function(){},wt={ForwardComparator:{configurable:!0},BidirectionalComparator:{configurable:!0},coordArrayType:{configurable:!0}};wt.ForwardComparator.get=function(){return Lt},wt.BidirectionalComparator.get=function(){return Ot},wt.coordArrayType.get=function(){return new Array(0).fill(null)},St.prototype.interfaces_=function(){return[]},St.prototype.getClass=function(){return St},St.isRing=function(t){return!(t.length<4||!t[0].equals2D(t[t.length-1]))},St.ptNotInList=function(t,e){for(var n=0;n<t.length;n++){var i=t[n];if(St.indexOf(i,e)<0)return i}return null},St.scroll=function(t,e){var n=St.indexOf(e,t);if(n<0)return null;var i=new Array(t.length).fill(null);Y.arraycopy(t,n,i,0,t.length-n),Y.arraycopy(t,0,i,t.length-n,n),Y.arraycopy(i,0,t,0,t.length)},St.equals=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];if(t===e)return!0;if(null===t||null===e)return!1;if(t.length!==e.length)return!1;for(var n=0;n<t.length;n++)if(!t[n].equals(e[n]))return!1;return!0}if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2];if(i===r)return!0;if(null===i||null===r)return!1;if(i.length!==r.length)return!1;for(var s=0;s<i.length;s++)if(0!==o.compare(i[s],r[s]))return!1;return!0}},St.intersection=function(t,e){for(var n=new bt,i=0;i<t.length;i++)e.intersects(t[i])&&n.add(t[i],!0);return n.toCoordinateArray()},St.hasRepeatedPoints=function(t){for(var e=1;e<t.length;e++)if(t[e-1].equals(t[e]))return!0;return!1},St.removeRepeatedPoints=function(t){return St.hasRepeatedPoints(t)?new bt(t,!1).toCoordinateArray():t},St.reverse=function(t){for(var e=t.length-1,n=Math.trunc(e/2),i=0;i<=n;i++){var r=t[i];t[i]=t[e-i],t[e-i]=r}},St.removeNull=function(t){for(var e=0,n=0;n<t.length;n++)null!==t[n]&&e++;var i=new Array(e).fill(null);if(0===e)return i;for(var r=0,o=0;o<t.length;o++)null!==t[o]&&(i[r++]=t[o]);return i},St.copyDeep=function(){if(1===arguments.length){for(var t=arguments[0],e=new Array(t.length).fill(null),n=0;n<t.length;n++)e[n]=new C(t[n]);return e}if(5===arguments.length)for(var i=arguments[0],r=arguments[1],o=arguments[2],s=arguments[3],a=arguments[4],u=0;u<a;u++)o[s+u]=new C(i[r+u])},St.isEqualReversed=function(t,e){for(var n=0;n<t.length;n++){var i=t[n],r=e[t.length-n-1];if(0!==i.compareTo(r))return!1}return!0},St.envelope=function(t){for(var e=new j,n=0;n<t.length;n++)e.expandToInclude(t[n]);return e},St.toCoordinateArray=function(t){return t.toArray(St.coordArrayType)},St.atLeastNCoordinatesOrNothing=function(t,e){return e.length>=t?e:[]},St.indexOf=function(t,e){for(var n=0;n<e.length;n++)if(t.equals(e[n]))return n;return-1},St.increasingDirection=function(t){for(var e=0;e<Math.trunc(t.length/2);e++){var n=t.length-1-e,i=t[e].compareTo(t[n]);if(0!==i)return i}return 1},St.compare=function(t,e){for(var n=0;n<t.length&&n<e.length;){var i=t[n].compareTo(e[n]);if(0!==i)return i;n++}return n<e.length?-1:n<t.length?1:0},St.minCoordinate=function(t){for(var e=null,n=0;n<t.length;n++)(null===e||e.compareTo(t[n])>0)&&(e=t[n]);return e},St.extract=function(t,e,n){e=T.clamp(e,0,t.length);var i=(n=T.clamp(n,-1,t.length))-e+1;n<0&&(i=0),e>=t.length&&(i=0),n<e&&(i=0);var r=new Array(i).fill(null);if(0===i)return r;for(var o=0,s=e;s<=n;s++)r[o++]=t[s];return r},Object.defineProperties(St,wt);var Lt=function(){};Lt.prototype.compare=function(t,e){return St.compare(t,e)},Lt.prototype.interfaces_=function(){return[N]},Lt.prototype.getClass=function(){return Lt};var Ot=function(){};Ot.prototype.compare=function(t,e){var n=t,i=e;if(n.length<i.length)return-1;if(n.length>i.length)return 1;if(0===n.length)return 0;var r=St.compare(n,i);return St.isEqualReversed(n,i)?0:r},Ot.prototype.OLDcompare=function(t,e){var n=t,i=e;if(n.length<i.length)return-1;if(n.length>i.length)return 1;if(0===n.length)return 0;for(var r=St.increasingDirection(n),o=St.increasingDirection(i),s=r>0?0:n.length-1,a=o>0?0:n.length-1,u=0;u<n.length;u++){var l=n[s].compareTo(i[a]);if(0!==l)return l;s+=r,a+=o}return 0},Ot.prototype.interfaces_=function(){return[N]},Ot.prototype.getClass=function(){return Ot};var Rt=function(){};Rt.prototype.get=function(){},Rt.prototype.put=function(){},Rt.prototype.size=function(){},Rt.prototype.values=function(){},Rt.prototype.entrySet=function(){};var Tt=function(t){function e(){t.apply(this,arguments)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e}(Rt);(r.prototype=new Error).name="OperationNotSupported",(o.prototype=new xt).contains=function(){};var Pt=function(t){function e(){t.call(this),this.array_=[],arguments[0]instanceof xt&&this.addAll(arguments[0])}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.contains=function(t){for(var e=0,n=this.array_.length;e<n;e++)if(this.array_[e]===t)return!0;return!1},e.prototype.add=function(t){return!this.contains(t)&&(this.array_.push(t),!0)},e.prototype.addAll=function(t){for(var e=t.iterator();e.hasNext();)this.add(e.next());return!0},e.prototype.remove=function(t){throw new Error},e.prototype.size=function(){return this.array_.length},e.prototype.isEmpty=function(){return 0===this.array_.length},e.prototype.toArray=function(){for(var t=[],e=0,n=this.array_.length;e<n;e++)t.push(this.array_[e]);return t},e.prototype.iterator=function(){return new Mt(this)},e}(o),Mt=function(t){function e(e){t.call(this),this.hashSet_=e,this.position_=0}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.next=function(){if(this.position_===this.hashSet_.size())throw new i;return this.hashSet_.array_[this.position_++]},e.prototype.hasNext=function(){return this.position_<this.hashSet_.size()},e.prototype.remove=function(){throw new r},e}(Et),Dt=0;(h.prototype=new Tt).get=function(t){for(var e=this.root_;null!==e;){var n=t.compareTo(e.key);if(n<0)e=e.left;else{if(!(n>0))return e.value;e=e.right}}return null},h.prototype.put=function(t,e){if(null===this.root_)return this.root_={key:t,value:e,left:null,right:null,parent:null,color:Dt,getValue:function(){return this.value},getKey:function(){return this.key}},this.size_=1,null;var n,i,r=this.root_;do{if(n=r,(i=t.compareTo(r.key))<0)r=r.left;else{if(!(i>0)){var o=r.value;return r.value=e,o}r=r.right}}while(null!==r);var s={key:t,left:null,right:null,value:e,parent:n,color:Dt,getValue:function(){return this.value},getKey:function(){return this.key}};return i<0?n.left=s:n.right=s,this.fixAfterInsertion(s),this.size_++,null},h.prototype.fixAfterInsertion=function(t){for(t.color=1;null!=t&&t!==this.root_&&1===t.parent.color;)if(a(t)===l(a(a(t)))){var e=c(a(a(t)));1===s(e)?(u(a(t),Dt),u(e,Dt),u(a(a(t)),1),t=a(a(t))):(t===c(a(t))&&(t=a(t),this.rotateLeft(t)),u(a(t),Dt),u(a(a(t)),1),this.rotateRight(a(a(t))))}else{var n=l(a(a(t)));1===s(n)?(u(a(t),Dt),u(n,Dt),u(a(a(t)),1),t=a(a(t))):(t===l(a(t))&&(t=a(t),this.rotateRight(t)),u(a(t),Dt),u(a(a(t)),1),this.rotateLeft(a(a(t))))}this.root_.color=Dt},h.prototype.values=function(){var t=new Nt,e=this.getFirstEntry();if(null!==e)for(t.add(e.value);null!==(e=h.successor(e));)t.add(e.value);return t},h.prototype.entrySet=function(){var t=new Pt,e=this.getFirstEntry();if(null!==e)for(t.add(e);null!==(e=h.successor(e));)t.add(e);return t},h.prototype.rotateLeft=function(t){if(null!=t){var e=t.right;t.right=e.left,null!=e.left&&(e.left.parent=t),e.parent=t.parent,null===t.parent?this.root_=e:t.parent.left===t?t.parent.left=e:t.parent.right=e,e.left=t,t.parent=e}},h.prototype.rotateRight=function(t){if(null!=t){var e=t.left;t.left=e.right,null!=e.right&&(e.right.parent=t),e.parent=t.parent,null===t.parent?this.root_=e:t.parent.right===t?t.parent.right=e:t.parent.left=e,e.right=t,t.parent=e}},h.prototype.getFirstEntry=function(){var t=this.root_;if(null!=t)for(;null!=t.left;)t=t.left;return t},h.successor=function(t){if(null===t)return null;if(null!==t.right){for(var e=t.right;null!==e.left;)e=e.left;return e}for(var n=t.parent,i=t;null!==n&&i===n.right;)i=n,n=n.parent;return n},h.prototype.size=function(){return this.size_};var At=function(){};At.prototype.interfaces_=function(){return[]},At.prototype.getClass=function(){return At},p.prototype=new o,(f.prototype=new p).contains=function(t){for(var e=0,n=this.array_.length;e<n;e++)if(0===this.array_[e].compareTo(t))return!0;return!1},f.prototype.add=function(t){if(this.contains(t))return!1;for(var e=0,n=this.array_.length;e<n;e++)if(1===this.array_[e].compareTo(t))return this.array_.splice(e,0,t),!0;return this.array_.push(t),!0},f.prototype.addAll=function(t){for(var e=t.iterator();e.hasNext();)this.add(e.next());return!0},f.prototype.remove=function(t){throw new r},f.prototype.size=function(){return this.array_.length},f.prototype.isEmpty=function(){return 0===this.array_.length},f.prototype.toArray=function(){for(var t=[],e=0,n=this.array_.length;e<n;e++)t.push(this.array_[e]);return t},f.prototype.iterator=function(){return new Ft(this)};var Ft=function(t){this.treeSet_=t,this.position_=0};Ft.prototype.next=function(){if(this.position_===this.treeSet_.size())throw new i;return this.treeSet_.array_[this.position_++]},Ft.prototype.hasNext=function(){return this.position_<this.treeSet_.size()},Ft.prototype.remove=function(){throw new r};var Gt=function(){};Gt.sort=function(){var t,e,n,i,r=arguments[0];if(1===arguments.length)i=function(t,e){return t.compareTo(e)},r.sort(i);else if(2===arguments.length)n=arguments[1],i=function(t,e){return n.compare(t,e)},r.sort(i);else if(3===arguments.length){(e=r.slice(arguments[1],arguments[2])).sort();var o=r.slice(0,arguments[1]).concat(e,r.slice(arguments[2],r.length));for(r.splice(0,r.length),t=0;t<o.length;t++)r.push(o[t])}else if(4===arguments.length)for(e=r.slice(arguments[1],arguments[2]),n=arguments[3],i=function(t,e){return n.compare(t,e)},e.sort(i),o=r.slice(0,arguments[1]).concat(e,r.slice(arguments[2],r.length)),r.splice(0,r.length),t=0;t<o.length;t++)r.push(o[t])},Gt.asList=function(t){for(var e=new Nt,n=0,i=t.length;n<i;n++)e.add(t[n]);return e};var Bt=function(){},Ut={P:{configurable:!0},L:{configurable:!0},A:{configurable:!0},FALSE:{configurable:!0},TRUE:{configurable:!0},DONTCARE:{configurable:!0},SYM_FALSE:{configurable:!0},SYM_TRUE:{configurable:!0},SYM_DONTCARE:{configurable:!0},SYM_P:{configurable:!0},SYM_L:{configurable:!0},SYM_A:{configurable:!0}};Ut.P.get=function(){return 0},Ut.L.get=function(){return 1},Ut.A.get=function(){return 2},Ut.FALSE.get=function(){return-1},Ut.TRUE.get=function(){return-2},Ut.DONTCARE.get=function(){return-3},Ut.SYM_FALSE.get=function(){return"F"},Ut.SYM_TRUE.get=function(){return"T"},Ut.SYM_DONTCARE.get=function(){return"*"},Ut.SYM_P.get=function(){return"0"},Ut.SYM_L.get=function(){return"1"},Ut.SYM_A.get=function(){return"2"},Bt.prototype.interfaces_=function(){return[]},Bt.prototype.getClass=function(){return Bt},Bt.toDimensionSymbol=function(t){switch(t){case Bt.FALSE:return Bt.SYM_FALSE;case Bt.TRUE:return Bt.SYM_TRUE;case Bt.DONTCARE:return Bt.SYM_DONTCARE;case Bt.P:return Bt.SYM_P;case Bt.L:return Bt.SYM_L;case Bt.A:return Bt.SYM_A}throw new m("Unknown dimension value: "+t)},Bt.toDimensionValue=function(t){switch(A.toUpperCase(t)){case Bt.SYM_FALSE:return Bt.FALSE;case Bt.SYM_TRUE:return Bt.TRUE;case Bt.SYM_DONTCARE:return Bt.DONTCARE;case Bt.SYM_P:return Bt.P;case Bt.SYM_L:return Bt.L;case Bt.SYM_A:return Bt.A}throw new m("Unknown dimension symbol: "+t)},Object.defineProperties(Bt,Ut);var Vt=function(){};Vt.prototype.filter=function(t){},Vt.prototype.interfaces_=function(){return[]},Vt.prototype.getClass=function(){return Vt};var qt=function(){};qt.prototype.filter=function(t,e){},qt.prototype.isDone=function(){},qt.prototype.isGeometryChanged=function(){},qt.prototype.interfaces_=function(){return[]},qt.prototype.getClass=function(){return qt};var zt=function(t){function e(e,n){if(t.call(this,n),this._geometries=e||[],t.hasNullElements(this._geometries))throw new m("geometries must not contain null elements")}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.computeEnvelopeInternal=function(){for(var t=new j,e=0;e<this._geometries.length;e++)t.expandToInclude(this._geometries[e].getEnvelopeInternal());return t},e.prototype.getGeometryN=function(t){return this._geometries[t]},e.prototype.getSortIndex=function(){return t.SORTINDEX_GEOMETRYCOLLECTION},e.prototype.getCoordinates=function(){for(var t=new Array(this.getNumPoints()).fill(null),e=-1,n=0;n<this._geometries.length;n++)for(var i=this._geometries[n].getCoordinates(),r=0;r<i.length;r++)t[++e]=i[r];return t},e.prototype.getArea=function(){for(var t=0,e=0;e<this._geometries.length;e++)t+=this._geometries[e].getArea();return t},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];if(!this.isEquivalentClass(e))return!1;var i=e;if(this._geometries.length!==i._geometries.length)return!1;for(var r=0;r<this._geometries.length;r++)if(!this._geometries[r].equalsExact(i._geometries[r],n))return!1;return!0}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.normalize=function(){for(var t=0;t<this._geometries.length;t++)this._geometries[t].normalize();Gt.sort(this._geometries)},e.prototype.getCoordinate=function(){return this.isEmpty()?null:this._geometries[0].getCoordinate()},e.prototype.getBoundaryDimension=function(){for(var t=Bt.FALSE,e=0;e<this._geometries.length;e++)t=Math.max(t,this._geometries[e].getBoundaryDimension());return t},e.prototype.getDimension=function(){for(var t=Bt.FALSE,e=0;e<this._geometries.length;e++)t=Math.max(t,this._geometries[e].getDimension());return t},e.prototype.getLength=function(){for(var t=0,e=0;e<this._geometries.length;e++)t+=this._geometries[e].getLength();return t},e.prototype.getNumPoints=function(){for(var t=0,e=0;e<this._geometries.length;e++)t+=this._geometries[e].getNumPoints();return t},e.prototype.getNumGeometries=function(){return this._geometries.length},e.prototype.reverse=function(){for(var t=this._geometries.length,e=new Array(t).fill(null),n=0;n<this._geometries.length;n++)e[n]=this._geometries[n].reverse();return this.getFactory().createGeometryCollection(e)},e.prototype.compareToSameClass=function(){if(1===arguments.length){var t=arguments[0],e=new f(Gt.asList(this._geometries)),n=new f(Gt.asList(t._geometries));return this.compare(e,n)}if(2===arguments.length){for(var i=arguments[0],r=arguments[1],o=i,s=this.getNumGeometries(),a=o.getNumGeometries(),u=0;u<s&&u<a;){var l=this.getGeometryN(u),c=o.getGeometryN(u),h=l.compareToSameClass(c,r);if(0!==h)return h;u++}return u<s?1:u<a?-1:0}},e.prototype.apply=function(){if(R(arguments[0],ft))for(var t=arguments[0],e=0;e<this._geometries.length;e++)this._geometries[e].apply(t);else if(R(arguments[0],qt)){var n=arguments[0];if(0===this._geometries.length)return null;for(var i=0;i<this._geometries.length&&(this._geometries[i].apply(n),!n.isDone());i++);n.isGeometryChanged()&&this.geometryChanged()}else if(R(arguments[0],Vt)){var r=arguments[0];r.filter(this);for(var o=0;o<this._geometries.length;o++)this._geometries[o].apply(r)}else if(R(arguments[0],lt)){var s=arguments[0];s.filter(this);for(var a=0;a<this._geometries.length;a++)this._geometries[a].apply(s)}},e.prototype.getBoundary=function(){return this.checkNotGeometryCollection(this),et.shouldNeverReachHere(),null},e.prototype.clone=function(){var e=t.prototype.clone.call(this);e._geometries=new Array(this._geometries.length).fill(null);for(var n=0;n<this._geometries.length;n++)e._geometries[n]=this._geometries[n].clone();return e},e.prototype.getGeometryType=function(){return"GeometryCollection"},e.prototype.copy=function(){for(var t=new Array(this._geometries.length).fill(null),n=0;n<t.length;n++)t[n]=this._geometries[n].copy();return new e(t,this._factory)},e.prototype.isEmpty=function(){for(var t=0;t<this._geometries.length;t++)if(!this._geometries[t].isEmpty())return!1;return!0},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return-0x4f07bcb1f857d800},Object.defineProperties(e,n),e}(ct),Xt=function(t){function e(){t.apply(this,arguments)}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.getSortIndex=function(){return ct.SORTINDEX_MULTILINESTRING},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];return!!this.isEquivalentClass(e)&&t.prototype.equalsExact.call(this,e,n)}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.getBoundaryDimension=function(){return this.isClosed()?Bt.FALSE:0},e.prototype.isClosed=function(){if(this.isEmpty())return!1;for(var t=0;t<this._geometries.length;t++)if(!this._geometries[t].isClosed())return!1;return!0},e.prototype.getDimension=function(){return 1},e.prototype.reverse=function(){for(var t=this._geometries.length,e=new Array(t).fill(null),n=0;n<this._geometries.length;n++)e[t-1-n]=this._geometries[n].reverse();return this.getFactory().createMultiLineString(e)},e.prototype.getBoundary=function(){return new Yt(this).getBoundary()},e.prototype.getGeometryType=function(){return"MultiLineString"},e.prototype.copy=function(){for(var t=new Array(this._geometries.length).fill(null),n=0;n<t.length;n++)t[n]=this._geometries[n].copy();return new e(t,this._factory)},e.prototype.interfaces_=function(){return[At]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return 0x7155d2ab4afa8000},Object.defineProperties(e,n),e}(zt),Yt=function(){if(this._geom=null,this._geomFact=null,this._bnRule=null,this._endpointMap=null,1===arguments.length){var t=arguments[0],e=gt.MOD2_BOUNDARY_RULE;this._geom=t,this._geomFact=t.getFactory(),this._bnRule=e}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this._geom=n,this._geomFact=n.getFactory(),this._bnRule=i}};Yt.prototype.boundaryMultiLineString=function(t){if(this._geom.isEmpty())return this.getEmptyMultiPoint();var e=this.computeBoundaryCoordinates(t);return 1===e.length?this._geomFact.createPoint(e[0]):this._geomFact.createMultiPointFromCoords(e)},Yt.prototype.getBoundary=function(){return this._geom instanceof Kt?this.boundaryLineString(this._geom):this._geom instanceof Xt?this.boundaryMultiLineString(this._geom):this._geom.getBoundary()},Yt.prototype.boundaryLineString=function(t){return this._geom.isEmpty()?this.getEmptyMultiPoint():t.isClosed()?this._bnRule.isInBoundary(2)?t.getStartPoint():this._geomFact.createMultiPoint():this._geomFact.createMultiPoint([t.getStartPoint(),t.getEndPoint()])},Yt.prototype.getEmptyMultiPoint=function(){return this._geomFact.createMultiPoint()},Yt.prototype.computeBoundaryCoordinates=function(t){var e=new Nt;this._endpointMap=new h;for(var n=0;n<t.getNumGeometries();n++){var i=t.getGeometryN(n);0!==i.getNumPoints()&&(this.addEndpoint(i.getCoordinateN(0)),this.addEndpoint(i.getCoordinateN(i.getNumPoints()-1)))}for(var r=this._endpointMap.entrySet().iterator();r.hasNext();){var o=r.next(),s=o.getValue().count;this._bnRule.isInBoundary(s)&&e.add(o.getKey())}return St.toCoordinateArray(e)},Yt.prototype.addEndpoint=function(t){var e=this._endpointMap.get(t);null===e&&(e=new kt,this._endpointMap.put(t,e)),e.count++},Yt.prototype.interfaces_=function(){return[]},Yt.prototype.getClass=function(){return Yt},Yt.getBoundary=function(){if(1===arguments.length){var t=arguments[0];return new Yt(t).getBoundary()}if(2===arguments.length){var e=arguments[0],n=arguments[1];return new Yt(e,n).getBoundary()}};var kt=function(){this.count=null};kt.prototype.interfaces_=function(){return[]},kt.prototype.getClass=function(){return kt};var jt=function(){},Ht={NEWLINE:{configurable:!0},SIMPLE_ORDINATE_FORMAT:{configurable:!0}};jt.prototype.interfaces_=function(){return[]},jt.prototype.getClass=function(){return jt},jt.chars=function(t,e){for(var n=new Array(e).fill(null),i=0;i<e;i++)n[i]=t;return String(n)},jt.getStackTrace=function(){if(1===arguments.length){var t=arguments[0],e=new function(){},n=new function(){}(e);return t.printStackTrace(n),e.toString()}if(2===arguments.length){for(var i=arguments[0],r=arguments[1],o="",s=new function(){}(new function(){}(jt.getStackTrace(i))),a=0;a<r;a++)try{o+=s.readLine()+jt.NEWLINE}catch(t){if(!(t instanceof g))throw t;et.shouldNeverReachHere()}return o}},jt.split=function(t,e){for(var n=e.length,i=new Nt,r=""+t,o=r.indexOf(e);o>=0;){var s=r.substring(0,o);i.add(s),o=(r=r.substring(o+n)).indexOf(e)}r.length>0&&i.add(r);for(var a=new Array(i.size()).fill(null),u=0;u<a.length;u++)a[u]=i.get(u);return a},jt.toString=function(){if(1===arguments.length){var t=arguments[0];return jt.SIMPLE_ORDINATE_FORMAT.format(t)}},jt.spaces=function(t){return jt.chars(" ",t)},Ht.NEWLINE.get=function(){return Y.getProperty("line.separator")},Ht.SIMPLE_ORDINATE_FORMAT.get=function(){return new function(){}("0.#")},Object.defineProperties(jt,Ht);var Wt=function(){};Wt.prototype.interfaces_=function(){return[]},Wt.prototype.getClass=function(){return Wt},Wt.copyCoord=function(t,e,n,i){for(var r=Math.min(t.getDimension(),n.getDimension()),o=0;o<r;o++)n.setOrdinate(i,o,t.getOrdinate(e,o))},Wt.isRing=function(t){var e=t.size();return 0===e||!(e<=3)&&t.getOrdinate(0,V.X)===t.getOrdinate(e-1,V.X)&&t.getOrdinate(0,V.Y)===t.getOrdinate(e-1,V.Y)},Wt.isEqual=function(t,e){var n=t.size();if(n!==e.size())return!1;for(var i=Math.min(t.getDimension(),e.getDimension()),r=0;r<n;r++)for(var o=0;o<i;o++){var s=t.getOrdinate(r,o),a=e.getOrdinate(r,o);if(!(t.getOrdinate(r,o)===e.getOrdinate(r,o)||v.isNaN(s)&&v.isNaN(a)))return!1}return!0},Wt.extend=function(t,e,n){var i=t.create(n,e.getDimension()),r=e.size();if(Wt.copy(e,0,i,0,r),r>0)for(var o=r;o<n;o++)Wt.copy(e,r-1,i,o,1);return i},Wt.reverse=function(t){for(var e=t.size()-1,n=Math.trunc(e/2),i=0;i<=n;i++)Wt.swap(t,i,e-i)},Wt.swap=function(t,e,n){if(e===n)return null;for(var i=0;i<t.getDimension();i++){var r=t.getOrdinate(e,i);t.setOrdinate(e,i,t.getOrdinate(n,i)),t.setOrdinate(n,i,r)}},Wt.copy=function(t,e,n,i,r){for(var o=0;o<r;o++)Wt.copyCoord(t,e+o,n,i+o)},Wt.toString=function(){if(1===arguments.length){var t=arguments[0],e=t.size();if(0===e)return"()";var n=t.getDimension(),i=new M;i.append("(");for(var r=0;r<e;r++){r>0&&i.append(" ");for(var o=0;o<n;o++)o>0&&i.append(","),i.append(jt.toString(t.getOrdinate(r,o)))}return i.append(")"),i.toString()}},Wt.ensureValidRing=function(t,e){var n=e.size();return 0===n?e:n<=3?Wt.createClosedRing(t,e,4):e.getOrdinate(0,V.X)===e.getOrdinate(n-1,V.X)&&e.getOrdinate(0,V.Y)===e.getOrdinate(n-1,V.Y)?e:Wt.createClosedRing(t,e,n+1)},Wt.createClosedRing=function(t,e,n){var i=t.create(n,e.getDimension()),r=e.size();Wt.copy(e,0,i,0,r);for(var o=r;o<n;o++)Wt.copy(e,0,i,o,1);return i};var Kt=function(t){function e(e,n){t.call(this,n),this._points=null,this.init(e)}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.computeEnvelopeInternal=function(){return this.isEmpty()?new j:this._points.expandEnvelope(new j)},e.prototype.isRing=function(){return this.isClosed()&&this.isSimple()},e.prototype.getSortIndex=function(){return t.SORTINDEX_LINESTRING},e.prototype.getCoordinates=function(){return this._points.toCoordinateArray()},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];if(!this.isEquivalentClass(e))return!1;var i=e;if(this._points.size()!==i._points.size())return!1;for(var r=0;r<this._points.size();r++)if(!this.equal(this._points.getCoordinate(r),i._points.getCoordinate(r),n))return!1;return!0}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.normalize=function(){for(var t=0;t<Math.trunc(this._points.size()/2);t++){var e=this._points.size()-1-t;if(!this._points.getCoordinate(t).equals(this._points.getCoordinate(e)))return this._points.getCoordinate(t).compareTo(this._points.getCoordinate(e))>0&&Wt.reverse(this._points),null}},e.prototype.getCoordinate=function(){return this.isEmpty()?null:this._points.getCoordinate(0)},e.prototype.getBoundaryDimension=function(){return this.isClosed()?Bt.FALSE:0},e.prototype.isClosed=function(){return!this.isEmpty()&&this.getCoordinateN(0).equals2D(this.getCoordinateN(this.getNumPoints()-1))},e.prototype.getEndPoint=function(){return this.isEmpty()?null:this.getPointN(this.getNumPoints()-1)},e.prototype.getDimension=function(){return 1},e.prototype.getLength=function(){return at.computeLength(this._points)},e.prototype.getNumPoints=function(){return this._points.size()},e.prototype.reverse=function(){var t=this._points.copy();return Wt.reverse(t),this.getFactory().createLineString(t)},e.prototype.compareToSameClass=function(){if(1===arguments.length){for(var t=arguments[0],e=0,n=0;e<this._points.size()&&n<t._points.size();){var i=this._points.getCoordinate(e).compareTo(t._points.getCoordinate(n));if(0!==i)return i;e++,n++}return e<this._points.size()?1:n<t._points.size()?-1:0}if(2===arguments.length){var r=arguments[0];return arguments[1].compare(this._points,r._points)}},e.prototype.apply=function(){if(R(arguments[0],ft))for(var t=arguments[0],e=0;e<this._points.size();e++)t.filter(this._points.getCoordinate(e));else if(R(arguments[0],qt)){var n=arguments[0];if(0===this._points.size())return null;for(var i=0;i<this._points.size()&&(n.filter(this._points,i),!n.isDone());i++);n.isGeometryChanged()&&this.geometryChanged()}else(R(arguments[0],Vt)||R(arguments[0],lt))&&arguments[0].filter(this)},e.prototype.getBoundary=function(){return new Yt(this).getBoundary()},e.prototype.isEquivalentClass=function(t){return t instanceof e},e.prototype.clone=function(){var e=t.prototype.clone.call(this);return e._points=this._points.clone(),e},e.prototype.getCoordinateN=function(t){return this._points.getCoordinate(t)},e.prototype.getGeometryType=function(){return"LineString"},e.prototype.copy=function(){return new e(this._points.copy(),this._factory)},e.prototype.getCoordinateSequence=function(){return this._points},e.prototype.isEmpty=function(){return 0===this._points.size()},e.prototype.init=function(t){if(null===t&&(t=this.getFactory().getCoordinateSequenceFactory().create([])),1===t.size())throw new m("Invalid number of points in LineString (found "+t.size()+" - must be 0 or >= 2)");this._points=t},e.prototype.isCoordinate=function(t){for(var e=0;e<this._points.size();e++)if(this._points.getCoordinate(e).equals(t))return!0;return!1},e.prototype.getStartPoint=function(){return this.isEmpty()?null:this.getPointN(0)},e.prototype.getPointN=function(t){return this.getFactory().createPoint(this._points.getCoordinate(t))},e.prototype.interfaces_=function(){return[At]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return 0x2b2b51ba435c8e00},Object.defineProperties(e,n),e}(ct),Jt=function(){};Jt.prototype.interfaces_=function(){return[]},Jt.prototype.getClass=function(){return Jt};var Qt=function(t){function e(e,n){t.call(this,n),this._coordinates=e||null,this.init(this._coordinates)}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.computeEnvelopeInternal=function(){if(this.isEmpty())return new j;var t=new j;return t.expandToInclude(this._coordinates.getX(0),this._coordinates.getY(0)),t},e.prototype.getSortIndex=function(){return t.SORTINDEX_POINT},e.prototype.getCoordinates=function(){return this.isEmpty()?[]:[this.getCoordinate()]},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];return!!this.isEquivalentClass(e)&&(!(!this.isEmpty()||!e.isEmpty())||this.isEmpty()===e.isEmpty()&&this.equal(e.getCoordinate(),this.getCoordinate(),n))}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.normalize=function(){},e.prototype.getCoordinate=function(){return 0!==this._coordinates.size()?this._coordinates.getCoordinate(0):null},e.prototype.getBoundaryDimension=function(){return Bt.FALSE},e.prototype.getDimension=function(){return 0},e.prototype.getNumPoints=function(){return this.isEmpty()?0:1},e.prototype.reverse=function(){return this.copy()},e.prototype.getX=function(){if(null===this.getCoordinate())throw new Error("getX called on empty Point");return this.getCoordinate().x},e.prototype.compareToSameClass=function(){if(1===arguments.length){var t=arguments[0];return this.getCoordinate().compareTo(t.getCoordinate())}if(2===arguments.length){var e=arguments[0];return arguments[1].compare(this._coordinates,e._coordinates)}},e.prototype.apply=function(){if(R(arguments[0],ft)){var t=arguments[0];if(this.isEmpty())return null;t.filter(this.getCoordinate())}else if(R(arguments[0],qt)){var e=arguments[0];if(this.isEmpty())return null;e.filter(this._coordinates,0),e.isGeometryChanged()&&this.geometryChanged()}else(R(arguments[0],Vt)||R(arguments[0],lt))&&arguments[0].filter(this)},e.prototype.getBoundary=function(){return this.getFactory().createGeometryCollection(null)},e.prototype.clone=function(){var e=t.prototype.clone.call(this);return e._coordinates=this._coordinates.clone(),e},e.prototype.getGeometryType=function(){return"Point"},e.prototype.copy=function(){return new e(this._coordinates.copy(),this._factory)},e.prototype.getCoordinateSequence=function(){return this._coordinates},e.prototype.getY=function(){if(null===this.getCoordinate())throw new Error("getY called on empty Point");return this.getCoordinate().y},e.prototype.isEmpty=function(){return 0===this._coordinates.size()},e.prototype.init=function(t){null===t&&(t=this.getFactory().getCoordinateSequenceFactory().create([])),et.isTrue(t.size()<=1),this._coordinates=t},e.prototype.isSimple=function(){return!0},e.prototype.interfaces_=function(){return[Jt]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return 0x44077bad161cbc00},Object.defineProperties(e,n),e}(ct),Zt=function(){};Zt.prototype.interfaces_=function(){return[]},Zt.prototype.getClass=function(){return Zt};var $t=function(t){function e(e,n,i){if(t.call(this,i),this._shell=null,this._holes=null,null===e&&(e=this.getFactory().createLinearRing()),null===n&&(n=[]),t.hasNullElements(n))throw new m("holes must not contain null elements");if(e.isEmpty()&&t.hasNonEmptyElements(n))throw new m("shell is empty but holes are not");this._shell=e,this._holes=n}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.computeEnvelopeInternal=function(){return this._shell.getEnvelopeInternal()},e.prototype.getSortIndex=function(){return t.SORTINDEX_POLYGON},e.prototype.getCoordinates=function(){if(this.isEmpty())return[];for(var t=new Array(this.getNumPoints()).fill(null),e=-1,n=this._shell.getCoordinates(),i=0;i<n.length;i++)t[++e]=n[i];for(var r=0;r<this._holes.length;r++)for(var o=this._holes[r].getCoordinates(),s=0;s<o.length;s++)t[++e]=o[s];return t},e.prototype.getArea=function(){var t=0;t+=Math.abs(at.signedArea(this._shell.getCoordinateSequence()));for(var e=0;e<this._holes.length;e++)t-=Math.abs(at.signedArea(this._holes[e].getCoordinateSequence()));return t},e.prototype.isRectangle=function(){if(0!==this.getNumInteriorRing())return!1;if(null===this._shell)return!1;if(5!==this._shell.getNumPoints())return!1;for(var t=this._shell.getCoordinateSequence(),e=this.getEnvelopeInternal(),n=0;n<5;n++){var i=t.getX(n);if(i!==e.getMinX()&&i!==e.getMaxX())return!1;var r=t.getY(n);if(r!==e.getMinY()&&r!==e.getMaxY())return!1}for(var o=t.getX(0),s=t.getY(0),a=1;a<=4;a++){var u=t.getX(a),l=t.getY(a);if(u!==o==(l!==s))return!1;o=u,s=l}return!0},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];if(!this.isEquivalentClass(e))return!1;var i=e,r=this._shell,o=i._shell;if(!r.equalsExact(o,n))return!1;if(this._holes.length!==i._holes.length)return!1;for(var s=0;s<this._holes.length;s++)if(!this._holes[s].equalsExact(i._holes[s],n))return!1;return!0}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.normalize=function(){if(0===arguments.length){this.normalize(this._shell,!0);for(var t=0;t<this._holes.length;t++)this.normalize(this._holes[t],!1);Gt.sort(this._holes)}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(e.isEmpty())return null;var i=new Array(e.getCoordinates().length-1).fill(null);Y.arraycopy(e.getCoordinates(),0,i,0,i.length);var r=St.minCoordinate(e.getCoordinates());St.scroll(i,r),Y.arraycopy(i,0,e.getCoordinates(),0,i.length),e.getCoordinates()[i.length]=i[0],at.isCCW(e.getCoordinates())===n&&St.reverse(e.getCoordinates())}},e.prototype.getCoordinate=function(){return this._shell.getCoordinate()},e.prototype.getNumInteriorRing=function(){return this._holes.length},e.prototype.getBoundaryDimension=function(){return 1},e.prototype.getDimension=function(){return 2},e.prototype.getLength=function(){var t=0;t+=this._shell.getLength();for(var e=0;e<this._holes.length;e++)t+=this._holes[e].getLength();return t},e.prototype.getNumPoints=function(){for(var t=this._shell.getNumPoints(),e=0;e<this._holes.length;e++)t+=this._holes[e].getNumPoints();return t},e.prototype.reverse=function(){var t=this.copy();t._shell=this._shell.copy().reverse(),t._holes=new Array(this._holes.length).fill(null);for(var e=0;e<this._holes.length;e++)t._holes[e]=this._holes[e].copy().reverse();return t},e.prototype.convexHull=function(){return this.getExteriorRing().convexHull()},e.prototype.compareToSameClass=function(){if(1===arguments.length){var t=arguments[0],e=this._shell,n=t._shell;return e.compareToSameClass(n)}if(2===arguments.length){var i=arguments[0],r=arguments[1],o=i,s=this._shell,a=o._shell,u=s.compareToSameClass(a,r);if(0!==u)return u;for(var l=this.getNumInteriorRing(),c=o.getNumInteriorRing(),h=0;h<l&&h<c;){var p=this.getInteriorRingN(h),f=o.getInteriorRingN(h),g=p.compareToSameClass(f,r);if(0!==g)return g;h++}return h<l?1:h<c?-1:0}},e.prototype.apply=function(t){if(R(t,ft)){this._shell.apply(t);for(var e=0;e<this._holes.length;e++)this._holes[e].apply(t)}else if(R(t,qt)){if(this._shell.apply(t),!t.isDone())for(var n=0;n<this._holes.length&&(this._holes[n].apply(t),!t.isDone());n++);t.isGeometryChanged()&&this.geometryChanged()}else if(R(t,Vt))t.filter(this);else if(R(t,lt)){t.filter(this),this._shell.apply(t);for(var i=0;i<this._holes.length;i++)this._holes[i].apply(t)}},e.prototype.getBoundary=function(){if(this.isEmpty())return this.getFactory().createMultiLineString();var t=new Array(this._holes.length+1).fill(null);t[0]=this._shell;for(var e=0;e<this._holes.length;e++)t[e+1]=this._holes[e];return t.length<=1?this.getFactory().createLinearRing(t[0].getCoordinateSequence()):this.getFactory().createMultiLineString(t)},e.prototype.clone=function(){var e=t.prototype.clone.call(this);e._shell=this._shell.clone(),e._holes=new Array(this._holes.length).fill(null);for(var n=0;n<this._holes.length;n++)e._holes[n]=this._holes[n].clone();return e},e.prototype.getGeometryType=function(){return"Polygon"},e.prototype.copy=function(){for(var t=this._shell.copy(),n=new Array(this._holes.length).fill(null),i=0;i<n.length;i++)n[i]=this._holes[i].copy();return new e(t,n,this._factory)},e.prototype.getExteriorRing=function(){return this._shell},e.prototype.isEmpty=function(){return this._shell.isEmpty()},e.prototype.getInteriorRingN=function(t){return this._holes[t]},e.prototype.interfaces_=function(){return[Zt]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return-0x307ffefd8dc97200},Object.defineProperties(e,n),e}(ct),te=function(t){function e(){t.apply(this,arguments)}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.getSortIndex=function(){return ct.SORTINDEX_MULTIPOINT},e.prototype.isValid=function(){return!0},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];return!!this.isEquivalentClass(e)&&t.prototype.equalsExact.call(this,e,n)}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.getCoordinate=function(){if(1===arguments.length){var e=arguments[0];return this._geometries[e].getCoordinate()}return t.prototype.getCoordinate.apply(this,arguments)},e.prototype.getBoundaryDimension=function(){return Bt.FALSE},e.prototype.getDimension=function(){return 0},e.prototype.getBoundary=function(){return this.getFactory().createGeometryCollection(null)},e.prototype.getGeometryType=function(){return"MultiPoint"},e.prototype.copy=function(){for(var t=new Array(this._geometries.length).fill(null),n=0;n<t.length;n++)t[n]=this._geometries[n].copy();return new e(t,this._factory)},e.prototype.interfaces_=function(){return[Jt]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return-0x6fb1ed4162e0fc00},Object.defineProperties(e,n),e}(zt),ee=function(t){function e(e,n){e instanceof C&&n instanceof _e&&(e=n.getCoordinateSequenceFactory().create(e)),t.call(this,e,n),this.validateConstruction()}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={MINIMUM_VALID_SIZE:{configurable:!0},serialVersionUID:{configurable:!0}};return e.prototype.getSortIndex=function(){return ct.SORTINDEX_LINEARRING},e.prototype.getBoundaryDimension=function(){return Bt.FALSE},e.prototype.isClosed=function(){return!!this.isEmpty()||t.prototype.isClosed.call(this)},e.prototype.reverse=function(){var t=this._points.copy();return Wt.reverse(t),this.getFactory().createLinearRing(t)},e.prototype.validateConstruction=function(){if(!this.isEmpty()&&!t.prototype.isClosed.call(this))throw new m("Points of LinearRing do not form a closed linestring");if(this.getCoordinateSequence().size()>=1&&this.getCoordinateSequence().size()<e.MINIMUM_VALID_SIZE)throw new m("Invalid number of points in LinearRing (found "+this.getCoordinateSequence().size()+" - must be 0 or >= 4)")},e.prototype.getGeometryType=function(){return"LinearRing"},e.prototype.copy=function(){return new e(this._points.copy(),this._factory)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},n.MINIMUM_VALID_SIZE.get=function(){return 4},n.serialVersionUID.get=function(){return-0x3b229e262367a600},Object.defineProperties(e,n),e}(Kt),ne=function(t){function e(){t.apply(this,arguments)}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={serialVersionUID:{configurable:!0}};return e.prototype.getSortIndex=function(){return ct.SORTINDEX_MULTIPOLYGON},e.prototype.equalsExact=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];return!!this.isEquivalentClass(e)&&t.prototype.equalsExact.call(this,e,n)}return t.prototype.equalsExact.apply(this,arguments)},e.prototype.getBoundaryDimension=function(){return 1},e.prototype.getDimension=function(){return 2},e.prototype.reverse=function(){for(var t=this._geometries.length,e=new Array(t).fill(null),n=0;n<this._geometries.length;n++)e[n]=this._geometries[n].reverse();return this.getFactory().createMultiPolygon(e)},e.prototype.getBoundary=function(){if(this.isEmpty())return this.getFactory().createMultiLineString();for(var t=new Nt,e=0;e<this._geometries.length;e++)for(var n=this._geometries[e].getBoundary(),i=0;i<n.getNumGeometries();i++)t.add(n.getGeometryN(i));var r=new Array(t.size()).fill(null);return this.getFactory().createMultiLineString(t.toArray(r))},e.prototype.getGeometryType=function(){return"MultiPolygon"},e.prototype.copy=function(){for(var t=new Array(this._geometries.length).fill(null),n=0;n<t.length;n++)t[n]=this._geometries[n].copy();return new e(t,this._factory)},e.prototype.interfaces_=function(){return[Zt]},e.prototype.getClass=function(){return e},n.serialVersionUID.get=function(){return-0x7a5aa1369171980},Object.defineProperties(e,n),e}(zt),ie=function(t){this._factory=t||null,this._isUserDataCopied=!1},re={NoOpGeometryOperation:{configurable:!0},CoordinateOperation:{configurable:!0},CoordinateSequenceOperation:{configurable:!0}};ie.prototype.setCopyUserData=function(t){this._isUserDataCopied=t},ie.prototype.edit=function(t,e){if(null===t)return null;var n=this.editInternal(t,e);return this._isUserDataCopied&&n.setUserData(t.getUserData()),n},ie.prototype.editInternal=function(t,e){return null===this._factory&&(this._factory=t.getFactory()),t instanceof zt?this.editGeometryCollection(t,e):t instanceof $t?this.editPolygon(t,e):t instanceof Qt||t instanceof Kt?e.edit(t,this._factory):(et.shouldNeverReachHere("Unsupported Geometry class: "+t.getClass().getName()),null)},ie.prototype.editGeometryCollection=function(t,e){for(var n=e.edit(t,this._factory),i=new Nt,r=0;r<n.getNumGeometries();r++){var o=this.edit(n.getGeometryN(r),e);null===o||o.isEmpty()||i.add(o)}return n.getClass()===te?this._factory.createMultiPoint(i.toArray([])):n.getClass()===Xt?this._factory.createMultiLineString(i.toArray([])):n.getClass()===ne?this._factory.createMultiPolygon(i.toArray([])):this._factory.createGeometryCollection(i.toArray([]))},ie.prototype.editPolygon=function(t,e){var n=e.edit(t,this._factory);if(null===n&&(n=this._factory.createPolygon(null)),n.isEmpty())return n;var i=this.edit(n.getExteriorRing(),e);if(null===i||i.isEmpty())return this._factory.createPolygon();for(var r=new Nt,o=0;o<n.getNumInteriorRing();o++){var s=this.edit(n.getInteriorRingN(o),e);null===s||s.isEmpty()||r.add(s)}return this._factory.createPolygon(i,r.toArray([]))},ie.prototype.interfaces_=function(){return[]},ie.prototype.getClass=function(){return ie},ie.GeometryEditorOperation=function(){},re.NoOpGeometryOperation.get=function(){return oe},re.CoordinateOperation.get=function(){return se},re.CoordinateSequenceOperation.get=function(){return ae},Object.defineProperties(ie,re);var oe=function(){};oe.prototype.edit=function(t,e){return t},oe.prototype.interfaces_=function(){return[ie.GeometryEditorOperation]},oe.prototype.getClass=function(){return oe};var se=function(){};se.prototype.edit=function(t,e){var n=this.editCoordinates(t.getCoordinates(),t);return null===n?t:t instanceof ee?e.createLinearRing(n):t instanceof Kt?e.createLineString(n):t instanceof Qt?n.length>0?e.createPoint(n[0]):e.createPoint():t},se.prototype.interfaces_=function(){return[ie.GeometryEditorOperation]},se.prototype.getClass=function(){return se};var ae=function(){};ae.prototype.edit=function(t,e){return t instanceof ee?e.createLinearRing(this.edit(t.getCoordinateSequence(),t)):t instanceof Kt?e.createLineString(this.edit(t.getCoordinateSequence(),t)):t instanceof Qt?e.createPoint(this.edit(t.getCoordinateSequence(),t)):t},ae.prototype.interfaces_=function(){return[ie.GeometryEditorOperation]},ae.prototype.getClass=function(){return ae};var ue=function(){if(this._dimension=3,this._coordinates=null,1===arguments.length){if(arguments[0]instanceof Array)this._coordinates=arguments[0],this._dimension=3;else if(Number.isInteger(arguments[0])){var t=arguments[0];this._coordinates=new Array(t).fill(null);for(var e=0;e<t;e++)this._coordinates[e]=new C}else if(R(arguments[0],V)){var n=arguments[0];if(null===n)return this._coordinates=new Array(0).fill(null),null;this._dimension=n.getDimension(),this._coordinates=new Array(n.size()).fill(null);for(var i=0;i<this._coordinates.length;i++)this._coordinates[i]=n.getCoordinateCopy(i)}}else if(2===arguments.length)if(arguments[0]instanceof Array&&Number.isInteger(arguments[1])){var r=arguments[0],o=arguments[1];this._coordinates=r,this._dimension=o,null===r&&(this._coordinates=new Array(0).fill(null))}else if(Number.isInteger(arguments[0])&&Number.isInteger(arguments[1])){var s=arguments[0],a=arguments[1];this._coordinates=new Array(s).fill(null),this._dimension=a;for(var u=0;u<s;u++)this._coordinates[u]=new C}},le={serialVersionUID:{configurable:!0}};ue.prototype.setOrdinate=function(t,e,n){switch(e){case V.X:this._coordinates[t].x=n;break;case V.Y:this._coordinates[t].y=n;break;case V.Z:this._coordinates[t].z=n;break;default:throw new m("invalid ordinateIndex")}},ue.prototype.size=function(){return this._coordinates.length},ue.prototype.getOrdinate=function(t,e){switch(e){case V.X:return this._coordinates[t].x;case V.Y:return this._coordinates[t].y;case V.Z:return this._coordinates[t].z}return v.NaN},ue.prototype.getCoordinate=function(){if(1===arguments.length){var t=arguments[0];return this._coordinates[t]}if(2===arguments.length){var e=arguments[0],n=arguments[1];n.x=this._coordinates[e].x,n.y=this._coordinates[e].y,n.z=this._coordinates[e].z}},ue.prototype.getCoordinateCopy=function(t){return new C(this._coordinates[t])},ue.prototype.getDimension=function(){return this._dimension},ue.prototype.getX=function(t){return this._coordinates[t].x},ue.prototype.clone=function(){for(var t=new Array(this.size()).fill(null),e=0;e<this._coordinates.length;e++)t[e]=this._coordinates[e].clone();return new ue(t,this._dimension)},ue.prototype.expandEnvelope=function(t){for(var e=0;e<this._coordinates.length;e++)t.expandToInclude(this._coordinates[e]);return t},ue.prototype.copy=function(){for(var t=new Array(this.size()).fill(null),e=0;e<this._coordinates.length;e++)t[e]=this._coordinates[e].copy();return new ue(t,this._dimension)},ue.prototype.toString=function(){if(this._coordinates.length>0){var t=new M(17*this._coordinates.length);t.append("("),t.append(this._coordinates[0]);for(var e=1;e<this._coordinates.length;e++)t.append(", "),t.append(this._coordinates[e]);return t.append(")"),t.toString()}return"()"},ue.prototype.getY=function(t){return this._coordinates[t].y},ue.prototype.toCoordinateArray=function(){return this._coordinates},ue.prototype.interfaces_=function(){return[V,e]},ue.prototype.getClass=function(){return ue},le.serialVersionUID.get=function(){return-0xcb44a778db18e00},Object.defineProperties(ue,le);var ce=function(){},he={serialVersionUID:{configurable:!0},instanceObject:{configurable:!0}};ce.prototype.readResolve=function(){return ce.instance()},ce.prototype.create=function(){if(1===arguments.length){if(arguments[0]instanceof Array){var t=arguments[0];return new ue(t)}if(R(arguments[0],V)){var e=arguments[0];return new ue(e)}}else if(2===arguments.length){var n=arguments[0],i=arguments[1];return i>3&&(i=3),i<2?new ue(n):new ue(n,i)}},ce.prototype.interfaces_=function(){return[w,e]},ce.prototype.getClass=function(){return ce},ce.instance=function(){return ce.instanceObject},he.serialVersionUID.get=function(){return-0x38e49fa6cf6f2e00},he.instanceObject.get=function(){return new ce},Object.defineProperties(ce,he);var pe=function(t){function e(){t.call(this),this.map_=new Map}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.get=function(t){return this.map_.get(t)||null},e.prototype.put=function(t,e){return this.map_.set(t,e),e},e.prototype.values=function(){for(var t=new Nt,e=this.map_.values(),n=e.next();!n.done;)t.add(n.value),n=e.next();return t},e.prototype.entrySet=function(){var t=new Pt;return this.map_.entries().forEach((function(e){return t.add(e)})),t},e.prototype.size=function(){return this.map_.size()},e}(Rt),fe=function t(){if(this._modelType=null,this._scale=null,0===arguments.length)this._modelType=t.FLOATING;else if(1===arguments.length)if(arguments[0]instanceof de){var e=arguments[0];this._modelType=e,e===t.FIXED&&this.setScale(1)}else if("number"==typeof arguments[0]){var n=arguments[0];this._modelType=t.FIXED,this.setScale(n)}else if(arguments[0]instanceof t){var i=arguments[0];this._modelType=i._modelType,this._scale=i._scale}},ge={serialVersionUID:{configurable:!0},maximumPreciseValue:{configurable:!0}};fe.prototype.equals=function(t){if(!(t instanceof fe))return!1;var e=t;return this._modelType===e._modelType&&this._scale===e._scale},fe.prototype.compareTo=function(t){var e=t,n=this.getMaximumSignificantDigits(),i=e.getMaximumSignificantDigits();return new D(n).compareTo(new D(i))},fe.prototype.getScale=function(){return this._scale},fe.prototype.isFloating=function(){return this._modelType===fe.FLOATING||this._modelType===fe.FLOATING_SINGLE},fe.prototype.getType=function(){return this._modelType},fe.prototype.toString=function(){var t="UNKNOWN";return this._modelType===fe.FLOATING?t="Floating":this._modelType===fe.FLOATING_SINGLE?t="Floating-Single":this._modelType===fe.FIXED&&(t="Fixed (Scale="+this.getScale()+")"),t},fe.prototype.makePrecise=function(){if("number"==typeof arguments[0]){var t=arguments[0];return v.isNaN(t)||this._modelType===fe.FLOATING_SINGLE?t:this._modelType===fe.FIXED?Math.round(t*this._scale)/this._scale:t}if(arguments[0]instanceof C){var e=arguments[0];if(this._modelType===fe.FLOATING)return null;e.x=this.makePrecise(e.x),e.y=this.makePrecise(e.y)}},fe.prototype.getMaximumSignificantDigits=function(){var t=16;return this._modelType===fe.FLOATING?t=16:this._modelType===fe.FLOATING_SINGLE?t=6:this._modelType===fe.FIXED&&(t=1+Math.trunc(Math.ceil(Math.log(this.getScale())/Math.log(10)))),t},fe.prototype.setScale=function(t){this._scale=Math.abs(t)},fe.prototype.interfaces_=function(){return[e,E]},fe.prototype.getClass=function(){return fe},fe.mostPrecise=function(t,e){return t.compareTo(e)>=0?t:e},ge.serialVersionUID.get=function(){return 0x6bee6404e9a25c00},ge.maximumPreciseValue.get=function(){return 9007199254740992},Object.defineProperties(fe,ge);var de=function t(e){this._name=e||null,t.nameToTypeMap.put(e,this)},ye={serialVersionUID:{configurable:!0},nameToTypeMap:{configurable:!0}};de.prototype.readResolve=function(){return de.nameToTypeMap.get(this._name)},de.prototype.toString=function(){return this._name},de.prototype.interfaces_=function(){return[e]},de.prototype.getClass=function(){return de},ye.serialVersionUID.get=function(){return-552860263173159e4},ye.nameToTypeMap.get=function(){return new pe},Object.defineProperties(de,ye),fe.Type=de,fe.FIXED=new de("FIXED"),fe.FLOATING=new de("FLOATING"),fe.FLOATING_SINGLE=new de("FLOATING SINGLE");var _e=function t(){this._precisionModel=new fe,this._SRID=0,this._coordinateSequenceFactory=t.getDefaultCoordinateSequenceFactory(),0===arguments.length||(1===arguments.length?R(arguments[0],w)?this._coordinateSequenceFactory=arguments[0]:arguments[0]instanceof fe&&(this._precisionModel=arguments[0]):2===arguments.length?(this._precisionModel=arguments[0],this._SRID=arguments[1]):3===arguments.length&&(this._precisionModel=arguments[0],this._SRID=arguments[1],this._coordinateSequenceFactory=arguments[2]))},me={serialVersionUID:{configurable:!0}};_e.prototype.toGeometry=function(t){return t.isNull()?this.createPoint(null):t.getMinX()===t.getMaxX()&&t.getMinY()===t.getMaxY()?this.createPoint(new C(t.getMinX(),t.getMinY())):t.getMinX()===t.getMaxX()||t.getMinY()===t.getMaxY()?this.createLineString([new C(t.getMinX(),t.getMinY()),new C(t.getMaxX(),t.getMaxY())]):this.createPolygon(this.createLinearRing([new C(t.getMinX(),t.getMinY()),new C(t.getMinX(),t.getMaxY()),new C(t.getMaxX(),t.getMaxY()),new C(t.getMaxX(),t.getMinY()),new C(t.getMinX(),t.getMinY())]),null)},_e.prototype.createLineString=function(t){return t?t instanceof Array?new Kt(this.getCoordinateSequenceFactory().create(t),this):R(t,V)?new Kt(t,this):void 0:new Kt(this.getCoordinateSequenceFactory().create([]),this)},_e.prototype.createMultiLineString=function(){if(0===arguments.length)return new Xt(null,this);if(1===arguments.length){var t=arguments[0];return new Xt(t,this)}},_e.prototype.buildGeometry=function(t){for(var e=null,n=!1,i=!1,r=t.iterator();r.hasNext();){var o=r.next(),s=o.getClass();null===e&&(e=s),s!==e&&(n=!0),o.isGeometryCollectionOrDerived()&&(i=!0)}if(null===e)return this.createGeometryCollection();if(n||i)return this.createGeometryCollection(_e.toGeometryArray(t));var a=t.iterator().next();if(t.size()>1){if(a instanceof $t)return this.createMultiPolygon(_e.toPolygonArray(t));if(a instanceof Kt)return this.createMultiLineString(_e.toLineStringArray(t));if(a instanceof Qt)return this.createMultiPoint(_e.toPointArray(t));et.shouldNeverReachHere("Unhandled class: "+a.getClass().getName())}return a},_e.prototype.createMultiPointFromCoords=function(t){return this.createMultiPoint(null!==t?this.getCoordinateSequenceFactory().create(t):null)},_e.prototype.createPoint=function(){if(0===arguments.length)return this.createPoint(this.getCoordinateSequenceFactory().create([]));if(1===arguments.length){if(arguments[0]instanceof C){var t=arguments[0];return this.createPoint(null!==t?this.getCoordinateSequenceFactory().create([t]):null)}if(R(arguments[0],V)){var e=arguments[0];return new Qt(e,this)}}},_e.prototype.getCoordinateSequenceFactory=function(){return this._coordinateSequenceFactory},_e.prototype.createPolygon=function(){if(0===arguments.length)return new $t(null,null,this);if(1===arguments.length){if(R(arguments[0],V)){var t=arguments[0];return this.createPolygon(this.createLinearRing(t))}if(arguments[0]instanceof Array){var e=arguments[0];return this.createPolygon(this.createLinearRing(e))}if(arguments[0]instanceof ee){var n=arguments[0];return this.createPolygon(n,null)}}else if(2===arguments.length){var i=arguments[0],r=arguments[1];return new $t(i,r,this)}},_e.prototype.getSRID=function(){return this._SRID},_e.prototype.createGeometryCollection=function(){if(0===arguments.length)return new zt(null,this);if(1===arguments.length){var t=arguments[0];return new zt(t,this)}},_e.prototype.createGeometry=function(t){return new ie(this).edit(t,{edit:function(){if(2===arguments.length){var t=arguments[0];return this._coordinateSequenceFactory.create(t)}}})},_e.prototype.getPrecisionModel=function(){return this._precisionModel},_e.prototype.createLinearRing=function(){if(0===arguments.length)return this.createLinearRing(this.getCoordinateSequenceFactory().create([]));if(1===arguments.length){if(arguments[0]instanceof Array){var t=arguments[0];return this.createLinearRing(null!==t?this.getCoordinateSequenceFactory().create(t):null)}if(R(arguments[0],V)){var e=arguments[0];return new ee(e,this)}}},_e.prototype.createMultiPolygon=function(){if(0===arguments.length)return new ne(null,this);if(1===arguments.length){var t=arguments[0];return new ne(t,this)}},_e.prototype.createMultiPoint=function(){if(0===arguments.length)return new te(null,this);if(1===arguments.length){if(arguments[0]instanceof Array){var t=arguments[0];return new te(t,this)}if(arguments[0]instanceof Array){var e=arguments[0];return this.createMultiPoint(null!==e?this.getCoordinateSequenceFactory().create(e):null)}if(R(arguments[0],V)){var n=arguments[0];if(null===n)return this.createMultiPoint(new Array(0).fill(null));for(var i=new Array(n.size()).fill(null),r=0;r<n.size();r++){var o=this.getCoordinateSequenceFactory().create(1,n.getDimension());Wt.copy(n,r,o,0,1),i[r]=this.createPoint(o)}return this.createMultiPoint(i)}}},_e.prototype.interfaces_=function(){return[e]},_e.prototype.getClass=function(){return _e},_e.toMultiPolygonArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toGeometryArray=function(t){if(null===t)return null;var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.getDefaultCoordinateSequenceFactory=function(){return ce.instance()},_e.toMultiLineStringArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toLineStringArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toMultiPointArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toLinearRingArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toPointArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.toPolygonArray=function(t){var e=new Array(t.size()).fill(null);return t.toArray(e)},_e.createPointFromInternalCoord=function(t,e){return e.getPrecisionModel().makePrecise(t),e.getFactory().createPoint(t)},me.serialVersionUID.get=function(){return-0x5ea75f2051eeb400},Object.defineProperties(_e,me);var ve=["Point","MultiPoint","LineString","MultiLineString","Polygon","MultiPolygon"],xe=function(t){this.geometryFactory=t||new _e};xe.prototype.read=function(t){var e,n=(e="string"==typeof t?JSON.parse(t):t).type;if(!Ee[n])throw new Error("Unknown GeoJSON type: "+e.type);return-1!==ve.indexOf(n)?Ee[n].apply(this,[e.coordinates]):"GeometryCollection"===n?Ee[n].apply(this,[e.geometries]):Ee[n].apply(this,[e])},xe.prototype.write=function(t){var e=t.getGeometryType();if(!Ie[e])throw new Error("Geometry is not supported");return Ie[e].apply(this,[t])};var Ee={Feature:function(t){var e={};for(var n in t)e[n]=t[n];if(t.geometry){var i=t.geometry.type;if(!Ee[i])throw new Error("Unknown GeoJSON type: "+t.type);e.geometry=this.read(t.geometry)}return t.bbox&&(e.bbox=Ee.bbox.apply(this,[t.bbox])),e},FeatureCollection:function(t){var e={};if(t.features){e.features=[];for(var n=0;n<t.features.length;++n)e.features.push(this.read(t.features[n]))}return t.bbox&&(e.bbox=this.parse.bbox.apply(this,[t.bbox])),e},coordinates:function(t){for(var e=[],n=0;n<t.length;++n){var i=t[n];e.push(new C(i[0],i[1]))}return e},bbox:function(t){return this.geometryFactory.createLinearRing([new C(t[0],t[1]),new C(t[2],t[1]),new C(t[2],t[3]),new C(t[0],t[3]),new C(t[0],t[1])])},Point:function(t){var e=new C(t[0],t[1]);return this.geometryFactory.createPoint(e)},MultiPoint:function(t){for(var e=[],n=0;n<t.length;++n)e.push(Ee.Point.apply(this,[t[n]]));return this.geometryFactory.createMultiPoint(e)},LineString:function(t){var e=Ee.coordinates.apply(this,[t]);return this.geometryFactory.createLineString(e)},MultiLineString:function(t){for(var e=[],n=0;n<t.length;++n)e.push(Ee.LineString.apply(this,[t[n]]));return this.geometryFactory.createMultiLineString(e)},Polygon:function(t){for(var e=Ee.coordinates.apply(this,[t[0]]),n=this.geometryFactory.createLinearRing(e),i=[],r=1;r<t.length;++r){var o=t[r],s=Ee.coordinates.apply(this,[o]),a=this.geometryFactory.createLinearRing(s);i.push(a)}return this.geometryFactory.createPolygon(n,i)},MultiPolygon:function(t){for(var e=[],n=0;n<t.length;++n){var i=t[n];e.push(Ee.Polygon.apply(this,[i]))}return this.geometryFactory.createMultiPolygon(e)},GeometryCollection:function(t){for(var e=[],n=0;n<t.length;++n){var i=t[n];e.push(this.read(i))}return this.geometryFactory.createGeometryCollection(e)}},Ie={coordinate:function(t){return[t.x,t.y]},Point:function(t){return{type:"Point",coordinates:Ie.coordinate.apply(this,[t.getCoordinate()])}},MultiPoint:function(t){for(var e=[],n=0;n<t._geometries.length;++n){var i=t._geometries[n],r=Ie.Point.apply(this,[i]);e.push(r.coordinates)}return{type:"MultiPoint",coordinates:e}},LineString:function(t){for(var e=[],n=t.getCoordinates(),i=0;i<n.length;++i){var r=n[i];e.push(Ie.coordinate.apply(this,[r]))}return{type:"LineString",coordinates:e}},MultiLineString:function(t){for(var e=[],n=0;n<t._geometries.length;++n){var i=t._geometries[n],r=Ie.LineString.apply(this,[i]);e.push(r.coordinates)}return{type:"MultiLineString",coordinates:e}},Polygon:function(t){var e=[],n=Ie.LineString.apply(this,[t._shell]);e.push(n.coordinates);for(var i=0;i<t._holes.length;++i){var r=t._holes[i],o=Ie.LineString.apply(this,[r]);e.push(o.coordinates)}return{type:"Polygon",coordinates:e}},MultiPolygon:function(t){for(var e=[],n=0;n<t._geometries.length;++n){var i=t._geometries[n],r=Ie.Polygon.apply(this,[i]);e.push(r.coordinates)}return{type:"MultiPolygon",coordinates:e}},GeometryCollection:function(t){for(var e=[],n=0;n<t._geometries.length;++n){var i=t._geometries[n],r=i.getGeometryType();e.push(Ie[r].apply(this,[i]))}return{type:"GeometryCollection",geometries:e}}},Ne=function(t){this.geometryFactory=t||new _e,this.precisionModel=this.geometryFactory.getPrecisionModel(),this.parser=new xe(this.geometryFactory)};Ne.prototype.read=function(t){var e=this.parser.read(t);return this.precisionModel.getType()===fe.FIXED&&this.reducePrecision(e),e},Ne.prototype.reducePrecision=function(t){var e,n;if(t.coordinate)this.precisionModel.makePrecise(t.coordinate);else if(t.points)for(e=0,n=t.points.length;e<n;e++)this.precisionModel.makePrecise(t.points[e]);else if(t.geometries)for(e=0,n=t.geometries.length;e<n;e++)this.reducePrecision(t.geometries[e])};var Ce=function(){this.parser=new xe(this.geometryFactory)};Ce.prototype.write=function(t){return this.parser.write(t)};var be=function(){},Se={ON:{configurable:!0},LEFT:{configurable:!0},RIGHT:{configurable:!0}};be.prototype.interfaces_=function(){return[]},be.prototype.getClass=function(){return be},be.opposite=function(t){return t===be.LEFT?be.RIGHT:t===be.RIGHT?be.LEFT:t},Se.ON.get=function(){return 0},Se.LEFT.get=function(){return 1},Se.RIGHT.get=function(){return 2},Object.defineProperties(be,Se),(d.prototype=new Error).name="EmptyStackException",(y.prototype=new It).add=function(t){return this.array_.push(t),!0},y.prototype.get=function(t){if(t<0||t>=this.size())throw new Error;return this.array_[t]},y.prototype.push=function(t){return this.array_.push(t),t},y.prototype.pop=function(t){if(0===this.array_.length)throw new d;return this.array_.pop()},y.prototype.peek=function(){if(0===this.array_.length)throw new d;return this.array_[this.array_.length-1]},y.prototype.empty=function(){return 0===this.array_.length},y.prototype.isEmpty=function(){return this.empty()},y.prototype.search=function(t){return this.array_.indexOf(t)},y.prototype.size=function(){return this.array_.length},y.prototype.toArray=function(){for(var t=[],e=0,n=this.array_.length;e<n;e++)t.push(this.array_[e]);return t};var we=function(){this._minIndex=-1,this._minCoord=null,this._minDe=null,this._orientedDe=null};we.prototype.getCoordinate=function(){return this._minCoord},we.prototype.getRightmostSide=function(t,e){var n=this.getRightmostSideOfSegment(t,e);return n<0&&(n=this.getRightmostSideOfSegment(t,e-1)),n<0&&(this._minCoord=null,this.checkForRightmostCoordinate(t)),n},we.prototype.findRightmostEdgeAtVertex=function(){var t=this._minDe.getEdge().getCoordinates();et.isTrue(this._minIndex>0&&this._minIndex<t.length,"rightmost point expected to be interior vertex of edge");var e=t[this._minIndex-1],n=t[this._minIndex+1],i=at.computeOrientation(this._minCoord,n,e),r=!1;(e.y<this._minCoord.y&&n.y<this._minCoord.y&&i===at.COUNTERCLOCKWISE||e.y>this._minCoord.y&&n.y>this._minCoord.y&&i===at.CLOCKWISE)&&(r=!0),r&&(this._minIndex=this._minIndex-1)},we.prototype.getRightmostSideOfSegment=function(t,e){var n=t.getEdge().getCoordinates();if(e<0||e+1>=n.length)return-1;if(n[e].y===n[e+1].y)return-1;var i=be.LEFT;return n[e].y<n[e+1].y&&(i=be.RIGHT),i},we.prototype.getEdge=function(){return this._orientedDe},we.prototype.checkForRightmostCoordinate=function(t){for(var e=t.getEdge().getCoordinates(),n=0;n<e.length-1;n++)(null===this._minCoord||e[n].x>this._minCoord.x)&&(this._minDe=t,this._minIndex=n,this._minCoord=e[n])},we.prototype.findRightmostEdgeAtNode=function(){var t=this._minDe.getNode().getEdges();this._minDe=t.getRightmostEdge(),this._minDe.isForward()||(this._minDe=this._minDe.getSym(),this._minIndex=this._minDe.getEdge().getCoordinates().length-1)},we.prototype.findEdge=function(t){for(var e=t.iterator();e.hasNext();){var n=e.next();n.isForward()&&this.checkForRightmostCoordinate(n)}et.isTrue(0!==this._minIndex||this._minCoord.equals(this._minDe.getCoordinate()),"inconsistency in rightmost processing"),0===this._minIndex?this.findRightmostEdgeAtNode():this.findRightmostEdgeAtVertex(),this._orientedDe=this._minDe,this.getRightmostSide(this._minDe,this._minIndex)===be.LEFT&&(this._orientedDe=this._minDe.getSym())},we.prototype.interfaces_=function(){return[]},we.prototype.getClass=function(){return we};var Le=function(t){function e(n,i){t.call(this,e.msgWithCoord(n,i)),this.pt=i?new C(i):null,this.name="TopologyException"}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.getCoordinate=function(){return this.pt},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e.msgWithCoord=function(t,e){return e?t:t+" [ "+e+" ]"},e}($),Oe=function(){this.array_=[]};Oe.prototype.addLast=function(t){this.array_.push(t)},Oe.prototype.removeFirst=function(){return this.array_.shift()},Oe.prototype.isEmpty=function(){return 0===this.array_.length};var Re=function(){this._finder=null,this._dirEdgeList=new Nt,this._nodes=new Nt,this._rightMostCoord=null,this._env=null,this._finder=new we};Re.prototype.clearVisitedEdges=function(){for(var t=this._dirEdgeList.iterator();t.hasNext();)t.next().setVisited(!1)},Re.prototype.getRightmostCoordinate=function(){return this._rightMostCoord},Re.prototype.computeNodeDepth=function(t){for(var e=null,n=t.getEdges().iterator();n.hasNext();){var i=n.next();if(i.isVisited()||i.getSym().isVisited()){e=i;break}}if(null===e)throw new Le("unable to find edge to compute depths at "+t.getCoordinate());t.getEdges().computeDepths(e);for(var r=t.getEdges().iterator();r.hasNext();){var o=r.next();o.setVisited(!0),this.copySymDepths(o)}},Re.prototype.computeDepth=function(t){this.clearVisitedEdges();var e=this._finder.getEdge();e.setEdgeDepths(be.RIGHT,t),this.copySymDepths(e),this.computeDepths(e)},Re.prototype.create=function(t){this.addReachable(t),this._finder.findEdge(this._dirEdgeList),this._rightMostCoord=this._finder.getCoordinate()},Re.prototype.findResultEdges=function(){for(var t=this._dirEdgeList.iterator();t.hasNext();){var e=t.next();e.getDepth(be.RIGHT)>=1&&e.getDepth(be.LEFT)<=0&&!e.isInteriorAreaEdge()&&e.setInResult(!0)}},Re.prototype.computeDepths=function(t){var e=new Pt,n=new Oe,i=t.getNode();for(n.addLast(i),e.add(i),t.setVisited(!0);!n.isEmpty();){var r=n.removeFirst();e.add(r),this.computeNodeDepth(r);for(var o=r.getEdges().iterator();o.hasNext();){var s=o.next().getSym();if(!s.isVisited()){var a=s.getNode();e.contains(a)||(n.addLast(a),e.add(a))}}}},Re.prototype.compareTo=function(t){var e=t;return this._rightMostCoord.x<e._rightMostCoord.x?-1:this._rightMostCoord.x>e._rightMostCoord.x?1:0},Re.prototype.getEnvelope=function(){if(null===this._env){for(var t=new j,e=this._dirEdgeList.iterator();e.hasNext();)for(var n=e.next().getEdge().getCoordinates(),i=0;i<n.length-1;i++)t.expandToInclude(n[i]);this._env=t}return this._env},Re.prototype.addReachable=function(t){var e=new y;for(e.add(t);!e.empty();){var n=e.pop();this.add(n,e)}},Re.prototype.copySymDepths=function(t){var e=t.getSym();e.setDepth(be.LEFT,t.getDepth(be.RIGHT)),e.setDepth(be.RIGHT,t.getDepth(be.LEFT))},Re.prototype.add=function(t,e){t.setVisited(!0),this._nodes.add(t);for(var n=t.getEdges().iterator();n.hasNext();){var i=n.next();this._dirEdgeList.add(i);var r=i.getSym().getNode();r.isVisited()||e.push(r)}},Re.prototype.getNodes=function(){return this._nodes},Re.prototype.getDirectedEdges=function(){return this._dirEdgeList},Re.prototype.interfaces_=function(){return[E]},Re.prototype.getClass=function(){return Re};var Te=function t(){if(this.location=null,1===arguments.length){if(arguments[0]instanceof Array){var e=arguments[0];this.init(e.length)}else if(Number.isInteger(arguments[0])){var n=arguments[0];this.init(1),this.location[be.ON]=n}else if(arguments[0]instanceof t){var i=arguments[0];if(this.init(i.location.length),null!==i)for(var r=0;r<this.location.length;r++)this.location[r]=i.location[r]}}else if(3===arguments.length){var o=arguments[0],s=arguments[1],a=arguments[2];this.init(3),this.location[be.ON]=o,this.location[be.LEFT]=s,this.location[be.RIGHT]=a}};Te.prototype.setAllLocations=function(t){for(var e=0;e<this.location.length;e++)this.location[e]=t},Te.prototype.isNull=function(){for(var t=0;t<this.location.length;t++)if(this.location[t]!==L.NONE)return!1;return!0},Te.prototype.setAllLocationsIfNull=function(t){for(var e=0;e<this.location.length;e++)this.location[e]===L.NONE&&(this.location[e]=t)},Te.prototype.isLine=function(){return 1===this.location.length},Te.prototype.merge=function(t){if(t.location.length>this.location.length){var e=new Array(3).fill(null);e[be.ON]=this.location[be.ON],e[be.LEFT]=L.NONE,e[be.RIGHT]=L.NONE,this.location=e}for(var n=0;n<this.location.length;n++)this.location[n]===L.NONE&&n<t.location.length&&(this.location[n]=t.location[n])},Te.prototype.getLocations=function(){return this.location},Te.prototype.flip=function(){if(this.location.length<=1)return null;var t=this.location[be.LEFT];this.location[be.LEFT]=this.location[be.RIGHT],this.location[be.RIGHT]=t},Te.prototype.toString=function(){var t=new M;return this.location.length>1&&t.append(L.toLocationSymbol(this.location[be.LEFT])),t.append(L.toLocationSymbol(this.location[be.ON])),this.location.length>1&&t.append(L.toLocationSymbol(this.location[be.RIGHT])),t.toString()},Te.prototype.setLocations=function(t,e,n){this.location[be.ON]=t,this.location[be.LEFT]=e,this.location[be.RIGHT]=n},Te.prototype.get=function(t){return t<this.location.length?this.location[t]:L.NONE},Te.prototype.isArea=function(){return this.location.length>1},Te.prototype.isAnyNull=function(){for(var t=0;t<this.location.length;t++)if(this.location[t]===L.NONE)return!0;return!1},Te.prototype.setLocation=function(){if(1===arguments.length){var t=arguments[0];this.setLocation(be.ON,t)}else if(2===arguments.length){var e=arguments[0],n=arguments[1];this.location[e]=n}},Te.prototype.init=function(t){this.location=new Array(t).fill(null),this.setAllLocations(L.NONE)},Te.prototype.isEqualOnSide=function(t,e){return this.location[e]===t.location[e]},Te.prototype.allPositionsEqual=function(t){for(var e=0;e<this.location.length;e++)if(this.location[e]!==t)return!1;return!0},Te.prototype.interfaces_=function(){return[]},Te.prototype.getClass=function(){return Te};var Pe=function t(){if(this.elt=new Array(2).fill(null),1===arguments.length){if(Number.isInteger(arguments[0])){var e=arguments[0];this.elt[0]=new Te(e),this.elt[1]=new Te(e)}else if(arguments[0]instanceof t){var n=arguments[0];this.elt[0]=new Te(n.elt[0]),this.elt[1]=new Te(n.elt[1])}}else if(2===arguments.length){var i=arguments[0],r=arguments[1];this.elt[0]=new Te(L.NONE),this.elt[1]=new Te(L.NONE),this.elt[i].setLocation(r)}else if(3===arguments.length){var o=arguments[0],s=arguments[1],a=arguments[2];this.elt[0]=new Te(o,s,a),this.elt[1]=new Te(o,s,a)}else if(4===arguments.length){var u=arguments[0],l=arguments[1],c=arguments[2],h=arguments[3];this.elt[0]=new Te(L.NONE,L.NONE,L.NONE),this.elt[1]=new Te(L.NONE,L.NONE,L.NONE),this.elt[u].setLocations(l,c,h)}};Pe.prototype.getGeometryCount=function(){var t=0;return this.elt[0].isNull()||t++,this.elt[1].isNull()||t++,t},Pe.prototype.setAllLocations=function(t,e){this.elt[t].setAllLocations(e)},Pe.prototype.isNull=function(t){return this.elt[t].isNull()},Pe.prototype.setAllLocationsIfNull=function(){if(1===arguments.length){var t=arguments[0];this.setAllLocationsIfNull(0,t),this.setAllLocationsIfNull(1,t)}else if(2===arguments.length){var e=arguments[0],n=arguments[1];this.elt[e].setAllLocationsIfNull(n)}},Pe.prototype.isLine=function(t){return this.elt[t].isLine()},Pe.prototype.merge=function(t){for(var e=0;e<2;e++)null===this.elt[e]&&null!==t.elt[e]?this.elt[e]=new Te(t.elt[e]):this.elt[e].merge(t.elt[e])},Pe.prototype.flip=function(){this.elt[0].flip(),this.elt[1].flip()},Pe.prototype.getLocation=function(){if(1===arguments.length){var t=arguments[0];return this.elt[t].get(be.ON)}if(2===arguments.length){var e=arguments[0],n=arguments[1];return this.elt[e].get(n)}},Pe.prototype.toString=function(){var t=new M;return null!==this.elt[0]&&(t.append("A:"),t.append(this.elt[0].toString())),null!==this.elt[1]&&(t.append(" B:"),t.append(this.elt[1].toString())),t.toString()},Pe.prototype.isArea=function(){if(0===arguments.length)return this.elt[0].isArea()||this.elt[1].isArea();if(1===arguments.length){var t=arguments[0];return this.elt[t].isArea()}},Pe.prototype.isAnyNull=function(t){return this.elt[t].isAnyNull()},Pe.prototype.setLocation=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];this.elt[t].setLocation(be.ON,e)}else if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2];this.elt[n].setLocation(i,r)}},Pe.prototype.isEqualOnSide=function(t,e){return this.elt[0].isEqualOnSide(t.elt[0],e)&&this.elt[1].isEqualOnSide(t.elt[1],e)},Pe.prototype.allPositionsEqual=function(t,e){return this.elt[t].allPositionsEqual(e)},Pe.prototype.toLine=function(t){this.elt[t].isArea()&&(this.elt[t]=new Te(this.elt[t].location[0]))},Pe.prototype.interfaces_=function(){return[]},Pe.prototype.getClass=function(){return Pe},Pe.toLineLabel=function(t){for(var e=new Pe(L.NONE),n=0;n<2;n++)e.setLocation(n,t.getLocation(n));return e};var Me=function(){this._startDe=null,this._maxNodeDegree=-1,this._edges=new Nt,this._pts=new Nt,this._label=new Pe(L.NONE),this._ring=null,this._isHole=null,this._shell=null,this._holes=new Nt,this._geometryFactory=null;var t=arguments[0],e=arguments[1];this._geometryFactory=e,this.computePoints(t),this.computeRing()};Me.prototype.computeRing=function(){if(null!==this._ring)return null;for(var t=new Array(this._pts.size()).fill(null),e=0;e<this._pts.size();e++)t[e]=this._pts.get(e);this._ring=this._geometryFactory.createLinearRing(t),this._isHole=at.isCCW(this._ring.getCoordinates())},Me.prototype.isIsolated=function(){return 1===this._label.getGeometryCount()},Me.prototype.computePoints=function(t){this._startDe=t;var e=t,n=!0;do{if(null===e)throw new Le("Found null DirectedEdge");if(e.getEdgeRing()===this)throw new Le("Directed Edge visited twice during ring-building at "+e.getCoordinate());this._edges.add(e);var i=e.getLabel();et.isTrue(i.isArea()),this.mergeLabel(i),this.addPoints(e.getEdge(),e.isForward(),n),n=!1,this.setEdgeRing(e,this),e=this.getNext(e)}while(e!==this._startDe)},Me.prototype.getLinearRing=function(){return this._ring},Me.prototype.getCoordinate=function(t){return this._pts.get(t)},Me.prototype.computeMaxNodeDegree=function(){this._maxNodeDegree=0;var t=this._startDe;do{var e=t.getNode().getEdges().getOutgoingDegree(this);e>this._maxNodeDegree&&(this._maxNodeDegree=e),t=this.getNext(t)}while(t!==this._startDe);this._maxNodeDegree*=2},Me.prototype.addPoints=function(t,e,n){var i=t.getCoordinates();if(e){var r=1;n&&(r=0);for(var o=r;o<i.length;o++)this._pts.add(i[o])}else{var s=i.length-2;n&&(s=i.length-1);for(var a=s;a>=0;a--)this._pts.add(i[a])}},Me.prototype.isHole=function(){return this._isHole},Me.prototype.setInResult=function(){var t=this._startDe;do{t.getEdge().setInResult(!0),t=t.getNext()}while(t!==this._startDe)},Me.prototype.containsPoint=function(t){var e=this.getLinearRing();if(!e.getEnvelopeInternal().contains(t))return!1;if(!at.isPointInRing(t,e.getCoordinates()))return!1;for(var n=this._holes.iterator();n.hasNext();)if(n.next().containsPoint(t))return!1;return!0},Me.prototype.addHole=function(t){this._holes.add(t)},Me.prototype.isShell=function(){return null===this._shell},Me.prototype.getLabel=function(){return this._label},Me.prototype.getEdges=function(){return this._edges},Me.prototype.getMaxNodeDegree=function(){return this._maxNodeDegree<0&&this.computeMaxNodeDegree(),this._maxNodeDegree},Me.prototype.getShell=function(){return this._shell},Me.prototype.mergeLabel=function(){if(1===arguments.length){var t=arguments[0];this.mergeLabel(t,0),this.mergeLabel(t,1)}else if(2===arguments.length){var e=arguments[0],n=arguments[1],i=e.getLocation(n,be.RIGHT);if(i===L.NONE)return null;if(this._label.getLocation(n)===L.NONE)return this._label.setLocation(n,i),null}},Me.prototype.setShell=function(t){this._shell=t,null!==t&&t.addHole(this)},Me.prototype.toPolygon=function(t){for(var e=new Array(this._holes.size()).fill(null),n=0;n<this._holes.size();n++)e[n]=this._holes.get(n).getLinearRing();return t.createPolygon(this.getLinearRing(),e)},Me.prototype.interfaces_=function(){return[]},Me.prototype.getClass=function(){return Me};var De=function(t){function e(){var e=arguments[0],n=arguments[1];t.call(this,e,n)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.setEdgeRing=function(t,e){t.setMinEdgeRing(e)},e.prototype.getNext=function(t){return t.getNextMin()},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Me),Ae=function(t){function e(){var e=arguments[0],n=arguments[1];t.call(this,e,n)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.buildMinimalRings=function(){var t=new Nt,e=this._startDe;do{if(null===e.getMinEdgeRing()){var n=new De(e,this._geometryFactory);t.add(n)}e=e.getNext()}while(e!==this._startDe);return t},e.prototype.setEdgeRing=function(t,e){t.setEdgeRing(e)},e.prototype.linkDirectedEdgesForMinimalEdgeRings=function(){var t=this._startDe;do{t.getNode().getEdges().linkMinimalDirectedEdges(this),t=t.getNext()}while(t!==this._startDe)},e.prototype.getNext=function(t){return t.getNext()},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Me),Fe=function(){if(this._label=null,this._isInResult=!1,this._isCovered=!1,this._isCoveredSet=!1,this._isVisited=!1,0===arguments.length);else if(1===arguments.length){var t=arguments[0];this._label=t}};Fe.prototype.setVisited=function(t){this._isVisited=t},Fe.prototype.setInResult=function(t){this._isInResult=t},Fe.prototype.isCovered=function(){return this._isCovered},Fe.prototype.isCoveredSet=function(){return this._isCoveredSet},Fe.prototype.setLabel=function(t){this._label=t},Fe.prototype.getLabel=function(){return this._label},Fe.prototype.setCovered=function(t){this._isCovered=t,this._isCoveredSet=!0},Fe.prototype.updateIM=function(t){et.isTrue(this._label.getGeometryCount()>=2,"found partial label"),this.computeIM(t)},Fe.prototype.isInResult=function(){return this._isInResult},Fe.prototype.isVisited=function(){return this._isVisited},Fe.prototype.interfaces_=function(){return[]},Fe.prototype.getClass=function(){return Fe};var Ge=function(t){function e(){t.call(this),this._coord=null,this._edges=null;var e=arguments[0],n=arguments[1];this._coord=e,this._edges=n,this._label=new Pe(0,L.NONE)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.isIncidentEdgeInResult=function(){for(var t=this.getEdges().getEdges().iterator();t.hasNext();)if(t.next().getEdge().isInResult())return!0;return!1},e.prototype.isIsolated=function(){return 1===this._label.getGeometryCount()},e.prototype.getCoordinate=function(){return this._coord},e.prototype.print=function(t){t.println("node "+this._coord+" lbl: "+this._label)},e.prototype.computeIM=function(t){},e.prototype.computeMergedLocation=function(t,e){var n=L.NONE;if(n=this._label.getLocation(e),!t.isNull(e)){var i=t.getLocation(e);n!==L.BOUNDARY&&(n=i)}return n},e.prototype.setLabel=function(){if(2!==arguments.length)return t.prototype.setLabel.apply(this,arguments);var e=arguments[0],n=arguments[1];null===this._label?this._label=new Pe(e,n):this._label.setLocation(e,n)},e.prototype.getEdges=function(){return this._edges},e.prototype.mergeLabel=function(){if(arguments[0]instanceof e){var t=arguments[0];this.mergeLabel(t._label)}else if(arguments[0]instanceof Pe)for(var n=arguments[0],i=0;i<2;i++){var r=this.computeMergedLocation(n,i);this._label.getLocation(i)===L.NONE&&this._label.setLocation(i,r)}},e.prototype.add=function(t){this._edges.insert(t),t.setNode(this)},e.prototype.setLabelBoundary=function(t){if(null===this._label)return null;var e=L.NONE;null!==this._label&&(e=this._label.getLocation(t));var n=null;switch(e){case L.BOUNDARY:n=L.INTERIOR;break;case L.INTERIOR:default:n=L.BOUNDARY}this._label.setLocation(t,n)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Fe),Be=function(){this.nodeMap=new h,this.nodeFact=null;var t=arguments[0];this.nodeFact=t};Be.prototype.find=function(t){return this.nodeMap.get(t)},Be.prototype.addNode=function(){if(arguments[0]instanceof C){var t=arguments[0],e=this.nodeMap.get(t);return null===e&&(e=this.nodeFact.createNode(t),this.nodeMap.put(t,e)),e}if(arguments[0]instanceof Ge){var n=arguments[0],i=this.nodeMap.get(n.getCoordinate());return null===i?(this.nodeMap.put(n.getCoordinate(),n),n):(i.mergeLabel(n),i)}},Be.prototype.print=function(t){for(var e=this.iterator();e.hasNext();)e.next().print(t)},Be.prototype.iterator=function(){return this.nodeMap.values().iterator()},Be.prototype.values=function(){return this.nodeMap.values()},Be.prototype.getBoundaryNodes=function(t){for(var e=new Nt,n=this.iterator();n.hasNext();){var i=n.next();i.getLabel().getLocation(t)===L.BOUNDARY&&e.add(i)}return e},Be.prototype.add=function(t){var e=t.getCoordinate();this.addNode(e).add(t)},Be.prototype.interfaces_=function(){return[]},Be.prototype.getClass=function(){return Be};var Ue=function(){},Ve={NE:{configurable:!0},NW:{configurable:!0},SW:{configurable:!0},SE:{configurable:!0}};Ue.prototype.interfaces_=function(){return[]},Ue.prototype.getClass=function(){return Ue},Ue.isNorthern=function(t){return t===Ue.NE||t===Ue.NW},Ue.isOpposite=function(t,e){return t!==e&&2==(t-e+4)%4},Ue.commonHalfPlane=function(t,e){if(t===e)return t;if(2==(t-e+4)%4)return-1;var n=t<e?t:e;return 0===n&&3===(t>e?t:e)?3:n},Ue.isInHalfPlane=function(t,e){return e===Ue.SE?t===Ue.SE||t===Ue.SW:t===e||t===e+1},Ue.quadrant=function(){if("number"==typeof arguments[0]&&"number"==typeof arguments[1]){var t=arguments[0],e=arguments[1];if(0===t&&0===e)throw new m("Cannot compute the quadrant for point ( "+t+", "+e+" )");return t>=0?e>=0?Ue.NE:Ue.SE:e>=0?Ue.NW:Ue.SW}if(arguments[0]instanceof C&&arguments[1]instanceof C){var n=arguments[0],i=arguments[1];if(i.x===n.x&&i.y===n.y)throw new m("Cannot compute the quadrant for two identical points "+n);return i.x>=n.x?i.y>=n.y?Ue.NE:Ue.SE:i.y>=n.y?Ue.NW:Ue.SW}},Ve.NE.get=function(){return 0},Ve.NW.get=function(){return 1},Ve.SW.get=function(){return 2},Ve.SE.get=function(){return 3},Object.defineProperties(Ue,Ve);var qe=function(){if(this._edge=null,this._label=null,this._node=null,this._p0=null,this._p1=null,this._dx=null,this._dy=null,this._quadrant=null,1===arguments.length){var t=arguments[0];this._edge=t}else if(3===arguments.length){var e=arguments[0],n=arguments[1],i=arguments[2];this._edge=e,this.init(n,i),this._label=null}else if(4===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2],a=arguments[3];this._edge=r,this.init(o,s),this._label=a}};qe.prototype.compareDirection=function(t){return this._dx===t._dx&&this._dy===t._dy?0:this._quadrant>t._quadrant?1:this._quadrant<t._quadrant?-1:at.computeOrientation(t._p0,t._p1,this._p1)},qe.prototype.getDy=function(){return this._dy},qe.prototype.getCoordinate=function(){return this._p0},qe.prototype.setNode=function(t){this._node=t},qe.prototype.print=function(t){var e=Math.atan2(this._dy,this._dx),n=this.getClass().getName(),i=n.lastIndexOf("."),r=n.substring(i+1);t.print("  "+r+": "+this._p0+" - "+this._p1+" "+this._quadrant+":"+e+"   "+this._label)},qe.prototype.compareTo=function(t){var e=t;return this.compareDirection(e)},qe.prototype.getDirectedCoordinate=function(){return this._p1},qe.prototype.getDx=function(){return this._dx},qe.prototype.getLabel=function(){return this._label},qe.prototype.getEdge=function(){return this._edge},qe.prototype.getQuadrant=function(){return this._quadrant},qe.prototype.getNode=function(){return this._node},qe.prototype.toString=function(){var t=Math.atan2(this._dy,this._dx),e=this.getClass().getName(),n=e.lastIndexOf(".");return"  "+e.substring(n+1)+": "+this._p0+" - "+this._p1+" "+this._quadrant+":"+t+"   "+this._label},qe.prototype.computeLabel=function(t){},qe.prototype.init=function(t,e){this._p0=t,this._p1=e,this._dx=e.x-t.x,this._dy=e.y-t.y,this._quadrant=Ue.quadrant(this._dx,this._dy),et.isTrue(!(0===this._dx&&0===this._dy),"EdgeEnd with identical endpoints found")},qe.prototype.interfaces_=function(){return[E]},qe.prototype.getClass=function(){return qe};var ze=function(t){function e(){var e=arguments[0],n=arguments[1];if(t.call(this,e),this._isForward=null,this._isInResult=!1,this._isVisited=!1,this._sym=null,this._next=null,this._nextMin=null,this._edgeRing=null,this._minEdgeRing=null,this._depth=[0,-999,-999],this._isForward=n,n)this.init(e.getCoordinate(0),e.getCoordinate(1));else{var i=e.getNumPoints()-1;this.init(e.getCoordinate(i),e.getCoordinate(i-1))}this.computeDirectedLabel()}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.getNextMin=function(){return this._nextMin},e.prototype.getDepth=function(t){return this._depth[t]},e.prototype.setVisited=function(t){this._isVisited=t},e.prototype.computeDirectedLabel=function(){this._label=new Pe(this._edge.getLabel()),this._isForward||this._label.flip()},e.prototype.getNext=function(){return this._next},e.prototype.setDepth=function(t,e){if(-999!==this._depth[t]&&this._depth[t]!==e)throw new Le("assigned depths do not match",this.getCoordinate());this._depth[t]=e},e.prototype.isInteriorAreaEdge=function(){for(var t=!0,e=0;e<2;e++)this._label.isArea(e)&&this._label.getLocation(e,be.LEFT)===L.INTERIOR&&this._label.getLocation(e,be.RIGHT)===L.INTERIOR||(t=!1);return t},e.prototype.setNextMin=function(t){this._nextMin=t},e.prototype.print=function(e){t.prototype.print.call(this,e),e.print(" "+this._depth[be.LEFT]+"/"+this._depth[be.RIGHT]),e.print(" ("+this.getDepthDelta()+")"),this._isInResult&&e.print(" inResult")},e.prototype.setMinEdgeRing=function(t){this._minEdgeRing=t},e.prototype.isLineEdge=function(){var t=this._label.isLine(0)||this._label.isLine(1),e=!this._label.isArea(0)||this._label.allPositionsEqual(0,L.EXTERIOR),n=!this._label.isArea(1)||this._label.allPositionsEqual(1,L.EXTERIOR);return t&&e&&n},e.prototype.setEdgeRing=function(t){this._edgeRing=t},e.prototype.getMinEdgeRing=function(){return this._minEdgeRing},e.prototype.getDepthDelta=function(){var t=this._edge.getDepthDelta();return this._isForward||(t=-t),t},e.prototype.setInResult=function(t){this._isInResult=t},e.prototype.getSym=function(){return this._sym},e.prototype.isForward=function(){return this._isForward},e.prototype.getEdge=function(){return this._edge},e.prototype.printEdge=function(t){this.print(t),t.print(" "),this._isForward?this._edge.print(t):this._edge.printReverse(t)},e.prototype.setSym=function(t){this._sym=t},e.prototype.setVisitedEdge=function(t){this.setVisited(t),this._sym.setVisited(t)},e.prototype.setEdgeDepths=function(t,e){var n=this.getEdge().getDepthDelta();this._isForward||(n=-n);var i=1;t===be.LEFT&&(i=-1);var r=be.opposite(t),o=e+n*i;this.setDepth(t,e),this.setDepth(r,o)},e.prototype.getEdgeRing=function(){return this._edgeRing},e.prototype.isInResult=function(){return this._isInResult},e.prototype.setNext=function(t){this._next=t},e.prototype.isVisited=function(){return this._isVisited},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e.depthFactor=function(t,e){return t===L.EXTERIOR&&e===L.INTERIOR?1:t===L.INTERIOR&&e===L.EXTERIOR?-1:0},e}(qe),Xe=function(){};Xe.prototype.createNode=function(t){return new Ge(t,null)},Xe.prototype.interfaces_=function(){return[]},Xe.prototype.getClass=function(){return Xe};var Ye=function(){if(this._edges=new Nt,this._nodes=null,this._edgeEndList=new Nt,0===arguments.length)this._nodes=new Be(new Xe);else if(1===arguments.length){var t=arguments[0];this._nodes=new Be(t)}};Ye.prototype.printEdges=function(t){t.println("Edges:");for(var e=0;e<this._edges.size();e++){t.println("edge "+e+":");var n=this._edges.get(e);n.print(t),n.eiList.print(t)}},Ye.prototype.find=function(t){return this._nodes.find(t)},Ye.prototype.addNode=function(){if(arguments[0]instanceof Ge){var t=arguments[0];return this._nodes.addNode(t)}if(arguments[0]instanceof C){var e=arguments[0];return this._nodes.addNode(e)}},Ye.prototype.getNodeIterator=function(){return this._nodes.iterator()},Ye.prototype.linkResultDirectedEdges=function(){for(var t=this._nodes.iterator();t.hasNext();)t.next().getEdges().linkResultDirectedEdges()},Ye.prototype.debugPrintln=function(t){Y.out.println(t)},Ye.prototype.isBoundaryNode=function(t,e){var n=this._nodes.find(e);if(null===n)return!1;var i=n.getLabel();return null!==i&&i.getLocation(t)===L.BOUNDARY},Ye.prototype.linkAllDirectedEdges=function(){for(var t=this._nodes.iterator();t.hasNext();)t.next().getEdges().linkAllDirectedEdges()},Ye.prototype.matchInSameDirection=function(t,e,n,i){return!!t.equals(n)&&at.computeOrientation(t,e,i)===at.COLLINEAR&&Ue.quadrant(t,e)===Ue.quadrant(n,i)},Ye.prototype.getEdgeEnds=function(){return this._edgeEndList},Ye.prototype.debugPrint=function(t){Y.out.print(t)},Ye.prototype.getEdgeIterator=function(){return this._edges.iterator()},Ye.prototype.findEdgeInSameDirection=function(t,e){for(var n=0;n<this._edges.size();n++){var i=this._edges.get(n),r=i.getCoordinates();if(this.matchInSameDirection(t,e,r[0],r[1]))return i;if(this.matchInSameDirection(t,e,r[r.length-1],r[r.length-2]))return i}return null},Ye.prototype.insertEdge=function(t){this._edges.add(t)},Ye.prototype.findEdgeEnd=function(t){for(var e=this.getEdgeEnds().iterator();e.hasNext();){var n=e.next();if(n.getEdge()===t)return n}return null},Ye.prototype.addEdges=function(t){for(var e=t.iterator();e.hasNext();){var n=e.next();this._edges.add(n);var i=new ze(n,!0),r=new ze(n,!1);i.setSym(r),r.setSym(i),this.add(i),this.add(r)}},Ye.prototype.add=function(t){this._nodes.add(t),this._edgeEndList.add(t)},Ye.prototype.getNodes=function(){return this._nodes.values()},Ye.prototype.findEdge=function(t,e){for(var n=0;n<this._edges.size();n++){var i=this._edges.get(n),r=i.getCoordinates();if(t.equals(r[0])&&e.equals(r[1]))return i}return null},Ye.prototype.interfaces_=function(){return[]},Ye.prototype.getClass=function(){return Ye},Ye.linkResultDirectedEdges=function(t){for(var e=t.iterator();e.hasNext();)e.next().getEdges().linkResultDirectedEdges()};var ke=function(){this._geometryFactory=null,this._shellList=new Nt;var t=arguments[0];this._geometryFactory=t};ke.prototype.sortShellsAndHoles=function(t,e,n){for(var i=t.iterator();i.hasNext();){var r=i.next();r.isHole()?n.add(r):e.add(r)}},ke.prototype.computePolygons=function(t){for(var e=new Nt,n=t.iterator();n.hasNext();){var i=n.next().toPolygon(this._geometryFactory);e.add(i)}return e},ke.prototype.placeFreeHoles=function(t,e){for(var n=e.iterator();n.hasNext();){var i=n.next();if(null===i.getShell()){var r=this.findEdgeRingContaining(i,t);if(null===r)throw new Le("unable to assign hole to a shell",i.getCoordinate(0));i.setShell(r)}}},ke.prototype.buildMinimalEdgeRings=function(t,e,n){for(var i=new Nt,r=t.iterator();r.hasNext();){var o=r.next();if(o.getMaxNodeDegree()>2){o.linkDirectedEdgesForMinimalEdgeRings();var s=o.buildMinimalRings(),a=this.findShell(s);null!==a?(this.placePolygonHoles(a,s),e.add(a)):n.addAll(s)}else i.add(o)}return i},ke.prototype.containsPoint=function(t){for(var e=this._shellList.iterator();e.hasNext();)if(e.next().containsPoint(t))return!0;return!1},ke.prototype.buildMaximalEdgeRings=function(t){for(var e=new Nt,n=t.iterator();n.hasNext();){var i=n.next();if(i.isInResult()&&i.getLabel().isArea()&&null===i.getEdgeRing()){var r=new Ae(i,this._geometryFactory);e.add(r),r.setInResult()}}return e},ke.prototype.placePolygonHoles=function(t,e){for(var n=e.iterator();n.hasNext();){var i=n.next();i.isHole()&&i.setShell(t)}},ke.prototype.getPolygons=function(){return this.computePolygons(this._shellList)},ke.prototype.findEdgeRingContaining=function(t,e){for(var n=t.getLinearRing(),i=n.getEnvelopeInternal(),r=n.getCoordinateN(0),o=null,s=null,a=e.iterator();a.hasNext();){var u=a.next(),l=u.getLinearRing(),c=l.getEnvelopeInternal();null!==o&&(s=o.getLinearRing().getEnvelopeInternal());var h=!1;c.contains(i)&&at.isPointInRing(r,l.getCoordinates())&&(h=!0),h&&(null===o||s.contains(c))&&(o=u)}return o},ke.prototype.findShell=function(t){for(var e=0,n=null,i=t.iterator();i.hasNext();){var r=i.next();r.isHole()||(n=r,e++)}return et.isTrue(e<=1,"found two shells in MinimalEdgeRing list"),n},ke.prototype.add=function(){if(1===arguments.length){var t=arguments[0];this.add(t.getEdgeEnds(),t.getNodes())}else if(2===arguments.length){var e=arguments[0],n=arguments[1];Ye.linkResultDirectedEdges(n);var i=this.buildMaximalEdgeRings(e),r=new Nt,o=this.buildMinimalEdgeRings(i,this._shellList,r);this.sortShellsAndHoles(o,this._shellList,r),this.placeFreeHoles(this._shellList,r)}},ke.prototype.interfaces_=function(){return[]},ke.prototype.getClass=function(){return ke};var je=function(){};je.prototype.getBounds=function(){},je.prototype.interfaces_=function(){return[]},je.prototype.getClass=function(){return je};var He=function(){this._bounds=null,this._item=null;var t=arguments[0],e=arguments[1];this._bounds=t,this._item=e};He.prototype.getItem=function(){return this._item},He.prototype.getBounds=function(){return this._bounds},He.prototype.interfaces_=function(){return[je,e]},He.prototype.getClass=function(){return He};var We=function(){this._size=null,this._items=null,this._size=0,this._items=new Nt,this._items.add(null)};We.prototype.poll=function(){if(this.isEmpty())return null;var t=this._items.get(1);return this._items.set(1,this._items.get(this._size)),this._size-=1,this.reorder(1),t},We.prototype.size=function(){return this._size},We.prototype.reorder=function(t){for(var e=null,n=this._items.get(t);2*t<=this._size&&((e=2*t)!==this._size&&this._items.get(e+1).compareTo(this._items.get(e))<0&&e++,this._items.get(e).compareTo(n)<0);t=e)this._items.set(t,this._items.get(e));this._items.set(t,n)},We.prototype.clear=function(){this._size=0,this._items.clear()},We.prototype.isEmpty=function(){return 0===this._size},We.prototype.add=function(t){this._items.add(null),this._size+=1;var e=this._size;for(this._items.set(0,t);t.compareTo(this._items.get(Math.trunc(e/2)))<0;e/=2)this._items.set(e,this._items.get(Math.trunc(e/2)));this._items.set(e,t)},We.prototype.interfaces_=function(){return[]},We.prototype.getClass=function(){return We};var Ke=function(){};Ke.prototype.visitItem=function(t){},Ke.prototype.interfaces_=function(){return[]},Ke.prototype.getClass=function(){return Ke};var Je=function(){};Je.prototype.insert=function(t,e){},Je.prototype.remove=function(t,e){},Je.prototype.query=function(){},Je.prototype.interfaces_=function(){return[]},Je.prototype.getClass=function(){return Je};var Qe=function(){if(this._childBoundables=new Nt,this._bounds=null,this._level=null,0===arguments.length);else if(1===arguments.length){var t=arguments[0];this._level=t}},Ze={serialVersionUID:{configurable:!0}};Qe.prototype.getLevel=function(){return this._level},Qe.prototype.size=function(){return this._childBoundables.size()},Qe.prototype.getChildBoundables=function(){return this._childBoundables},Qe.prototype.addChildBoundable=function(t){et.isTrue(null===this._bounds),this._childBoundables.add(t)},Qe.prototype.isEmpty=function(){return this._childBoundables.isEmpty()},Qe.prototype.getBounds=function(){return null===this._bounds&&(this._bounds=this.computeBounds()),this._bounds},Qe.prototype.interfaces_=function(){return[je,e]},Qe.prototype.getClass=function(){return Qe},Ze.serialVersionUID.get=function(){return 0x5a1e55ec41369800},Object.defineProperties(Qe,Ze);var $e=function(){};$e.reverseOrder=function(){return{compare:function(t,e){return e.compareTo(t)}}},$e.min=function(t){return $e.sort(t),t.get(0)},$e.sort=function(t,e){var n=t.toArray();e?Gt.sort(n,e):Gt.sort(n);for(var i=t.iterator(),r=0,o=n.length;r<o;r++)i.next(),i.set(n[r])},$e.singletonList=function(t){var e=new Nt;return e.add(t),e};var tn=function(){this._boundable1=null,this._boundable2=null,this._distance=null,this._itemDistance=null;var t=arguments[0],e=arguments[1],n=arguments[2];this._boundable1=t,this._boundable2=e,this._itemDistance=n,this._distance=this.distance()};tn.prototype.expandToQueue=function(t,e){var n=tn.isComposite(this._boundable1),i=tn.isComposite(this._boundable2);if(n&&i)return tn.area(this._boundable1)>tn.area(this._boundable2)?(this.expand(this._boundable1,this._boundable2,t,e),null):(this.expand(this._boundable2,this._boundable1,t,e),null);if(n)return this.expand(this._boundable1,this._boundable2,t,e),null;if(i)return this.expand(this._boundable2,this._boundable1,t,e),null;throw new m("neither boundable is composite")},tn.prototype.isLeaves=function(){return!(tn.isComposite(this._boundable1)||tn.isComposite(this._boundable2))},tn.prototype.compareTo=function(t){var e=t;return this._distance<e._distance?-1:this._distance>e._distance?1:0},tn.prototype.expand=function(t,e,n,i){for(var r=t.getChildBoundables().iterator();r.hasNext();){var o=r.next(),s=new tn(o,e,this._itemDistance);s.getDistance()<i&&n.add(s)}},tn.prototype.getBoundable=function(t){return 0===t?this._boundable1:this._boundable2},tn.prototype.getDistance=function(){return this._distance},tn.prototype.distance=function(){return this.isLeaves()?this._itemDistance.distance(this._boundable1,this._boundable2):this._boundable1.getBounds().distance(this._boundable2.getBounds())},tn.prototype.interfaces_=function(){return[E]},tn.prototype.getClass=function(){return tn},tn.area=function(t){return t.getBounds().getArea()},tn.isComposite=function(t){return t instanceof Qe};var en=function t(){if(this._root=null,this._built=!1,this._itemBoundables=new Nt,this._nodeCapacity=null,0===arguments.length){var e=t.DEFAULT_NODE_CAPACITY;this._nodeCapacity=e}else if(1===arguments.length){var n=arguments[0];et.isTrue(n>1,"Node capacity must be greater than 1"),this._nodeCapacity=n}},nn={IntersectsOp:{configurable:!0},serialVersionUID:{configurable:!0},DEFAULT_NODE_CAPACITY:{configurable:!0}};en.prototype.getNodeCapacity=function(){return this._nodeCapacity},en.prototype.lastNode=function(t){return t.get(t.size()-1)},en.prototype.size=function(){if(0===arguments.length)return this.isEmpty()?0:(this.build(),this.size(this._root));if(1===arguments.length){for(var t=0,e=arguments[0].getChildBoundables().iterator();e.hasNext();){var n=e.next();n instanceof Qe?t+=this.size(n):n instanceof He&&(t+=1)}return t}},en.prototype.removeItem=function(t,e){for(var n=null,i=t.getChildBoundables().iterator();i.hasNext();){var r=i.next();r instanceof He&&r.getItem()===e&&(n=r)}return null!==n&&(t.getChildBoundables().remove(n),!0)},en.prototype.itemsTree=function(){if(0===arguments.length){this.build();var t=this.itemsTree(this._root);return null===t?new Nt:t}if(1===arguments.length){for(var e=arguments[0],n=new Nt,i=e.getChildBoundables().iterator();i.hasNext();){var r=i.next();if(r instanceof Qe){var o=this.itemsTree(r);null!==o&&n.add(o)}else r instanceof He?n.add(r.getItem()):et.shouldNeverReachHere()}return n.size()<=0?null:n}},en.prototype.insert=function(t,e){et.isTrue(!this._built,"Cannot insert items into an STR packed R-tree after it has been built."),this._itemBoundables.add(new He(t,e))},en.prototype.boundablesAtLevel=function(){if(1===arguments.length){var t=arguments[0],e=new Nt;return this.boundablesAtLevel(t,this._root,e),e}if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2];if(et.isTrue(n>-2),i.getLevel()===n)return r.add(i),null;for(var o=i.getChildBoundables().iterator();o.hasNext();){var s=o.next();s instanceof Qe?this.boundablesAtLevel(n,s,r):(et.isTrue(s instanceof He),-1===n&&r.add(s))}return null}},en.prototype.query=function(){if(1===arguments.length){var t=arguments[0];this.build();var e=new Nt;return this.isEmpty()||this.getIntersectsOp().intersects(this._root.getBounds(),t)&&this.query(t,this._root,e),e}if(2===arguments.length){var n=arguments[0],i=arguments[1];if(this.build(),this.isEmpty())return null;this.getIntersectsOp().intersects(this._root.getBounds(),n)&&this.query(n,this._root,i)}else if(3===arguments.length)if(R(arguments[2],Ke)&&arguments[0]instanceof Object&&arguments[1]instanceof Qe)for(var r=arguments[0],o=arguments[1],s=arguments[2],a=o.getChildBoundables(),u=0;u<a.size();u++){var l=a.get(u);this.getIntersectsOp().intersects(l.getBounds(),r)&&(l instanceof Qe?this.query(r,l,s):l instanceof He?s.visitItem(l.getItem()):et.shouldNeverReachHere())}else if(R(arguments[2],It)&&arguments[0]instanceof Object&&arguments[1]instanceof Qe)for(var c=arguments[0],h=arguments[1],p=arguments[2],f=h.getChildBoundables(),g=0;g<f.size();g++){var d=f.get(g);this.getIntersectsOp().intersects(d.getBounds(),c)&&(d instanceof Qe?this.query(c,d,p):d instanceof He?p.add(d.getItem()):et.shouldNeverReachHere())}},en.prototype.build=function(){if(this._built)return null;this._root=this._itemBoundables.isEmpty()?this.createNode(0):this.createHigherLevels(this._itemBoundables,-1),this._itemBoundables=null,this._built=!0},en.prototype.getRoot=function(){return this.build(),this._root},en.prototype.remove=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];return this.build(),!!this.getIntersectsOp().intersects(this._root.getBounds(),t)&&this.remove(t,this._root,e)}if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2],o=this.removeItem(i,r);if(o)return!0;for(var s=null,a=i.getChildBoundables().iterator();a.hasNext();){var u=a.next();if(this.getIntersectsOp().intersects(u.getBounds(),n)&&u instanceof Qe&&(o=this.remove(n,u,r))){s=u;break}}return null!==s&&s.getChildBoundables().isEmpty()&&i.getChildBoundables().remove(s),o}},en.prototype.createHigherLevels=function(t,e){et.isTrue(!t.isEmpty());var n=this.createParentBoundables(t,e+1);return 1===n.size()?n.get(0):this.createHigherLevels(n,e+1)},en.prototype.depth=function(){if(0===arguments.length)return this.isEmpty()?0:(this.build(),this.depth(this._root));if(1===arguments.length){for(var t=0,e=arguments[0].getChildBoundables().iterator();e.hasNext();){var n=e.next();if(n instanceof Qe){var i=this.depth(n);i>t&&(t=i)}}return t+1}},en.prototype.createParentBoundables=function(t,e){et.isTrue(!t.isEmpty());var n=new Nt;n.add(this.createNode(e));var i=new Nt(t);$e.sort(i,this.getComparator());for(var r=i.iterator();r.hasNext();){var o=r.next();this.lastNode(n).getChildBoundables().size()===this.getNodeCapacity()&&n.add(this.createNode(e)),this.lastNode(n).addChildBoundable(o)}return n},en.prototype.isEmpty=function(){return this._built?this._root.isEmpty():this._itemBoundables.isEmpty()},en.prototype.interfaces_=function(){return[e]},en.prototype.getClass=function(){return en},en.compareDoubles=function(t,e){return t>e?1:t<e?-1:0},nn.IntersectsOp.get=function(){return rn},nn.serialVersionUID.get=function(){return-0x35ef64c82d4c5400},nn.DEFAULT_NODE_CAPACITY.get=function(){return 10},Object.defineProperties(en,nn);var rn=function(){},on=function(){};on.prototype.distance=function(t,e){},on.prototype.interfaces_=function(){return[]},on.prototype.getClass=function(){return on};var sn=function(t){function n(e){e=e||n.DEFAULT_NODE_CAPACITY,t.call(this,e)}t&&(n.__proto__=t),(n.prototype=Object.create(t&&t.prototype)).constructor=n;var i={STRtreeNode:{configurable:!0},serialVersionUID:{configurable:!0},xComparator:{configurable:!0},yComparator:{configurable:!0},intersectsOp:{configurable:!0},DEFAULT_NODE_CAPACITY:{configurable:!0}};return n.prototype.createParentBoundablesFromVerticalSlices=function(t,e){et.isTrue(t.length>0);for(var n=new Nt,i=0;i<t.length;i++)n.addAll(this.createParentBoundablesFromVerticalSlice(t[i],e));return n},n.prototype.createNode=function(t){return new an(t)},n.prototype.size=function(){return 0===arguments.length?t.prototype.size.call(this):t.prototype.size.apply(this,arguments)},n.prototype.insert=function(){if(2!==arguments.length)return t.prototype.insert.apply(this,arguments);var e=arguments[0],n=arguments[1];if(e.isNull())return null;t.prototype.insert.call(this,e,n)},n.prototype.getIntersectsOp=function(){return n.intersectsOp},n.prototype.verticalSlices=function(t,e){for(var n=Math.trunc(Math.ceil(t.size()/e)),i=new Array(e).fill(null),r=t.iterator(),o=0;o<e;o++){i[o]=new Nt;for(var s=0;r.hasNext()&&s<n;){var a=r.next();i[o].add(a),s++}}return i},n.prototype.query=function(){if(1===arguments.length){var e=arguments[0];return t.prototype.query.call(this,e)}if(2===arguments.length){var n=arguments[0],i=arguments[1];t.prototype.query.call(this,n,i)}else if(3===arguments.length)if(R(arguments[2],Ke)&&arguments[0]instanceof Object&&arguments[1]instanceof Qe){var r=arguments[0],o=arguments[1],s=arguments[2];t.prototype.query.call(this,r,o,s)}else if(R(arguments[2],It)&&arguments[0]instanceof Object&&arguments[1]instanceof Qe){var a=arguments[0],u=arguments[1],l=arguments[2];t.prototype.query.call(this,a,u,l)}},n.prototype.getComparator=function(){return n.yComparator},n.prototype.createParentBoundablesFromVerticalSlice=function(e,n){return t.prototype.createParentBoundables.call(this,e,n)},n.prototype.remove=function(){if(2===arguments.length){var e=arguments[0],n=arguments[1];return t.prototype.remove.call(this,e,n)}return t.prototype.remove.apply(this,arguments)},n.prototype.depth=function(){return 0===arguments.length?t.prototype.depth.call(this):t.prototype.depth.apply(this,arguments)},n.prototype.createParentBoundables=function(t,e){et.isTrue(!t.isEmpty());var i=Math.trunc(Math.ceil(t.size()/this.getNodeCapacity())),r=new Nt(t);$e.sort(r,n.xComparator);var o=this.verticalSlices(r,Math.trunc(Math.ceil(Math.sqrt(i))));return this.createParentBoundablesFromVerticalSlices(o,e)},n.prototype.nearestNeighbour=function(){if(1===arguments.length){if(R(arguments[0],on)){var t=arguments[0],e=new tn(this.getRoot(),this.getRoot(),t);return this.nearestNeighbour(e)}if(arguments[0]instanceof tn){var i=arguments[0];return this.nearestNeighbour(i,v.POSITIVE_INFINITY)}}else if(2===arguments.length){if(arguments[0]instanceof n&&R(arguments[1],on)){var r=arguments[0],o=arguments[1],s=new tn(this.getRoot(),r.getRoot(),o);return this.nearestNeighbour(s)}if(arguments[0]instanceof tn&&"number"==typeof arguments[1]){var a=arguments[0],u=arguments[1],l=null,c=new We;for(c.add(a);!c.isEmpty()&&u>0;){var h=c.poll(),p=h.getDistance();if(p>=u)break;h.isLeaves()?(u=p,l=h):h.expandToQueue(c,u)}return[l.getBoundable(0).getItem(),l.getBoundable(1).getItem()]}}else if(3===arguments.length){var f=arguments[0],g=arguments[1],d=arguments[2],y=new He(f,g),_=new tn(this.getRoot(),y,d);return this.nearestNeighbour(_)[0]}},n.prototype.interfaces_=function(){return[Je,e]},n.prototype.getClass=function(){return n},n.centreX=function(t){return n.avg(t.getMinX(),t.getMaxX())},n.avg=function(t,e){return(t+e)/2},n.centreY=function(t){return n.avg(t.getMinY(),t.getMaxY())},i.STRtreeNode.get=function(){return an},i.serialVersionUID.get=function(){return 0x39920f7d5f261e0},i.xComparator.get=function(){return{interfaces_:function(){return[N]},compare:function(e,i){return t.compareDoubles(n.centreX(e.getBounds()),n.centreX(i.getBounds()))}}},i.yComparator.get=function(){return{interfaces_:function(){return[N]},compare:function(e,i){return t.compareDoubles(n.centreY(e.getBounds()),n.centreY(i.getBounds()))}}},i.intersectsOp.get=function(){return{interfaces_:function(){return[t.IntersectsOp]},intersects:function(t,e){return t.intersects(e)}}},i.DEFAULT_NODE_CAPACITY.get=function(){return 10},Object.defineProperties(n,i),n}(en),an=function(t){function e(){var e=arguments[0];t.call(this,e)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.computeBounds=function(){for(var t=null,e=this.getChildBoundables().iterator();e.hasNext();){var n=e.next();null===t?t=new j(n.getBounds()):t.expandToInclude(n.getBounds())}return t},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Qe),un=function(){};un.prototype.interfaces_=function(){return[]},un.prototype.getClass=function(){return un},un.relativeSign=function(t,e){return t<e?-1:t>e?1:0},un.compare=function(t,e,n){if(e.equals2D(n))return 0;var i=un.relativeSign(e.x,n.x),r=un.relativeSign(e.y,n.y);switch(t){case 0:return un.compareValue(i,r);case 1:return un.compareValue(r,i);case 2:return un.compareValue(r,-i);case 3:return un.compareValue(-i,r);case 4:return un.compareValue(-i,-r);case 5:return un.compareValue(-r,-i);case 6:return un.compareValue(-r,i);case 7:return un.compareValue(i,-r)}return et.shouldNeverReachHere("invalid octant value"),0},un.compareValue=function(t,e){return t<0?-1:t>0?1:e<0?-1:e>0?1:0};var ln=function(){this._segString=null,this.coord=null,this.segmentIndex=null,this._segmentOctant=null,this._isInterior=null;var t=arguments[0],e=arguments[1],n=arguments[2],i=arguments[3];this._segString=t,this.coord=new C(e),this.segmentIndex=n,this._segmentOctant=i,this._isInterior=!e.equals2D(t.getCoordinate(n))};ln.prototype.getCoordinate=function(){return this.coord},ln.prototype.print=function(t){t.print(this.coord),t.print(" seg # = "+this.segmentIndex)},ln.prototype.compareTo=function(t){var e=t;return this.segmentIndex<e.segmentIndex?-1:this.segmentIndex>e.segmentIndex?1:this.coord.equals2D(e.coord)?0:un.compare(this._segmentOctant,this.coord,e.coord)},ln.prototype.isEndPoint=function(t){return 0===this.segmentIndex&&!this._isInterior||this.segmentIndex===t},ln.prototype.isInterior=function(){return this._isInterior},ln.prototype.interfaces_=function(){return[E]},ln.prototype.getClass=function(){return ln};var cn=function(){this._nodeMap=new h,this._edge=null;var t=arguments[0];this._edge=t};cn.prototype.getSplitCoordinates=function(){var t=new bt;this.addEndpoints();for(var e=this.iterator(),n=e.next();e.hasNext();){var i=e.next();this.addEdgeCoordinates(n,i,t),n=i}return t.toCoordinateArray()},cn.prototype.addCollapsedNodes=function(){var t=new Nt;this.findCollapsesFromInsertedNodes(t),this.findCollapsesFromExistingVertices(t);for(var e=t.iterator();e.hasNext();){var n=e.next().intValue();this.add(this._edge.getCoordinate(n),n)}},cn.prototype.print=function(t){t.println("Intersections:");for(var e=this.iterator();e.hasNext();)e.next().print(t)},cn.prototype.findCollapsesFromExistingVertices=function(t){for(var e=0;e<this._edge.size()-2;e++){var n=this._edge.getCoordinate(e),i=this._edge.getCoordinate(e+2);n.equals2D(i)&&t.add(new D(e+1))}},cn.prototype.addEdgeCoordinates=function(t,e,n){var i=this._edge.getCoordinate(e.segmentIndex),r=e.isInterior()||!e.coord.equals2D(i);n.add(new C(t.coord),!1);for(var o=t.segmentIndex+1;o<=e.segmentIndex;o++)n.add(this._edge.getCoordinate(o));r&&n.add(new C(e.coord))},cn.prototype.iterator=function(){return this._nodeMap.values().iterator()},cn.prototype.addSplitEdges=function(t){this.addEndpoints(),this.addCollapsedNodes();for(var e=this.iterator(),n=e.next();e.hasNext();){var i=e.next(),r=this.createSplitEdge(n,i);t.add(r),n=i}},cn.prototype.findCollapseIndex=function(t,e,n){if(!t.coord.equals2D(e.coord))return!1;var i=e.segmentIndex-t.segmentIndex;return e.isInterior()||i--,1===i&&(n[0]=t.segmentIndex+1,!0)},cn.prototype.findCollapsesFromInsertedNodes=function(t){for(var e=new Array(1).fill(null),n=this.iterator(),i=n.next();n.hasNext();){var r=n.next();this.findCollapseIndex(i,r,e)&&t.add(new D(e[0])),i=r}},cn.prototype.getEdge=function(){return this._edge},cn.prototype.addEndpoints=function(){var t=this._edge.size()-1;this.add(this._edge.getCoordinate(0),0),this.add(this._edge.getCoordinate(t),t)},cn.prototype.createSplitEdge=function(t,e){var n=e.segmentIndex-t.segmentIndex+2,i=this._edge.getCoordinate(e.segmentIndex),r=e.isInterior()||!e.coord.equals2D(i);r||n--;var o=new Array(n).fill(null),s=0;o[s++]=new C(t.coord);for(var a=t.segmentIndex+1;a<=e.segmentIndex;a++)o[s++]=this._edge.getCoordinate(a);return r&&(o[s]=new C(e.coord)),new gn(o,this._edge.getData())},cn.prototype.add=function(t,e){var n=new ln(this._edge,t,e,this._edge.getSegmentOctant(e)),i=this._nodeMap.get(n);return null!==i?(et.isTrue(i.coord.equals2D(t),"Found equal nodes with different coordinates"),i):(this._nodeMap.put(n,n),n)},cn.prototype.checkSplitEdgesCorrectness=function(t){var e=this._edge.getCoordinates(),n=t.get(0).getCoordinate(0);if(!n.equals2D(e[0]))throw new $("bad split edge start point at "+n);var i=t.get(t.size()-1).getCoordinates(),r=i[i.length-1];if(!r.equals2D(e[e.length-1]))throw new $("bad split edge end point at "+r)},cn.prototype.interfaces_=function(){return[]},cn.prototype.getClass=function(){return cn};var hn=function(){};hn.prototype.interfaces_=function(){return[]},hn.prototype.getClass=function(){return hn},hn.octant=function(){if("number"==typeof arguments[0]&&"number"==typeof arguments[1]){var t=arguments[0],e=arguments[1];if(0===t&&0===e)throw new m("Cannot compute the octant for point ( "+t+", "+e+" )");var n=Math.abs(t),i=Math.abs(e);return t>=0?e>=0?n>=i?0:1:n>=i?7:6:e>=0?n>=i?3:2:n>=i?4:5}if(arguments[0]instanceof C&&arguments[1]instanceof C){var r=arguments[0],o=arguments[1],s=o.x-r.x,a=o.y-r.y;if(0===s&&0===a)throw new m("Cannot compute the octant for two identical points "+r);return hn.octant(s,a)}};var pn=function(){};pn.prototype.getCoordinates=function(){},pn.prototype.size=function(){},pn.prototype.getCoordinate=function(t){},pn.prototype.isClosed=function(){},pn.prototype.setData=function(t){},pn.prototype.getData=function(){},pn.prototype.interfaces_=function(){return[]},pn.prototype.getClass=function(){return pn};var fn=function(){};fn.prototype.addIntersection=function(t,e){},fn.prototype.interfaces_=function(){return[pn]},fn.prototype.getClass=function(){return fn};var gn=function(){this._nodeList=new cn(this),this._pts=null,this._data=null;var t=arguments[0],e=arguments[1];this._pts=t,this._data=e};gn.prototype.getCoordinates=function(){return this._pts},gn.prototype.size=function(){return this._pts.length},gn.prototype.getCoordinate=function(t){return this._pts[t]},gn.prototype.isClosed=function(){return this._pts[0].equals(this._pts[this._pts.length-1])},gn.prototype.getSegmentOctant=function(t){return t===this._pts.length-1?-1:this.safeOctant(this.getCoordinate(t),this.getCoordinate(t+1))},gn.prototype.setData=function(t){this._data=t},gn.prototype.safeOctant=function(t,e){return t.equals2D(e)?0:hn.octant(t,e)},gn.prototype.getData=function(){return this._data},gn.prototype.addIntersection=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];this.addIntersectionNode(t,e)}else if(4===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[3],o=new C(n.getIntersection(r));this.addIntersection(o,i)}},gn.prototype.toString=function(){return Z.toLineString(new ue(this._pts))},gn.prototype.getNodeList=function(){return this._nodeList},gn.prototype.addIntersectionNode=function(t,e){var n=e,i=n+1;if(i<this._pts.length){var r=this._pts[i];t.equals2D(r)&&(n=i)}return this._nodeList.add(t,n)},gn.prototype.addIntersections=function(t,e,n){for(var i=0;i<t.getIntersectionNum();i++)this.addIntersection(t,e,n,i)},gn.prototype.interfaces_=function(){return[fn]},gn.prototype.getClass=function(){return gn},gn.getNodedSubstrings=function(){if(1===arguments.length){var t=arguments[0],e=new Nt;return gn.getNodedSubstrings(t,e),e}if(2===arguments.length)for(var n=arguments[0],i=arguments[1],r=n.iterator();r.hasNext();)r.next().getNodeList().addSplitEdges(i)};var dn=function(){if(this.p0=null,this.p1=null,0===arguments.length)this.p0=new C,this.p1=new C;else if(1===arguments.length){var t=arguments[0];this.p0=new C(t.p0),this.p1=new C(t.p1)}else if(2===arguments.length)this.p0=arguments[0],this.p1=arguments[1];else if(4===arguments.length){var e=arguments[0],n=arguments[1],i=arguments[2],r=arguments[3];this.p0=new C(e,n),this.p1=new C(i,r)}},yn={serialVersionUID:{configurable:!0}};dn.prototype.minX=function(){return Math.min(this.p0.x,this.p1.x)},dn.prototype.orientationIndex=function(){if(arguments[0]instanceof dn){var t=arguments[0],e=at.orientationIndex(this.p0,this.p1,t.p0),n=at.orientationIndex(this.p0,this.p1,t.p1);return e>=0&&n>=0||e<=0&&n<=0?Math.max(e,n):0}if(arguments[0]instanceof C){var i=arguments[0];return at.orientationIndex(this.p0,this.p1,i)}},dn.prototype.toGeometry=function(t){return t.createLineString([this.p0,this.p1])},dn.prototype.isVertical=function(){return this.p0.x===this.p1.x},dn.prototype.equals=function(t){if(!(t instanceof dn))return!1;var e=t;return this.p0.equals(e.p0)&&this.p1.equals(e.p1)},dn.prototype.intersection=function(t){var e=new rt;return e.computeIntersection(this.p0,this.p1,t.p0,t.p1),e.hasIntersection()?e.getIntersection(0):null},dn.prototype.project=function(){if(arguments[0]instanceof C){var t=arguments[0];if(t.equals(this.p0)||t.equals(this.p1))return new C(t);var e=this.projectionFactor(t),n=new C;return n.x=this.p0.x+e*(this.p1.x-this.p0.x),n.y=this.p0.y+e*(this.p1.y-this.p0.y),n}if(arguments[0]instanceof dn){var i=arguments[0],r=this.projectionFactor(i.p0),o=this.projectionFactor(i.p1);if(r>=1&&o>=1)return null;if(r<=0&&o<=0)return null;var s=this.project(i.p0);r<0&&(s=this.p0),r>1&&(s=this.p1);var a=this.project(i.p1);return o<0&&(a=this.p0),o>1&&(a=this.p1),new dn(s,a)}},dn.prototype.normalize=function(){this.p1.compareTo(this.p0)<0&&this.reverse()},dn.prototype.angle=function(){return Math.atan2(this.p1.y-this.p0.y,this.p1.x-this.p0.x)},dn.prototype.getCoordinate=function(t){return 0===t?this.p0:this.p1},dn.prototype.distancePerpendicular=function(t){return at.distancePointLinePerpendicular(t,this.p0,this.p1)},dn.prototype.minY=function(){return Math.min(this.p0.y,this.p1.y)},dn.prototype.midPoint=function(){return dn.midPoint(this.p0,this.p1)},dn.prototype.projectionFactor=function(t){if(t.equals(this.p0))return 0;if(t.equals(this.p1))return 1;var e=this.p1.x-this.p0.x,n=this.p1.y-this.p0.y,i=e*e+n*n;return i<=0?v.NaN:((t.x-this.p0.x)*e+(t.y-this.p0.y)*n)/i},dn.prototype.closestPoints=function(t){var e=this.intersection(t);if(null!==e)return[e,e];var n=new Array(2).fill(null),i=v.MAX_VALUE,r=null,o=this.closestPoint(t.p0);i=o.distance(t.p0),n[0]=o,n[1]=t.p0;var s=this.closestPoint(t.p1);(r=s.distance(t.p1))<i&&(i=r,n[0]=s,n[1]=t.p1);var a=t.closestPoint(this.p0);(r=a.distance(this.p0))<i&&(i=r,n[0]=this.p0,n[1]=a);var u=t.closestPoint(this.p1);return(r=u.distance(this.p1))<i&&(i=r,n[0]=this.p1,n[1]=u),n},dn.prototype.closestPoint=function(t){var e=this.projectionFactor(t);return e>0&&e<1?this.project(t):this.p0.distance(t)<this.p1.distance(t)?this.p0:this.p1},dn.prototype.maxX=function(){return Math.max(this.p0.x,this.p1.x)},dn.prototype.getLength=function(){return this.p0.distance(this.p1)},dn.prototype.compareTo=function(t){var e=t,n=this.p0.compareTo(e.p0);return 0!==n?n:this.p1.compareTo(e.p1)},dn.prototype.reverse=function(){var t=this.p0;this.p0=this.p1,this.p1=t},dn.prototype.equalsTopo=function(t){return this.p0.equals(t.p0)&&(this.p1.equals(t.p1)||this.p0.equals(t.p1))&&this.p1.equals(t.p0)},dn.prototype.lineIntersection=function(t){try{return k.intersection(this.p0,this.p1,t.p0,t.p1)}catch(t){if(!(t instanceof X))throw t}return null},dn.prototype.maxY=function(){return Math.max(this.p0.y,this.p1.y)},dn.prototype.pointAlongOffset=function(t,e){var n=this.p0.x+t*(this.p1.x-this.p0.x),i=this.p0.y+t*(this.p1.y-this.p0.y),r=this.p1.x-this.p0.x,o=this.p1.y-this.p0.y,s=Math.sqrt(r*r+o*o),a=0,u=0;if(0!==e){if(s<=0)throw new Error("Cannot compute offset from zero-length line segment");a=e*r/s,u=e*o/s}return new C(n-u,i+a)},dn.prototype.setCoordinates=function(){if(1===arguments.length){var t=arguments[0];this.setCoordinates(t.p0,t.p1)}else if(2===arguments.length){var e=arguments[0],n=arguments[1];this.p0.x=e.x,this.p0.y=e.y,this.p1.x=n.x,this.p1.y=n.y}},dn.prototype.segmentFraction=function(t){var e=this.projectionFactor(t);return e<0?e=0:(e>1||v.isNaN(e))&&(e=1),e},dn.prototype.toString=function(){return"LINESTRING( "+this.p0.x+" "+this.p0.y+", "+this.p1.x+" "+this.p1.y+")"},dn.prototype.isHorizontal=function(){return this.p0.y===this.p1.y},dn.prototype.distance=function(){if(arguments[0]instanceof dn){var t=arguments[0];return at.distanceLineLine(this.p0,this.p1,t.p0,t.p1)}if(arguments[0]instanceof C){var e=arguments[0];return at.distancePointLine(e,this.p0,this.p1)}},dn.prototype.pointAlong=function(t){var e=new C;return e.x=this.p0.x+t*(this.p1.x-this.p0.x),e.y=this.p0.y+t*(this.p1.y-this.p0.y),e},dn.prototype.hashCode=function(){var t=v.doubleToLongBits(this.p0.x);t^=31*v.doubleToLongBits(this.p0.y);var e=Math.trunc(t)^Math.trunc(t>>32),n=v.doubleToLongBits(this.p1.x);return n^=31*v.doubleToLongBits(this.p1.y),e^Math.trunc(n)^Math.trunc(n>>32)},dn.prototype.interfaces_=function(){return[E,e]},dn.prototype.getClass=function(){return dn},dn.midPoint=function(t,e){return new C((t.x+e.x)/2,(t.y+e.y)/2)},yn.serialVersionUID.get=function(){return 0x2d2172135f411c00},Object.defineProperties(dn,yn);var _n=function(){this.tempEnv1=new j,this.tempEnv2=new j,this._overlapSeg1=new dn,this._overlapSeg2=new dn};_n.prototype.overlap=function(){if(2===arguments.length);else if(4===arguments.length){var t=arguments[0],e=arguments[1],n=arguments[2],i=arguments[3];t.getLineSegment(e,this._overlapSeg1),n.getLineSegment(i,this._overlapSeg2),this.overlap(this._overlapSeg1,this._overlapSeg2)}},_n.prototype.interfaces_=function(){return[]},_n.prototype.getClass=function(){return _n};var mn=function(){this._pts=null,this._start=null,this._end=null,this._env=null,this._context=null,this._id=null;var t=arguments[0],e=arguments[1],n=arguments[2],i=arguments[3];this._pts=t,this._start=e,this._end=n,this._context=i};mn.prototype.getLineSegment=function(t,e){e.p0=this._pts[t],e.p1=this._pts[t+1]},mn.prototype.computeSelect=function(t,e,n,i){var r=this._pts[e],o=this._pts[n];if(i.tempEnv1.init(r,o),n-e==1)return i.select(this,e),null;if(!t.intersects(i.tempEnv1))return null;var s=Math.trunc((e+n)/2);e<s&&this.computeSelect(t,e,s,i),s<n&&this.computeSelect(t,s,n,i)},mn.prototype.getCoordinates=function(){for(var t=new Array(this._end-this._start+1).fill(null),e=0,n=this._start;n<=this._end;n++)t[e++]=this._pts[n];return t},mn.prototype.computeOverlaps=function(t,e){this.computeOverlapsInternal(this._start,this._end,t,t._start,t._end,e)},mn.prototype.setId=function(t){this._id=t},mn.prototype.select=function(t,e){this.computeSelect(t,this._start,this._end,e)},mn.prototype.getEnvelope=function(){if(null===this._env){var t=this._pts[this._start],e=this._pts[this._end];this._env=new j(t,e)}return this._env},mn.prototype.getEndIndex=function(){return this._end},mn.prototype.getStartIndex=function(){return this._start},mn.prototype.getContext=function(){return this._context},mn.prototype.getId=function(){return this._id},mn.prototype.computeOverlapsInternal=function(t,e,n,i,r,o){var s=this._pts[t],a=this._pts[e],u=n._pts[i],l=n._pts[r];if(e-t==1&&r-i==1)return o.overlap(this,t,n,i),null;if(o.tempEnv1.init(s,a),o.tempEnv2.init(u,l),!o.tempEnv1.intersects(o.tempEnv2))return null;var c=Math.trunc((t+e)/2),h=Math.trunc((i+r)/2);t<c&&(i<h&&this.computeOverlapsInternal(t,c,n,i,h,o),h<r&&this.computeOverlapsInternal(t,c,n,h,r,o)),c<e&&(i<h&&this.computeOverlapsInternal(c,e,n,i,h,o),h<r&&this.computeOverlapsInternal(c,e,n,h,r,o))},mn.prototype.interfaces_=function(){return[]},mn.prototype.getClass=function(){return mn};var vn=function(){};vn.prototype.interfaces_=function(){return[]},vn.prototype.getClass=function(){return vn},vn.getChainStartIndices=function(t){var e=0,n=new Nt;n.add(new D(e));do{var i=vn.findChainEnd(t,e);n.add(new D(i)),e=i}while(e<t.length-1);return vn.toIntArray(n)},vn.findChainEnd=function(t,e){for(var n=e;n<t.length-1&&t[n].equals2D(t[n+1]);)n++;if(n>=t.length-1)return t.length-1;for(var i=Ue.quadrant(t[n],t[n+1]),r=e+1;r<t.length&&(t[r-1].equals2D(t[r])||Ue.quadrant(t[r-1],t[r])===i);)r++;return r-1},vn.getChains=function(){if(1===arguments.length){var t=arguments[0];return vn.getChains(t,null)}if(2===arguments.length){for(var e=arguments[0],n=arguments[1],i=new Nt,r=vn.getChainStartIndices(e),o=0;o<r.length-1;o++){var s=new mn(e,r[o],r[o+1],n);i.add(s)}return i}},vn.toIntArray=function(t){for(var e=new Array(t.size()).fill(null),n=0;n<e.length;n++)e[n]=t.get(n).intValue();return e};var xn=function(){};xn.prototype.computeNodes=function(t){},xn.prototype.getNodedSubstrings=function(){},xn.prototype.interfaces_=function(){return[]},xn.prototype.getClass=function(){return xn};var En=function(){if(this._segInt=null,0===arguments.length);else if(1===arguments.length){var t=arguments[0];this.setSegmentIntersector(t)}};En.prototype.setSegmentIntersector=function(t){this._segInt=t},En.prototype.interfaces_=function(){return[xn]},En.prototype.getClass=function(){return En};var In=function(t){function e(e){e?t.call(this,e):t.call(this),this._monoChains=new Nt,this._index=new sn,this._idCounter=0,this._nodedSegStrings=null,this._nOverlaps=0}t&&(e.__proto__=t),(e.prototype=Object.create(t&&t.prototype)).constructor=e;var n={SegmentOverlapAction:{configurable:!0}};return e.prototype.getMonotoneChains=function(){return this._monoChains},e.prototype.getNodedSubstrings=function(){return gn.getNodedSubstrings(this._nodedSegStrings)},e.prototype.getIndex=function(){return this._index},e.prototype.add=function(t){for(var e=vn.getChains(t.getCoordinates(),t).iterator();e.hasNext();){var n=e.next();n.setId(this._idCounter++),this._index.insert(n.getEnvelope(),n),this._monoChains.add(n)}},e.prototype.computeNodes=function(t){this._nodedSegStrings=t;for(var e=t.iterator();e.hasNext();)this.add(e.next());this.intersectChains()},e.prototype.intersectChains=function(){for(var t=new Nn(this._segInt),e=this._monoChains.iterator();e.hasNext();)for(var n=e.next(),i=this._index.query(n.getEnvelope()).iterator();i.hasNext();){var r=i.next();if(r.getId()>n.getId()&&(n.computeOverlaps(r,t),this._nOverlaps++),this._segInt.isDone())return null}},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},n.SegmentOverlapAction.get=function(){return Nn},Object.defineProperties(e,n),e}(En),Nn=function(t){function e(){t.call(this),this._si=null;var e=arguments[0];this._si=e}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.overlap=function(){if(4!==arguments.length)return t.prototype.overlap.apply(this,arguments);var e=arguments[0],n=arguments[1],i=arguments[2],r=arguments[3],o=e.getContext(),s=i.getContext();this._si.processIntersections(o,n,s,r)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(_n),Cn=function t(){if(this._quadrantSegments=t.DEFAULT_QUADRANT_SEGMENTS,this._endCapStyle=t.CAP_ROUND,this._joinStyle=t.JOIN_ROUND,this._mitreLimit=t.DEFAULT_MITRE_LIMIT,this._isSingleSided=!1,this._simplifyFactor=t.DEFAULT_SIMPLIFY_FACTOR,0===arguments.length);else if(1===arguments.length){var e=arguments[0];this.setQuadrantSegments(e)}else if(2===arguments.length){var n=arguments[0],i=arguments[1];this.setQuadrantSegments(n),this.setEndCapStyle(i)}else if(4===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2],a=arguments[3];this.setQuadrantSegments(r),this.setEndCapStyle(o),this.setJoinStyle(s),this.setMitreLimit(a)}},bn={CAP_ROUND:{configurable:!0},CAP_FLAT:{configurable:!0},CAP_SQUARE:{configurable:!0},JOIN_ROUND:{configurable:!0},JOIN_MITRE:{configurable:!0},JOIN_BEVEL:{configurable:!0},DEFAULT_QUADRANT_SEGMENTS:{configurable:!0},DEFAULT_MITRE_LIMIT:{configurable:!0},DEFAULT_SIMPLIFY_FACTOR:{configurable:!0}};Cn.prototype.getEndCapStyle=function(){return this._endCapStyle},Cn.prototype.isSingleSided=function(){return this._isSingleSided},Cn.prototype.setQuadrantSegments=function(t){this._quadrantSegments=t,0===this._quadrantSegments&&(this._joinStyle=Cn.JOIN_BEVEL),this._quadrantSegments<0&&(this._joinStyle=Cn.JOIN_MITRE,this._mitreLimit=Math.abs(this._quadrantSegments)),t<=0&&(this._quadrantSegments=1),this._joinStyle!==Cn.JOIN_ROUND&&(this._quadrantSegments=Cn.DEFAULT_QUADRANT_SEGMENTS)},Cn.prototype.getJoinStyle=function(){return this._joinStyle},Cn.prototype.setJoinStyle=function(t){this._joinStyle=t},Cn.prototype.setSimplifyFactor=function(t){this._simplifyFactor=t<0?0:t},Cn.prototype.getSimplifyFactor=function(){return this._simplifyFactor},Cn.prototype.getQuadrantSegments=function(){return this._quadrantSegments},Cn.prototype.setEndCapStyle=function(t){this._endCapStyle=t},Cn.prototype.getMitreLimit=function(){return this._mitreLimit},Cn.prototype.setMitreLimit=function(t){this._mitreLimit=t},Cn.prototype.setSingleSided=function(t){this._isSingleSided=t},Cn.prototype.interfaces_=function(){return[]},Cn.prototype.getClass=function(){return Cn},Cn.bufferDistanceError=function(t){var e=Math.PI/2/t;return 1-Math.cos(e/2)},bn.CAP_ROUND.get=function(){return 1},bn.CAP_FLAT.get=function(){return 2},bn.CAP_SQUARE.get=function(){return 3},bn.JOIN_ROUND.get=function(){return 1},bn.JOIN_MITRE.get=function(){return 2},bn.JOIN_BEVEL.get=function(){return 3},bn.DEFAULT_QUADRANT_SEGMENTS.get=function(){return 8},bn.DEFAULT_MITRE_LIMIT.get=function(){return 5},bn.DEFAULT_SIMPLIFY_FACTOR.get=function(){return.01},Object.defineProperties(Cn,bn);var Sn=function(t){this._distanceTol=null,this._isDeleted=null,this._angleOrientation=at.COUNTERCLOCKWISE,this._inputLine=t||null},wn={INIT:{configurable:!0},DELETE:{configurable:!0},KEEP:{configurable:!0},NUM_PTS_TO_CHECK:{configurable:!0}};Sn.prototype.isDeletable=function(t,e,n,i){var r=this._inputLine[t],o=this._inputLine[e],s=this._inputLine[n];return!!this.isConcave(r,o,s)&&!!this.isShallow(r,o,s,i)&&this.isShallowSampled(r,o,t,n,i)},Sn.prototype.deleteShallowConcavities=function(){for(var t=1,e=this.findNextNonDeletedIndex(t),n=this.findNextNonDeletedIndex(e),i=!1;n<this._inputLine.length;){var r=!1;this.isDeletable(t,e,n,this._distanceTol)&&(this._isDeleted[e]=Sn.DELETE,r=!0,i=!0),t=r?n:e,e=this.findNextNonDeletedIndex(t),n=this.findNextNonDeletedIndex(e)}return i},Sn.prototype.isShallowConcavity=function(t,e,n,i){return at.computeOrientation(t,e,n)===this._angleOrientation&&at.distancePointLine(e,t,n)<i},Sn.prototype.isShallowSampled=function(t,e,n,i,r){var o=Math.trunc((i-n)/Sn.NUM_PTS_TO_CHECK);o<=0&&(o=1);for(var s=n;s<i;s+=o)if(!this.isShallow(t,e,this._inputLine[s],r))return!1;return!0},Sn.prototype.isConcave=function(t,e,n){return at.computeOrientation(t,e,n)===this._angleOrientation},Sn.prototype.simplify=function(t){this._distanceTol=Math.abs(t),t<0&&(this._angleOrientation=at.CLOCKWISE),this._isDeleted=new Array(this._inputLine.length).fill(null);var e=!1;do{e=this.deleteShallowConcavities()}while(e);return this.collapseLine()},Sn.prototype.findNextNonDeletedIndex=function(t){for(var e=t+1;e<this._inputLine.length&&this._isDeleted[e]===Sn.DELETE;)e++;return e},Sn.prototype.isShallow=function(t,e,n,i){return at.distancePointLine(e,t,n)<i},Sn.prototype.collapseLine=function(){for(var t=new bt,e=0;e<this._inputLine.length;e++)this._isDeleted[e]!==Sn.DELETE&&t.add(this._inputLine[e]);return t.toCoordinateArray()},Sn.prototype.interfaces_=function(){return[]},Sn.prototype.getClass=function(){return Sn},Sn.simplify=function(t,e){return new Sn(t).simplify(e)},wn.INIT.get=function(){return 0},wn.DELETE.get=function(){return 1},wn.KEEP.get=function(){return 1},wn.NUM_PTS_TO_CHECK.get=function(){return 10},Object.defineProperties(Sn,wn);var Ln=function(){this._ptList=null,this._precisionModel=null,this._minimimVertexDistance=0,this._ptList=new Nt},On={COORDINATE_ARRAY_TYPE:{configurable:!0}};Ln.prototype.getCoordinates=function(){return this._ptList.toArray(Ln.COORDINATE_ARRAY_TYPE)},Ln.prototype.setPrecisionModel=function(t){this._precisionModel=t},Ln.prototype.addPt=function(t){var e=new C(t);if(this._precisionModel.makePrecise(e),this.isRedundant(e))return null;this._ptList.add(e)},Ln.prototype.revere=function(){},Ln.prototype.addPts=function(t,e){if(e)for(var n=0;n<t.length;n++)this.addPt(t[n]);else for(var i=t.length-1;i>=0;i--)this.addPt(t[i])},Ln.prototype.isRedundant=function(t){if(this._ptList.size()<1)return!1;var e=this._ptList.get(this._ptList.size()-1);return t.distance(e)<this._minimimVertexDistance},Ln.prototype.toString=function(){return(new _e).createLineString(this.getCoordinates()).toString()},Ln.prototype.closeRing=function(){if(this._ptList.size()<1)return null;var t=new C(this._ptList.get(0)),e=this._ptList.get(this._ptList.size()-1);if(t.equals(e))return null;this._ptList.add(t)},Ln.prototype.setMinimumVertexDistance=function(t){this._minimimVertexDistance=t},Ln.prototype.interfaces_=function(){return[]},Ln.prototype.getClass=function(){return Ln},On.COORDINATE_ARRAY_TYPE.get=function(){return new Array(0).fill(null)},Object.defineProperties(Ln,On);var Rn=function(){},Tn={PI_TIMES_2:{configurable:!0},PI_OVER_2:{configurable:!0},PI_OVER_4:{configurable:!0},COUNTERCLOCKWISE:{configurable:!0},CLOCKWISE:{configurable:!0},NONE:{configurable:!0}};Rn.prototype.interfaces_=function(){return[]},Rn.prototype.getClass=function(){return Rn},Rn.toDegrees=function(t){return 180*t/Math.PI},Rn.normalize=function(t){for(;t>Math.PI;)t-=Rn.PI_TIMES_2;for(;t<=-Math.PI;)t+=Rn.PI_TIMES_2;return t},Rn.angle=function(){if(1===arguments.length){var t=arguments[0];return Math.atan2(t.y,t.x)}if(2===arguments.length){var e=arguments[0],n=arguments[1],i=n.x-e.x,r=n.y-e.y;return Math.atan2(r,i)}},Rn.isAcute=function(t,e,n){var i=t.x-e.x,r=t.y-e.y;return i*(n.x-e.x)+r*(n.y-e.y)>0},Rn.isObtuse=function(t,e,n){var i=t.x-e.x,r=t.y-e.y;return i*(n.x-e.x)+r*(n.y-e.y)<0},Rn.interiorAngle=function(t,e,n){var i=Rn.angle(e,t),r=Rn.angle(e,n);return Math.abs(r-i)},Rn.normalizePositive=function(t){if(t<0){for(;t<0;)t+=Rn.PI_TIMES_2;t>=Rn.PI_TIMES_2&&(t=0)}else{for(;t>=Rn.PI_TIMES_2;)t-=Rn.PI_TIMES_2;t<0&&(t=0)}return t},Rn.angleBetween=function(t,e,n){var i=Rn.angle(e,t),r=Rn.angle(e,n);return Rn.diff(i,r)},Rn.diff=function(t,e){var n=null;return(n=t<e?e-t:t-e)>Math.PI&&(n=2*Math.PI-n),n},Rn.toRadians=function(t){return t*Math.PI/180},Rn.getTurn=function(t,e){var n=Math.sin(e-t);return n>0?Rn.COUNTERCLOCKWISE:n<0?Rn.CLOCKWISE:Rn.NONE},Rn.angleBetweenOriented=function(t,e,n){var i=Rn.angle(e,t),r=Rn.angle(e,n)-i;return r<=-Math.PI?r+Rn.PI_TIMES_2:r>Math.PI?r-Rn.PI_TIMES_2:r},Tn.PI_TIMES_2.get=function(){return 2*Math.PI},Tn.PI_OVER_2.get=function(){return Math.PI/2},Tn.PI_OVER_4.get=function(){return Math.PI/4},Tn.COUNTERCLOCKWISE.get=function(){return at.COUNTERCLOCKWISE},Tn.CLOCKWISE.get=function(){return at.CLOCKWISE},Tn.NONE.get=function(){return at.COLLINEAR},Object.defineProperties(Rn,Tn);var Pn=function t(){this._maxCurveSegmentError=0,this._filletAngleQuantum=null,this._closingSegLengthFactor=1,this._segList=null,this._distance=0,this._precisionModel=null,this._bufParams=null,this._li=null,this._s0=null,this._s1=null,this._s2=null,this._seg0=new dn,this._seg1=new dn,this._offset0=new dn,this._offset1=new dn,this._side=0,this._hasNarrowConcaveAngle=!1;var e=arguments[0],n=arguments[1],i=arguments[2];this._precisionModel=e,this._bufParams=n,this._li=new rt,this._filletAngleQuantum=Math.PI/2/n.getQuadrantSegments(),n.getQuadrantSegments()>=8&&n.getJoinStyle()===Cn.JOIN_ROUND&&(this._closingSegLengthFactor=t.MAX_CLOSING_SEG_LEN_FACTOR),this.init(i)},Mn={OFFSET_SEGMENT_SEPARATION_FACTOR:{configurable:!0},INSIDE_TURN_VERTEX_SNAP_DISTANCE_FACTOR:{configurable:!0},CURVE_VERTEX_SNAP_DISTANCE_FACTOR:{configurable:!0},MAX_CLOSING_SEG_LEN_FACTOR:{configurable:!0}};Pn.prototype.addNextSegment=function(t,e){if(this._s0=this._s1,this._s1=this._s2,this._s2=t,this._seg0.setCoordinates(this._s0,this._s1),this.computeOffsetSegment(this._seg0,this._side,this._distance,this._offset0),this._seg1.setCoordinates(this._s1,this._s2),this.computeOffsetSegment(this._seg1,this._side,this._distance,this._offset1),this._s1.equals(this._s2))return null;var n=at.computeOrientation(this._s0,this._s1,this._s2),i=n===at.CLOCKWISE&&this._side===be.LEFT||n===at.COUNTERCLOCKWISE&&this._side===be.RIGHT;0===n?this.addCollinear(e):i?this.addOutsideTurn(n,e):this.addInsideTurn(n,e)},Pn.prototype.addLineEndCap=function(t,e){var n=new dn(t,e),i=new dn;this.computeOffsetSegment(n,be.LEFT,this._distance,i);var r=new dn;this.computeOffsetSegment(n,be.RIGHT,this._distance,r);var o=e.x-t.x,s=e.y-t.y,a=Math.atan2(s,o);switch(this._bufParams.getEndCapStyle()){case Cn.CAP_ROUND:this._segList.addPt(i.p1),this.addFilletArc(e,a+Math.PI/2,a-Math.PI/2,at.CLOCKWISE,this._distance),this._segList.addPt(r.p1);break;case Cn.CAP_FLAT:this._segList.addPt(i.p1),this._segList.addPt(r.p1);break;case Cn.CAP_SQUARE:var u=new C;u.x=Math.abs(this._distance)*Math.cos(a),u.y=Math.abs(this._distance)*Math.sin(a);var l=new C(i.p1.x+u.x,i.p1.y+u.y),c=new C(r.p1.x+u.x,r.p1.y+u.y);this._segList.addPt(l),this._segList.addPt(c)}},Pn.prototype.getCoordinates=function(){return this._segList.getCoordinates()},Pn.prototype.addMitreJoin=function(t,e,n,i){var r=!0,o=null;try{o=k.intersection(e.p0,e.p1,n.p0,n.p1),(i<=0?1:o.distance(t)/Math.abs(i))>this._bufParams.getMitreLimit()&&(r=!1)}catch(t){if(!(t instanceof X))throw t;o=new C(0,0),r=!1}r?this._segList.addPt(o):this.addLimitedMitreJoin(e,n,i,this._bufParams.getMitreLimit())},Pn.prototype.addFilletCorner=function(t,e,n,i,r){var o=e.x-t.x,s=e.y-t.y,a=Math.atan2(s,o),u=n.x-t.x,l=n.y-t.y,c=Math.atan2(l,u);i===at.CLOCKWISE?a<=c&&(a+=2*Math.PI):a>=c&&(a-=2*Math.PI),this._segList.addPt(e),this.addFilletArc(t,a,c,i,r),this._segList.addPt(n)},Pn.prototype.addOutsideTurn=function(t,e){if(this._offset0.p1.distance(this._offset1.p0)<this._distance*Pn.OFFSET_SEGMENT_SEPARATION_FACTOR)return this._segList.addPt(this._offset0.p1),null;this._bufParams.getJoinStyle()===Cn.JOIN_MITRE?this.addMitreJoin(this._s1,this._offset0,this._offset1,this._distance):this._bufParams.getJoinStyle()===Cn.JOIN_BEVEL?this.addBevelJoin(this._offset0,this._offset1):(e&&this._segList.addPt(this._offset0.p1),this.addFilletCorner(this._s1,this._offset0.p1,this._offset1.p0,t,this._distance),this._segList.addPt(this._offset1.p0))},Pn.prototype.createSquare=function(t){this._segList.addPt(new C(t.x+this._distance,t.y+this._distance)),this._segList.addPt(new C(t.x+this._distance,t.y-this._distance)),this._segList.addPt(new C(t.x-this._distance,t.y-this._distance)),this._segList.addPt(new C(t.x-this._distance,t.y+this._distance)),this._segList.closeRing()},Pn.prototype.addSegments=function(t,e){this._segList.addPts(t,e)},Pn.prototype.addFirstSegment=function(){this._segList.addPt(this._offset1.p0)},Pn.prototype.addLastSegment=function(){this._segList.addPt(this._offset1.p1)},Pn.prototype.initSideSegments=function(t,e,n){this._s1=t,this._s2=e,this._side=n,this._seg1.setCoordinates(t,e),this.computeOffsetSegment(this._seg1,n,this._distance,this._offset1)},Pn.prototype.addLimitedMitreJoin=function(t,e,n,i){var r=this._seg0.p1,o=Rn.angle(r,this._seg0.p0),s=Rn.angleBetweenOriented(this._seg0.p0,r,this._seg1.p1)/2,a=Rn.normalize(o+s),u=Rn.normalize(a+Math.PI),l=i*n,c=n-l*Math.abs(Math.sin(s)),h=r.x+l*Math.cos(u),p=r.y+l*Math.sin(u),f=new C(h,p),g=new dn(r,f),d=g.pointAlongOffset(1,c),y=g.pointAlongOffset(1,-c);this._side===be.LEFT?(this._segList.addPt(d),this._segList.addPt(y)):(this._segList.addPt(y),this._segList.addPt(d))},Pn.prototype.computeOffsetSegment=function(t,e,n,i){var r=e===be.LEFT?1:-1,o=t.p1.x-t.p0.x,s=t.p1.y-t.p0.y,a=Math.sqrt(o*o+s*s),u=r*n*o/a,l=r*n*s/a;i.p0.x=t.p0.x-l,i.p0.y=t.p0.y+u,i.p1.x=t.p1.x-l,i.p1.y=t.p1.y+u},Pn.prototype.addFilletArc=function(t,e,n,i,r){var o=i===at.CLOCKWISE?-1:1,s=Math.abs(e-n),a=Math.trunc(s/this._filletAngleQuantum+.5);if(a<1)return null;for(var u=s/a,l=0,c=new C;l<s;){var h=e+o*l;c.x=t.x+r*Math.cos(h),c.y=t.y+r*Math.sin(h),this._segList.addPt(c),l+=u}},Pn.prototype.addInsideTurn=function(t,e){if(this._li.computeIntersection(this._offset0.p0,this._offset0.p1,this._offset1.p0,this._offset1.p1),this._li.hasIntersection())this._segList.addPt(this._li.getIntersection(0));else if(this._hasNarrowConcaveAngle=!0,this._offset0.p1.distance(this._offset1.p0)<this._distance*Pn.INSIDE_TURN_VERTEX_SNAP_DISTANCE_FACTOR)this._segList.addPt(this._offset0.p1);else{if(this._segList.addPt(this._offset0.p1),this._closingSegLengthFactor>0){var n=new C((this._closingSegLengthFactor*this._offset0.p1.x+this._s1.x)/(this._closingSegLengthFactor+1),(this._closingSegLengthFactor*this._offset0.p1.y+this._s1.y)/(this._closingSegLengthFactor+1));this._segList.addPt(n);var i=new C((this._closingSegLengthFactor*this._offset1.p0.x+this._s1.x)/(this._closingSegLengthFactor+1),(this._closingSegLengthFactor*this._offset1.p0.y+this._s1.y)/(this._closingSegLengthFactor+1));this._segList.addPt(i)}else this._segList.addPt(this._s1);this._segList.addPt(this._offset1.p0)}},Pn.prototype.createCircle=function(t){var e=new C(t.x+this._distance,t.y);this._segList.addPt(e),this.addFilletArc(t,0,2*Math.PI,-1,this._distance),this._segList.closeRing()},Pn.prototype.addBevelJoin=function(t,e){this._segList.addPt(t.p1),this._segList.addPt(e.p0)},Pn.prototype.init=function(t){this._distance=t,this._maxCurveSegmentError=t*(1-Math.cos(this._filletAngleQuantum/2)),this._segList=new Ln,this._segList.setPrecisionModel(this._precisionModel),this._segList.setMinimumVertexDistance(t*Pn.CURVE_VERTEX_SNAP_DISTANCE_FACTOR)},Pn.prototype.addCollinear=function(t){this._li.computeIntersection(this._s0,this._s1,this._s1,this._s2),this._li.getIntersectionNum()>=2&&(this._bufParams.getJoinStyle()===Cn.JOIN_BEVEL||this._bufParams.getJoinStyle()===Cn.JOIN_MITRE?(t&&this._segList.addPt(this._offset0.p1),this._segList.addPt(this._offset1.p0)):this.addFilletCorner(this._s1,this._offset0.p1,this._offset1.p0,at.CLOCKWISE,this._distance))},Pn.prototype.closeRing=function(){this._segList.closeRing()},Pn.prototype.hasNarrowConcaveAngle=function(){return this._hasNarrowConcaveAngle},Pn.prototype.interfaces_=function(){return[]},Pn.prototype.getClass=function(){return Pn},Mn.OFFSET_SEGMENT_SEPARATION_FACTOR.get=function(){return.001},Mn.INSIDE_TURN_VERTEX_SNAP_DISTANCE_FACTOR.get=function(){return.001},Mn.CURVE_VERTEX_SNAP_DISTANCE_FACTOR.get=function(){return 1e-6},Mn.MAX_CLOSING_SEG_LEN_FACTOR.get=function(){return 80},Object.defineProperties(Pn,Mn);var Dn=function(){this._distance=0,this._precisionModel=null,this._bufParams=null;var t=arguments[0],e=arguments[1];this._precisionModel=t,this._bufParams=e};Dn.prototype.getOffsetCurve=function(t,e){if(this._distance=e,0===e)return null;var n=e<0,i=Math.abs(e),r=this.getSegGen(i);t.length<=1?this.computePointCurve(t[0],r):this.computeOffsetCurve(t,n,r);var o=r.getCoordinates();return n&&St.reverse(o),o},Dn.prototype.computeSingleSidedBufferCurve=function(t,e,n){var i=this.simplifyTolerance(this._distance);if(e){n.addSegments(t,!0);var r=Sn.simplify(t,-i),o=r.length-1;n.initSideSegments(r[o],r[o-1],be.LEFT),n.addFirstSegment();for(var s=o-2;s>=0;s--)n.addNextSegment(r[s],!0)}else{n.addSegments(t,!1);var a=Sn.simplify(t,i),u=a.length-1;n.initSideSegments(a[0],a[1],be.LEFT),n.addFirstSegment();for(var l=2;l<=u;l++)n.addNextSegment(a[l],!0)}n.addLastSegment(),n.closeRing()},Dn.prototype.computeRingBufferCurve=function(t,e,n){var i=this.simplifyTolerance(this._distance);e===be.RIGHT&&(i=-i);var r=Sn.simplify(t,i),o=r.length-1;n.initSideSegments(r[o-1],r[0],e);for(var s=1;s<=o;s++){var a=1!==s;n.addNextSegment(r[s],a)}n.closeRing()},Dn.prototype.computeLineBufferCurve=function(t,e){var n=this.simplifyTolerance(this._distance),i=Sn.simplify(t,n),r=i.length-1;e.initSideSegments(i[0],i[1],be.LEFT);for(var o=2;o<=r;o++)e.addNextSegment(i[o],!0);e.addLastSegment(),e.addLineEndCap(i[r-1],i[r]);var s=Sn.simplify(t,-n),a=s.length-1;e.initSideSegments(s[a],s[a-1],be.LEFT);for(var u=a-2;u>=0;u--)e.addNextSegment(s[u],!0);e.addLastSegment(),e.addLineEndCap(s[1],s[0]),e.closeRing()},Dn.prototype.computePointCurve=function(t,e){switch(this._bufParams.getEndCapStyle()){case Cn.CAP_ROUND:e.createCircle(t);break;case Cn.CAP_SQUARE:e.createSquare(t)}},Dn.prototype.getLineCurve=function(t,e){if(this._distance=e,e<0&&!this._bufParams.isSingleSided())return null;if(0===e)return null;var n=Math.abs(e),i=this.getSegGen(n);if(t.length<=1)this.computePointCurve(t[0],i);else if(this._bufParams.isSingleSided()){var r=e<0;this.computeSingleSidedBufferCurve(t,r,i)}else this.computeLineBufferCurve(t,i);return i.getCoordinates()},Dn.prototype.getBufferParameters=function(){return this._bufParams},Dn.prototype.simplifyTolerance=function(t){return t*this._bufParams.getSimplifyFactor()},Dn.prototype.getRingCurve=function(t,e,n){if(this._distance=n,t.length<=2)return this.getLineCurve(t,n);if(0===n)return Dn.copyCoordinates(t);var i=this.getSegGen(n);return this.computeRingBufferCurve(t,e,i),i.getCoordinates()},Dn.prototype.computeOffsetCurve=function(t,e,n){var i=this.simplifyTolerance(this._distance);if(e){var r=Sn.simplify(t,-i),o=r.length-1;n.initSideSegments(r[o],r[o-1],be.LEFT),n.addFirstSegment();for(var s=o-2;s>=0;s--)n.addNextSegment(r[s],!0)}else{var a=Sn.simplify(t,i),u=a.length-1;n.initSideSegments(a[0],a[1],be.LEFT),n.addFirstSegment();for(var l=2;l<=u;l++)n.addNextSegment(a[l],!0)}n.addLastSegment()},Dn.prototype.getSegGen=function(t){return new Pn(this._precisionModel,this._bufParams,t)},Dn.prototype.interfaces_=function(){return[]},Dn.prototype.getClass=function(){return Dn},Dn.copyCoordinates=function(t){for(var e=new Array(t.length).fill(null),n=0;n<e.length;n++)e[n]=new C(t[n]);return e};var An=function(){this._subgraphs=null,this._seg=new dn,this._cga=new at;var t=arguments[0];this._subgraphs=t},Fn={DepthSegment:{configurable:!0}};An.prototype.findStabbedSegments=function(){if(1===arguments.length){for(var t=arguments[0],e=new Nt,n=this._subgraphs.iterator();n.hasNext();){var i=n.next(),r=i.getEnvelope();t.y<r.getMinY()||t.y>r.getMaxY()||this.findStabbedSegments(t,i.getDirectedEdges(),e)}return e}if(3===arguments.length)if(R(arguments[2],It)&&arguments[0]instanceof C&&arguments[1]instanceof ze){for(var o=arguments[0],s=arguments[1],a=arguments[2],u=s.getEdge().getCoordinates(),l=0;l<u.length-1;l++)if(this._seg.p0=u[l],this._seg.p1=u[l+1],this._seg.p0.y>this._seg.p1.y&&this._seg.reverse(),!(Math.max(this._seg.p0.x,this._seg.p1.x)<o.x||this._seg.isHorizontal()||o.y<this._seg.p0.y||o.y>this._seg.p1.y||at.computeOrientation(this._seg.p0,this._seg.p1,o)===at.RIGHT)){var c=s.getDepth(be.LEFT);this._seg.p0.equals(u[l])||(c=s.getDepth(be.RIGHT));var h=new Gn(this._seg,c);a.add(h)}}else if(R(arguments[2],It)&&arguments[0]instanceof C&&R(arguments[1],It))for(var p=arguments[0],f=arguments[1],g=arguments[2],d=f.iterator();d.hasNext();){var y=d.next();y.isForward()&&this.findStabbedSegments(p,y,g)}},An.prototype.getDepth=function(t){var e=this.findStabbedSegments(t);return 0===e.size()?0:$e.min(e)._leftDepth},An.prototype.interfaces_=function(){return[]},An.prototype.getClass=function(){return An},Fn.DepthSegment.get=function(){return Gn},Object.defineProperties(An,Fn);var Gn=function(){this._upwardSeg=null,this._leftDepth=null;var t=arguments[0],e=arguments[1];this._upwardSeg=new dn(t),this._leftDepth=e};Gn.prototype.compareTo=function(t){var e=t;if(this._upwardSeg.minX()>=e._upwardSeg.maxX())return 1;if(this._upwardSeg.maxX()<=e._upwardSeg.minX())return-1;var n=this._upwardSeg.orientationIndex(e._upwardSeg);return 0!==n||0!=(n=-1*e._upwardSeg.orientationIndex(this._upwardSeg))?n:this._upwardSeg.compareTo(e._upwardSeg)},Gn.prototype.compareX=function(t,e){var n=t.p0.compareTo(e.p0);return 0!==n?n:t.p1.compareTo(e.p1)},Gn.prototype.toString=function(){return this._upwardSeg.toString()},Gn.prototype.interfaces_=function(){return[E]},Gn.prototype.getClass=function(){return Gn};var Bn=function(t,e,n){this.p0=t||null,this.p1=e||null,this.p2=n||null};Bn.prototype.area=function(){return Bn.area(this.p0,this.p1,this.p2)},Bn.prototype.signedArea=function(){return Bn.signedArea(this.p0,this.p1,this.p2)},Bn.prototype.interpolateZ=function(t){if(null===t)throw new m("Supplied point is null.");return Bn.interpolateZ(t,this.p0,this.p1,this.p2)},Bn.prototype.longestSideLength=function(){return Bn.longestSideLength(this.p0,this.p1,this.p2)},Bn.prototype.isAcute=function(){return Bn.isAcute(this.p0,this.p1,this.p2)},Bn.prototype.circumcentre=function(){return Bn.circumcentre(this.p0,this.p1,this.p2)},Bn.prototype.area3D=function(){return Bn.area3D(this.p0,this.p1,this.p2)},Bn.prototype.centroid=function(){return Bn.centroid(this.p0,this.p1,this.p2)},Bn.prototype.inCentre=function(){return Bn.inCentre(this.p0,this.p1,this.p2)},Bn.prototype.interfaces_=function(){return[]},Bn.prototype.getClass=function(){return Bn},Bn.area=function(t,e,n){return Math.abs(((n.x-t.x)*(e.y-t.y)-(e.x-t.x)*(n.y-t.y))/2)},Bn.signedArea=function(t,e,n){return((n.x-t.x)*(e.y-t.y)-(e.x-t.x)*(n.y-t.y))/2},Bn.det=function(t,e,n,i){return t*i-e*n},Bn.interpolateZ=function(t,e,n,i){var r=e.x,o=e.y,s=n.x-r,a=i.x-r,u=n.y-o,l=i.y-o,c=s*l-a*u,h=t.x-r,p=t.y-o,f=(l*h-a*p)/c,g=(-u*h+s*p)/c;return e.z+f*(n.z-e.z)+g*(i.z-e.z)},Bn.longestSideLength=function(t,e,n){var i=t.distance(e),r=e.distance(n),o=n.distance(t),s=i;return r>s&&(s=r),o>s&&(s=o),s},Bn.isAcute=function(t,e,n){return!!Rn.isAcute(t,e,n)&&!!Rn.isAcute(e,n,t)&&!!Rn.isAcute(n,t,e)},Bn.circumcentre=function(t,e,n){var i=n.x,r=n.y,o=t.x-i,s=t.y-r,a=e.x-i,u=e.y-r,l=2*Bn.det(o,s,a,u),c=Bn.det(s,o*o+s*s,u,a*a+u*u),h=Bn.det(o,o*o+s*s,a,a*a+u*u);return new C(i-c/l,r+h/l)},Bn.perpendicularBisector=function(t,e){var n=e.x-t.x,i=e.y-t.y,r=new k(t.x+n/2,t.y+i/2,1),o=new k(t.x-i+n/2,t.y+n+i/2,1);return new k(r,o)},Bn.angleBisector=function(t,e,n){var i=e.distance(t),r=i/(i+e.distance(n)),o=n.x-t.x,s=n.y-t.y;return new C(t.x+r*o,t.y+r*s)},Bn.area3D=function(t,e,n){var i=e.x-t.x,r=e.y-t.y,o=e.z-t.z,s=n.x-t.x,a=n.y-t.y,u=n.z-t.z,l=r*u-o*a,c=o*s-i*u,h=i*a-r*s,p=l*l+c*c+h*h;return Math.sqrt(p)/2},Bn.centroid=function(t,e,n){var i=(t.x+e.x+n.x)/3,r=(t.y+e.y+n.y)/3;return new C(i,r)},Bn.inCentre=function(t,e,n){var i=e.distance(n),r=t.distance(n),o=t.distance(e),s=i+r+o,a=(i*t.x+r*e.x+o*n.x)/s,u=(i*t.y+r*e.y+o*n.y)/s;return new C(a,u)};var Un=function(){this._inputGeom=null,this._distance=null,this._curveBuilder=null,this._curveList=new Nt;var t=arguments[0],e=arguments[1],n=arguments[2];this._inputGeom=t,this._distance=e,this._curveBuilder=n};Un.prototype.addPoint=function(t){if(this._distance<=0)return null;var e=t.getCoordinates(),n=this._curveBuilder.getLineCurve(e,this._distance);this.addCurve(n,L.EXTERIOR,L.INTERIOR)},Un.prototype.addPolygon=function(t){var e=this._distance,n=be.LEFT;this._distance<0&&(e=-this._distance,n=be.RIGHT);var i=t.getExteriorRing(),r=St.removeRepeatedPoints(i.getCoordinates());if(this._distance<0&&this.isErodedCompletely(i,this._distance))return null;if(this._distance<=0&&r.length<3)return null;this.addPolygonRing(r,e,n,L.EXTERIOR,L.INTERIOR);for(var o=0;o<t.getNumInteriorRing();o++){var s=t.getInteriorRingN(o),a=St.removeRepeatedPoints(s.getCoordinates());this._distance>0&&this.isErodedCompletely(s,-this._distance)||this.addPolygonRing(a,e,be.opposite(n),L.INTERIOR,L.EXTERIOR)}},Un.prototype.isTriangleErodedCompletely=function(t,e){var n=new Bn(t[0],t[1],t[2]),i=n.inCentre();return at.distancePointLine(i,n.p0,n.p1)<Math.abs(e)},Un.prototype.addLineString=function(t){if(this._distance<=0&&!this._curveBuilder.getBufferParameters().isSingleSided())return null;var e=St.removeRepeatedPoints(t.getCoordinates()),n=this._curveBuilder.getLineCurve(e,this._distance);this.addCurve(n,L.EXTERIOR,L.INTERIOR)},Un.prototype.addCurve=function(t,e,n){if(null===t||t.length<2)return null;var i=new gn(t,new Pe(0,L.BOUNDARY,e,n));this._curveList.add(i)},Un.prototype.getCurves=function(){return this.add(this._inputGeom),this._curveList},Un.prototype.addPolygonRing=function(t,e,n,i,r){if(0===e&&t.length<ee.MINIMUM_VALID_SIZE)return null;var o=i,s=r;t.length>=ee.MINIMUM_VALID_SIZE&&at.isCCW(t)&&(o=r,s=i,n=be.opposite(n));var a=this._curveBuilder.getRingCurve(t,n,e);this.addCurve(a,o,s)},Un.prototype.add=function(t){if(t.isEmpty())return null;t instanceof $t?this.addPolygon(t):t instanceof Kt?this.addLineString(t):t instanceof Qt?this.addPoint(t):(t instanceof te||t instanceof Xt||t instanceof ne||t instanceof zt)&&this.addCollection(t)},Un.prototype.isErodedCompletely=function(t,e){var n=t.getCoordinates();if(n.length<4)return e<0;if(4===n.length)return this.isTriangleErodedCompletely(n,e);var i=t.getEnvelopeInternal(),r=Math.min(i.getHeight(),i.getWidth());return e<0&&2*Math.abs(e)>r},Un.prototype.addCollection=function(t){for(var e=0;e<t.getNumGeometries();e++){var n=t.getGeometryN(e);this.add(n)}},Un.prototype.interfaces_=function(){return[]},Un.prototype.getClass=function(){return Un};var Vn=function(){};Vn.prototype.locate=function(t){},Vn.prototype.interfaces_=function(){return[]},Vn.prototype.getClass=function(){return Vn};var qn=function(){this._parent=null,this._atStart=null,this._max=null,this._index=null,this._subcollectionIterator=null;var t=arguments[0];this._parent=t,this._atStart=!0,this._index=0,this._max=t.getNumGeometries()};qn.prototype.next=function(){if(this._atStart)return this._atStart=!1,qn.isAtomic(this._parent)&&this._index++,this._parent;if(null!==this._subcollectionIterator){if(this._subcollectionIterator.hasNext())return this._subcollectionIterator.next();this._subcollectionIterator=null}if(this._index>=this._max)throw new i;var t=this._parent.getGeometryN(this._index++);return t instanceof zt?(this._subcollectionIterator=new qn(t),this._subcollectionIterator.next()):t},qn.prototype.remove=function(){throw new Error(this.getClass().getName())},qn.prototype.hasNext=function(){if(this._atStart)return!0;if(null!==this._subcollectionIterator){if(this._subcollectionIterator.hasNext())return!0;this._subcollectionIterator=null}return!(this._index>=this._max)},qn.prototype.interfaces_=function(){return[Et]},qn.prototype.getClass=function(){return qn},qn.isAtomic=function(t){return!(t instanceof zt)};var zn=function(){this._geom=null;var t=arguments[0];this._geom=t};zn.prototype.locate=function(t){return zn.locate(t,this._geom)},zn.prototype.interfaces_=function(){return[Vn]},zn.prototype.getClass=function(){return zn},zn.isPointInRing=function(t,e){return!!e.getEnvelopeInternal().intersects(t)&&at.isPointInRing(t,e.getCoordinates())},zn.containsPointInPolygon=function(t,e){if(e.isEmpty())return!1;var n=e.getExteriorRing();if(!zn.isPointInRing(t,n))return!1;for(var i=0;i<e.getNumInteriorRing();i++){var r=e.getInteriorRingN(i);if(zn.isPointInRing(t,r))return!1}return!0},zn.containsPoint=function(t,e){if(e instanceof $t)return zn.containsPointInPolygon(t,e);if(e instanceof zt)for(var n=new qn(e);n.hasNext();){var i=n.next();if(i!==e&&zn.containsPoint(t,i))return!0}return!1},zn.locate=function(t,e){return e.isEmpty()?L.EXTERIOR:zn.containsPoint(t,e)?L.INTERIOR:L.EXTERIOR};var Xn=function(){this._edgeMap=new h,this._edgeList=null,this._ptInAreaLocation=[L.NONE,L.NONE]};Xn.prototype.getNextCW=function(t){this.getEdges();var e=this._edgeList.indexOf(t),n=e-1;return 0===e&&(n=this._edgeList.size()-1),this._edgeList.get(n)},Xn.prototype.propagateSideLabels=function(t){for(var e=L.NONE,n=this.iterator();n.hasNext();){var i=n.next().getLabel();i.isArea(t)&&i.getLocation(t,be.LEFT)!==L.NONE&&(e=i.getLocation(t,be.LEFT))}if(e===L.NONE)return null;for(var r=e,o=this.iterator();o.hasNext();){var s=o.next(),a=s.getLabel();if(a.getLocation(t,be.ON)===L.NONE&&a.setLocation(t,be.ON,r),a.isArea(t)){var u=a.getLocation(t,be.LEFT),l=a.getLocation(t,be.RIGHT);if(l!==L.NONE){if(l!==r)throw new Le("side location conflict",s.getCoordinate());u===L.NONE&&et.shouldNeverReachHere("found single null side (at "+s.getCoordinate()+")"),r=u}else et.isTrue(a.getLocation(t,be.LEFT)===L.NONE,"found single null side"),a.setLocation(t,be.RIGHT,r),a.setLocation(t,be.LEFT,r)}}},Xn.prototype.getCoordinate=function(){var t=this.iterator();return t.hasNext()?t.next().getCoordinate():null},Xn.prototype.print=function(t){Y.out.println("EdgeEndStar:   "+this.getCoordinate());for(var e=this.iterator();e.hasNext();)e.next().print(t)},Xn.prototype.isAreaLabelsConsistent=function(t){return this.computeEdgeEndLabels(t.getBoundaryNodeRule()),this.checkAreaLabelsConsistent(0)},Xn.prototype.checkAreaLabelsConsistent=function(t){var e=this.getEdges();if(e.size()<=0)return!0;var n=e.size()-1,i=e.get(n).getLabel().getLocation(t,be.LEFT);et.isTrue(i!==L.NONE,"Found unlabelled area edge");for(var r=i,o=this.iterator();o.hasNext();){var s=o.next().getLabel();et.isTrue(s.isArea(t),"Found non-area edge");var a=s.getLocation(t,be.LEFT),u=s.getLocation(t,be.RIGHT);if(a===u)return!1;if(u!==r)return!1;r=a}return!0},Xn.prototype.findIndex=function(t){this.iterator();for(var e=0;e<this._edgeList.size();e++)if(this._edgeList.get(e)===t)return e;return-1},Xn.prototype.iterator=function(){return this.getEdges().iterator()},Xn.prototype.getEdges=function(){return null===this._edgeList&&(this._edgeList=new Nt(this._edgeMap.values())),this._edgeList},Xn.prototype.getLocation=function(t,e,n){return this._ptInAreaLocation[t]===L.NONE&&(this._ptInAreaLocation[t]=zn.locate(e,n[t].getGeometry())),this._ptInAreaLocation[t]},Xn.prototype.toString=function(){var t=new M;t.append("EdgeEndStar:   "+this.getCoordinate()),t.append("\n");for(var e=this.iterator();e.hasNext();){var n=e.next();t.append(n),t.append("\n")}return t.toString()},Xn.prototype.computeEdgeEndLabels=function(t){for(var e=this.iterator();e.hasNext();)e.next().computeLabel(t)},Xn.prototype.computeLabelling=function(t){this.computeEdgeEndLabels(t[0].getBoundaryNodeRule()),this.propagateSideLabels(0),this.propagateSideLabels(1);for(var e=[!1,!1],n=this.iterator();n.hasNext();)for(var i=n.next().getLabel(),r=0;r<2;r++)i.isLine(r)&&i.getLocation(r)===L.BOUNDARY&&(e[r]=!0);for(var o=this.iterator();o.hasNext();)for(var s=o.next(),a=s.getLabel(),u=0;u<2;u++)if(a.isAnyNull(u)){var l=L.NONE;if(e[u])l=L.EXTERIOR;else{var c=s.getCoordinate();l=this.getLocation(u,c,t)}a.setAllLocationsIfNull(u,l)}},Xn.prototype.getDegree=function(){return this._edgeMap.size()},Xn.prototype.insertEdgeEnd=function(t,e){this._edgeMap.put(t,e),this._edgeList=null},Xn.prototype.interfaces_=function(){return[]},Xn.prototype.getClass=function(){return Xn};var Yn=function(t){function e(){t.call(this),this._resultAreaEdgeList=null,this._label=null,this._SCANNING_FOR_INCOMING=1,this._LINKING_TO_OUTGOING=2}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.linkResultDirectedEdges=function(){this.getResultAreaEdges();for(var t=null,e=null,n=this._SCANNING_FOR_INCOMING,i=0;i<this._resultAreaEdgeList.size();i++){var r=this._resultAreaEdgeList.get(i),o=r.getSym();if(r.getLabel().isArea())switch(null===t&&r.isInResult()&&(t=r),n){case this._SCANNING_FOR_INCOMING:if(!o.isInResult())continue;e=o,n=this._LINKING_TO_OUTGOING;break;case this._LINKING_TO_OUTGOING:if(!r.isInResult())continue;e.setNext(r),n=this._SCANNING_FOR_INCOMING}}if(n===this._LINKING_TO_OUTGOING){if(null===t)throw new Le("no outgoing dirEdge found",this.getCoordinate());et.isTrue(t.isInResult(),"unable to link last incoming dirEdge"),e.setNext(t)}},e.prototype.insert=function(t){var e=t;this.insertEdgeEnd(e,e)},e.prototype.getRightmostEdge=function(){var t=this.getEdges(),e=t.size();if(e<1)return null;var n=t.get(0);if(1===e)return n;var i=t.get(e-1),r=n.getQuadrant(),o=i.getQuadrant();return Ue.isNorthern(r)&&Ue.isNorthern(o)?n:Ue.isNorthern(r)||Ue.isNorthern(o)?0!==n.getDy()?n:0!==i.getDy()?i:(et.shouldNeverReachHere("found two horizontal edges incident on node"),null):i},e.prototype.print=function(t){Y.out.println("DirectedEdgeStar: "+this.getCoordinate());for(var e=this.iterator();e.hasNext();){var n=e.next();t.print("out "),n.print(t),t.println(),t.print("in "),n.getSym().print(t),t.println()}},e.prototype.getResultAreaEdges=function(){if(null!==this._resultAreaEdgeList)return this._resultAreaEdgeList;this._resultAreaEdgeList=new Nt;for(var t=this.iterator();t.hasNext();){var e=t.next();(e.isInResult()||e.getSym().isInResult())&&this._resultAreaEdgeList.add(e)}return this._resultAreaEdgeList},e.prototype.updateLabelling=function(t){for(var e=this.iterator();e.hasNext();){var n=e.next().getLabel();n.setAllLocationsIfNull(0,t.getLocation(0)),n.setAllLocationsIfNull(1,t.getLocation(1))}},e.prototype.linkAllDirectedEdges=function(){this.getEdges();for(var t=null,e=null,n=this._edgeList.size()-1;n>=0;n--){var i=this._edgeList.get(n),r=i.getSym();null===e&&(e=r),null!==t&&r.setNext(t),t=i}e.setNext(t)},e.prototype.computeDepths=function(){if(1===arguments.length){var t=arguments[0],e=this.findIndex(t),n=t.getDepth(be.LEFT),i=t.getDepth(be.RIGHT),r=this.computeDepths(e+1,this._edgeList.size(),n);if(this.computeDepths(0,e,r)!==i)throw new Le("depth mismatch at "+t.getCoordinate())}else if(3===arguments.length){for(var o=arguments[0],s=arguments[1],a=arguments[2],u=o;u<s;u++){var l=this._edgeList.get(u);l.setEdgeDepths(be.RIGHT,a),a=l.getDepth(be.LEFT)}return a}},e.prototype.mergeSymLabels=function(){for(var t=this.iterator();t.hasNext();){var e=t.next();e.getLabel().merge(e.getSym().getLabel())}},e.prototype.linkMinimalDirectedEdges=function(t){for(var e=null,n=null,i=this._SCANNING_FOR_INCOMING,r=this._resultAreaEdgeList.size()-1;r>=0;r--){var o=this._resultAreaEdgeList.get(r),s=o.getSym();switch(null===e&&o.getEdgeRing()===t&&(e=o),i){case this._SCANNING_FOR_INCOMING:if(s.getEdgeRing()!==t)continue;n=s,i=this._LINKING_TO_OUTGOING;break;case this._LINKING_TO_OUTGOING:if(o.getEdgeRing()!==t)continue;n.setNextMin(o),i=this._SCANNING_FOR_INCOMING}}i===this._LINKING_TO_OUTGOING&&(et.isTrue(null!==e,"found null for first outgoing dirEdge"),et.isTrue(e.getEdgeRing()===t,"unable to link last incoming dirEdge"),n.setNextMin(e))},e.prototype.getOutgoingDegree=function(){if(0===arguments.length){for(var t=0,e=this.iterator();e.hasNext();)e.next().isInResult()&&t++;return t}if(1===arguments.length){for(var n=arguments[0],i=0,r=this.iterator();r.hasNext();)r.next().getEdgeRing()===n&&i++;return i}},e.prototype.getLabel=function(){return this._label},e.prototype.findCoveredLineEdges=function(){for(var t=L.NONE,e=this.iterator();e.hasNext();){var n=e.next(),i=n.getSym();if(!n.isLineEdge()){if(n.isInResult()){t=L.INTERIOR;break}if(i.isInResult()){t=L.EXTERIOR;break}}}if(t===L.NONE)return null;for(var r=t,o=this.iterator();o.hasNext();){var s=o.next(),a=s.getSym();s.isLineEdge()?s.getEdge().setCovered(r===L.INTERIOR):(s.isInResult()&&(r=L.EXTERIOR),a.isInResult()&&(r=L.INTERIOR))}},e.prototype.computeLabelling=function(e){t.prototype.computeLabelling.call(this,e),this._label=new Pe(L.NONE);for(var n=this.iterator();n.hasNext();)for(var i=n.next().getEdge().getLabel(),r=0;r<2;r++){var o=i.getLocation(r);o!==L.INTERIOR&&o!==L.BOUNDARY||this._label.setLocation(r,L.INTERIOR)}},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Xn),kn=function(t){function e(){t.apply(this,arguments)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.createNode=function(t){return new Ge(t,new Yn)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Xe),jn=function t(){this._pts=null,this._orientation=null;var e=arguments[0];this._pts=e,this._orientation=t.orientation(e)};jn.prototype.compareTo=function(t){var e=t;return jn.compareOriented(this._pts,this._orientation,e._pts,e._orientation)},jn.prototype.interfaces_=function(){return[E]},jn.prototype.getClass=function(){return jn},jn.orientation=function(t){return 1===St.increasingDirection(t)},jn.compareOriented=function(t,e,n,i){for(var r=e?1:-1,o=i?1:-1,s=e?t.length:-1,a=i?n.length:-1,u=e?0:t.length-1,l=i?0:n.length-1;;){var c=t[u].compareTo(n[l]);if(0!==c)return c;var h=(u+=r)===s,p=(l+=o)===a;if(h&&!p)return-1;if(!h&&p)return 1;if(h&&p)return 0}};var Hn=function(){this._edges=new Nt,this._ocaMap=new h};Hn.prototype.print=function(t){t.print("MULTILINESTRING ( ");for(var e=0;e<this._edges.size();e++){var n=this._edges.get(e);e>0&&t.print(","),t.print("(");for(var i=n.getCoordinates(),r=0;r<i.length;r++)r>0&&t.print(","),t.print(i[r].x+" "+i[r].y);t.println(")")}t.print(")  ")},Hn.prototype.addAll=function(t){for(var e=t.iterator();e.hasNext();)this.add(e.next())},Hn.prototype.findEdgeIndex=function(t){for(var e=0;e<this._edges.size();e++)if(this._edges.get(e).equals(t))return e;return-1},Hn.prototype.iterator=function(){return this._edges.iterator()},Hn.prototype.getEdges=function(){return this._edges},Hn.prototype.get=function(t){return this._edges.get(t)},Hn.prototype.findEqualEdge=function(t){var e=new jn(t.getCoordinates());return this._ocaMap.get(e)},Hn.prototype.add=function(t){this._edges.add(t);var e=new jn(t.getCoordinates());this._ocaMap.put(e,t)},Hn.prototype.interfaces_=function(){return[]},Hn.prototype.getClass=function(){return Hn};var Wn=function(){};Wn.prototype.processIntersections=function(t,e,n,i){},Wn.prototype.isDone=function(){},Wn.prototype.interfaces_=function(){return[]},Wn.prototype.getClass=function(){return Wn};var Kn=function(){this._hasIntersection=!1,this._hasProper=!1,this._hasProperInterior=!1,this._hasInterior=!1,this._properIntersectionPoint=null,this._li=null,this._isSelfIntersection=null,this.numIntersections=0,this.numInteriorIntersections=0,this.numProperIntersections=0,this.numTests=0;var t=arguments[0];this._li=t};Kn.prototype.isTrivialIntersection=function(t,e,n,i){if(t===n&&1===this._li.getIntersectionNum()){if(Kn.isAdjacentSegments(e,i))return!0;if(t.isClosed()){var r=t.size()-1;if(0===e&&i===r||0===i&&e===r)return!0}}return!1},Kn.prototype.getProperIntersectionPoint=function(){return this._properIntersectionPoint},Kn.prototype.hasProperInteriorIntersection=function(){return this._hasProperInterior},Kn.prototype.getLineIntersector=function(){return this._li},Kn.prototype.hasProperIntersection=function(){return this._hasProper},Kn.prototype.processIntersections=function(t,e,n,i){if(t===n&&e===i)return null;this.numTests++;var r=t.getCoordinates()[e],o=t.getCoordinates()[e+1],s=n.getCoordinates()[i],a=n.getCoordinates()[i+1];this._li.computeIntersection(r,o,s,a),this._li.hasIntersection()&&(this.numIntersections++,this._li.isInteriorIntersection()&&(this.numInteriorIntersections++,this._hasInterior=!0),this.isTrivialIntersection(t,e,n,i)||(this._hasIntersection=!0,t.addIntersections(this._li,e,0),n.addIntersections(this._li,i,1),this._li.isProper()&&(this.numProperIntersections++,this._hasProper=!0,this._hasProperInterior=!0)))},Kn.prototype.hasIntersection=function(){return this._hasIntersection},Kn.prototype.isDone=function(){return!1},Kn.prototype.hasInteriorIntersection=function(){return this._hasInterior},Kn.prototype.interfaces_=function(){return[Wn]},Kn.prototype.getClass=function(){return Kn},Kn.isAdjacentSegments=function(t,e){return 1===Math.abs(t-e)};var Jn=function(){this.coord=null,this.segmentIndex=null,this.dist=null;var t=arguments[0],e=arguments[1],n=arguments[2];this.coord=new C(t),this.segmentIndex=e,this.dist=n};Jn.prototype.getSegmentIndex=function(){return this.segmentIndex},Jn.prototype.getCoordinate=function(){return this.coord},Jn.prototype.print=function(t){t.print(this.coord),t.print(" seg # = "+this.segmentIndex),t.println(" dist = "+this.dist)},Jn.prototype.compareTo=function(t){var e=t;return this.compare(e.segmentIndex,e.dist)},Jn.prototype.isEndPoint=function(t){return 0===this.segmentIndex&&0===this.dist||this.segmentIndex===t},Jn.prototype.toString=function(){return this.coord+" seg # = "+this.segmentIndex+" dist = "+this.dist},Jn.prototype.getDistance=function(){return this.dist},Jn.prototype.compare=function(t,e){return this.segmentIndex<t?-1:this.segmentIndex>t?1:this.dist<e?-1:this.dist>e?1:0},Jn.prototype.interfaces_=function(){return[E]},Jn.prototype.getClass=function(){return Jn};var Qn=function(){this._nodeMap=new h,this.edge=null;var t=arguments[0];this.edge=t};Qn.prototype.print=function(t){t.println("Intersections:");for(var e=this.iterator();e.hasNext();)e.next().print(t)},Qn.prototype.iterator=function(){return this._nodeMap.values().iterator()},Qn.prototype.addSplitEdges=function(t){this.addEndpoints();for(var e=this.iterator(),n=e.next();e.hasNext();){var i=e.next(),r=this.createSplitEdge(n,i);t.add(r),n=i}},Qn.prototype.addEndpoints=function(){var t=this.edge.pts.length-1;this.add(this.edge.pts[0],0,0),this.add(this.edge.pts[t],t,0)},Qn.prototype.createSplitEdge=function(t,e){var n=e.segmentIndex-t.segmentIndex+2,i=this.edge.pts[e.segmentIndex],r=e.dist>0||!e.coord.equals2D(i);r||n--;var o=new Array(n).fill(null),s=0;o[s++]=new C(t.coord);for(var a=t.segmentIndex+1;a<=e.segmentIndex;a++)o[s++]=this.edge.pts[a];return r&&(o[s]=e.coord),new ni(o,new Pe(this.edge._label))},Qn.prototype.add=function(t,e,n){var i=new Jn(t,e,n),r=this._nodeMap.get(i);return null!==r?r:(this._nodeMap.put(i,i),i)},Qn.prototype.isIntersection=function(t){for(var e=this.iterator();e.hasNext();)if(e.next().coord.equals(t))return!0;return!1},Qn.prototype.interfaces_=function(){return[]},Qn.prototype.getClass=function(){return Qn};var Zn=function(){};Zn.prototype.getChainStartIndices=function(t){var e=0,n=new Nt;n.add(new D(e));do{var i=this.findChainEnd(t,e);n.add(new D(i)),e=i}while(e<t.length-1);return Zn.toIntArray(n)},Zn.prototype.findChainEnd=function(t,e){for(var n=Ue.quadrant(t[e],t[e+1]),i=e+1;i<t.length&&Ue.quadrant(t[i-1],t[i])===n;)i++;return i-1},Zn.prototype.interfaces_=function(){return[]},Zn.prototype.getClass=function(){return Zn},Zn.toIntArray=function(t){for(var e=new Array(t.size()).fill(null),n=0;n<e.length;n++)e[n]=t.get(n).intValue();return e};var $n=function(){this.e=null,this.pts=null,this.startIndex=null,this.env1=new j,this.env2=new j;var t=arguments[0];this.e=t,this.pts=t.getCoordinates();var e=new Zn;this.startIndex=e.getChainStartIndices(this.pts)};$n.prototype.getCoordinates=function(){return this.pts},$n.prototype.getMaxX=function(t){var e=this.pts[this.startIndex[t]].x,n=this.pts[this.startIndex[t+1]].x;return e>n?e:n},$n.prototype.getMinX=function(t){var e=this.pts[this.startIndex[t]].x,n=this.pts[this.startIndex[t+1]].x;return e<n?e:n},$n.prototype.computeIntersectsForChain=function(){if(4===arguments.length){var t=arguments[0],e=arguments[1],n=arguments[2],i=arguments[3];this.computeIntersectsForChain(this.startIndex[t],this.startIndex[t+1],e,e.startIndex[n],e.startIndex[n+1],i)}else if(6===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2],a=arguments[3],u=arguments[4],l=arguments[5],c=this.pts[r],h=this.pts[o],p=s.pts[a],f=s.pts[u];if(o-r==1&&u-a==1)return l.addIntersections(this.e,r,s.e,a),null;if(this.env1.init(c,h),this.env2.init(p,f),!this.env1.intersects(this.env2))return null;var g=Math.trunc((r+o)/2),d=Math.trunc((a+u)/2);r<g&&(a<d&&this.computeIntersectsForChain(r,g,s,a,d,l),d<u&&this.computeIntersectsForChain(r,g,s,d,u,l)),g<o&&(a<d&&this.computeIntersectsForChain(g,o,s,a,d,l),d<u&&this.computeIntersectsForChain(g,o,s,d,u,l))}},$n.prototype.getStartIndexes=function(){return this.startIndex},$n.prototype.computeIntersects=function(t,e){for(var n=0;n<this.startIndex.length-1;n++)for(var i=0;i<t.startIndex.length-1;i++)this.computeIntersectsForChain(n,t,i,e)},$n.prototype.interfaces_=function(){return[]},$n.prototype.getClass=function(){return $n};var ti=function t(){this._depth=Array(2).fill().map((function(){return Array(3)}));for(var e=0;e<2;e++)for(var n=0;n<3;n++)this._depth[e][n]=t.NULL_VALUE},ei={NULL_VALUE:{configurable:!0}};ti.prototype.getDepth=function(t,e){return this._depth[t][e]},ti.prototype.setDepth=function(t,e,n){this._depth[t][e]=n},ti.prototype.isNull=function(){if(0===arguments.length){for(var t=0;t<2;t++)for(var e=0;e<3;e++)if(this._depth[t][e]!==ti.NULL_VALUE)return!1;return!0}if(1===arguments.length){var n=arguments[0];return this._depth[n][1]===ti.NULL_VALUE}if(2===arguments.length){var i=arguments[0],r=arguments[1];return this._depth[i][r]===ti.NULL_VALUE}},ti.prototype.normalize=function(){for(var t=0;t<2;t++)if(!this.isNull(t)){var e=this._depth[t][1];this._depth[t][2]<e&&(e=this._depth[t][2]),e<0&&(e=0);for(var n=1;n<3;n++){var i=0;this._depth[t][n]>e&&(i=1),this._depth[t][n]=i}}},ti.prototype.getDelta=function(t){return this._depth[t][be.RIGHT]-this._depth[t][be.LEFT]},ti.prototype.getLocation=function(t,e){return this._depth[t][e]<=0?L.EXTERIOR:L.INTERIOR},ti.prototype.toString=function(){return"A: "+this._depth[0][1]+","+this._depth[0][2]+" B: "+this._depth[1][1]+","+this._depth[1][2]},ti.prototype.add=function(){if(1===arguments.length)for(var t=arguments[0],e=0;e<2;e++)for(var n=1;n<3;n++){var i=t.getLocation(e,n);i!==L.EXTERIOR&&i!==L.INTERIOR||(this.isNull(e,n)?this._depth[e][n]=ti.depthAtLocation(i):this._depth[e][n]+=ti.depthAtLocation(i))}else if(3===arguments.length){var r=arguments[0],o=arguments[1];arguments[2]===L.INTERIOR&&this._depth[r][o]++}},ti.prototype.interfaces_=function(){return[]},ti.prototype.getClass=function(){return ti},ti.depthAtLocation=function(t){return t===L.EXTERIOR?0:t===L.INTERIOR?1:ti.NULL_VALUE},ei.NULL_VALUE.get=function(){return-1},Object.defineProperties(ti,ei);var ni=function(t){function e(){if(t.call(this),this.pts=null,this._env=null,this.eiList=new Qn(this),this._name=null,this._mce=null,this._isIsolated=!0,this._depth=new ti,this._depthDelta=0,1===arguments.length){var n=arguments[0];e.call(this,n,null)}else if(2===arguments.length){var i=arguments[0],r=arguments[1];this.pts=i,this._label=r}}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.getDepth=function(){return this._depth},e.prototype.getCollapsedEdge=function(){var t=new Array(2).fill(null);return t[0]=this.pts[0],t[1]=this.pts[1],new e(t,Pe.toLineLabel(this._label))},e.prototype.isIsolated=function(){return this._isIsolated},e.prototype.getCoordinates=function(){return this.pts},e.prototype.setIsolated=function(t){this._isIsolated=t},e.prototype.setName=function(t){this._name=t},e.prototype.equals=function(t){if(!(t instanceof e))return!1;var n=t;if(this.pts.length!==n.pts.length)return!1;for(var i=!0,r=!0,o=this.pts.length,s=0;s<this.pts.length;s++)if(this.pts[s].equals2D(n.pts[s])||(i=!1),this.pts[s].equals2D(n.pts[--o])||(r=!1),!i&&!r)return!1;return!0},e.prototype.getCoordinate=function(){if(0===arguments.length)return this.pts.length>0?this.pts[0]:null;if(1===arguments.length){var t=arguments[0];return this.pts[t]}},e.prototype.print=function(t){t.print("edge "+this._name+": "),t.print("LINESTRING (");for(var e=0;e<this.pts.length;e++)e>0&&t.print(","),t.print(this.pts[e].x+" "+this.pts[e].y);t.print(")  "+this._label+" "+this._depthDelta)},e.prototype.computeIM=function(t){e.updateIM(this._label,t)},e.prototype.isCollapsed=function(){return!!this._label.isArea()&&3===this.pts.length&&!!this.pts[0].equals(this.pts[2])},e.prototype.isClosed=function(){return this.pts[0].equals(this.pts[this.pts.length-1])},e.prototype.getMaximumSegmentIndex=function(){return this.pts.length-1},e.prototype.getDepthDelta=function(){return this._depthDelta},e.prototype.getNumPoints=function(){return this.pts.length},e.prototype.printReverse=function(t){t.print("edge "+this._name+": ");for(var e=this.pts.length-1;e>=0;e--)t.print(this.pts[e]+" ");t.println("")},e.prototype.getMonotoneChainEdge=function(){return null===this._mce&&(this._mce=new $n(this)),this._mce},e.prototype.getEnvelope=function(){if(null===this._env){this._env=new j;for(var t=0;t<this.pts.length;t++)this._env.expandToInclude(this.pts[t])}return this._env},e.prototype.addIntersection=function(t,e,n,i){var r=new C(t.getIntersection(i)),o=e,s=t.getEdgeDistance(n,i),a=o+1;if(a<this.pts.length){var u=this.pts[a];r.equals2D(u)&&(o=a,s=0)}this.eiList.add(r,o,s)},e.prototype.toString=function(){var t=new M;t.append("edge "+this._name+": "),t.append("LINESTRING (");for(var e=0;e<this.pts.length;e++)e>0&&t.append(","),t.append(this.pts[e].x+" "+this.pts[e].y);return t.append(")  "+this._label+" "+this._depthDelta),t.toString()},e.prototype.isPointwiseEqual=function(t){if(this.pts.length!==t.pts.length)return!1;for(var e=0;e<this.pts.length;e++)if(!this.pts[e].equals2D(t.pts[e]))return!1;return!0},e.prototype.setDepthDelta=function(t){this._depthDelta=t},e.prototype.getEdgeIntersectionList=function(){return this.eiList},e.prototype.addIntersections=function(t,e,n){for(var i=0;i<t.getIntersectionNum();i++)this.addIntersection(t,e,n,i)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e.updateIM=function(){if(2!==arguments.length)return t.prototype.updateIM.apply(this,arguments);var e=arguments[0],n=arguments[1];n.setAtLeastIfValid(e.getLocation(0,be.ON),e.getLocation(1,be.ON),1),e.isArea()&&(n.setAtLeastIfValid(e.getLocation(0,be.LEFT),e.getLocation(1,be.LEFT),2),n.setAtLeastIfValid(e.getLocation(0,be.RIGHT),e.getLocation(1,be.RIGHT),2))},e}(Fe),ii=function(t){this._workingPrecisionModel=null,this._workingNoder=null,this._geomFact=null,this._graph=null,this._edgeList=new Hn,this._bufParams=t||null};ii.prototype.setWorkingPrecisionModel=function(t){this._workingPrecisionModel=t},ii.prototype.insertUniqueEdge=function(t){var e=this._edgeList.findEqualEdge(t);if(null!==e){var n=e.getLabel(),i=t.getLabel();e.isPointwiseEqual(t)||(i=new Pe(t.getLabel())).flip(),n.merge(i);var r=ii.depthDelta(i),o=e.getDepthDelta()+r;e.setDepthDelta(o)}else this._edgeList.add(t),t.setDepthDelta(ii.depthDelta(t.getLabel()))},ii.prototype.buildSubgraphs=function(t,e){for(var n=new Nt,i=t.iterator();i.hasNext();){var r=i.next(),o=r.getRightmostCoordinate(),s=new An(n).getDepth(o);r.computeDepth(s),r.findResultEdges(),n.add(r),e.add(r.getDirectedEdges(),r.getNodes())}},ii.prototype.createSubgraphs=function(t){for(var e=new Nt,n=t.getNodes().iterator();n.hasNext();){var i=n.next();if(!i.isVisited()){var r=new Re;r.create(i),e.add(r)}}return $e.sort(e,$e.reverseOrder()),e},ii.prototype.createEmptyResultGeometry=function(){return this._geomFact.createPolygon()},ii.prototype.getNoder=function(t){if(null!==this._workingNoder)return this._workingNoder;var e=new In,n=new rt;return n.setPrecisionModel(t),e.setSegmentIntersector(new Kn(n)),e},ii.prototype.buffer=function(t,e){var n=this._workingPrecisionModel;null===n&&(n=t.getPrecisionModel()),this._geomFact=t.getFactory();var i=new Dn(n,this._bufParams),r=new Un(t,e,i).getCurves();if(r.size()<=0)return this.createEmptyResultGeometry();this.computeNodedEdges(r,n),this._graph=new Ye(new kn),this._graph.addEdges(this._edgeList.getEdges());var o=this.createSubgraphs(this._graph),s=new ke(this._geomFact);this.buildSubgraphs(o,s);var a=s.getPolygons();return a.size()<=0?this.createEmptyResultGeometry():this._geomFact.buildGeometry(a)},ii.prototype.computeNodedEdges=function(t,e){var n=this.getNoder(e);n.computeNodes(t);for(var i=n.getNodedSubstrings().iterator();i.hasNext();){var r=i.next(),o=r.getCoordinates();if(2!==o.length||!o[0].equals2D(o[1])){var s=r.getData(),a=new ni(r.getCoordinates(),new Pe(s));this.insertUniqueEdge(a)}}},ii.prototype.setNoder=function(t){this._workingNoder=t},ii.prototype.interfaces_=function(){return[]},ii.prototype.getClass=function(){return ii},ii.depthDelta=function(t){var e=t.getLocation(0,be.LEFT),n=t.getLocation(0,be.RIGHT);return e===L.INTERIOR&&n===L.EXTERIOR?1:e===L.EXTERIOR&&n===L.INTERIOR?-1:0},ii.convertSegStrings=function(t){for(var e=new _e,n=new Nt;t.hasNext();){var i=t.next(),r=e.createLineString(i.getCoordinates());n.add(r)}return e.buildGeometry(n)};var ri=function(){if(this._noder=null,this._scaleFactor=null,this._offsetX=null,this._offsetY=null,this._isScaled=!1,2===arguments.length){var t=arguments[0],e=arguments[1];this._noder=t,this._scaleFactor=e,this._offsetX=0,this._offsetY=0,this._isScaled=!this.isIntegerPrecision()}else if(4===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2],o=arguments[3];this._noder=n,this._scaleFactor=i,this._offsetX=r,this._offsetY=o,this._isScaled=!this.isIntegerPrecision()}};ri.prototype.rescale=function(){if(R(arguments[0],xt))for(var t=arguments[0].iterator();t.hasNext();){var e=t.next();this.rescale(e.getCoordinates())}else if(arguments[0]instanceof Array){for(var n=arguments[0],i=0;i<n.length;i++)n[i].x=n[i].x/this._scaleFactor+this._offsetX,n[i].y=n[i].y/this._scaleFactor+this._offsetY;2===n.length&&n[0].equals2D(n[1])&&Y.out.println(n)}},ri.prototype.scale=function(){if(R(arguments[0],xt)){for(var t=arguments[0],e=new Nt,n=t.iterator();n.hasNext();){var i=n.next();e.add(new gn(this.scale(i.getCoordinates()),i.getData()))}return e}if(arguments[0]instanceof Array){for(var r=arguments[0],o=new Array(r.length).fill(null),s=0;s<r.length;s++)o[s]=new C(Math.round((r[s].x-this._offsetX)*this._scaleFactor),Math.round((r[s].y-this._offsetY)*this._scaleFactor),r[s].z);return St.removeRepeatedPoints(o)}},ri.prototype.isIntegerPrecision=function(){return 1===this._scaleFactor},ri.prototype.getNodedSubstrings=function(){var t=this._noder.getNodedSubstrings();return this._isScaled&&this.rescale(t),t},ri.prototype.computeNodes=function(t){var e=t;this._isScaled&&(e=this.scale(t)),this._noder.computeNodes(e)},ri.prototype.interfaces_=function(){return[xn]},ri.prototype.getClass=function(){return ri};var oi=function(){this._li=new rt,this._segStrings=null;var t=arguments[0];this._segStrings=t},si={fact:{configurable:!0}};oi.prototype.checkEndPtVertexIntersections=function(){if(0===arguments.length)for(var t=this._segStrings.iterator();t.hasNext();){var e=t.next().getCoordinates();this.checkEndPtVertexIntersections(e[0],this._segStrings),this.checkEndPtVertexIntersections(e[e.length-1],this._segStrings)}else if(2===arguments.length)for(var n=arguments[0],i=arguments[1].iterator();i.hasNext();)for(var r=i.next().getCoordinates(),o=1;o<r.length-1;o++)if(r[o].equals(n))throw new $("found endpt/interior pt intersection at index "+o+" :pt "+n)},oi.prototype.checkInteriorIntersections=function(){if(0===arguments.length)for(var t=this._segStrings.iterator();t.hasNext();)for(var e=t.next(),n=this._segStrings.iterator();n.hasNext();){var i=n.next();this.checkInteriorIntersections(e,i)}else if(2===arguments.length)for(var r=arguments[0],o=arguments[1],s=r.getCoordinates(),a=o.getCoordinates(),u=0;u<s.length-1;u++)for(var l=0;l<a.length-1;l++)this.checkInteriorIntersections(r,u,o,l);else if(4===arguments.length){var c=arguments[0],h=arguments[1],p=arguments[2],f=arguments[3];if(c===p&&h===f)return null;var g=c.getCoordinates()[h],d=c.getCoordinates()[h+1],y=p.getCoordinates()[f],_=p.getCoordinates()[f+1];if(this._li.computeIntersection(g,d,y,_),this._li.hasIntersection()&&(this._li.isProper()||this.hasInteriorIntersection(this._li,g,d)||this.hasInteriorIntersection(this._li,y,_)))throw new $("found non-noded intersection at "+g+"-"+d+" and "+y+"-"+_)}},oi.prototype.checkValid=function(){this.checkEndPtVertexIntersections(),this.checkInteriorIntersections(),this.checkCollapses()},oi.prototype.checkCollapses=function(){if(0===arguments.length)for(var t=this._segStrings.iterator();t.hasNext();){var e=t.next();this.checkCollapses(e)}else if(1===arguments.length)for(var n=arguments[0].getCoordinates(),i=0;i<n.length-2;i++)this.checkCollapse(n[i],n[i+1],n[i+2])},oi.prototype.hasInteriorIntersection=function(t,e,n){for(var i=0;i<t.getIntersectionNum();i++){var r=t.getIntersection(i);if(!r.equals(e)&&!r.equals(n))return!0}return!1},oi.prototype.checkCollapse=function(t,e,n){if(t.equals(n))throw new $("found non-noded collapse at "+oi.fact.createLineString([t,e,n]))},oi.prototype.interfaces_=function(){return[]},oi.prototype.getClass=function(){return oi},si.fact.get=function(){return new _e},Object.defineProperties(oi,si);var ai=function(){this._li=null,this._pt=null,this._originalPt=null,this._ptScaled=null,this._p0Scaled=null,this._p1Scaled=null,this._scaleFactor=null,this._minx=null,this._maxx=null,this._miny=null,this._maxy=null,this._corner=new Array(4).fill(null),this._safeEnv=null;var t=arguments[0],e=arguments[1],n=arguments[2];if(this._originalPt=t,this._pt=t,this._scaleFactor=e,this._li=n,e<=0)throw new m("Scale factor must be non-zero");1!==e&&(this._pt=new C(this.scale(t.x),this.scale(t.y)),this._p0Scaled=new C,this._p1Scaled=new C),this.initCorners(this._pt)},ui={SAFE_ENV_EXPANSION_FACTOR:{configurable:!0}};ai.prototype.intersectsScaled=function(t,e){var n=Math.min(t.x,e.x),i=Math.max(t.x,e.x),r=Math.min(t.y,e.y),o=Math.max(t.y,e.y),s=this._maxx<n||this._minx>i||this._maxy<r||this._miny>o;if(s)return!1;var a=this.intersectsToleranceSquare(t,e);return et.isTrue(!(s&&a),"Found bad envelope test"),a},ai.prototype.initCorners=function(t){this._minx=t.x-.5,this._maxx=t.x+.5,this._miny=t.y-.5,this._maxy=t.y+.5,this._corner[0]=new C(this._maxx,this._maxy),this._corner[1]=new C(this._minx,this._maxy),this._corner[2]=new C(this._minx,this._miny),this._corner[3]=new C(this._maxx,this._miny)},ai.prototype.intersects=function(t,e){return 1===this._scaleFactor?this.intersectsScaled(t,e):(this.copyScaled(t,this._p0Scaled),this.copyScaled(e,this._p1Scaled),this.intersectsScaled(this._p0Scaled,this._p1Scaled))},ai.prototype.scale=function(t){return Math.round(t*this._scaleFactor)},ai.prototype.getCoordinate=function(){return this._originalPt},ai.prototype.copyScaled=function(t,e){e.x=this.scale(t.x),e.y=this.scale(t.y)},ai.prototype.getSafeEnvelope=function(){if(null===this._safeEnv){var t=ai.SAFE_ENV_EXPANSION_FACTOR/this._scaleFactor;this._safeEnv=new j(this._originalPt.x-t,this._originalPt.x+t,this._originalPt.y-t,this._originalPt.y+t)}return this._safeEnv},ai.prototype.intersectsPixelClosure=function(t,e){return this._li.computeIntersection(t,e,this._corner[0],this._corner[1]),!!(this._li.hasIntersection()||(this._li.computeIntersection(t,e,this._corner[1],this._corner[2]),this._li.hasIntersection()||(this._li.computeIntersection(t,e,this._corner[2],this._corner[3]),this._li.hasIntersection()||(this._li.computeIntersection(t,e,this._corner[3],this._corner[0]),this._li.hasIntersection()))))},ai.prototype.intersectsToleranceSquare=function(t,e){var n=!1,i=!1;return this._li.computeIntersection(t,e,this._corner[0],this._corner[1]),!!(this._li.isProper()||(this._li.computeIntersection(t,e,this._corner[1],this._corner[2]),this._li.isProper()||(this._li.hasIntersection()&&(n=!0),this._li.computeIntersection(t,e,this._corner[2],this._corner[3]),this._li.isProper()||(this._li.hasIntersection()&&(i=!0),this._li.computeIntersection(t,e,this._corner[3],this._corner[0]),this._li.isProper()||n&&i||t.equals(this._pt)||e.equals(this._pt)))))},ai.prototype.addSnappedNode=function(t,e){var n=t.getCoordinate(e),i=t.getCoordinate(e+1);return!!this.intersects(n,i)&&(t.addIntersection(this.getCoordinate(),e),!0)},ai.prototype.interfaces_=function(){return[]},ai.prototype.getClass=function(){return ai},ui.SAFE_ENV_EXPANSION_FACTOR.get=function(){return.75},Object.defineProperties(ai,ui);var li=function(){this.tempEnv1=new j,this.selectedSegment=new dn};li.prototype.select=function(){if(1===arguments.length);else if(2===arguments.length){var t=arguments[0],e=arguments[1];t.getLineSegment(e,this.selectedSegment),this.select(this.selectedSegment)}},li.prototype.interfaces_=function(){return[]},li.prototype.getClass=function(){return li};var ci=function(){this._index=null;var t=arguments[0];this._index=t},hi={HotPixelSnapAction:{configurable:!0}};ci.prototype.snap=function(){if(1===arguments.length){var t=arguments[0];return this.snap(t,null,-1)}if(3===arguments.length){var e=arguments[0],n=arguments[1],i=arguments[2],r=e.getSafeEnvelope(),o=new pi(e,n,i);return this._index.query(r,{interfaces_:function(){return[Ke]},visitItem:function(t){t.select(r,o)}}),o.isNodeAdded()}},ci.prototype.interfaces_=function(){return[]},ci.prototype.getClass=function(){return ci},hi.HotPixelSnapAction.get=function(){return pi},Object.defineProperties(ci,hi);var pi=function(t){function e(){t.call(this),this._hotPixel=null,this._parentEdge=null,this._hotPixelVertexIndex=null,this._isNodeAdded=!1;var e=arguments[0],n=arguments[1],i=arguments[2];this._hotPixel=e,this._parentEdge=n,this._hotPixelVertexIndex=i}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.isNodeAdded=function(){return this._isNodeAdded},e.prototype.select=function(){if(2!==arguments.length)return t.prototype.select.apply(this,arguments);var e=arguments[0],n=arguments[1],i=e.getContext();if(null!==this._parentEdge&&i===this._parentEdge&&n===this._hotPixelVertexIndex)return null;this._isNodeAdded=this._hotPixel.addSnappedNode(i,n)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(li),fi=function(){this._li=null,this._interiorIntersections=null;var t=arguments[0];this._li=t,this._interiorIntersections=new Nt};fi.prototype.processIntersections=function(t,e,n,i){if(t===n&&e===i)return null;var r=t.getCoordinates()[e],o=t.getCoordinates()[e+1],s=n.getCoordinates()[i],a=n.getCoordinates()[i+1];if(this._li.computeIntersection(r,o,s,a),this._li.hasIntersection()&&this._li.isInteriorIntersection()){for(var u=0;u<this._li.getIntersectionNum();u++)this._interiorIntersections.add(this._li.getIntersection(u));t.addIntersections(this._li,e,0),n.addIntersections(this._li,i,1)}},fi.prototype.isDone=function(){return!1},fi.prototype.getInteriorIntersections=function(){return this._interiorIntersections},fi.prototype.interfaces_=function(){return[Wn]},fi.prototype.getClass=function(){return fi};var gi=function(){this._pm=null,this._li=null,this._scaleFactor=null,this._noder=null,this._pointSnapper=null,this._nodedSegStrings=null;var t=arguments[0];this._pm=t,this._li=new rt,this._li.setPrecisionModel(t),this._scaleFactor=t.getScale()};gi.prototype.checkCorrectness=function(t){var e=gn.getNodedSubstrings(t),n=new oi(e);try{n.checkValid()}catch(t){if(!(t instanceof z))throw t;t.printStackTrace()}},gi.prototype.getNodedSubstrings=function(){return gn.getNodedSubstrings(this._nodedSegStrings)},gi.prototype.snapRound=function(t,e){var n=this.findInteriorIntersections(t,e);this.computeIntersectionSnaps(n),this.computeVertexSnaps(t)},gi.prototype.findInteriorIntersections=function(t,e){var n=new fi(e);return this._noder.setSegmentIntersector(n),this._noder.computeNodes(t),n.getInteriorIntersections()},gi.prototype.computeVertexSnaps=function(){if(R(arguments[0],xt))for(var t=arguments[0].iterator();t.hasNext();){var e=t.next();this.computeVertexSnaps(e)}else if(arguments[0]instanceof gn)for(var n=arguments[0],i=n.getCoordinates(),r=0;r<i.length;r++){var o=new ai(i[r],this._scaleFactor,this._li);this._pointSnapper.snap(o,n,r)&&n.addIntersection(i[r],r)}},gi.prototype.computeNodes=function(t){this._nodedSegStrings=t,this._noder=new In,this._pointSnapper=new ci(this._noder.getIndex()),this.snapRound(t,this._li)},gi.prototype.computeIntersectionSnaps=function(t){for(var e=t.iterator();e.hasNext();){var n=e.next(),i=new ai(n,this._scaleFactor,this._li);this._pointSnapper.snap(i)}},gi.prototype.interfaces_=function(){return[xn]},gi.prototype.getClass=function(){return gi};var di=function(){if(this._argGeom=null,this._distance=null,this._bufParams=new Cn,this._resultGeometry=null,this._saveException=null,1===arguments.length){var t=arguments[0];this._argGeom=t}else if(2===arguments.length){var e=arguments[0],n=arguments[1];this._argGeom=e,this._bufParams=n}},yi={CAP_ROUND:{configurable:!0},CAP_BUTT:{configurable:!0},CAP_FLAT:{configurable:!0},CAP_SQUARE:{configurable:!0},MAX_PRECISION_DIGITS:{configurable:!0}};di.prototype.bufferFixedPrecision=function(t){var e=new ri(new gi(new fe(1)),t.getScale()),n=new ii(this._bufParams);n.setWorkingPrecisionModel(t),n.setNoder(e),this._resultGeometry=n.buffer(this._argGeom,this._distance)},di.prototype.bufferReducedPrecision=function(){var t=this;if(0===arguments.length){for(var e=di.MAX_PRECISION_DIGITS;e>=0;e--){try{t.bufferReducedPrecision(e)}catch(e){if(!(e instanceof Le))throw e;t._saveException=e}if(null!==t._resultGeometry)return null}throw this._saveException}if(1===arguments.length){var n=arguments[0],i=di.precisionScaleFactor(this._argGeom,this._distance,n),r=new fe(i);this.bufferFixedPrecision(r)}},di.prototype.computeGeometry=function(){if(this.bufferOriginalPrecision(),null!==this._resultGeometry)return null;var t=this._argGeom.getFactory().getPrecisionModel();t.getType()===fe.FIXED?this.bufferFixedPrecision(t):this.bufferReducedPrecision()},di.prototype.setQuadrantSegments=function(t){this._bufParams.setQuadrantSegments(t)},di.prototype.bufferOriginalPrecision=function(){try{var t=new ii(this._bufParams);this._resultGeometry=t.buffer(this._argGeom,this._distance)}catch(t){if(!(t instanceof $))throw t;this._saveException=t}},di.prototype.getResultGeometry=function(t){return this._distance=t,this.computeGeometry(),this._resultGeometry},di.prototype.setEndCapStyle=function(t){this._bufParams.setEndCapStyle(t)},di.prototype.interfaces_=function(){return[]},di.prototype.getClass=function(){return di},di.bufferOp=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];return new di(t).getResultGeometry(e)}if(3===arguments.length){if(Number.isInteger(arguments[2])&&arguments[0]instanceof ct&&"number"==typeof arguments[1]){var n=arguments[0],i=arguments[1],r=arguments[2],o=new di(n);return o.setQuadrantSegments(r),o.getResultGeometry(i)}if(arguments[2]instanceof Cn&&arguments[0]instanceof ct&&"number"==typeof arguments[1]){var s=arguments[0],a=arguments[1],u=arguments[2];return new di(s,u).getResultGeometry(a)}}else if(4===arguments.length){var l=arguments[0],c=arguments[1],h=arguments[2],p=arguments[3],f=new di(l);return f.setQuadrantSegments(h),f.setEndCapStyle(p),f.getResultGeometry(c)}},di.precisionScaleFactor=function(t,e,n){var i=t.getEnvelopeInternal(),r=T.max(Math.abs(i.getMaxX()),Math.abs(i.getMaxY()),Math.abs(i.getMinX()),Math.abs(i.getMinY()))+2*(e>0?e:0),o=n-Math.trunc(Math.log(r)/Math.log(10)+1);return Math.pow(10,o)},yi.CAP_ROUND.get=function(){return Cn.CAP_ROUND},yi.CAP_BUTT.get=function(){return Cn.CAP_FLAT},yi.CAP_FLAT.get=function(){return Cn.CAP_FLAT},yi.CAP_SQUARE.get=function(){return Cn.CAP_SQUARE},yi.MAX_PRECISION_DIGITS.get=function(){return 12},Object.defineProperties(di,yi);var _i=function(){this._pt=[new C,new C],this._distance=v.NaN,this._isNull=!0};_i.prototype.getCoordinates=function(){return this._pt},_i.prototype.getCoordinate=function(t){return this._pt[t]},_i.prototype.setMinimum=function(){if(1===arguments.length){var t=arguments[0];this.setMinimum(t._pt[0],t._pt[1])}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(this._isNull)return this.initialize(e,n),null;var i=e.distance(n);i<this._distance&&this.initialize(e,n,i)}},_i.prototype.initialize=function(){if(0===arguments.length)this._isNull=!0;else if(2===arguments.length){var t=arguments[0],e=arguments[1];this._pt[0].setCoordinate(t),this._pt[1].setCoordinate(e),this._distance=t.distance(e),this._isNull=!1}else if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2];this._pt[0].setCoordinate(n),this._pt[1].setCoordinate(i),this._distance=r,this._isNull=!1}},_i.prototype.getDistance=function(){return this._distance},_i.prototype.setMaximum=function(){if(1===arguments.length){var t=arguments[0];this.setMaximum(t._pt[0],t._pt[1])}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(this._isNull)return this.initialize(e,n),null;var i=e.distance(n);i>this._distance&&this.initialize(e,n,i)}},_i.prototype.interfaces_=function(){return[]},_i.prototype.getClass=function(){return _i};var mi=function(){};mi.prototype.interfaces_=function(){return[]},mi.prototype.getClass=function(){return mi},mi.computeDistance=function(){if(arguments[2]instanceof _i&&arguments[0]instanceof Kt&&arguments[1]instanceof C)for(var t=arguments[0],e=arguments[1],n=arguments[2],i=t.getCoordinates(),r=new dn,o=0;o<i.length-1;o++){r.setCoordinates(i[o],i[o+1]);var s=r.closestPoint(e);n.setMinimum(s,e)}else if(arguments[2]instanceof _i&&arguments[0]instanceof $t&&arguments[1]instanceof C){var a=arguments[0],u=arguments[1],l=arguments[2];mi.computeDistance(a.getExteriorRing(),u,l);for(var c=0;c<a.getNumInteriorRing();c++)mi.computeDistance(a.getInteriorRingN(c),u,l)}else if(arguments[2]instanceof _i&&arguments[0]instanceof ct&&arguments[1]instanceof C){var h=arguments[0],p=arguments[1],f=arguments[2];if(h instanceof Kt)mi.computeDistance(h,p,f);else if(h instanceof $t)mi.computeDistance(h,p,f);else if(h instanceof zt)for(var g=h,d=0;d<g.getNumGeometries();d++){var y=g.getGeometryN(d);mi.computeDistance(y,p,f)}else f.setMinimum(h.getCoordinate(),p)}else if(arguments[2]instanceof _i&&arguments[0]instanceof dn&&arguments[1]instanceof C){var _=arguments[0],m=arguments[1],v=arguments[2],x=_.closestPoint(m);v.setMinimum(x,m)}};var vi=function(t){this._maxPtDist=new _i,this._inputGeom=t||null},xi={MaxPointDistanceFilter:{configurable:!0},MaxMidpointDistanceFilter:{configurable:!0}};vi.prototype.computeMaxMidpointDistance=function(t){var e=new Ii(this._inputGeom);t.apply(e),this._maxPtDist.setMaximum(e.getMaxPointDistance())},vi.prototype.computeMaxVertexDistance=function(t){var e=new Ei(this._inputGeom);t.apply(e),this._maxPtDist.setMaximum(e.getMaxPointDistance())},vi.prototype.findDistance=function(t){return this.computeMaxVertexDistance(t),this.computeMaxMidpointDistance(t),this._maxPtDist.getDistance()},vi.prototype.getDistancePoints=function(){return this._maxPtDist},vi.prototype.interfaces_=function(){return[]},vi.prototype.getClass=function(){return vi},xi.MaxPointDistanceFilter.get=function(){return Ei},xi.MaxMidpointDistanceFilter.get=function(){return Ii},Object.defineProperties(vi,xi);var Ei=function(t){this._maxPtDist=new _i,this._minPtDist=new _i,this._geom=t||null};Ei.prototype.filter=function(t){this._minPtDist.initialize(),mi.computeDistance(this._geom,t,this._minPtDist),this._maxPtDist.setMaximum(this._minPtDist)},Ei.prototype.getMaxPointDistance=function(){return this._maxPtDist},Ei.prototype.interfaces_=function(){return[ft]},Ei.prototype.getClass=function(){return Ei};var Ii=function(t){this._maxPtDist=new _i,this._minPtDist=new _i,this._geom=t||null};Ii.prototype.filter=function(t,e){if(0===e)return null;var n=t.getCoordinate(e-1),i=t.getCoordinate(e),r=new C((n.x+i.x)/2,(n.y+i.y)/2);this._minPtDist.initialize(),mi.computeDistance(this._geom,r,this._minPtDist),this._maxPtDist.setMaximum(this._minPtDist)},Ii.prototype.isDone=function(){return!1},Ii.prototype.isGeometryChanged=function(){return!1},Ii.prototype.getMaxPointDistance=function(){return this._maxPtDist},Ii.prototype.interfaces_=function(){return[qt]},Ii.prototype.getClass=function(){return Ii};var Ni=function(t){this._comps=t||null};Ni.prototype.filter=function(t){t instanceof $t&&this._comps.add(t)},Ni.prototype.interfaces_=function(){return[Vt]},Ni.prototype.getClass=function(){return Ni},Ni.getPolygons=function(){if(1===arguments.length){var t=arguments[0];return Ni.getPolygons(t,new Nt)}if(2===arguments.length){var e=arguments[0],n=arguments[1];return e instanceof $t?n.add(e):e instanceof zt&&e.apply(new Ni(n)),n}};var Ci=function(){if(this._lines=null,this._isForcedToLineString=!1,1===arguments.length){var t=arguments[0];this._lines=t}else if(2===arguments.length){var e=arguments[0],n=arguments[1];this._lines=e,this._isForcedToLineString=n}};Ci.prototype.filter=function(t){if(this._isForcedToLineString&&t instanceof ee){var e=t.getFactory().createLineString(t.getCoordinateSequence());return this._lines.add(e),null}t instanceof Kt&&this._lines.add(t)},Ci.prototype.setForceToLineString=function(t){this._isForcedToLineString=t},Ci.prototype.interfaces_=function(){return[lt]},Ci.prototype.getClass=function(){return Ci},Ci.getGeometry=function(){if(1===arguments.length){var t=arguments[0];return t.getFactory().buildGeometry(Ci.getLines(t))}if(2===arguments.length){var e=arguments[0],n=arguments[1];return e.getFactory().buildGeometry(Ci.getLines(e,n))}},Ci.getLines=function(){if(1===arguments.length){var t=arguments[0];return Ci.getLines(t,!1)}if(2===arguments.length){if(R(arguments[0],xt)&&R(arguments[1],xt)){for(var e=arguments[0],n=arguments[1],i=e.iterator();i.hasNext();){var r=i.next();Ci.getLines(r,n)}return n}if(arguments[0]instanceof ct&&"boolean"==typeof arguments[1]){var o=arguments[0],s=arguments[1],a=new Nt;return o.apply(new Ci(a,s)),a}if(arguments[0]instanceof ct&&R(arguments[1],xt)){var u=arguments[0],l=arguments[1];return u instanceof Kt?l.add(u):u.apply(new Ci(l)),l}}else if(3===arguments.length){if("boolean"==typeof arguments[2]&&R(arguments[0],xt)&&R(arguments[1],xt)){for(var c=arguments[0],h=arguments[1],p=arguments[2],f=c.iterator();f.hasNext();){var g=f.next();Ci.getLines(g,h,p)}return h}if("boolean"==typeof arguments[2]&&arguments[0]instanceof ct&&R(arguments[1],xt)){var d=arguments[0],y=arguments[1],_=arguments[2];return d.apply(new Ci(y,_)),y}}};var bi=function(){if(this._boundaryRule=gt.OGC_SFS_BOUNDARY_RULE,this._isIn=null,this._numBoundaries=null,0===arguments.length);else if(1===arguments.length){var t=arguments[0];if(null===t)throw new m("Rule must be non-null");this._boundaryRule=t}};bi.prototype.locateInternal=function(){if(arguments[0]instanceof C&&arguments[1]instanceof $t){var t=arguments[0],e=arguments[1];if(e.isEmpty())return L.EXTERIOR;var n=e.getExteriorRing(),i=this.locateInPolygonRing(t,n);if(i===L.EXTERIOR)return L.EXTERIOR;if(i===L.BOUNDARY)return L.BOUNDARY;for(var r=0;r<e.getNumInteriorRing();r++){var o=e.getInteriorRingN(r),s=this.locateInPolygonRing(t,o);if(s===L.INTERIOR)return L.EXTERIOR;if(s===L.BOUNDARY)return L.BOUNDARY}return L.INTERIOR}if(arguments[0]instanceof C&&arguments[1]instanceof Kt){var a=arguments[0],u=arguments[1];if(!u.getEnvelopeInternal().intersects(a))return L.EXTERIOR;var l=u.getCoordinates();return u.isClosed()||!a.equals(l[0])&&!a.equals(l[l.length-1])?at.isOnLine(a,l)?L.INTERIOR:L.EXTERIOR:L.BOUNDARY}if(arguments[0]instanceof C&&arguments[1]instanceof Qt){var c=arguments[0];return arguments[1].getCoordinate().equals2D(c)?L.INTERIOR:L.EXTERIOR}},bi.prototype.locateInPolygonRing=function(t,e){return e.getEnvelopeInternal().intersects(t)?at.locatePointInRing(t,e.getCoordinates()):L.EXTERIOR},bi.prototype.intersects=function(t,e){return this.locate(t,e)!==L.EXTERIOR},bi.prototype.updateLocationInfo=function(t){t===L.INTERIOR&&(this._isIn=!0),t===L.BOUNDARY&&this._numBoundaries++},bi.prototype.computeLocation=function(t,e){if(e instanceof Qt&&this.updateLocationInfo(this.locateInternal(t,e)),e instanceof Kt)this.updateLocationInfo(this.locateInternal(t,e));else if(e instanceof $t)this.updateLocationInfo(this.locateInternal(t,e));else if(e instanceof Xt)for(var n=e,i=0;i<n.getNumGeometries();i++){var r=n.getGeometryN(i);this.updateLocationInfo(this.locateInternal(t,r))}else if(e instanceof ne)for(var o=e,s=0;s<o.getNumGeometries();s++){var a=o.getGeometryN(s);this.updateLocationInfo(this.locateInternal(t,a))}else if(e instanceof zt)for(var u=new qn(e);u.hasNext();){var l=u.next();l!==e&&this.computeLocation(t,l)}},bi.prototype.locate=function(t,e){return e.isEmpty()?L.EXTERIOR:e instanceof Kt||e instanceof $t?this.locateInternal(t,e):(this._isIn=!1,this._numBoundaries=0,this.computeLocation(t,e),this._boundaryRule.isInBoundary(this._numBoundaries)?L.BOUNDARY:this._numBoundaries>0||this._isIn?L.INTERIOR:L.EXTERIOR)},bi.prototype.interfaces_=function(){return[]},bi.prototype.getClass=function(){return bi};var Si=function t(){if(this._component=null,this._segIndex=null,this._pt=null,2===arguments.length){var e=arguments[0],n=arguments[1];t.call(this,e,t.INSIDE_AREA,n)}else if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2];this._component=i,this._segIndex=r,this._pt=o}},wi={INSIDE_AREA:{configurable:!0}};Si.prototype.isInsideArea=function(){return this._segIndex===Si.INSIDE_AREA},Si.prototype.getCoordinate=function(){return this._pt},Si.prototype.getGeometryComponent=function(){return this._component},Si.prototype.getSegmentIndex=function(){return this._segIndex},Si.prototype.interfaces_=function(){return[]},Si.prototype.getClass=function(){return Si},wi.INSIDE_AREA.get=function(){return-1},Object.defineProperties(Si,wi);var Li=function(t){this._pts=t||null};Li.prototype.filter=function(t){t instanceof Qt&&this._pts.add(t)},Li.prototype.interfaces_=function(){return[Vt]},Li.prototype.getClass=function(){return Li},Li.getPoints=function(){if(1===arguments.length){var t=arguments[0];return t instanceof Qt?$e.singletonList(t):Li.getPoints(t,new Nt)}if(2===arguments.length){var e=arguments[0],n=arguments[1];return e instanceof Qt?n.add(e):e instanceof zt&&e.apply(new Li(n)),n}};var Oi=function(){this._locations=null;var t=arguments[0];this._locations=t};Oi.prototype.filter=function(t){(t instanceof Qt||t instanceof Kt||t instanceof $t)&&this._locations.add(new Si(t,0,t.getCoordinate()))},Oi.prototype.interfaces_=function(){return[Vt]},Oi.prototype.getClass=function(){return Oi},Oi.getLocations=function(t){var e=new Nt;return t.apply(new Oi(e)),e};var Ri=function(){if(this._geom=null,this._terminateDistance=0,this._ptLocator=new bi,this._minDistanceLocation=null,this._minDistance=v.MAX_VALUE,2===arguments.length){var t=arguments[0],e=arguments[1];this._geom=[t,e],this._terminateDistance=0}else if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2];this._geom=new Array(2).fill(null),this._geom[0]=n,this._geom[1]=i,this._terminateDistance=r}};Ri.prototype.computeContainmentDistance=function(){if(0===arguments.length){var t=new Array(2).fill(null);if(this.computeContainmentDistance(0,t),this._minDistance<=this._terminateDistance)return null;this.computeContainmentDistance(1,t)}else if(2===arguments.length){var e=arguments[0],n=arguments[1],i=1-e,r=Ni.getPolygons(this._geom[e]);if(r.size()>0){var o=Oi.getLocations(this._geom[i]);if(this.computeContainmentDistance(o,r,n),this._minDistance<=this._terminateDistance)return this._minDistanceLocation[i]=n[0],this._minDistanceLocation[e]=n[1],null}}else if(3===arguments.length)if(arguments[2]instanceof Array&&R(arguments[0],It)&&R(arguments[1],It)){for(var s=arguments[0],a=arguments[1],u=arguments[2],l=0;l<s.size();l++)for(var c=s.get(l),h=0;h<a.size();h++)if(this.computeContainmentDistance(c,a.get(h),u),this._minDistance<=this._terminateDistance)return null}else if(arguments[2]instanceof Array&&arguments[0]instanceof Si&&arguments[1]instanceof $t){var p=arguments[0],f=arguments[1],g=arguments[2],d=p.getCoordinate();if(L.EXTERIOR!==this._ptLocator.locate(d,f))return this._minDistance=0,g[0]=p,g[1]=new Si(f,d),null}},Ri.prototype.computeMinDistanceLinesPoints=function(t,e,n){for(var i=0;i<t.size();i++)for(var r=t.get(i),o=0;o<e.size();o++){var s=e.get(o);if(this.computeMinDistance(r,s,n),this._minDistance<=this._terminateDistance)return null}},Ri.prototype.computeFacetDistance=function(){var t=new Array(2).fill(null),e=Ci.getLines(this._geom[0]),n=Ci.getLines(this._geom[1]),i=Li.getPoints(this._geom[0]),r=Li.getPoints(this._geom[1]);return this.computeMinDistanceLines(e,n,t),this.updateMinDistance(t,!1),this._minDistance<=this._terminateDistance?null:(t[0]=null,t[1]=null,this.computeMinDistanceLinesPoints(e,r,t),this.updateMinDistance(t,!1),this._minDistance<=this._terminateDistance?null:(t[0]=null,t[1]=null,this.computeMinDistanceLinesPoints(n,i,t),this.updateMinDistance(t,!0),this._minDistance<=this._terminateDistance?null:(t[0]=null,t[1]=null,this.computeMinDistancePoints(i,r,t),void this.updateMinDistance(t,!1))))},Ri.prototype.nearestLocations=function(){return this.computeMinDistance(),this._minDistanceLocation},Ri.prototype.updateMinDistance=function(t,e){if(null===t[0])return null;e?(this._minDistanceLocation[0]=t[1],this._minDistanceLocation[1]=t[0]):(this._minDistanceLocation[0]=t[0],this._minDistanceLocation[1]=t[1])},Ri.prototype.nearestPoints=function(){return this.computeMinDistance(),[this._minDistanceLocation[0].getCoordinate(),this._minDistanceLocation[1].getCoordinate()]},Ri.prototype.computeMinDistance=function(){if(0===arguments.length){if(null!==this._minDistanceLocation)return null;if(this._minDistanceLocation=new Array(2).fill(null),this.computeContainmentDistance(),this._minDistance<=this._terminateDistance)return null;this.computeFacetDistance()}else if(3===arguments.length)if(arguments[2]instanceof Array&&arguments[0]instanceof Kt&&arguments[1]instanceof Qt){var t=arguments[0],e=arguments[1],n=arguments[2];if(t.getEnvelopeInternal().distance(e.getEnvelopeInternal())>this._minDistance)return null;for(var i=t.getCoordinates(),r=e.getCoordinate(),o=0;o<i.length-1;o++){var s=at.distancePointLine(r,i[o],i[o+1]);if(s<this._minDistance){this._minDistance=s;var a=new dn(i[o],i[o+1]).closestPoint(r);n[0]=new Si(t,o,a),n[1]=new Si(e,0,r)}if(this._minDistance<=this._terminateDistance)return null}}else if(arguments[2]instanceof Array&&arguments[0]instanceof Kt&&arguments[1]instanceof Kt){var u=arguments[0],l=arguments[1],c=arguments[2];if(u.getEnvelopeInternal().distance(l.getEnvelopeInternal())>this._minDistance)return null;for(var h=u.getCoordinates(),p=l.getCoordinates(),f=0;f<h.length-1;f++)for(var g=0;g<p.length-1;g++){var d=at.distanceLineLine(h[f],h[f+1],p[g],p[g+1]);if(d<this._minDistance){this._minDistance=d;var y=new dn(h[f],h[f+1]),_=new dn(p[g],p[g+1]),m=y.closestPoints(_);c[0]=new Si(u,f,m[0]),c[1]=new Si(l,g,m[1])}if(this._minDistance<=this._terminateDistance)return null}}},Ri.prototype.computeMinDistancePoints=function(t,e,n){for(var i=0;i<t.size();i++)for(var r=t.get(i),o=0;o<e.size();o++){var s=e.get(o),a=r.getCoordinate().distance(s.getCoordinate());if(a<this._minDistance&&(this._minDistance=a,n[0]=new Si(r,0,r.getCoordinate()),n[1]=new Si(s,0,s.getCoordinate())),this._minDistance<=this._terminateDistance)return null}},Ri.prototype.distance=function(){if(null===this._geom[0]||null===this._geom[1])throw new m("null geometries are not supported");return this._geom[0].isEmpty()||this._geom[1].isEmpty()?0:(this.computeMinDistance(),this._minDistance)},Ri.prototype.computeMinDistanceLines=function(t,e,n){for(var i=0;i<t.size();i++)for(var r=t.get(i),o=0;o<e.size();o++){var s=e.get(o);if(this.computeMinDistance(r,s,n),this._minDistance<=this._terminateDistance)return null}},Ri.prototype.interfaces_=function(){return[]},Ri.prototype.getClass=function(){return Ri},Ri.distance=function(t,e){return new Ri(t,e).distance()},Ri.isWithinDistance=function(t,e,n){return new Ri(t,e,n).distance()<=n},Ri.nearestPoints=function(t,e){return new Ri(t,e).nearestPoints()};var Ti=function(){this._pt=[new C,new C],this._distance=v.NaN,this._isNull=!0};Ti.prototype.getCoordinates=function(){return this._pt},Ti.prototype.getCoordinate=function(t){return this._pt[t]},Ti.prototype.setMinimum=function(){if(1===arguments.length){var t=arguments[0];this.setMinimum(t._pt[0],t._pt[1])}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(this._isNull)return this.initialize(e,n),null;var i=e.distance(n);i<this._distance&&this.initialize(e,n,i)}},Ti.prototype.initialize=function(){if(0===arguments.length)this._isNull=!0;else if(2===arguments.length){var t=arguments[0],e=arguments[1];this._pt[0].setCoordinate(t),this._pt[1].setCoordinate(e),this._distance=t.distance(e),this._isNull=!1}else if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2];this._pt[0].setCoordinate(n),this._pt[1].setCoordinate(i),this._distance=r,this._isNull=!1}},Ti.prototype.toString=function(){return Z.toLineString(this._pt[0],this._pt[1])},Ti.prototype.getDistance=function(){return this._distance},Ti.prototype.setMaximum=function(){if(1===arguments.length){var t=arguments[0];this.setMaximum(t._pt[0],t._pt[1])}else if(2===arguments.length){var e=arguments[0],n=arguments[1];if(this._isNull)return this.initialize(e,n),null;var i=e.distance(n);i>this._distance&&this.initialize(e,n,i)}},Ti.prototype.interfaces_=function(){return[]},Ti.prototype.getClass=function(){return Ti};var Pi=function(){};Pi.prototype.interfaces_=function(){return[]},Pi.prototype.getClass=function(){return Pi},Pi.computeDistance=function(){if(arguments[2]instanceof Ti&&arguments[0]instanceof Kt&&arguments[1]instanceof C)for(var t=arguments[0],e=arguments[1],n=arguments[2],i=new dn,r=t.getCoordinates(),o=0;o<r.length-1;o++){i.setCoordinates(r[o],r[o+1]);var s=i.closestPoint(e);n.setMinimum(s,e)}else if(arguments[2]instanceof Ti&&arguments[0]instanceof $t&&arguments[1]instanceof C){var a=arguments[0],u=arguments[1],l=arguments[2];Pi.computeDistance(a.getExteriorRing(),u,l);for(var c=0;c<a.getNumInteriorRing();c++)Pi.computeDistance(a.getInteriorRingN(c),u,l)}else if(arguments[2]instanceof Ti&&arguments[0]instanceof ct&&arguments[1]instanceof C){var h=arguments[0],p=arguments[1],f=arguments[2];if(h instanceof Kt)Pi.computeDistance(h,p,f);else if(h instanceof $t)Pi.computeDistance(h,p,f);else if(h instanceof zt)for(var g=h,d=0;d<g.getNumGeometries();d++){var y=g.getGeometryN(d);Pi.computeDistance(y,p,f)}else f.setMinimum(h.getCoordinate(),p)}else if(arguments[2]instanceof Ti&&arguments[0]instanceof dn&&arguments[1]instanceof C){var _=arguments[0],m=arguments[1],v=arguments[2],x=_.closestPoint(m);v.setMinimum(x,m)}};var Mi=function(){this._g0=null,this._g1=null,this._ptDist=new Ti,this._densifyFrac=0;var t=arguments[0],e=arguments[1];this._g0=t,this._g1=e},Di={MaxPointDistanceFilter:{configurable:!0},MaxDensifiedByFractionDistanceFilter:{configurable:!0}};Mi.prototype.getCoordinates=function(){return this._ptDist.getCoordinates()},Mi.prototype.setDensifyFraction=function(t){if(t>1||t<=0)throw new m("Fraction is not in range (0.0 - 1.0]");this._densifyFrac=t},Mi.prototype.compute=function(t,e){this.computeOrientedDistance(t,e,this._ptDist),this.computeOrientedDistance(e,t,this._ptDist)},Mi.prototype.distance=function(){return this.compute(this._g0,this._g1),this._ptDist.getDistance()},Mi.prototype.computeOrientedDistance=function(t,e,n){var i=new Ai(e);if(t.apply(i),n.setMaximum(i.getMaxPointDistance()),this._densifyFrac>0){var r=new Fi(e,this._densifyFrac);t.apply(r),n.setMaximum(r.getMaxPointDistance())}},Mi.prototype.orientedDistance=function(){return this.computeOrientedDistance(this._g0,this._g1,this._ptDist),this._ptDist.getDistance()},Mi.prototype.interfaces_=function(){return[]},Mi.prototype.getClass=function(){return Mi},Mi.distance=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];return new Mi(t,e).distance()}if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2],o=new Mi(n,i);return o.setDensifyFraction(r),o.distance()}},Di.MaxPointDistanceFilter.get=function(){return Ai},Di.MaxDensifiedByFractionDistanceFilter.get=function(){return Fi},Object.defineProperties(Mi,Di);var Ai=function(){this._maxPtDist=new Ti,this._minPtDist=new Ti,this._euclideanDist=new Pi,this._geom=null;var t=arguments[0];this._geom=t};Ai.prototype.filter=function(t){this._minPtDist.initialize(),Pi.computeDistance(this._geom,t,this._minPtDist),this._maxPtDist.setMaximum(this._minPtDist)},Ai.prototype.getMaxPointDistance=function(){return this._maxPtDist},Ai.prototype.interfaces_=function(){return[ft]},Ai.prototype.getClass=function(){return Ai};var Fi=function(){this._maxPtDist=new Ti,this._minPtDist=new Ti,this._geom=null,this._numSubSegs=0;var t=arguments[0],e=arguments[1];this._geom=t,this._numSubSegs=Math.trunc(Math.round(1/e))};Fi.prototype.filter=function(t,e){if(0===e)return null;for(var n=t.getCoordinate(e-1),i=t.getCoordinate(e),r=(i.x-n.x)/this._numSubSegs,o=(i.y-n.y)/this._numSubSegs,s=0;s<this._numSubSegs;s++){var a=n.x+s*r,u=n.y+s*o,l=new C(a,u);this._minPtDist.initialize(),Pi.computeDistance(this._geom,l,this._minPtDist),this._maxPtDist.setMaximum(this._minPtDist)}},Fi.prototype.isDone=function(){return!1},Fi.prototype.isGeometryChanged=function(){return!1},Fi.prototype.getMaxPointDistance=function(){return this._maxPtDist},Fi.prototype.interfaces_=function(){return[qt]},Fi.prototype.getClass=function(){return Fi};var Gi=function(t,e,n){this._minValidDistance=null,this._maxValidDistance=null,this._minDistanceFound=null,this._maxDistanceFound=null,this._isValid=!0,this._errMsg=null,this._errorLocation=null,this._errorIndicator=null,this._input=t||null,this._bufDistance=e||null,this._result=n||null},Bi={VERBOSE:{configurable:!0},MAX_DISTANCE_DIFF_FRAC:{configurable:!0}};Gi.prototype.checkMaximumDistance=function(t,e,n){var i=new Mi(e,t);if(i.setDensifyFraction(.25),this._maxDistanceFound=i.orientedDistance(),this._maxDistanceFound>n){this._isValid=!1;var r=i.getCoordinates();this._errorLocation=r[1],this._errorIndicator=t.getFactory().createLineString(r),this._errMsg="Distance between buffer curve and input is too large ("+this._maxDistanceFound+" at "+Z.toLineString(r[0],r[1])+")"}},Gi.prototype.isValid=function(){var t=Math.abs(this._bufDistance),e=Gi.MAX_DISTANCE_DIFF_FRAC*t;return this._minValidDistance=t-e,this._maxValidDistance=t+e,!(!this._input.isEmpty()&&!this._result.isEmpty())||(this._bufDistance>0?this.checkPositiveValid():this.checkNegativeValid(),Gi.VERBOSE&&Y.out.println("Min Dist= "+this._minDistanceFound+"  err= "+(1-this._minDistanceFound/this._bufDistance)+"  Max Dist= "+this._maxDistanceFound+"  err= "+(this._maxDistanceFound/this._bufDistance-1)),this._isValid)},Gi.prototype.checkNegativeValid=function(){if(!(this._input instanceof $t||this._input instanceof ne||this._input instanceof zt))return null;var t=this.getPolygonLines(this._input);if(this.checkMinimumDistance(t,this._result,this._minValidDistance),!this._isValid)return null;this.checkMaximumDistance(t,this._result,this._maxValidDistance)},Gi.prototype.getErrorIndicator=function(){return this._errorIndicator},Gi.prototype.checkMinimumDistance=function(t,e,n){var i=new Ri(t,e,n);if(this._minDistanceFound=i.distance(),this._minDistanceFound<n){this._isValid=!1;var r=i.nearestPoints();this._errorLocation=i.nearestPoints()[1],this._errorIndicator=t.getFactory().createLineString(r),this._errMsg="Distance between buffer curve and input is too small ("+this._minDistanceFound+" at "+Z.toLineString(r[0],r[1])+" )"}},Gi.prototype.checkPositiveValid=function(){var t=this._result.getBoundary();if(this.checkMinimumDistance(this._input,t,this._minValidDistance),!this._isValid)return null;this.checkMaximumDistance(this._input,t,this._maxValidDistance)},Gi.prototype.getErrorLocation=function(){return this._errorLocation},Gi.prototype.getPolygonLines=function(t){for(var e=new Nt,n=new Ci(e),i=Ni.getPolygons(t).iterator();i.hasNext();)i.next().apply(n);return t.getFactory().buildGeometry(e)},Gi.prototype.getErrorMessage=function(){return this._errMsg},Gi.prototype.interfaces_=function(){return[]},Gi.prototype.getClass=function(){return Gi},Bi.VERBOSE.get=function(){return!1},Bi.MAX_DISTANCE_DIFF_FRAC.get=function(){return.012},Object.defineProperties(Gi,Bi);var Ui=function(t,e,n){this._isValid=!0,this._errorMsg=null,this._errorLocation=null,this._errorIndicator=null,this._input=t||null,this._distance=e||null,this._result=n||null},Vi={VERBOSE:{configurable:!0},MAX_ENV_DIFF_FRAC:{configurable:!0}};Ui.prototype.isValid=function(){return this.checkPolygonal(),this._isValid?(this.checkExpectedEmpty(),this._isValid?(this.checkEnvelope(),this._isValid?(this.checkArea(),this._isValid?(this.checkDistance(),this._isValid):this._isValid):this._isValid):this._isValid):this._isValid},Ui.prototype.checkEnvelope=function(){if(this._distance<0)return null;var t=this._distance*Ui.MAX_ENV_DIFF_FRAC;0===t&&(t=.001);var e=new j(this._input.getEnvelopeInternal());e.expandBy(this._distance);var n=new j(this._result.getEnvelopeInternal());n.expandBy(t),n.contains(e)||(this._isValid=!1,this._errorMsg="Buffer envelope is incorrect",this._errorIndicator=this._input.getFactory().toGeometry(n)),this.report("Envelope")},Ui.prototype.checkDistance=function(){var t=new Gi(this._input,this._distance,this._result);t.isValid()||(this._isValid=!1,this._errorMsg=t.getErrorMessage(),this._errorLocation=t.getErrorLocation(),this._errorIndicator=t.getErrorIndicator()),this.report("Distance")},Ui.prototype.checkArea=function(){var t=this._input.getArea(),e=this._result.getArea();this._distance>0&&t>e&&(this._isValid=!1,this._errorMsg="Area of positive buffer is smaller than input",this._errorIndicator=this._result),this._distance<0&&t<e&&(this._isValid=!1,this._errorMsg="Area of negative buffer is larger than input",this._errorIndicator=this._result),this.report("Area")},Ui.prototype.checkPolygonal=function(){this._result instanceof $t||this._result instanceof ne||(this._isValid=!1),this._errorMsg="Result is not polygonal",this._errorIndicator=this._result,this.report("Polygonal")},Ui.prototype.getErrorIndicator=function(){return this._errorIndicator},Ui.prototype.getErrorLocation=function(){return this._errorLocation},Ui.prototype.checkExpectedEmpty=function(){return this._input.getDimension()>=2||this._distance>0?null:(this._result.isEmpty()||(this._isValid=!1,this._errorMsg="Result is non-empty",this._errorIndicator=this._result),void this.report("ExpectedEmpty"))},Ui.prototype.report=function(t){if(!Ui.VERBOSE)return null;Y.out.println("Check "+t+": "+(this._isValid?"passed":"FAILED"))},Ui.prototype.getErrorMessage=function(){return this._errorMsg},Ui.prototype.interfaces_=function(){return[]},Ui.prototype.getClass=function(){return Ui},Ui.isValidMsg=function(t,e,n){var i=new Ui(t,e,n);return i.isValid()?null:i.getErrorMessage()},Ui.isValid=function(t,e,n){return!!new Ui(t,e,n).isValid()},Vi.VERBOSE.get=function(){return!1},Vi.MAX_ENV_DIFF_FRAC.get=function(){return.012},Object.defineProperties(Ui,Vi);var qi=function(){this._pts=null,this._data=null;var t=arguments[0],e=arguments[1];this._pts=t,this._data=e};qi.prototype.getCoordinates=function(){return this._pts},qi.prototype.size=function(){return this._pts.length},qi.prototype.getCoordinate=function(t){return this._pts[t]},qi.prototype.isClosed=function(){return this._pts[0].equals(this._pts[this._pts.length-1])},qi.prototype.getSegmentOctant=function(t){return t===this._pts.length-1?-1:hn.octant(this.getCoordinate(t),this.getCoordinate(t+1))},qi.prototype.setData=function(t){this._data=t},qi.prototype.getData=function(){return this._data},qi.prototype.toString=function(){return Z.toLineString(new ue(this._pts))},qi.prototype.interfaces_=function(){return[pn]},qi.prototype.getClass=function(){return qi};var zi=function(){this._findAllIntersections=!1,this._isCheckEndSegmentsOnly=!1,this._li=null,this._interiorIntersection=null,this._intSegments=null,this._intersections=new Nt,this._intersectionCount=0,this._keepIntersections=!0;var t=arguments[0];this._li=t,this._interiorIntersection=null};zi.prototype.getInteriorIntersection=function(){return this._interiorIntersection},zi.prototype.setCheckEndSegmentsOnly=function(t){this._isCheckEndSegmentsOnly=t},zi.prototype.getIntersectionSegments=function(){return this._intSegments},zi.prototype.count=function(){return this._intersectionCount},zi.prototype.getIntersections=function(){return this._intersections},zi.prototype.setFindAllIntersections=function(t){this._findAllIntersections=t},zi.prototype.setKeepIntersections=function(t){this._keepIntersections=t},zi.prototype.processIntersections=function(t,e,n,i){if(!this._findAllIntersections&&this.hasIntersection())return null;if(t===n&&e===i)return null;if(this._isCheckEndSegmentsOnly&&!this.isEndSegment(t,e)&&!this.isEndSegment(n,i))return null;var r=t.getCoordinates()[e],o=t.getCoordinates()[e+1],s=n.getCoordinates()[i],a=n.getCoordinates()[i+1];this._li.computeIntersection(r,o,s,a),this._li.hasIntersection()&&this._li.isInteriorIntersection()&&(this._intSegments=new Array(4).fill(null),this._intSegments[0]=r,this._intSegments[1]=o,this._intSegments[2]=s,this._intSegments[3]=a,this._interiorIntersection=this._li.getIntersection(0),this._keepIntersections&&this._intersections.add(this._interiorIntersection),this._intersectionCount++)},zi.prototype.isEndSegment=function(t,e){return 0===e||e>=t.size()-2},zi.prototype.hasIntersection=function(){return null!==this._interiorIntersection},zi.prototype.isDone=function(){return!this._findAllIntersections&&null!==this._interiorIntersection},zi.prototype.interfaces_=function(){return[Wn]},zi.prototype.getClass=function(){return zi},zi.createAllIntersectionsFinder=function(t){var e=new zi(t);return e.setFindAllIntersections(!0),e},zi.createAnyIntersectionFinder=function(t){return new zi(t)},zi.createIntersectionCounter=function(t){var e=new zi(t);return e.setFindAllIntersections(!0),e.setKeepIntersections(!1),e};var Xi=function(){this._li=new rt,this._segStrings=null,this._findAllIntersections=!1,this._segInt=null,this._isValid=!0;var t=arguments[0];this._segStrings=t};Xi.prototype.execute=function(){if(null!==this._segInt)return null;this.checkInteriorIntersections()},Xi.prototype.getIntersections=function(){return this._segInt.getIntersections()},Xi.prototype.isValid=function(){return this.execute(),this._isValid},Xi.prototype.setFindAllIntersections=function(t){this._findAllIntersections=t},Xi.prototype.checkInteriorIntersections=function(){this._isValid=!0,this._segInt=new zi(this._li),this._segInt.setFindAllIntersections(this._findAllIntersections);var t=new In;if(t.setSegmentIntersector(this._segInt),t.computeNodes(this._segStrings),this._segInt.hasIntersection())return this._isValid=!1,null},Xi.prototype.checkValid=function(){if(this.execute(),!this._isValid)throw new Le(this.getErrorMessage(),this._segInt.getInteriorIntersection())},Xi.prototype.getErrorMessage=function(){if(this._isValid)return"no intersections found";var t=this._segInt.getIntersectionSegments();return"found non-noded intersection between "+Z.toLineString(t[0],t[1])+" and "+Z.toLineString(t[2],t[3])},Xi.prototype.interfaces_=function(){return[]},Xi.prototype.getClass=function(){return Xi},Xi.computeIntersections=function(t){var e=new Xi(t);return e.setFindAllIntersections(!0),e.isValid(),e.getIntersections()};var Yi=function t(){this._nv=null;var e=arguments[0];this._nv=new Xi(t.toSegmentStrings(e))};Yi.prototype.checkValid=function(){this._nv.checkValid()},Yi.prototype.interfaces_=function(){return[]},Yi.prototype.getClass=function(){return Yi},Yi.toSegmentStrings=function(t){for(var e=new Nt,n=t.iterator();n.hasNext();){var i=n.next();e.add(new qi(i.getCoordinates(),i))}return e},Yi.checkValid=function(t){new Yi(t).checkValid()};var ki=function(t){this._mapOp=t};ki.prototype.map=function(t){for(var e=new Nt,n=0;n<t.getNumGeometries();n++){var i=this._mapOp.map(t.getGeometryN(n));i.isEmpty()||e.add(i)}return t.getFactory().createGeometryCollection(_e.toGeometryArray(e))},ki.prototype.interfaces_=function(){return[]},ki.prototype.getClass=function(){return ki},ki.map=function(t,e){return new ki(e).map(t)};var ji=function(){this._op=null,this._geometryFactory=null,this._ptLocator=null,this._lineEdgesList=new Nt,this._resultLineList=new Nt;var t=arguments[0],e=arguments[1],n=arguments[2];this._op=t,this._geometryFactory=e,this._ptLocator=n};ji.prototype.collectLines=function(t){for(var e=this._op.getGraph().getEdgeEnds().iterator();e.hasNext();){var n=e.next();this.collectLineEdge(n,t,this._lineEdgesList),this.collectBoundaryTouchEdge(n,t,this._lineEdgesList)}},ji.prototype.labelIsolatedLine=function(t,e){var n=this._ptLocator.locate(t.getCoordinate(),this._op.getArgGeometry(e));t.getLabel().setLocation(e,n)},ji.prototype.build=function(t){return this.findCoveredLineEdges(),this.collectLines(t),this.buildLines(t),this._resultLineList},ji.prototype.collectLineEdge=function(t,e,n){var i=t.getLabel(),r=t.getEdge();t.isLineEdge()&&(t.isVisited()||!Sr.isResultOfOp(i,e)||r.isCovered()||(n.add(r),t.setVisitedEdge(!0)))},ji.prototype.findCoveredLineEdges=function(){for(var t=this._op.getGraph().getNodes().iterator();t.hasNext();)t.next().getEdges().findCoveredLineEdges();for(var e=this._op.getGraph().getEdgeEnds().iterator();e.hasNext();){var n=e.next(),i=n.getEdge();if(n.isLineEdge()&&!i.isCoveredSet()){var r=this._op.isCoveredByA(n.getCoordinate());i.setCovered(r)}}},ji.prototype.labelIsolatedLines=function(t){for(var e=t.iterator();e.hasNext();){var n=e.next(),i=n.getLabel();n.isIsolated()&&(i.isNull(0)?this.labelIsolatedLine(n,0):this.labelIsolatedLine(n,1))}},ji.prototype.buildLines=function(t){for(var e=this._lineEdgesList.iterator();e.hasNext();){var n=e.next(),i=this._geometryFactory.createLineString(n.getCoordinates());this._resultLineList.add(i),n.setInResult(!0)}},ji.prototype.collectBoundaryTouchEdge=function(t,e,n){var i=t.getLabel();return t.isLineEdge()||t.isVisited()||t.isInteriorAreaEdge()||t.getEdge().isInResult()?null:(et.isTrue(!(t.isInResult()||t.getSym().isInResult())||!t.getEdge().isInResult()),void(Sr.isResultOfOp(i,e)&&e===Sr.INTERSECTION&&(n.add(t.getEdge()),t.setVisitedEdge(!0))))},ji.prototype.interfaces_=function(){return[]},ji.prototype.getClass=function(){return ji};var Hi=function(){this._op=null,this._geometryFactory=null,this._resultPointList=new Nt;var t=arguments[0],e=arguments[1];this._op=t,this._geometryFactory=e};Hi.prototype.filterCoveredNodeToPoint=function(t){var e=t.getCoordinate();if(!this._op.isCoveredByLA(e)){var n=this._geometryFactory.createPoint(e);this._resultPointList.add(n)}},Hi.prototype.extractNonCoveredResultNodes=function(t){for(var e=this._op.getGraph().getNodes().iterator();e.hasNext();){var n=e.next();if(!(n.isInResult()||n.isIncidentEdgeInResult()||0!==n.getEdges().getDegree()&&t!==Sr.INTERSECTION)){var i=n.getLabel();Sr.isResultOfOp(i,t)&&this.filterCoveredNodeToPoint(n)}}},Hi.prototype.build=function(t){return this.extractNonCoveredResultNodes(t),this._resultPointList},Hi.prototype.interfaces_=function(){return[]},Hi.prototype.getClass=function(){return Hi};var Wi=function(){this._inputGeom=null,this._factory=null,this._pruneEmptyGeometry=!0,this._preserveGeometryCollectionType=!0,this._preserveCollections=!1,this._preserveType=!1};Wi.prototype.transformPoint=function(t,e){return this._factory.createPoint(this.transformCoordinates(t.getCoordinateSequence(),t))},Wi.prototype.transformPolygon=function(t,e){var n=!0,i=this.transformLinearRing(t.getExteriorRing(),t);null!==i&&i instanceof ee&&!i.isEmpty()||(n=!1);for(var r=new Nt,o=0;o<t.getNumInteriorRing();o++){var s=this.transformLinearRing(t.getInteriorRingN(o),t);null===s||s.isEmpty()||(s instanceof ee||(n=!1),r.add(s))}if(n)return this._factory.createPolygon(i,r.toArray([]));var a=new Nt;return null!==i&&a.add(i),a.addAll(r),this._factory.buildGeometry(a)},Wi.prototype.createCoordinateSequence=function(t){return this._factory.getCoordinateSequenceFactory().create(t)},Wi.prototype.getInputGeometry=function(){return this._inputGeom},Wi.prototype.transformMultiLineString=function(t,e){for(var n=new Nt,i=0;i<t.getNumGeometries();i++){var r=this.transformLineString(t.getGeometryN(i),t);null!==r&&(r.isEmpty()||n.add(r))}return this._factory.buildGeometry(n)},Wi.prototype.transformCoordinates=function(t,e){return this.copy(t)},Wi.prototype.transformLineString=function(t,e){return this._factory.createLineString(this.transformCoordinates(t.getCoordinateSequence(),t))},Wi.prototype.transformMultiPoint=function(t,e){for(var n=new Nt,i=0;i<t.getNumGeometries();i++){var r=this.transformPoint(t.getGeometryN(i),t);null!==r&&(r.isEmpty()||n.add(r))}return this._factory.buildGeometry(n)},Wi.prototype.transformMultiPolygon=function(t,e){for(var n=new Nt,i=0;i<t.getNumGeometries();i++){var r=this.transformPolygon(t.getGeometryN(i),t);null!==r&&(r.isEmpty()||n.add(r))}return this._factory.buildGeometry(n)},Wi.prototype.copy=function(t){return t.copy()},Wi.prototype.transformGeometryCollection=function(t,e){for(var n=new Nt,i=0;i<t.getNumGeometries();i++){var r=this.transform(t.getGeometryN(i));null!==r&&(this._pruneEmptyGeometry&&r.isEmpty()||n.add(r))}return this._preserveGeometryCollectionType?this._factory.createGeometryCollection(_e.toGeometryArray(n)):this._factory.buildGeometry(n)},Wi.prototype.transform=function(t){if(this._inputGeom=t,this._factory=t.getFactory(),t instanceof Qt)return this.transformPoint(t,null);if(t instanceof te)return this.transformMultiPoint(t,null);if(t instanceof ee)return this.transformLinearRing(t,null);if(t instanceof Kt)return this.transformLineString(t,null);if(t instanceof Xt)return this.transformMultiLineString(t,null);if(t instanceof $t)return this.transformPolygon(t,null);if(t instanceof ne)return this.transformMultiPolygon(t,null);if(t instanceof zt)return this.transformGeometryCollection(t,null);throw new m("Unknown Geometry subtype: "+t.getClass().getName())},Wi.prototype.transformLinearRing=function(t,e){var n=this.transformCoordinates(t.getCoordinateSequence(),t);if(null===n)return this._factory.createLinearRing(null);var i=n.size();return i>0&&i<4&&!this._preserveType?this._factory.createLineString(n):this._factory.createLinearRing(n)},Wi.prototype.interfaces_=function(){return[]},Wi.prototype.getClass=function(){return Wi};var Ki=function t(){if(this._snapTolerance=0,this._srcPts=null,this._seg=new dn,this._allowSnappingToSourceVertices=!1,this._isClosed=!1,arguments[0]instanceof Kt&&"number"==typeof arguments[1]){var e=arguments[0],n=arguments[1];t.call(this,e.getCoordinates(),n)}else if(arguments[0]instanceof Array&&"number"==typeof arguments[1]){var i=arguments[0],r=arguments[1];this._srcPts=i,this._isClosed=t.isClosed(i),this._snapTolerance=r}};Ki.prototype.snapVertices=function(t,e){for(var n=this._isClosed?t.size()-1:t.size(),i=0;i<n;i++){var r=t.get(i),o=this.findSnapForVertex(r,e);null!==o&&(t.set(i,new C(o)),0===i&&this._isClosed&&t.set(t.size()-1,new C(o)))}},Ki.prototype.findSnapForVertex=function(t,e){for(var n=0;n<e.length;n++){if(t.equals2D(e[n]))return null;if(t.distance(e[n])<this._snapTolerance)return e[n]}return null},Ki.prototype.snapTo=function(t){var e=new bt(this._srcPts);return this.snapVertices(e,t),this.snapSegments(e,t),e.toCoordinateArray()},Ki.prototype.snapSegments=function(t,e){if(0===e.length)return null;var n=e.length;e[0].equals2D(e[e.length-1])&&(n=e.length-1);for(var i=0;i<n;i++){var r=e[i],o=this.findSegmentIndexToSnap(r,t);o>=0&&t.add(o+1,new C(r),!1)}},Ki.prototype.findSegmentIndexToSnap=function(t,e){for(var n=v.MAX_VALUE,i=-1,r=0;r<e.size()-1;r++){if(this._seg.p0=e.get(r),this._seg.p1=e.get(r+1),this._seg.p0.equals2D(t)||this._seg.p1.equals2D(t)){if(this._allowSnappingToSourceVertices)continue;return-1}var o=this._seg.distance(t);o<this._snapTolerance&&o<n&&(n=o,i=r)}return i},Ki.prototype.setAllowSnappingToSourceVertices=function(t){this._allowSnappingToSourceVertices=t},Ki.prototype.interfaces_=function(){return[]},Ki.prototype.getClass=function(){return Ki},Ki.isClosed=function(t){return!(t.length<=1)&&t[0].equals2D(t[t.length-1])};var Ji=function(t){this._srcGeom=t||null},Qi={SNAP_PRECISION_FACTOR:{configurable:!0}};Ji.prototype.snapTo=function(t,e){var n=this.extractTargetCoordinates(t);return new Zi(e,n).transform(this._srcGeom)},Ji.prototype.snapToSelf=function(t,e){var n=this.extractTargetCoordinates(this._srcGeom),i=new Zi(t,n,!0).transform(this._srcGeom),r=i;return e&&R(r,Zt)&&(r=i.buffer(0)),r},Ji.prototype.computeSnapTolerance=function(t){return this.computeMinimumSegmentLength(t)/10},Ji.prototype.extractTargetCoordinates=function(t){for(var e=new f,n=t.getCoordinates(),i=0;i<n.length;i++)e.add(n[i]);return e.toArray(new Array(0).fill(null))},Ji.prototype.computeMinimumSegmentLength=function(t){for(var e=v.MAX_VALUE,n=0;n<t.length-1;n++){var i=t[n].distance(t[n+1]);i<e&&(e=i)}return e},Ji.prototype.interfaces_=function(){return[]},Ji.prototype.getClass=function(){return Ji},Ji.snap=function(t,e,n){var i=new Array(2).fill(null),r=new Ji(t);i[0]=r.snapTo(e,n);var o=new Ji(e);return i[1]=o.snapTo(i[0],n),i},Ji.computeOverlaySnapTolerance=function(){if(1===arguments.length){var t=arguments[0],e=Ji.computeSizeBasedSnapTolerance(t),n=t.getPrecisionModel();if(n.getType()===fe.FIXED){var i=1/n.getScale()*2/1.415;i>e&&(e=i)}return e}if(2===arguments.length){var r=arguments[0],o=arguments[1];return Math.min(Ji.computeOverlaySnapTolerance(r),Ji.computeOverlaySnapTolerance(o))}},Ji.computeSizeBasedSnapTolerance=function(t){var e=t.getEnvelopeInternal();return Math.min(e.getHeight(),e.getWidth())*Ji.SNAP_PRECISION_FACTOR},Ji.snapToSelf=function(t,e,n){return new Ji(t).snapToSelf(e,n)},Qi.SNAP_PRECISION_FACTOR.get=function(){return 1e-9},Object.defineProperties(Ji,Qi);var Zi=function(t){function e(e,n,i){t.call(this),this._snapTolerance=e||null,this._snapPts=n||null,this._isSelfSnap=void 0!==i&&i}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.snapLine=function(t,e){var n=new Ki(t,this._snapTolerance);return n.setAllowSnappingToSourceVertices(this._isSelfSnap),n.snapTo(e)},e.prototype.transformCoordinates=function(t,e){var n=t.toCoordinateArray(),i=this.snapLine(n,this._snapPts);return this._factory.getCoordinateSequenceFactory().create(i)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Wi),$i=function(){this._isFirst=!0,this._commonMantissaBitsCount=53,this._commonBits=0,this._commonSignExp=null};$i.prototype.getCommon=function(){return v.longBitsToDouble(this._commonBits)},$i.prototype.add=function(t){var e=v.doubleToLongBits(t);return this._isFirst?(this._commonBits=e,this._commonSignExp=$i.signExpBits(this._commonBits),this._isFirst=!1,null):$i.signExpBits(e)!==this._commonSignExp?(this._commonBits=0,null):(this._commonMantissaBitsCount=$i.numCommonMostSigMantissaBits(this._commonBits,e),void(this._commonBits=$i.zeroLowerBits(this._commonBits,64-(12+this._commonMantissaBitsCount))))},$i.prototype.toString=function(){if(1===arguments.length){var t=arguments[0],e=v.longBitsToDouble(t),n="0000000000000000000000000000000000000000000000000000000000000000"+v.toBinaryString(t),i=n.substring(n.length-64);return i.substring(0,1)+"  "+i.substring(1,12)+"(exp) "+i.substring(12)+" [ "+e+" ]"}},$i.prototype.interfaces_=function(){return[]},$i.prototype.getClass=function(){return $i},$i.getBit=function(t,e){return 0!=(t&1<<e)?1:0},$i.signExpBits=function(t){return t>>52},$i.zeroLowerBits=function(t,e){return t&~((1<<e)-1)},$i.numCommonMostSigMantissaBits=function(t,e){for(var n=0,i=52;i>=0;i--){if($i.getBit(t,i)!==$i.getBit(e,i))return n;n++}return 52};var tr=function(){this._commonCoord=null,this._ccFilter=new nr},er={CommonCoordinateFilter:{configurable:!0},Translater:{configurable:!0}};tr.prototype.addCommonBits=function(t){var e=new ir(this._commonCoord);t.apply(e),t.geometryChanged()},tr.prototype.removeCommonBits=function(t){if(0===this._commonCoord.x&&0===this._commonCoord.y)return t;var e=new C(this._commonCoord);e.x=-e.x,e.y=-e.y;var n=new ir(e);return t.apply(n),t.geometryChanged(),t},tr.prototype.getCommonCoordinate=function(){return this._commonCoord},tr.prototype.add=function(t){t.apply(this._ccFilter),this._commonCoord=this._ccFilter.getCommonCoordinate()},tr.prototype.interfaces_=function(){return[]},tr.prototype.getClass=function(){return tr},er.CommonCoordinateFilter.get=function(){return nr},er.Translater.get=function(){return ir},Object.defineProperties(tr,er);var nr=function(){this._commonBitsX=new $i,this._commonBitsY=new $i};nr.prototype.filter=function(t){this._commonBitsX.add(t.x),this._commonBitsY.add(t.y)},nr.prototype.getCommonCoordinate=function(){return new C(this._commonBitsX.getCommon(),this._commonBitsY.getCommon())},nr.prototype.interfaces_=function(){return[ft]},nr.prototype.getClass=function(){return nr};var ir=function(){this.trans=null;var t=arguments[0];this.trans=t};ir.prototype.filter=function(t,e){var n=t.getOrdinate(e,0)+this.trans.x,i=t.getOrdinate(e,1)+this.trans.y;t.setOrdinate(e,0,n),t.setOrdinate(e,1,i)},ir.prototype.isDone=function(){return!1},ir.prototype.isGeometryChanged=function(){return!0},ir.prototype.interfaces_=function(){return[qt]},ir.prototype.getClass=function(){return ir};var rr=function(t,e){this._geom=new Array(2).fill(null),this._snapTolerance=null,this._cbr=null,this._geom[0]=t,this._geom[1]=e,this.computeSnapTolerance()};rr.prototype.selfSnap=function(t){return new Ji(t).snapTo(t,this._snapTolerance)},rr.prototype.removeCommonBits=function(t){this._cbr=new tr,this._cbr.add(t[0]),this._cbr.add(t[1]);var e=new Array(2).fill(null);return e[0]=this._cbr.removeCommonBits(t[0].copy()),e[1]=this._cbr.removeCommonBits(t[1].copy()),e},rr.prototype.prepareResult=function(t){return this._cbr.addCommonBits(t),t},rr.prototype.getResultGeometry=function(t){var e=this.snap(this._geom),n=Sr.overlayOp(e[0],e[1],t);return this.prepareResult(n)},rr.prototype.checkValid=function(t){t.isValid()||Y.out.println("Snapped geometry is invalid")},rr.prototype.computeSnapTolerance=function(){this._snapTolerance=Ji.computeOverlaySnapTolerance(this._geom[0],this._geom[1])},rr.prototype.snap=function(t){var e=this.removeCommonBits(t);return Ji.snap(e[0],e[1],this._snapTolerance)},rr.prototype.interfaces_=function(){return[]},rr.prototype.getClass=function(){return rr},rr.overlayOp=function(t,e,n){return new rr(t,e).getResultGeometry(n)},rr.union=function(t,e){return rr.overlayOp(t,e,Sr.UNION)},rr.intersection=function(t,e){return rr.overlayOp(t,e,Sr.INTERSECTION)},rr.symDifference=function(t,e){return rr.overlayOp(t,e,Sr.SYMDIFFERENCE)},rr.difference=function(t,e){return rr.overlayOp(t,e,Sr.DIFFERENCE)};var or=function(t,e){this._geom=new Array(2).fill(null),this._geom[0]=t,this._geom[1]=e};or.prototype.getResultGeometry=function(t){var e=null,n=!1,i=null;try{e=Sr.overlayOp(this._geom[0],this._geom[1],t),n=!0}catch(t){if(!(t instanceof $))throw t;i=t}if(!n)try{e=rr.overlayOp(this._geom[0],this._geom[1],t)}catch(t){throw t instanceof $?i:t}return e},or.prototype.interfaces_=function(){return[]},or.prototype.getClass=function(){return or},or.overlayOp=function(t,e,n){return new or(t,e).getResultGeometry(n)},or.union=function(t,e){return or.overlayOp(t,e,Sr.UNION)},or.intersection=function(t,e){return or.overlayOp(t,e,Sr.INTERSECTION)},or.symDifference=function(t,e){return or.overlayOp(t,e,Sr.SYMDIFFERENCE)},or.difference=function(t,e){return or.overlayOp(t,e,Sr.DIFFERENCE)};var sr=function(){this.mce=null,this.chainIndex=null;var t=arguments[0],e=arguments[1];this.mce=t,this.chainIndex=e};sr.prototype.computeIntersections=function(t,e){this.mce.computeIntersectsForChain(this.chainIndex,t.mce,t.chainIndex,e)},sr.prototype.interfaces_=function(){return[]},sr.prototype.getClass=function(){return sr};var ar=function t(){if(this._label=null,this._xValue=null,this._eventType=null,this._insertEvent=null,this._deleteEventIndex=null,this._obj=null,2===arguments.length){var e=arguments[0],n=arguments[1];this._eventType=t.DELETE,this._xValue=e,this._insertEvent=n}else if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2];this._eventType=t.INSERT,this._label=i,this._xValue=r,this._obj=o}},ur={INSERT:{configurable:!0},DELETE:{configurable:!0}};ar.prototype.isDelete=function(){return this._eventType===ar.DELETE},ar.prototype.setDeleteEventIndex=function(t){this._deleteEventIndex=t},ar.prototype.getObject=function(){return this._obj},ar.prototype.compareTo=function(t){var e=t;return this._xValue<e._xValue?-1:this._xValue>e._xValue?1:this._eventType<e._eventType?-1:this._eventType>e._eventType?1:0},ar.prototype.getInsertEvent=function(){return this._insertEvent},ar.prototype.isInsert=function(){return this._eventType===ar.INSERT},ar.prototype.isSameLabel=function(t){return null!==this._label&&this._label===t._label},ar.prototype.getDeleteEventIndex=function(){return this._deleteEventIndex},ar.prototype.interfaces_=function(){return[E]},ar.prototype.getClass=function(){return ar},ur.INSERT.get=function(){return 1},ur.DELETE.get=function(){return 2},Object.defineProperties(ar,ur);var lr=function(){};lr.prototype.interfaces_=function(){return[]},lr.prototype.getClass=function(){return lr};var cr=function(){this._hasIntersection=!1,this._hasProper=!1,this._hasProperInterior=!1,this._properIntersectionPoint=null,this._li=null,this._includeProper=null,this._recordIsolated=null,this._isSelfIntersection=null,this._numIntersections=0,this.numTests=0,this._bdyNodes=null,this._isDone=!1,this._isDoneWhenProperInt=!1;var t=arguments[0],e=arguments[1],n=arguments[2];this._li=t,this._includeProper=e,this._recordIsolated=n};cr.prototype.isTrivialIntersection=function(t,e,n,i){if(t===n&&1===this._li.getIntersectionNum()){if(cr.isAdjacentSegments(e,i))return!0;if(t.isClosed()){var r=t.getNumPoints()-1;if(0===e&&i===r||0===i&&e===r)return!0}}return!1},cr.prototype.getProperIntersectionPoint=function(){return this._properIntersectionPoint},cr.prototype.setIsDoneIfProperInt=function(t){this._isDoneWhenProperInt=t},cr.prototype.hasProperInteriorIntersection=function(){return this._hasProperInterior},cr.prototype.isBoundaryPointInternal=function(t,e){for(var n=e.iterator();n.hasNext();){var i=n.next().getCoordinate();if(t.isIntersection(i))return!0}return!1},cr.prototype.hasProperIntersection=function(){return this._hasProper},cr.prototype.hasIntersection=function(){return this._hasIntersection},cr.prototype.isDone=function(){return this._isDone},cr.prototype.isBoundaryPoint=function(t,e){return!(null===e||!this.isBoundaryPointInternal(t,e[0])&&!this.isBoundaryPointInternal(t,e[1]))},cr.prototype.setBoundaryNodes=function(t,e){this._bdyNodes=new Array(2).fill(null),this._bdyNodes[0]=t,this._bdyNodes[1]=e},cr.prototype.addIntersections=function(t,e,n,i){if(t===n&&e===i)return null;this.numTests++;var r=t.getCoordinates()[e],o=t.getCoordinates()[e+1],s=n.getCoordinates()[i],a=n.getCoordinates()[i+1];this._li.computeIntersection(r,o,s,a),this._li.hasIntersection()&&(this._recordIsolated&&(t.setIsolated(!1),n.setIsolated(!1)),this._numIntersections++,this.isTrivialIntersection(t,e,n,i)||(this._hasIntersection=!0,!this._includeProper&&this._li.isProper()||(t.addIntersections(this._li,e,0),n.addIntersections(this._li,i,1)),this._li.isProper()&&(this._properIntersectionPoint=this._li.getIntersection(0).copy(),this._hasProper=!0,this._isDoneWhenProperInt&&(this._isDone=!0),this.isBoundaryPoint(this._li,this._bdyNodes)||(this._hasProperInterior=!0))))},cr.prototype.interfaces_=function(){return[]},cr.prototype.getClass=function(){return cr},cr.isAdjacentSegments=function(t,e){return 1===Math.abs(t-e)};var hr=function(t){function e(){t.call(this),this.events=new Nt,this.nOverlaps=null}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.prepareEvents=function(){$e.sort(this.events);for(var t=0;t<this.events.size();t++){var e=this.events.get(t);e.isDelete()&&e.getInsertEvent().setDeleteEventIndex(t)}},e.prototype.computeIntersections=function(){if(1===arguments.length){var t=arguments[0];this.nOverlaps=0,this.prepareEvents();for(var e=0;e<this.events.size();e++){var n=this.events.get(e);if(n.isInsert()&&this.processOverlaps(e,n.getDeleteEventIndex(),n,t),t.isDone())break}}else if(3===arguments.length)if(arguments[2]instanceof cr&&R(arguments[0],It)&&R(arguments[1],It)){var i=arguments[0],r=arguments[1],o=arguments[2];this.addEdges(i,i),this.addEdges(r,r),this.computeIntersections(o)}else if("boolean"==typeof arguments[2]&&R(arguments[0],It)&&arguments[1]instanceof cr){var s=arguments[0],a=arguments[1];arguments[2]?this.addEdges(s,null):this.addEdges(s),this.computeIntersections(a)}},e.prototype.addEdge=function(t,e){for(var n=t.getMonotoneChainEdge(),i=n.getStartIndexes(),r=0;r<i.length-1;r++){var o=new sr(n,r),s=new ar(e,n.getMinX(r),o);this.events.add(s),this.events.add(new ar(n.getMaxX(r),s))}},e.prototype.processOverlaps=function(t,e,n,i){for(var r=n.getObject(),o=t;o<e;o++){var s=this.events.get(o);if(s.isInsert()){var a=s.getObject();n.isSameLabel(s)||(r.computeIntersections(a,i),this.nOverlaps++)}}},e.prototype.addEdges=function(){if(1===arguments.length)for(var t=arguments[0].iterator();t.hasNext();){var e=t.next();this.addEdge(e,e)}else if(2===arguments.length)for(var n=arguments[0],i=arguments[1],r=n.iterator();r.hasNext();){var o=r.next();this.addEdge(o,i)}},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(lr),pr=function(){this._min=v.POSITIVE_INFINITY,this._max=v.NEGATIVE_INFINITY},fr={NodeComparator:{configurable:!0}};pr.prototype.getMin=function(){return this._min},pr.prototype.intersects=function(t,e){return!(this._min>e||this._max<t)},pr.prototype.getMax=function(){return this._max},pr.prototype.toString=function(){return Z.toLineString(new C(this._min,0),new C(this._max,0))},pr.prototype.interfaces_=function(){return[]},pr.prototype.getClass=function(){return pr},fr.NodeComparator.get=function(){return gr},Object.defineProperties(pr,fr);var gr=function(){};gr.prototype.compare=function(t,e){var n=t,i=e,r=(n._min+n._max)/2,o=(i._min+i._max)/2;return r<o?-1:r>o?1:0},gr.prototype.interfaces_=function(){return[N]},gr.prototype.getClass=function(){return gr};var dr=function(t){function e(){t.call(this),this._item=null;var e=arguments[0],n=arguments[1],i=arguments[2];this._min=e,this._max=n,this._item=i}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.query=function(t,e,n){if(!this.intersects(t,e))return null;n.visitItem(this._item)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(pr),yr=function(t){function e(){t.call(this),this._node1=null,this._node2=null;var e=arguments[0],n=arguments[1];this._node1=e,this._node2=n,this.buildExtent(this._node1,this._node2)}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.buildExtent=function(t,e){this._min=Math.min(t._min,e._min),this._max=Math.max(t._max,e._max)},e.prototype.query=function(t,e,n){if(!this.intersects(t,e))return null;null!==this._node1&&this._node1.query(t,e,n),null!==this._node2&&this._node2.query(t,e,n)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(pr),_r=function(){this._leaves=new Nt,this._root=null,this._level=0};_r.prototype.buildTree=function(){$e.sort(this._leaves,new pr.NodeComparator);for(var t=this._leaves,e=null,n=new Nt;;){if(this.buildLevel(t,n),1===n.size())return n.get(0);e=t,t=n,n=e}},_r.prototype.insert=function(t,e,n){if(null!==this._root)throw new Error("Index cannot be added to once it has been queried");this._leaves.add(new dr(t,e,n))},_r.prototype.query=function(t,e,n){this.init(),this._root.query(t,e,n)},_r.prototype.buildRoot=function(){if(null!==this._root)return null;this._root=this.buildTree()},_r.prototype.printNode=function(t){Y.out.println(Z.toLineString(new C(t._min,this._level),new C(t._max,this._level)))},_r.prototype.init=function(){if(null!==this._root)return null;this.buildRoot()},_r.prototype.buildLevel=function(t,e){this._level++,e.clear();for(var n=0;n<t.size();n+=2){var i=t.get(n);if(null===(n+1<t.size()?t.get(n):null))e.add(i);else{var r=new yr(t.get(n),t.get(n+1));e.add(r)}}},_r.prototype.interfaces_=function(){return[]},_r.prototype.getClass=function(){return _r};var mr=function(){this._items=new Nt};mr.prototype.visitItem=function(t){this._items.add(t)},mr.prototype.getItems=function(){return this._items},mr.prototype.interfaces_=function(){return[Ke]},mr.prototype.getClass=function(){return mr};var vr=function(){this._index=null;var t=arguments[0];if(!R(t,Zt))throw new m("Argument must be Polygonal");this._index=new Ir(t)},xr={SegmentVisitor:{configurable:!0},IntervalIndexedGeometry:{configurable:!0}};vr.prototype.locate=function(t){var e=new st(t),n=new Er(e);return this._index.query(t.y,t.y,n),e.getLocation()},vr.prototype.interfaces_=function(){return[Vn]},vr.prototype.getClass=function(){return vr},xr.SegmentVisitor.get=function(){return Er},xr.IntervalIndexedGeometry.get=function(){return Ir},Object.defineProperties(vr,xr);var Er=function(){this._counter=null;var t=arguments[0];this._counter=t};Er.prototype.visitItem=function(t){var e=t;this._counter.countSegment(e.getCoordinate(0),e.getCoordinate(1))},Er.prototype.interfaces_=function(){return[Ke]},Er.prototype.getClass=function(){return Er};var Ir=function(){this._index=new _r;var t=arguments[0];this.init(t)};Ir.prototype.init=function(t){for(var e=Ci.getLines(t).iterator();e.hasNext();){var n=e.next().getCoordinates();this.addLine(n)}},Ir.prototype.addLine=function(t){for(var e=1;e<t.length;e++){var n=new dn(t[e-1],t[e]),i=Math.min(n.p0.y,n.p1.y),r=Math.max(n.p0.y,n.p1.y);this._index.insert(i,r,n)}},Ir.prototype.query=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1],n=new mr;return this._index.query(t,e,n),n.getItems()}if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2];this._index.query(i,r,o)}},Ir.prototype.interfaces_=function(){return[]},Ir.prototype.getClass=function(){return Ir};var Nr=function(t){function e(){if(t.call(this),this._parentGeom=null,this._lineEdgeMap=new pe,this._boundaryNodeRule=null,this._useBoundaryDeterminationRule=!0,this._argIndex=null,this._boundaryNodes=null,this._hasTooFewPoints=!1,this._invalidPoint=null,this._areaPtLocator=null,this._ptLocator=new bi,2===arguments.length){var e=arguments[0],n=arguments[1],i=gt.OGC_SFS_BOUNDARY_RULE;this._argIndex=e,this._parentGeom=n,this._boundaryNodeRule=i,null!==n&&this.add(n)}else if(3===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2];this._argIndex=r,this._parentGeom=o,this._boundaryNodeRule=s,null!==o&&this.add(o)}}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.insertBoundaryPoint=function(t,n){var i=this._nodes.addNode(n).getLabel(),r=1;i.getLocation(t,be.ON)===L.BOUNDARY&&r++;var o=e.determineBoundary(this._boundaryNodeRule,r);i.setLocation(t,o)},e.prototype.computeSelfNodes=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1];return this.computeSelfNodes(t,e,!1)}if(3===arguments.length){var n=arguments[0],i=arguments[1],r=arguments[2],o=new cr(n,!0,!1);o.setIsDoneIfProperInt(r);var s=this.createEdgeSetIntersector(),a=this._parentGeom instanceof ee||this._parentGeom instanceof $t||this._parentGeom instanceof ne,u=i||!a;return s.computeIntersections(this._edges,o,u),this.addSelfIntersectionNodes(this._argIndex),o}},e.prototype.computeSplitEdges=function(t){for(var e=this._edges.iterator();e.hasNext();)e.next().eiList.addSplitEdges(t)},e.prototype.computeEdgeIntersections=function(t,e,n){var i=new cr(e,n,!0);return i.setBoundaryNodes(this.getBoundaryNodes(),t.getBoundaryNodes()),this.createEdgeSetIntersector().computeIntersections(this._edges,t._edges,i),i},e.prototype.getGeometry=function(){return this._parentGeom},e.prototype.getBoundaryNodeRule=function(){return this._boundaryNodeRule},e.prototype.hasTooFewPoints=function(){return this._hasTooFewPoints},e.prototype.addPoint=function(){if(arguments[0]instanceof Qt){var t=arguments[0].getCoordinate();this.insertPoint(this._argIndex,t,L.INTERIOR)}else if(arguments[0]instanceof C){var e=arguments[0];this.insertPoint(this._argIndex,e,L.INTERIOR)}},e.prototype.addPolygon=function(t){this.addPolygonRing(t.getExteriorRing(),L.EXTERIOR,L.INTERIOR);for(var e=0;e<t.getNumInteriorRing();e++){var n=t.getInteriorRingN(e);this.addPolygonRing(n,L.INTERIOR,L.EXTERIOR)}},e.prototype.addEdge=function(t){this.insertEdge(t);var e=t.getCoordinates();this.insertPoint(this._argIndex,e[0],L.BOUNDARY),this.insertPoint(this._argIndex,e[e.length-1],L.BOUNDARY)},e.prototype.addLineString=function(t){var e=St.removeRepeatedPoints(t.getCoordinates());if(e.length<2)return this._hasTooFewPoints=!0,this._invalidPoint=e[0],null;var n=new ni(e,new Pe(this._argIndex,L.INTERIOR));this._lineEdgeMap.put(t,n),this.insertEdge(n),et.isTrue(e.length>=2,"found LineString with single point"),this.insertBoundaryPoint(this._argIndex,e[0]),this.insertBoundaryPoint(this._argIndex,e[e.length-1])},e.prototype.getInvalidPoint=function(){return this._invalidPoint},e.prototype.getBoundaryPoints=function(){for(var t=this.getBoundaryNodes(),e=new Array(t.size()).fill(null),n=0,i=t.iterator();i.hasNext();){var r=i.next();e[n++]=r.getCoordinate().copy()}return e},e.prototype.getBoundaryNodes=function(){return null===this._boundaryNodes&&(this._boundaryNodes=this._nodes.getBoundaryNodes(this._argIndex)),this._boundaryNodes},e.prototype.addSelfIntersectionNode=function(t,e,n){if(this.isBoundaryNode(t,e))return null;n===L.BOUNDARY&&this._useBoundaryDeterminationRule?this.insertBoundaryPoint(t,e):this.insertPoint(t,e,n)},e.prototype.addPolygonRing=function(t,e,n){if(t.isEmpty())return null;var i=St.removeRepeatedPoints(t.getCoordinates());if(i.length<4)return this._hasTooFewPoints=!0,this._invalidPoint=i[0],null;var r=e,o=n;at.isCCW(i)&&(r=n,o=e);var s=new ni(i,new Pe(this._argIndex,L.BOUNDARY,r,o));this._lineEdgeMap.put(t,s),this.insertEdge(s),this.insertPoint(this._argIndex,i[0],L.BOUNDARY)},e.prototype.insertPoint=function(t,e,n){var i=this._nodes.addNode(e),r=i.getLabel();null===r?i._label=new Pe(t,n):r.setLocation(t,n)},e.prototype.createEdgeSetIntersector=function(){return new hr},e.prototype.addSelfIntersectionNodes=function(t){for(var e=this._edges.iterator();e.hasNext();)for(var n=e.next(),i=n.getLabel().getLocation(t),r=n.eiList.iterator();r.hasNext();){var o=r.next();this.addSelfIntersectionNode(t,o.coord,i)}},e.prototype.add=function(){if(1!==arguments.length)return t.prototype.add.apply(this,arguments);var e=arguments[0];if(e.isEmpty())return null;if(e instanceof ne&&(this._useBoundaryDeterminationRule=!1),e instanceof $t)this.addPolygon(e);else if(e instanceof Kt)this.addLineString(e);else if(e instanceof Qt)this.addPoint(e);else if(e instanceof te)this.addCollection(e);else if(e instanceof Xt)this.addCollection(e);else if(e instanceof ne)this.addCollection(e);else{if(!(e instanceof zt))throw new Error(e.getClass().getName());this.addCollection(e)}},e.prototype.addCollection=function(t){for(var e=0;e<t.getNumGeometries();e++){var n=t.getGeometryN(e);this.add(n)}},e.prototype.locate=function(t){return R(this._parentGeom,Zt)&&this._parentGeom.getNumGeometries()>50?(null===this._areaPtLocator&&(this._areaPtLocator=new vr(this._parentGeom)),this._areaPtLocator.locate(t)):this._ptLocator.locate(t,this._parentGeom)},e.prototype.findEdge=function(){if(1===arguments.length){var e=arguments[0];return this._lineEdgeMap.get(e)}return t.prototype.findEdge.apply(this,arguments)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e.determineBoundary=function(t,e){return t.isInBoundary(e)?L.BOUNDARY:L.INTERIOR},e}(Ye),Cr=function(){if(this._li=new rt,this._resultPrecisionModel=null,this._arg=null,1===arguments.length){var t=arguments[0];this.setComputationPrecision(t.getPrecisionModel()),this._arg=new Array(1).fill(null),this._arg[0]=new Nr(0,t)}else if(2===arguments.length){var e=arguments[0],n=arguments[1],i=gt.OGC_SFS_BOUNDARY_RULE;e.getPrecisionModel().compareTo(n.getPrecisionModel())>=0?this.setComputationPrecision(e.getPrecisionModel()):this.setComputationPrecision(n.getPrecisionModel()),this._arg=new Array(2).fill(null),this._arg[0]=new Nr(0,e,i),this._arg[1]=new Nr(1,n,i)}else if(3===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2];r.getPrecisionModel().compareTo(o.getPrecisionModel())>=0?this.setComputationPrecision(r.getPrecisionModel()):this.setComputationPrecision(o.getPrecisionModel()),this._arg=new Array(2).fill(null),this._arg[0]=new Nr(0,r,s),this._arg[1]=new Nr(1,o,s)}};Cr.prototype.getArgGeometry=function(t){return this._arg[t].getGeometry()},Cr.prototype.setComputationPrecision=function(t){this._resultPrecisionModel=t,this._li.setPrecisionModel(this._resultPrecisionModel)},Cr.prototype.interfaces_=function(){return[]},Cr.prototype.getClass=function(){return Cr};var br=function(){};br.prototype.interfaces_=function(){return[]},br.prototype.getClass=function(){return br},br.map=function(){if(arguments[0]instanceof ct&&R(arguments[1],br.MapOp)){for(var t=arguments[0],e=arguments[1],n=new Nt,i=0;i<t.getNumGeometries();i++){var r=e.map(t.getGeometryN(i));null!==r&&n.add(r)}return t.getFactory().buildGeometry(n)}if(R(arguments[0],xt)&&R(arguments[1],br.MapOp)){for(var o=arguments[0],s=arguments[1],a=new Nt,u=o.iterator();u.hasNext();){var l=u.next(),c=s.map(l);null!==c&&a.add(c)}return a}},br.MapOp=function(){};var Sr=function(t){function e(){var e=arguments[0],n=arguments[1];t.call(this,e,n),this._ptLocator=new bi,this._geomFact=null,this._resultGeom=null,this._graph=null,this._edgeList=new Hn,this._resultPolyList=new Nt,this._resultLineList=new Nt,this._resultPointList=new Nt,this._graph=new Ye(new kn),this._geomFact=e.getFactory()}return t&&(e.__proto__=t),e.prototype=Object.create(t&&t.prototype),e.prototype.constructor=e,e.prototype.insertUniqueEdge=function(t){var e=this._edgeList.findEqualEdge(t);if(null!==e){var n=e.getLabel(),i=t.getLabel();e.isPointwiseEqual(t)||(i=new Pe(t.getLabel())).flip();var r=e.getDepth();r.isNull()&&r.add(n),r.add(i),n.merge(i)}else this._edgeList.add(t)},e.prototype.getGraph=function(){return this._graph},e.prototype.cancelDuplicateResultEdges=function(){for(var t=this._graph.getEdgeEnds().iterator();t.hasNext();){var e=t.next(),n=e.getSym();e.isInResult()&&n.isInResult()&&(e.setInResult(!1),n.setInResult(!1))}},e.prototype.isCoveredByLA=function(t){return!!this.isCovered(t,this._resultLineList)||!!this.isCovered(t,this._resultPolyList)},e.prototype.computeGeometry=function(t,n,i,r){var o=new Nt;return o.addAll(t),o.addAll(n),o.addAll(i),o.isEmpty()?e.createEmptyResult(r,this._arg[0].getGeometry(),this._arg[1].getGeometry(),this._geomFact):this._geomFact.buildGeometry(o)},e.prototype.mergeSymLabels=function(){for(var t=this._graph.getNodes().iterator();t.hasNext();)t.next().getEdges().mergeSymLabels()},e.prototype.isCovered=function(t,e){for(var n=e.iterator();n.hasNext();){var i=n.next();if(this._ptLocator.locate(t,i)!==L.EXTERIOR)return!0}return!1},e.prototype.replaceCollapsedEdges=function(){for(var t=new Nt,e=this._edgeList.iterator();e.hasNext();){var n=e.next();n.isCollapsed()&&(e.remove(),t.add(n.getCollapsedEdge()))}this._edgeList.addAll(t)},e.prototype.updateNodeLabelling=function(){for(var t=this._graph.getNodes().iterator();t.hasNext();){var e=t.next(),n=e.getEdges().getLabel();e.getLabel().merge(n)}},e.prototype.getResultGeometry=function(t){return this.computeOverlay(t),this._resultGeom},e.prototype.insertUniqueEdges=function(t){for(var e=t.iterator();e.hasNext();){var n=e.next();this.insertUniqueEdge(n)}},e.prototype.computeOverlay=function(t){this.copyPoints(0),this.copyPoints(1),this._arg[0].computeSelfNodes(this._li,!1),this._arg[1].computeSelfNodes(this._li,!1),this._arg[0].computeEdgeIntersections(this._arg[1],this._li,!0);var e=new Nt;this._arg[0].computeSplitEdges(e),this._arg[1].computeSplitEdges(e),this.insertUniqueEdges(e),this.computeLabelsFromDepths(),this.replaceCollapsedEdges(),Yi.checkValid(this._edgeList.getEdges()),this._graph.addEdges(this._edgeList.getEdges()),this.computeLabelling(),this.labelIncompleteNodes(),this.findResultAreaEdges(t),this.cancelDuplicateResultEdges();var n=new ke(this._geomFact);n.add(this._graph),this._resultPolyList=n.getPolygons();var i=new ji(this,this._geomFact,this._ptLocator);this._resultLineList=i.build(t);var r=new Hi(this,this._geomFact,this._ptLocator);this._resultPointList=r.build(t),this._resultGeom=this.computeGeometry(this._resultPointList,this._resultLineList,this._resultPolyList,t)},e.prototype.labelIncompleteNode=function(t,e){var n=this._ptLocator.locate(t.getCoordinate(),this._arg[e].getGeometry());t.getLabel().setLocation(e,n)},e.prototype.copyPoints=function(t){for(var e=this._arg[t].getNodeIterator();e.hasNext();){var n=e.next();this._graph.addNode(n.getCoordinate()).setLabel(t,n.getLabel().getLocation(t))}},e.prototype.findResultAreaEdges=function(t){for(var n=this._graph.getEdgeEnds().iterator();n.hasNext();){var i=n.next(),r=i.getLabel();r.isArea()&&!i.isInteriorAreaEdge()&&e.isResultOfOp(r.getLocation(0,be.RIGHT),r.getLocation(1,be.RIGHT),t)&&i.setInResult(!0)}},e.prototype.computeLabelsFromDepths=function(){for(var t=this._edgeList.iterator();t.hasNext();){var e=t.next(),n=e.getLabel(),i=e.getDepth();if(!i.isNull()){i.normalize();for(var r=0;r<2;r++)n.isNull(r)||!n.isArea()||i.isNull(r)||(0===i.getDelta(r)?n.toLine(r):(et.isTrue(!i.isNull(r,be.LEFT),"depth of LEFT side has not been initialized"),n.setLocation(r,be.LEFT,i.getLocation(r,be.LEFT)),et.isTrue(!i.isNull(r,be.RIGHT),"depth of RIGHT side has not been initialized"),n.setLocation(r,be.RIGHT,i.getLocation(r,be.RIGHT))))}}},e.prototype.computeLabelling=function(){for(var t=this._graph.getNodes().iterator();t.hasNext();)t.next().getEdges().computeLabelling(this._arg);this.mergeSymLabels(),this.updateNodeLabelling()},e.prototype.labelIncompleteNodes=function(){for(var t=this._graph.getNodes().iterator();t.hasNext();){var e=t.next(),n=e.getLabel();e.isIsolated()&&(n.isNull(0)?this.labelIncompleteNode(e,0):this.labelIncompleteNode(e,1)),e.getEdges().updateLabelling(n)}},e.prototype.isCoveredByA=function(t){return!!this.isCovered(t,this._resultPolyList)},e.prototype.interfaces_=function(){return[]},e.prototype.getClass=function(){return e},e}(Cr);Sr.overlayOp=function(t,e,n){return new Sr(t,e).getResultGeometry(n)},Sr.intersection=function(t,e){if(t.isEmpty()||e.isEmpty())return Sr.createEmptyResult(Sr.INTERSECTION,t,e,t.getFactory());if(t.isGeometryCollection()){var n=e;return ki.map(t,{interfaces_:function(){return[br.MapOp]},map:function(t){return t.intersection(n)}})}return t.checkNotGeometryCollection(t),t.checkNotGeometryCollection(e),or.overlayOp(t,e,Sr.INTERSECTION)},Sr.symDifference=function(t,e){if(t.isEmpty()||e.isEmpty()){if(t.isEmpty()&&e.isEmpty())return Sr.createEmptyResult(Sr.SYMDIFFERENCE,t,e,t.getFactory());if(t.isEmpty())return e.copy();if(e.isEmpty())return t.copy()}return t.checkNotGeometryCollection(t),t.checkNotGeometryCollection(e),or.overlayOp(t,e,Sr.SYMDIFFERENCE)},Sr.resultDimension=function(t,e,n){var i=e.getDimension(),r=n.getDimension(),o=-1;switch(t){case Sr.INTERSECTION:o=Math.min(i,r);break;case Sr.UNION:o=Math.max(i,r);break;case Sr.DIFFERENCE:o=i;break;case Sr.SYMDIFFERENCE:o=Math.max(i,r)}return o},Sr.createEmptyResult=function(t,e,n,i){var r=null;switch(Sr.resultDimension(t,e,n)){case-1:r=i.createGeometryCollection(new Array(0).fill(null));break;case 0:r=i.createPoint();break;case 1:r=i.createLineString();break;case 2:r=i.createPolygon()}return r},Sr.difference=function(t,e){return t.isEmpty()?Sr.createEmptyResult(Sr.DIFFERENCE,t,e,t.getFactory()):e.isEmpty()?t.copy():(t.checkNotGeometryCollection(t),t.checkNotGeometryCollection(e),or.overlayOp(t,e,Sr.DIFFERENCE))},Sr.isResultOfOp=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1],n=t.getLocation(0),i=t.getLocation(1);return Sr.isResultOfOp(n,i,e)}if(3===arguments.length){var r=arguments[0],o=arguments[1],s=arguments[2];switch(r===L.BOUNDARY&&(r=L.INTERIOR),o===L.BOUNDARY&&(o=L.INTERIOR),s){case Sr.INTERSECTION:return r===L.INTERIOR&&o===L.INTERIOR;case Sr.UNION:return r===L.INTERIOR||o===L.INTERIOR;case Sr.DIFFERENCE:return r===L.INTERIOR&&o!==L.INTERIOR;case Sr.SYMDIFFERENCE:return r===L.INTERIOR&&o!==L.INTERIOR||r!==L.INTERIOR&&o===L.INTERIOR}return!1}},Sr.INTERSECTION=1,Sr.UNION=2,Sr.DIFFERENCE=3,Sr.SYMDIFFERENCE=4;var wr=function(){this._g=null,this._boundaryDistanceTolerance=null,this._linework=null,this._ptLocator=new bi,this._seg=new dn;var t=arguments[0],e=arguments[1];this._g=t,this._boundaryDistanceTolerance=e,this._linework=this.extractLinework(t)};wr.prototype.isWithinToleranceOfBoundary=function(t){for(var e=0;e<this._linework.getNumGeometries();e++)for(var n=this._linework.getGeometryN(e).getCoordinateSequence(),i=0;i<n.size()-1;i++)if(n.getCoordinate(i,this._seg.p0),n.getCoordinate(i+1,this._seg.p1),this._seg.distance(t)<=this._boundaryDistanceTolerance)return!0;return!1},wr.prototype.getLocation=function(t){return this.isWithinToleranceOfBoundary(t)?L.BOUNDARY:this._ptLocator.locate(t,this._g)},wr.prototype.extractLinework=function(t){var e=new Lr;t.apply(e);var n=e.getLinework(),i=_e.toLineStringArray(n);return t.getFactory().createMultiLineString(i)},wr.prototype.interfaces_=function(){return[]},wr.prototype.getClass=function(){return wr};var Lr=function(){this._linework=null,this._linework=new Nt};Lr.prototype.getLinework=function(){return this._linework},Lr.prototype.filter=function(t){if(t instanceof $t){var e=t;this._linework.add(e.getExteriorRing());for(var n=0;n<e.getNumInteriorRing();n++)this._linework.add(e.getInteriorRingN(n))}},Lr.prototype.interfaces_=function(){return[Vt]},Lr.prototype.getClass=function(){return Lr};var Or=function(){this._g=null,this._doLeft=!0,this._doRight=!0;var t=arguments[0];this._g=t};Or.prototype.extractPoints=function(t,e,n){for(var i=t.getCoordinates(),r=0;r<i.length-1;r++)this.computeOffsetPoints(i[r],i[r+1],e,n)},Or.prototype.setSidesToGenerate=function(t,e){this._doLeft=t,this._doRight=e},Or.prototype.getPoints=function(t){for(var e=new Nt,n=Ci.getLines(this._g).iterator();n.hasNext();){var i=n.next();this.extractPoints(i,t,e)}return e},Or.prototype.computeOffsetPoints=function(t,e,n,i){var r=e.x-t.x,o=e.y-t.y,s=Math.sqrt(r*r+o*o),a=n*r/s,u=n*o/s,l=(e.x+t.x)/2,c=(e.y+t.y)/2;if(this._doLeft){var h=new C(l-u,c+a);i.add(h)}if(this._doRight){var p=new C(l+u,c-a);i.add(p)}},Or.prototype.interfaces_=function(){return[]},Or.prototype.getClass=function(){return Or};var Rr=function t(){this._geom=null,this._locFinder=null,this._location=new Array(3).fill(null),this._invalidLocation=null,this._boundaryDistanceTolerance=t.TOLERANCE,this._testCoords=new Nt;var e=arguments[0],n=arguments[1],i=arguments[2];this._boundaryDistanceTolerance=t.computeBoundaryDistanceTolerance(e,n),this._geom=[e,n,i],this._locFinder=[new wr(this._geom[0],this._boundaryDistanceTolerance),new wr(this._geom[1],this._boundaryDistanceTolerance),new wr(this._geom[2],this._boundaryDistanceTolerance)]},Tr={TOLERANCE:{configurable:!0}};Rr.prototype.reportResult=function(t,e,n){Y.out.println("Overlay result invalid - A:"+L.toLocationSymbol(e[0])+" B:"+L.toLocationSymbol(e[1])+" expected:"+(n?"i":"e")+" actual:"+L.toLocationSymbol(e[2]))},Rr.prototype.isValid=function(t){return this.addTestPts(this._geom[0]),this.addTestPts(this._geom[1]),this.checkValid(t)},Rr.prototype.checkValid=function(){if(1===arguments.length){for(var t=arguments[0],e=0;e<this._testCoords.size();e++){var n=this._testCoords.get(e);if(!this.checkValid(t,n))return this._invalidLocation=n,!1}return!0}if(2===arguments.length){var i=arguments[0],r=arguments[1];return this._location[0]=this._locFinder[0].getLocation(r),this._location[1]=this._locFinder[1].getLocation(r),this._location[2]=this._locFinder[2].getLocation(r),!!Rr.hasLocation(this._location,L.BOUNDARY)||this.isValidResult(i,this._location)}},Rr.prototype.addTestPts=function(t){var e=new Or(t);this._testCoords.addAll(e.getPoints(5*this._boundaryDistanceTolerance))},Rr.prototype.isValidResult=function(t,e){var n=Sr.isResultOfOp(e[0],e[1],t),i=!(n^e[2]===L.INTERIOR);return i||this.reportResult(t,e,n),i},Rr.prototype.getInvalidLocation=function(){return this._invalidLocation},Rr.prototype.interfaces_=function(){return[]},Rr.prototype.getClass=function(){return Rr},Rr.hasLocation=function(t,e){for(var n=0;n<3;n++)if(t[n]===e)return!0;return!1},Rr.computeBoundaryDistanceTolerance=function(t,e){return Math.min(Ji.computeSizeBasedSnapTolerance(t),Ji.computeSizeBasedSnapTolerance(e))},Rr.isValid=function(t,e,n,i){return new Rr(t,e,i).isValid(n)},Tr.TOLERANCE.get=function(){return 1e-6},Object.defineProperties(Rr,Tr);var Pr=function t(e){this._geomFactory=null,this._skipEmpty=!1,this._inputGeoms=null,this._geomFactory=t.extractFactory(e),this._inputGeoms=e};Pr.prototype.extractElements=function(t,e){if(null===t)return null;for(var n=0;n<t.getNumGeometries();n++){var i=t.getGeometryN(n);this._skipEmpty&&i.isEmpty()||e.add(i)}},Pr.prototype.combine=function(){for(var t=new Nt,e=this._inputGeoms.iterator();e.hasNext();){var n=e.next();this.extractElements(n,t)}return 0===t.size()?null!==this._geomFactory?this._geomFactory.createGeometryCollection(null):null:this._geomFactory.buildGeometry(t)},Pr.prototype.interfaces_=function(){return[]},Pr.prototype.getClass=function(){return Pr},Pr.combine=function(){if(1===arguments.length){var t=arguments[0];return new Pr(t).combine()}if(2===arguments.length){var e=arguments[0],n=arguments[1];return new Pr(Pr.createList(e,n)).combine()}if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2];return new Pr(Pr.createList(i,r,o)).combine()}},Pr.extractFactory=function(t){return t.isEmpty()?null:t.iterator().next().getFactory()},Pr.createList=function(){if(2===arguments.length){var t=arguments[0],e=arguments[1],n=new Nt;return n.add(t),n.add(e),n}if(3===arguments.length){var i=arguments[0],r=arguments[1],o=arguments[2],s=new Nt;return s.add(i),s.add(r),s.add(o),s}};var Mr=function(){this._inputPolys=null,this._geomFactory=null;var t=arguments[0];this._inputPolys=t,null===this._inputPolys&&(this._inputPolys=new Nt)},Dr={STRTREE_NODE_CAPACITY:{configurable:!0}};Mr.prototype.reduceToGeometries=function(t){for(var e=new Nt,n=t.iterator();n.hasNext();){var i=n.next(),r=null;R(i,It)?r=this.unionTree(i):i instanceof ct&&(r=i),e.add(r)}return e},Mr.prototype.extractByEnvelope=function(t,e,n){for(var i=new Nt,r=0;r<e.getNumGeometries();r++){var o=e.getGeometryN(r);o.getEnvelopeInternal().intersects(t)?i.add(o):n.add(o)}return this._geomFactory.buildGeometry(i)},Mr.prototype.unionOptimized=function(t,e){var n=t.getEnvelopeInternal(),i=e.getEnvelopeInternal();if(!n.intersects(i))return Pr.combine(t,e);if(t.getNumGeometries()<=1&&e.getNumGeometries()<=1)return this.unionActual(t,e);var r=n.intersection(i);return this.unionUsingEnvelopeIntersection(t,e,r)},Mr.prototype.union=function(){if(null===this._inputPolys)throw new Error("union() method cannot be called twice");if(this._inputPolys.isEmpty())return null;this._geomFactory=this._inputPolys.iterator().next().getFactory();for(var t=new sn(Mr.STRTREE_NODE_CAPACITY),e=this._inputPolys.iterator();e.hasNext();){var n=e.next();t.insert(n.getEnvelopeInternal(),n)}this._inputPolys=null;var i=t.itemsTree();return this.unionTree(i)},Mr.prototype.binaryUnion=function(){if(1===arguments.length){var t=arguments[0];return this.binaryUnion(t,0,t.size())}if(3===arguments.length){var e=arguments[0],n=arguments[1],i=arguments[2];if(i-n<=1){var r=Mr.getGeometry(e,n);return this.unionSafe(r,null)}if(i-n==2)return this.unionSafe(Mr.getGeometry(e,n),Mr.getGeometry(e,n+1));var o=Math.trunc((i+n)/2),s=this.binaryUnion(e,n,o),a=this.binaryUnion(e,o,i);return this.unionSafe(s,a)}},Mr.prototype.repeatedUnion=function(t){for(var e=null,n=t.iterator();n.hasNext();){var i=n.next();e=null===e?i.copy():e.union(i)}return e},Mr.prototype.unionSafe=function(t,e){return null===t&&null===e?null:null===t?e.copy():null===e?t.copy():this.unionOptimized(t,e)},Mr.prototype.unionActual=function(t,e){return Mr.restrictToPolygons(t.union(e))},Mr.prototype.unionTree=function(t){var e=this.reduceToGeometries(t);return this.binaryUnion(e)},Mr.prototype.unionUsingEnvelopeIntersection=function(t,e,n){var i=new Nt,r=this.extractByEnvelope(n,t,i),o=this.extractByEnvelope(n,e,i),s=this.unionActual(r,o);return i.add(s),Pr.combine(i)},Mr.prototype.bufferUnion=function(){if(1===arguments.length){var t=arguments[0];return t.get(0).getFactory().buildGeometry(t).buffer(0)}if(2===arguments.length){var e=arguments[0],n=arguments[1];return e.getFactory().createGeometryCollection([e,n]).buffer(0)}},Mr.prototype.interfaces_=function(){return[]},Mr.prototype.getClass=function(){return Mr},Mr.restrictToPolygons=function(t){if(R(t,Zt))return t;var e=Ni.getPolygons(t);return 1===e.size()?e.get(0):t.getFactory().createMultiPolygon(_e.toPolygonArray(e))},Mr.getGeometry=function(t,e){return e>=t.size()?null:t.get(e)},Mr.union=function(t){return new Mr(t).union()},Dr.STRTREE_NODE_CAPACITY.get=function(){return 4},Object.defineProperties(Mr,Dr);var Ar=function(){};Ar.prototype.interfaces_=function(){return[]},Ar.prototype.getClass=function(){return Ar},Ar.union=function(t,e){if(t.isEmpty()||e.isEmpty()){if(t.isEmpty()&&e.isEmpty())return Sr.createEmptyResult(Sr.UNION,t,e,t.getFactory());if(t.isEmpty())return e.copy();if(e.isEmpty())return t.copy()}return t.checkNotGeometryCollection(t),t.checkNotGeometryCollection(e),or.overlayOp(t,e,Sr.UNION)},t.GeoJSONReader=Ne,t.GeoJSONWriter=Ce,t.OverlayOp=Sr,t.UnionOp=Ar,t.BufferOp=di,Object.defineProperty(t,"__esModule",{value:!0})}(e)},function(t,e,n){"use strict";n.r(e),n.d(e,"DistanceDetectionType",(function(){return it})),n.d(e,"DEFAULT_OPTIONS",(function(){return rt})),n.d(e,"packComponents",(function(){return ot})),n.d(e,"getFrame",(function(){return at})),n.d(e,"constructEdges",(function(){return ut}));var i,r=function(){return(r=Object.assign||function(t){for(var e,n=1,i=arguments.length;n<i;n++)for(var r in e=arguments[n])Object.prototype.hasOwnProperty.call(e,r)&&(t[r]=e[r]);return t}).apply(this,arguments)};function o(t){var e="function"==typeof Symbol&&Symbol.iterator,n=e&&t[e],i=0;if(n)return n.call(t);if(t&&"number"==typeof t.length)return{next:function(){return t&&i>=t.length&&(t=void 0),{value:t&&t[i++],done:!t}}};throw new TypeError(e?"Object is not iterable.":"Symbol.iterator is not defined.")}function s(t,e){var n="function"==typeof Symbol&&t[Symbol.iterator];if(!n)return t;var i,r,o=n.call(t),s=[];try{for(;(void 0===e||e-- >0)&&!(i=o.next()).done;)s.push(i.value)}catch(t){r={error:t}}finally{try{i&&!i.done&&(n=o.return)&&n.call(o)}finally{if(r)throw r.error}}return s}function a(){for(var t=[],e=0;e<arguments.length;e++)t=t.concat(s(arguments[e]));return t}!function(t){t[t.LEFT=0]="LEFT",t[t.RIGHT=1]="RIGHT",t[t.STRAIGHT=2]="STRAIGHT"}(i||(i={}));var u,l=function(t,e){var n=e.x-t.from.x,i=e.y-t.from.y,r=t.to.x-t.from.x,o=t.to.y-t.from.y,s=r*r+o*o,a=-1;return 0!==s&&(a=(n*r+i*o)/s),a<0?[{x:t.from.x,y:t.from.y},e]:a>1?[{x:t.to.x,y:t.to.y},e]:[{x:t.from.x+a*r,y:t.from.y+a*o},e]},c=function(t){return t.x*t.x+t.y*t.y},h=function(t,e){var n=t.x-e.x,i=t.y-e.y;return Math.pow(n,2)+Math.pow(i,2)},p=function(t,e){var n=e.y-t.y,i=e.x-t.x;return Math.atan2(n,i)},f=function(t){return Math.abs((t.maxX-t.minX)*(t.maxY-t.minY))},g=function(t){return t.reduce((function(t,e){return{minX:Math.min(t.minX,e.minX),maxX:Math.max(t.maxX,e.maxX),minY:Math.min(t.minY,e.minY),maxY:Math.max(t.maxY,e.maxY)}}),{minX:Number.MAX_SAFE_INTEGER,maxX:Number.MIN_SAFE_INTEGER,minY:Number.MAX_SAFE_INTEGER,maxY:Number.MIN_SAFE_INTEGER})},d=function(){function t(t){var e,n;this.mPoints=t,this.mBase={x:0,y:0},this.mVerticeCenter={x:0,y:0};try{for(var i=o(this.mPoints),r=i.next();!r.done;r=i.next()){var s=r.value;this.mVerticeCenter.x+=s.x,this.mVerticeCenter.y+=s.y}}catch(t){e={error:t}}finally{try{r&&!r.done&&(n=i.return)&&n.call(i)}finally{if(e)throw e.error}}this.mVerticeCenter.x/=this.mPoints.length,this.mVerticeCenter.y/=this.mPoints.length,this.mVerticesBbox=null}return t.fromGraph=function(t){var e,n,i=[];try{for(var r=o(t.nodes),s=r.next();!s.done;s=r.next()){var a=s.value;i.push(a.min,a.max)}}catch(t){e={error:t}}finally{try{s&&!s.done&&(n=r.return)&&n.call(r)}finally{if(e)throw e.error}}return this.fromPoints(i)},t.fromPoints=function(e){return new t(this.convexHull(e))},t.fromPointsUnsafe=function(e){return new t(e)},t.prototype.withBase=function(t){return 0==this.base.x&&0==this.base.y?t:{x:t.x+this.base.x,y:t.y+this.base.y}},t.prototype.move=function(t){this.mBase.x+=t.x,this.mBase.y+=t.y},Object.defineProperty(t.prototype,"points",{get:function(){return 0==this.base.x&&0==this.base.y?this.mPoints:this.mPoints.map(this.withBase.bind(this))},enumerable:!1,configurable:!0}),Object.defineProperty(t.prototype,"pointCount",{get:function(){return this.mPoints.length},enumerable:!1,configurable:!0}),Object.defineProperty(t.prototype,"base",{get:function(){return this.mBase},enumerable:!1,configurable:!0}),Object.defineProperty(t.prototype,"center",{get:function(){return{x:this.base.x+this.mVerticeCenter.x,y:this.base.y+this.mVerticeCenter.y}},enumerable:!1,configurable:!0}),t.prototype.negative=function(){return new t(this.points.map((function(t){return{x:-t.x,y:-t.y}})))},t.prototype.getSafeIndex=function(t){return e=t,n=this.points.length,(e%n+n)%n;var e,n},t.prototype.getPoint=function(t){return this.withBase(this.points[this.getSafeIndex(t)])},t.prototype.getPrevPoint=function(t){return this.withBase(this.getPoint(t-1))},t.prototype.getNextPoint=function(t){return this.withBase(this.getPoint(t+1))},Object.defineProperty(t.prototype,"boundingBox",{get:function(){var t,e;if(null===this.mVerticesBbox){var n={minX:Number.MAX_SAFE_INTEGER,maxX:Number.MIN_SAFE_INTEGER,minY:Number.MAX_SAFE_INTEGER,maxY:Number.MIN_SAFE_INTEGER};try{for(var i=o(this.mPoints),r=i.next();!r.done;r=i.next()){var s=r.value;s.x<n.minX&&(n.minX=s.x),s.x>n.maxX&&(n.maxX=s.x),s.y<n.minY&&(n.minY=s.y),s.y>n.maxY&&(n.maxY=s.y)}}catch(e){t={error:e}}finally{try{r&&!r.done&&(e=i.return)&&e.call(i)}finally{if(t)throw t.error}}this.mVerticesBbox=n}var a=this.mBase;return{minX:this.mVerticesBbox.minX+a.x,maxX:this.mVerticesBbox.maxX+a.x,minY:this.mVerticesBbox.minY+a.y,maxY:this.mVerticesBbox.maxY+a.y}},enumerable:!1,configurable:!0}),t.convexHull=function(e){var n,r,s=[],a=t.topLeft(e);s.push(a),e.splice(e.findIndex((function(t){return t===a})),1),e.sort((function(t,e){return p(a,t)-p(a,e)}));var u,l,c,h,f=this.removeDuplicates(e,a);try{for(var g=o(f),d=g.next();!d.done;d=g.next()){for(var y=d.value;s.length>1&&(u=s[s.length-2],l=s[s.length-1],c=y,h=void 0,((h=l.x*c.y-l.y*c.x-u.x*c.y+u.x*l.y+u.y*c.x-u.y*l.x)<0?i.LEFT:h>0?i.RIGHT:i.STRAIGHT)===i.LEFT);)s.pop();s.push(y)}}catch(t){n={error:t}}finally{try{d&&!d.done&&(r=g.return)&&r.call(g)}finally{if(n)throw n.error}}return s},t.removeDuplicates=function(t,e){for(var n=[],i=0;i<t.length;){for(var r=t[i],o=i+1;o<t.length&&p(e,r)-p(e,t[o])==0;)h(e,t[o])>h(e,r)&&(r=t[o]),o+=1;n.push(r),i=o}return n},t.topLeft=function(t){return t.reduce((function(t,e){return t.y<e.y||t.y==e.y&&t.x<=e.x?t:e}),{x:Number.MAX_VALUE,y:Number.MAX_VALUE})},t}();!function(t){t[t.BruteForce=0]="BruteForce",t[t.Linear=1]="Linear",t[t.Logarithmic=2]="Logarithmic"}(u||(u={}));var y=function(t,e,n){void 0===n&&(n=u.BruteForce);var i=e.negative();switch(n){case u.BruteForce:var r=function(t,e){var n,i,r,s,a=[];try{for(var u=o(t.points),l=u.next();!l.done;l=u.next()){var c=l.value;try{for(var h=(r=void 0,o(e.points)),p=h.next();!p.done;p=h.next()){var f=p.value,g={x:c.x+f.x,y:c.y+f.y};a.push(g)}}catch(t){r={error:t}}finally{try{p&&!p.done&&(s=h.return)&&s.call(h)}finally{if(r)throw r.error}}}}catch(t){n={error:t}}finally{try{l&&!l.done&&(i=u.return)&&i.call(u)}finally{if(n)throw n.error}}return a}(t,i),s=d.fromPoints(r);return s.points.map((function(t,e){var n={from:t,to:s.getNextPoint(e)},i=l(n,{x:0,y:0}),r=c(i[0]),o=Math.sqrt(r);return{distance:r,unitVector:{x:(i[1].x-i[0].x)/o,y:(i[1].y-i[0].y)/o}}})).reduce((function(t,e){return e.distance<t.distance?e:t}));default:throw new Error("Strategy "+n+" has not implemented yet")}};function _(t,e,n){if(!x(n=n||{}))throw new Error("options is invalid");var i=n.bbox,r=n.id;if(void 0===t)throw new Error("geometry is required");if(e&&e.constructor!==Object)throw new Error("properties must be an Object");i&&E(i),r&&I(r);var o={type:"Feature"};return r&&(o.id=r),i&&(o.bbox=i),o.properties=e||{},o.geometry=t,o}function m(t,e,n){if(!t)throw new Error("coordinates is required");for(var i=0;i<t.length;i++){var r=t[i];if(r.length<4)throw new Error("Each LinearRing of a Polygon must have 4 or more Positions.");for(var o=0;o<r[r.length-1].length;o++){if(0===i&&0===o&&!v(r[0][0])||!v(r[0][1]))throw new Error("coordinates must contain numbers");if(r[r.length-1][o]!==r[0][o])throw new Error("First and last Position are not equivalent.")}}return _({type:"Polygon",coordinates:t},e,n)}function v(t){return!isNaN(t)&&null!==t&&!Array.isArray(t)}function x(t){return!!t&&t.constructor===Object}function E(t){if(!t)throw new Error("bbox is required");if(!Array.isArray(t))throw new Error("bbox must be an Array");if(4!==t.length&&6!==t.length)throw new Error("bbox must be an Array of 4 or 6 numbers");t.forEach((function(t){if(!v(t))throw new Error("bbox must only contain numbers")}))}function I(t){if(!t)throw new Error("id is required");if(-1===["string","number"].indexOf(typeof t))throw new Error("id must be a number or a string")}var N=function(t){return[t.x,t.y]},C=function(t){var e,n=t.points;return m([(e=a(n,[n[0]]),e.map(N))])},b=n(0);function S(t,e,n){if(null!==t)for(var i,r,o,s,a,u,l,c,h=0,p=0,f=t.type,g="FeatureCollection"===f,d="Feature"===f,y=g?t.features.length:1,_=0;_<y;_++){a=(c=!!(l=g?t.features[_].geometry:d?t.geometry:t)&&"GeometryCollection"===l.type)?l.geometries.length:1;for(var m=0;m<a;m++){var v=0,x=0;if(null!==(s=c?l.geometries[m]:l)){u=s.coordinates;var E=s.type;switch(h=!n||"Polygon"!==E&&"MultiPolygon"!==E?0:1,E){case null:break;case"Point":e(u,p,_,v,x),p++,v++;break;case"LineString":case"MultiPoint":for(i=0;i<u.length;i++)e(u[i],p,_,v,x),p++,"MultiPoint"===E&&v++;"LineString"===E&&v++;break;case"Polygon":case"MultiLineString":for(i=0;i<u.length;i++){for(r=0;r<u[i].length-h;r++)e(u[i][r],p,_,v,x),p++;"MultiLineString"===E&&v++,"Polygon"===E&&x++}"Polygon"===E&&v++;break;case"MultiPolygon":for(i=0;i<u.length;i++){for("MultiPolygon"===E&&(x=0),r=0;r<u[i].length;r++){for(o=0;o<u[i][r].length-h;o++)e(u[i][r][o],p,_,v,x),p++;x++}v++}break;case"GeometryCollection":for(i=0;i<s.geometries.length;i++)S(s.geometries[i],e,n);break;default:throw new Error("Unknown Geometry Type")}}}}}var w=function(t,e){if(!x(e=e||{}))throw new Error("options is invalid");var n=e.precision,i=e.coordinates,r=e.mutate;if(n=null==n||isNaN(n)?6:n,i=null==i||isNaN(i)?3:i,!t)throw new Error("<geojson> is required");if("number"!=typeof n)throw new Error("<precision> must be a number");if("number"!=typeof i)throw new Error("<coordinates> must be a number");!1!==r&&void 0!==r||(t=JSON.parse(JSON.stringify(t)));var o=Math.pow(10,n);return S(t,(function(t){!function(t,e,n){t.length>n&&t.splice(n,t.length);for(var i=0;i<t.length;i++)t[i]=Math.round(t[i]*e)/e}(t,o,i)})),t};function L(t){if(!t)throw new Error("obj is required");var e;if(t.length?e=t:t.coordinates?e=t.coordinates:t.geometry&&t.geometry.coordinates&&(e=t.geometry.coordinates),e)return function t(e){if(e.length>1&&v(e[0])&&v(e[1]))return!0;if(Array.isArray(e[0])&&e[0].length)return t(e[0]);throw new Error("coordinates must only contain numbers")}(e),e;throw new Error("No valid coordinates")}function O(t){if(!t)throw new Error("geojson is required");if(void 0!==t.geometry)return t.geometry;if(t.coordinates||t.geometries)return t;throw new Error("geojson must be a valid Feature or Geometry Object")}function R(t){var e,n,i,r,o,s=L(t);if(2===s.length&&(e=s[0],n=s[1],e[0]!==n[0]||e[1]!==n[1]))return s;var a=[],u=s.length-1;a.push(s[0]);for(var l=1;l<u;l++)i=s[l-1],r=s[l],T(i,o=s[l+1],r)||a.push(r);return a.push(o),a}function T(t,e,n){var i=n[0],r=n[1],o=t[0],s=t[1],a=e[0],u=e[1],l=a-o,c=u-s;return 0==(i-o)*c-(r-s)*l&&(Math.abs(l)>=Math.abs(c)?l>0?o<=i&&i<=a:a<=i&&i<=o:c>0?s<=r&&r<=u:u<=r&&r<=s)}var P,M=function(t,e){var n="object"==typeof e?e.mutate:e;if(!t)throw new Error("geojson is required");var i=function(t,e){if(!t)throw new Error((e||"geojson")+" is required");if(t.geometry&&t.geometry.type)return t.geometry.type;if(t.type)return t.type;throw new Error((e||"geojson")+" is invalid")}(t),r=[];switch(i){case"LineString":r=R(t);break;case"MultiLineString":case"Polygon":L(t).forEach((function(t){r.push(R(t))}));break;case"MultiPolygon":L(t).forEach((function(t){var e=[];t.forEach((function(t){e.push(R(t))})),r.push(e)}));break;case"Point":return t;case"MultiPoint":var o={};L(t).forEach((function(t){var e=t.join("-");o.hasOwnProperty(e)||(r.push(t),o[e]=!0)}));break;default:throw new Error(i+" geometry not supported")}return t.coordinates?!0===n?(t.coordinates=r,t):{type:i,coordinates:r}:!0===n?(t.geometry.coordinates=r,t):_({type:i,coordinates:r},t.properties,t.bbox,t.id)},D=function(t,e){var n=O(t),i=O(e);if(M(w(i,{precision:4})).coordinates[0].length<4)return null;if(M(w(n,{precision:4})).coordinates[0].length<4)return null;var r=new b.GeoJSONReader,o=r.read(w(n)),s=r.read(w(i)),a=b.OverlayOp.intersection(o,s);return a.isEmpty()?null:_((new b.GeoJSONWriter).write(a))};!function(t){t[t.Normal=0]="Normal",t[t.Intersection=1]="Intersection"}(P||(P={}));var A=function(t,e){var n=e.componentSpacing,i=Math.pow(e.componentSpacing,2),r=n,a=function(t){return function(e,n){var i=y(e,n),o=i.distance,s=i.unitVector,a=t(o),u=Math.abs(a)<r?a:r*Math.sign(a);return{x:s.x*u,y:s.y*u}}},u=a((function(t){return 3*Math.log2(Math.sqrt(t)/n)})),l=a((function(t){return-(i/t-1)})),h=function(n,i,r){var o=s([t.nodes[n],t.nodes[i]],2),a=o[0],u=o[1];if(null===D(C(a),C(u)))return{force:r(a,u),type:P.Normal};var l,c,h=e.componentSpacing,p={from:a.center,to:u.center},f=(l=p,c=Math.sqrt(function(t){var e=t.to.x-t.from.x,n=t.to.y-t.from.y;return e*e+n*n}(l)),{x:(l.to.x-l.from.x)/c,y:(l.to.y-l.from.y)/c});return{force:{x:-f.x*h,y:-f.y*h},type:P.Intersection}},p=e.type===it.GRID_SQUARE?e.detection.move:function(e,n){t.nodes[e].move(n)},f=Array.from({length:t.nodes.length},(function(){return{x:0,y:0}})),g=Array.from({length:t.nodes.length},(function(){return{x:0,y:0}})),d=function(){var n=function(t){return 0!==g[t].x||0!==g[t].y};!function(t,e,n){var i,r,a,l;try{for(var c=o(t.edges.entries()),p=c.next();!p.done;p=c.next()){var f=s(p.value,2),g=f[0],d=f[1];try{for(var y=(a=void 0,o(d)),_=y.next();!_.done;_=y.next()){var m=_.value,v=h(g,m,u),x=v.force,E=v.type===P.Normal?e:n;E[g].x+=x.x,E[g].y+=x.y,E[m].x-=x.x,E[m].y-=x.y}}catch(t){a={error:t}}finally{try{_&&!_.done&&(l=y.return)&&l.call(y)}finally{if(a)throw a.error}}}}catch(t){i={error:t}}finally{try{p&&!p.done&&(r=c.return)&&r.call(c)}finally{if(i)throw i.error}}}(t,f,g),function(t,n,i){if(e.type!==it.BASIC)throw new Error("Not implemented");for(var r=t.nodes.length,o=0;o<r;++o)for(var s=function(e){if(void 0!==t.edges[o].find((function(t){return t===e}))){var r=h(o,e,l),s=r.force,a=r.type===P.Normal?n:i;a[o].x+=s.x,a[o].y+=s.y,a[e].x-=s.x,a[e].y-=s.y}},a=o+1;a<r;++a)s(a)}(t,f,g);for(var i=0,r=0;r<t.nodes.length;++r){var a=n(r)?g[r]:f[r];p(r,a),i+=c(a),f[r].x=0,f[r].y=0,g[r].x=0,g[r].y=0}return i/t.nodes.length};if(void 0!==e.step)for(var _=e.step,m=0;m<_;++m)d();else{var v=0;for(m=0;m<100;m+=1)d(),(v+=1)>=5&&(t.edges=ut(t.nodes),v=0)}};const F=Math.pow(2,-52),G=new Uint32Array(512);class B{static from(t,e=j,n=H){const i=t.length,r=new Float64Array(2*i);for(let o=0;o<i;o++){const i=t[o];r[2*o]=e(i),r[2*o+1]=n(i)}return new B(r)}constructor(t){const e=t.length>>1;if(e>0&&"number"!=typeof t[0])throw new Error("Expected coords to contain numbers.");this.coords=t;const n=Math.max(2*e-5,0);this._triangles=new Uint32Array(3*n),this._halfedges=new Int32Array(3*n),this._hashSize=Math.ceil(Math.sqrt(e)),this._hullPrev=new Uint32Array(e),this._hullNext=new Uint32Array(e),this._hullTri=new Uint32Array(e),this._hullHash=new Int32Array(this._hashSize).fill(-1),this._ids=new Uint32Array(e),this._dists=new Float64Array(e),this.update()}update(){const{coords:t,_hullPrev:e,_hullNext:n,_hullTri:i,_hullHash:r}=this,o=t.length>>1;let s=1/0,a=1/0,u=-1/0,l=-1/0;for(let e=0;e<o;e++){const n=t[2*e],i=t[2*e+1];n<s&&(s=n),i<a&&(a=i),n>u&&(u=n),i>l&&(l=i),this._ids[e]=e}const c=(s+u)/2,h=(a+l)/2;let p,f,g,d=1/0;for(let e=0;e<o;e++){const n=U(c,h,t[2*e],t[2*e+1]);n<d&&(p=e,d=n)}const y=t[2*p],_=t[2*p+1];d=1/0;for(let e=0;e<o;e++){if(e===p)continue;const n=U(y,_,t[2*e],t[2*e+1]);n<d&&n>0&&(f=e,d=n)}let m=t[2*f],v=t[2*f+1],x=1/0;for(let e=0;e<o;e++){if(e===p||e===f)continue;const n=X(y,_,m,v,t[2*e],t[2*e+1]);n<x&&(g=e,x=n)}let E=t[2*g],I=t[2*g+1];if(x===1/0){for(let e=0;e<o;e++)this._dists[e]=t[2*e]-t[0]||t[2*e+1]-t[1];Y(this._ids,this._dists,0,o-1);const e=new Uint32Array(o);let n=0;for(let t=0,i=-1/0;t<o;t++){const r=this._ids[t];this._dists[r]>i&&(e[n++]=r,i=this._dists[r])}return this.hull=e.subarray(0,n),this.triangles=new Uint32Array(0),void(this.halfedges=new Uint32Array(0))}if(q(y,_,m,v,E,I)){const t=f,e=m,n=v;f=g,m=E,v=I,g=t,E=e,I=n}const N=function(t,e,n,i,r,o){const s=n-t,a=i-e,u=r-t,l=o-e,c=s*s+a*a,h=u*u+l*l,p=.5/(s*l-a*u);return{x:t+(l*c-a*h)*p,y:e+(s*h-u*c)*p}}(y,_,m,v,E,I);this._cx=N.x,this._cy=N.y;for(let e=0;e<o;e++)this._dists[e]=U(t[2*e],t[2*e+1],N.x,N.y);Y(this._ids,this._dists,0,o-1),this._hullStart=p;let C=3;n[p]=e[g]=f,n[f]=e[p]=g,n[g]=e[f]=p,i[p]=0,i[f]=1,i[g]=2,r.fill(-1),r[this._hashKey(y,_)]=p,r[this._hashKey(m,v)]=f,r[this._hashKey(E,I)]=g,this.trianglesLen=0,this._addTriangle(p,f,g,-1,-1,-1);for(let o,s,a=0;a<this._ids.length;a++){const u=this._ids[a],l=t[2*u],c=t[2*u+1];if(a>0&&Math.abs(l-o)<=F&&Math.abs(c-s)<=F)continue;if(o=l,s=c,u===p||u===f||u===g)continue;let h=0;for(let t=0,e=this._hashKey(l,c);t<this._hashSize&&(h=r[(e+t)%this._hashSize],-1===h||h===n[h]);t++);h=e[h];let d,y=h;for(;d=n[y],!q(l,c,t[2*y],t[2*y+1],t[2*d],t[2*d+1]);)if(y=d,y===h){y=-1;break}if(-1===y)continue;let _=this._addTriangle(y,u,n[y],-1,-1,i[y]);i[u]=this._legalize(_+2),i[y]=_,C++;let m=n[y];for(;d=n[m],q(l,c,t[2*m],t[2*m+1],t[2*d],t[2*d+1]);)_=this._addTriangle(m,u,d,i[u],-1,i[m]),i[u]=this._legalize(_+2),n[m]=m,C--,m=d;if(y===h)for(;d=e[y],q(l,c,t[2*d],t[2*d+1],t[2*y],t[2*y+1]);)_=this._addTriangle(d,u,y,-1,i[y],i[d]),this._legalize(_+2),i[d]=_,n[y]=y,C--,y=d;this._hullStart=e[u]=y,n[y]=e[m]=u,n[u]=m,r[this._hashKey(l,c)]=u,r[this._hashKey(t[2*y],t[2*y+1])]=y}this.hull=new Uint32Array(C);for(let t=0,e=this._hullStart;t<C;t++)this.hull[t]=e,e=n[e];this.triangles=this._triangles.subarray(0,this.trianglesLen),this.halfedges=this._halfedges.subarray(0,this.trianglesLen)}_hashKey(t,e){return Math.floor(function(t,e){const n=t/(Math.abs(t)+Math.abs(e));return(e>0?3-n:1+n)/4}(t-this._cx,e-this._cy)*this._hashSize)%this._hashSize}_legalize(t){const{_triangles:e,_halfedges:n,coords:i}=this;let r=0,o=0;for(;;){const s=n[t],a=t-t%3;if(o=a+(t+2)%3,-1===s){if(0===r)break;t=G[--r];continue}const u=s-s%3,l=a+(t+1)%3,c=u+(s+2)%3,h=e[o],p=e[t],f=e[l],g=e[c];if(z(i[2*h],i[2*h+1],i[2*p],i[2*p+1],i[2*f],i[2*f+1],i[2*g],i[2*g+1])){e[t]=g,e[s]=h;const i=n[c];if(-1===i){let e=this._hullStart;do{if(this._hullTri[e]===c){this._hullTri[e]=t;break}e=this._hullPrev[e]}while(e!==this._hullStart)}this._link(t,i),this._link(s,n[o]),this._link(o,c);const a=u+(s+1)%3;r<G.length&&(G[r++]=a)}else{if(0===r)break;t=G[--r]}}return o}_link(t,e){this._halfedges[t]=e,-1!==e&&(this._halfedges[e]=t)}_addTriangle(t,e,n,i,r,o){const s=this.trianglesLen;return this._triangles[s]=t,this._triangles[s+1]=e,this._triangles[s+2]=n,this._link(s,i),this._link(s+1,r),this._link(s+2,o),this.trianglesLen+=3,s}}function U(t,e,n,i){const r=t-n,o=e-i;return r*r+o*o}function V(t,e,n,i,r,o){const s=(i-e)*(r-t),a=(n-t)*(o-e);return Math.abs(s-a)>=33306690738754716e-32*Math.abs(s+a)?s-a:0}function q(t,e,n,i,r,o){return(V(r,o,t,e,n,i)||V(t,e,n,i,r,o)||V(n,i,r,o,t,e))<0}function z(t,e,n,i,r,o,s,a){const u=t-s,l=e-a,c=n-s,h=i-a,p=r-s,f=o-a,g=c*c+h*h,d=p*p+f*f;return u*(h*d-g*f)-l*(c*d-g*p)+(u*u+l*l)*(c*f-h*p)<0}function X(t,e,n,i,r,o){const s=n-t,a=i-e,u=r-t,l=o-e,c=s*s+a*a,h=u*u+l*l,p=.5/(s*l-a*u),f=(l*c-a*h)*p,g=(s*h-u*c)*p;return f*f+g*g}function Y(t,e,n,i){if(i-n<=20)for(let r=n+1;r<=i;r++){const i=t[r],o=e[i];let s=r-1;for(;s>=n&&e[t[s]]>o;)t[s+1]=t[s--];t[s+1]=i}else{let r=n+1,o=i;k(t,n+i>>1,r),e[t[n]]>e[t[i]]&&k(t,n,i),e[t[r]]>e[t[i]]&&k(t,r,i),e[t[n]]>e[t[r]]&&k(t,n,r);const s=t[r],a=e[s];for(;;){do{r++}while(e[t[r]]<a);do{o--}while(e[t[o]]>a);if(o<r)break;k(t,r,o)}t[n+1]=t[o],t[o]=s,i-r+1>=o-n?(Y(t,e,r,i),Y(t,e,n,o-1)):(Y(t,e,n,o-1),Y(t,e,r,i))}}function k(t,e,n){const i=t[e];t[e]=t[n],t[n]=i}function j(t){return t[0]}function H(t){return t[1]}class W{constructor(){this._x0=this._y0=this._x1=this._y1=null,this._=""}moveTo(t,e){this._+=`M${this._x0=this._x1=+t},${this._y0=this._y1=+e}`}closePath(){null!==this._x1&&(this._x1=this._x0,this._y1=this._y0,this._+="Z")}lineTo(t,e){this._+=`L${this._x1=+t},${this._y1=+e}`}arc(t,e,n){const i=(t=+t)+(n=+n),r=e=+e;if(n<0)throw new Error("negative radius");null===this._x1?this._+=`M${i},${r}`:(Math.abs(this._x1-i)>1e-6||Math.abs(this._y1-r)>1e-6)&&(this._+="L"+i+","+r),n&&(this._+=`A${n},${n},0,1,1,${t-n},${e}A${n},${n},0,1,1,${this._x1=i},${this._y1=r}`)}rect(t,e,n,i){this._+=`M${this._x0=this._x1=+t},${this._y0=this._y1=+e}h${+n}v${+i}h${-n}Z`}value(){return this._||null}}class K{constructor(){this._=[]}moveTo(t,e){this._.push([t,e])}closePath(){this._.push(this._[0].slice())}lineTo(t,e){this._.push([t,e])}value(){return this._.length?this._:null}}class J{constructor(t,[e,n,i,r]=[0,0,960,500]){if(!((i=+i)>=(e=+e)&&(r=+r)>=(n=+n)))throw new Error("invalid bounds");this.delaunay=t,this._circumcenters=new Float64Array(2*t.points.length),this.vectors=new Float64Array(2*t.points.length),this.xmax=i,this.xmin=e,this.ymax=r,this.ymin=n,this._init()}update(){return this.delaunay.update(),this._init(),this}_init(){const{delaunay:{points:t,hull:e,triangles:n},vectors:i}=this,r=this.circumcenters=this._circumcenters.subarray(0,n.length/3*2);for(let e,i,o=0,s=0,a=n.length;o<a;o+=3,s+=2){const a=2*n[o],u=2*n[o+1],l=2*n[o+2],c=t[a],h=t[a+1],p=t[u],f=t[u+1],g=t[l],d=t[l+1],y=p-c,_=f-h,m=g-c,v=d-h,x=y*y+_*_,E=m*m+v*v,I=2*(y*v-_*m);if(I)if(Math.abs(I)<1e-8)e=(c+g)/2,i=(h+d)/2;else{const t=1/I;e=c+(v*x-_*E)*t,i=h+(y*E-m*x)*t}else e=(c+g)/2-1e8*v,i=(h+d)/2+1e8*m;r[s]=e,r[s+1]=i}let o,s,a,u=e[e.length-1],l=4*u,c=t[2*u],h=t[2*u+1];i.fill(0);for(let n=0;n<e.length;++n)u=e[n],o=l,s=c,a=h,l=4*u,c=t[2*u],h=t[2*u+1],i[o+2]=i[l]=a-h,i[o+3]=i[l+1]=c-s}render(t){const e=null==t?t=new W:void 0,{delaunay:{halfedges:n,inedges:i,hull:r},circumcenters:o,vectors:s}=this;if(r.length<=1)return null;for(let e=0,i=n.length;e<i;++e){const i=n[e];if(i<e)continue;const r=2*Math.floor(e/3),s=2*Math.floor(i/3),a=o[r],u=o[r+1],l=o[s],c=o[s+1];this._renderSegment(a,u,l,c,t)}let a,u=r[r.length-1];for(let e=0;e<r.length;++e){a=u,u=r[e];const n=2*Math.floor(i[u]/3),l=o[n],c=o[n+1],h=4*a,p=this._project(l,c,s[h+2],s[h+3]);p&&this._renderSegment(l,c,p[0],p[1],t)}return e&&e.value()}renderBounds(t){const e=null==t?t=new W:void 0;return t.rect(this.xmin,this.ymin,this.xmax-this.xmin,this.ymax-this.ymin),e&&e.value()}renderCell(t,e){const n=null==e?e=new W:void 0,i=this._clip(t);if(null===i||!i.length)return;e.moveTo(i[0],i[1]);let r=i.length;for(;i[0]===i[r-2]&&i[1]===i[r-1]&&r>1;)r-=2;for(let t=2;t<r;t+=2)i[t]===i[t-2]&&i[t+1]===i[t-1]||e.lineTo(i[t],i[t+1]);return e.closePath(),n&&n.value()}*cellPolygons(){const{delaunay:{points:t}}=this;for(let e=0,n=t.length/2;e<n;++e){const t=this.cellPolygon(e);t&&(t.index=e,yield t)}}cellPolygon(t){const e=new K;return this.renderCell(t,e),e.value()}_renderSegment(t,e,n,i,r){let o;const s=this._regioncode(t,e),a=this._regioncode(n,i);0===s&&0===a?(r.moveTo(t,e),r.lineTo(n,i)):(o=this._clipSegment(t,e,n,i,s,a))&&(r.moveTo(o[0],o[1]),r.lineTo(o[2],o[3]))}contains(t,e,n){return(e=+e)==e&&(n=+n)==n&&this.delaunay._step(t,e,n)===t}*neighbors(t){const e=this._clip(t);if(e)for(const n of this.delaunay.neighbors(t)){const t=this._clip(n);if(t)t:for(let i=0,r=e.length;i<r;i+=2)for(let o=0,s=t.length;o<s;o+=2)if(e[i]==t[o]&&e[i+1]==t[o+1]&&e[(i+2)%r]==t[(o+s-2)%s]&&e[(i+3)%r]==t[(o+s-1)%s]){yield n;break t}}}_cell(t){const{circumcenters:e,delaunay:{inedges:n,halfedges:i,triangles:r}}=this,o=n[t];if(-1===o)return null;const s=[];let a=o;do{const n=Math.floor(a/3);if(s.push(e[2*n],e[2*n+1]),a=a%3==2?a-2:a+1,r[a]!==t)break;a=i[a]}while(a!==o&&-1!==a);return s}_clip(t){if(0===t&&1===this.delaunay.hull.length)return[this.xmax,this.ymin,this.xmax,this.ymax,this.xmin,this.ymax,this.xmin,this.ymin];const e=this._cell(t);if(null===e)return null;const{vectors:n}=this,i=4*t;return n[i]||n[i+1]?this._clipInfinite(t,e,n[i],n[i+1],n[i+2],n[i+3]):this._clipFinite(t,e)}_clipFinite(t,e){const n=e.length;let i,r,o,s,a,u=null,l=e[n-2],c=e[n-1],h=this._regioncode(l,c);for(let p=0;p<n;p+=2)if(i=l,r=c,l=e[p],c=e[p+1],o=h,h=this._regioncode(l,c),0===o&&0===h)s=a,a=0,u?u.push(l,c):u=[l,c];else{let e,n,p,f,g;if(0===o){if(null===(e=this._clipSegment(i,r,l,c,o,h)))continue;[n,p,f,g]=e}else{if(null===(e=this._clipSegment(l,c,i,r,h,o)))continue;[f,g,n,p]=e,s=a,a=this._edgecode(n,p),s&&a&&this._edge(t,s,a,u,u.length),u?u.push(n,p):u=[n,p]}s=a,a=this._edgecode(f,g),s&&a&&this._edge(t,s,a,u,u.length),u?u.push(f,g):u=[f,g]}if(u)s=a,a=this._edgecode(u[0],u[1]),s&&a&&this._edge(t,s,a,u,u.length);else if(this.contains(t,(this.xmin+this.xmax)/2,(this.ymin+this.ymax)/2))return[this.xmax,this.ymin,this.xmax,this.ymax,this.xmin,this.ymax,this.xmin,this.ymin];return u}_clipSegment(t,e,n,i,r,o){for(;;){if(0===r&&0===o)return[t,e,n,i];if(r&o)return null;let s,a,u=r||o;8&u?(s=t+(n-t)*(this.ymax-e)/(i-e),a=this.ymax):4&u?(s=t+(n-t)*(this.ymin-e)/(i-e),a=this.ymin):2&u?(a=e+(i-e)*(this.xmax-t)/(n-t),s=this.xmax):(a=e+(i-e)*(this.xmin-t)/(n-t),s=this.xmin),r?(t=s,e=a,r=this._regioncode(t,e)):(n=s,i=a,o=this._regioncode(n,i))}}_clipInfinite(t,e,n,i,r,o){let s,a=Array.from(e);if((s=this._project(a[0],a[1],n,i))&&a.unshift(s[0],s[1]),(s=this._project(a[a.length-2],a[a.length-1],r,o))&&a.push(s[0],s[1]),a=this._clipFinite(t,a))for(let e,n=0,i=a.length,r=this._edgecode(a[i-2],a[i-1]);n<i;n+=2)e=r,r=this._edgecode(a[n],a[n+1]),e&&r&&(n=this._edge(t,e,r,a,n),i=a.length);else this.contains(t,(this.xmin+this.xmax)/2,(this.ymin+this.ymax)/2)&&(a=[this.xmin,this.ymin,this.xmax,this.ymin,this.xmax,this.ymax,this.xmin,this.ymax]);return a}_edge(t,e,n,i,r){for(;e!==n;){let n,o;switch(e){case 5:e=4;continue;case 4:e=6,n=this.xmax,o=this.ymin;break;case 6:e=2;continue;case 2:e=10,n=this.xmax,o=this.ymax;break;case 10:e=8;continue;case 8:e=9,n=this.xmin,o=this.ymax;break;case 9:e=1;continue;case 1:e=5,n=this.xmin,o=this.ymin}i[r]===n&&i[r+1]===o||!this.contains(t,n,o)||(i.splice(r,0,n,o),r+=2)}if(i.length>4)for(let t=0;t<i.length;t+=2){const e=(t+2)%i.length,n=(t+4)%i.length;(i[t]===i[e]&&i[e]===i[n]||i[t+1]===i[e+1]&&i[e+1]===i[n+1])&&(i.splice(e,2),t-=2)}return r}_project(t,e,n,i){let r,o,s,a=1/0;if(i<0){if(e<=this.ymin)return null;(r=(this.ymin-e)/i)<a&&(s=this.ymin,o=t+(a=r)*n)}else if(i>0){if(e>=this.ymax)return null;(r=(this.ymax-e)/i)<a&&(s=this.ymax,o=t+(a=r)*n)}if(n>0){if(t>=this.xmax)return null;(r=(this.xmax-t)/n)<a&&(o=this.xmax,s=e+(a=r)*i)}else if(n<0){if(t<=this.xmin)return null;(r=(this.xmin-t)/n)<a&&(o=this.xmin,s=e+(a=r)*i)}return[o,s]}_edgecode(t,e){return(t===this.xmin?1:t===this.xmax?2:0)|(e===this.ymin?4:e===this.ymax?8:0)}_regioncode(t,e){return(t<this.xmin?1:t>this.xmax?2:0)|(e<this.ymin?4:e>this.ymax?8:0)}}const Q=2*Math.PI,Z=Math.pow;function $(t){return t[0]}function tt(t){return t[1]}function et(t,e,n){return[t+Math.sin(t+e)*n,e+Math.cos(t-e)*n]}class nt{static from(t,e=$,n=tt,i){return new nt("length"in t?function(t,e,n,i){const r=t.length,o=new Float64Array(2*r);for(let s=0;s<r;++s){const r=t[s];o[2*s]=e.call(i,r,s,t),o[2*s+1]=n.call(i,r,s,t)}return o}(t,e,n,i):Float64Array.from(function*(t,e,n,i){let r=0;for(const o of t)yield e.call(i,o,r,t),yield n.call(i,o,r,t),++r}(t,e,n,i)))}constructor(t){this._delaunator=new B(t),this.inedges=new Int32Array(t.length/2),this._hullIndex=new Int32Array(t.length/2),this.points=this._delaunator.coords,this._init()}update(){return this._delaunator.update(),this._init(),this}_init(){const t=this._delaunator,e=this.points;if(t.hull&&t.hull.length>2&&function(t){const{triangles:e,coords:n}=t;for(let t=0;t<e.length;t+=3){const i=2*e[t],r=2*e[t+1],o=2*e[t+2];if((n[o]-n[i])*(n[r+1]-n[i+1])-(n[r]-n[i])*(n[o+1]-n[i+1])>1e-10)return!1}return!0}(t)){this.collinear=Int32Array.from({length:e.length/2},(t,e)=>e).sort((t,n)=>e[2*t]-e[2*n]||e[2*t+1]-e[2*n+1]);const t=this.collinear[0],n=this.collinear[this.collinear.length-1],i=[e[2*t],e[2*t+1],e[2*n],e[2*n+1]],r=1e-8*Math.hypot(i[3]-i[1],i[2]-i[0]);for(let t=0,n=e.length/2;t<n;++t){const n=et(e[2*t],e[2*t+1],r);e[2*t]=n[0],e[2*t+1]=n[1]}this._delaunator=new B(e)}else delete this.collinear;const n=this.halfedges=this._delaunator.halfedges,i=this.hull=this._delaunator.hull,r=this.triangles=this._delaunator.triangles,o=this.inedges.fill(-1),s=this._hullIndex.fill(-1);for(let t=0,e=n.length;t<e;++t){const e=r[t%3==2?t-2:t+1];-1!==n[t]&&-1!==o[e]||(o[e]=t)}for(let t=0,e=i.length;t<e;++t)s[i[t]]=t;i.length<=2&&i.length>0&&(this.triangles=new Int32Array(3).fill(-1),this.halfedges=new Int32Array(3).fill(-1),this.triangles[0]=i[0],this.triangles[1]=i[1],this.triangles[2]=i[1],o[i[0]]=1,2===i.length&&(o[i[1]]=0))}voronoi(t){return new J(this,t)}*neighbors(t){const{inedges:e,hull:n,_hullIndex:i,halfedges:r,triangles:o,collinear:s}=this;if(s){const e=s.indexOf(t);return e>0&&(yield s[e-1]),void(e<s.length-1&&(yield s[e+1]))}const a=e[t];if(-1===a)return;let u=a,l=-1;do{if(yield l=o[u],u=u%3==2?u-2:u+1,o[u]!==t)return;if(u=r[u],-1===u){const e=n[(i[t]+1)%n.length];return void(e!==l&&(yield e))}}while(u!==a)}find(t,e,n=0){if((t=+t)!=t||(e=+e)!=e)return-1;const i=n;let r;for(;(r=this._step(n,t,e))>=0&&r!==n&&r!==i;)n=r;return r}_step(t,e,n){const{inedges:i,hull:r,_hullIndex:o,halfedges:s,triangles:a,points:u}=this;if(-1===i[t]||!u.length)return(t+1)%(u.length>>1);let l=t,c=Z(e-u[2*t],2)+Z(n-u[2*t+1],2);const h=i[t];let p=h;do{let i=a[p];const h=Z(e-u[2*i],2)+Z(n-u[2*i+1],2);if(h<c&&(c=h,l=i),p=p%3==2?p-2:p+1,a[p]!==t)break;if(p=s[p],-1===p){if(p=r[(o[t]+1)%r.length],p!==i&&Z(e-u[2*p],2)+Z(n-u[2*p+1],2)<c)return p;break}}while(p!==h);return l}render(t){const e=null==t?t=new W:void 0,{points:n,halfedges:i,triangles:r}=this;for(let e=0,o=i.length;e<o;++e){const o=i[e];if(o<e)continue;const s=2*r[e],a=2*r[o];t.moveTo(n[s],n[s+1]),t.lineTo(n[a],n[a+1])}return this.renderHull(t),e&&e.value()}renderPoints(t,e=2){const n=null==t?t=new W:void 0,{points:i}=this;for(let n=0,r=i.length;n<r;n+=2){const r=i[n],o=i[n+1];t.moveTo(r+e,o),t.arc(r,o,e,0,Q)}return n&&n.value()}renderHull(t){const e=null==t?t=new W:void 0,{hull:n,points:i}=this,r=2*n[0],o=n.length;t.moveTo(i[r],i[r+1]);for(let e=1;e<o;++e){const r=2*n[e];t.lineTo(i[r],i[r+1])}return t.closePath(),e&&e.value()}hullPolygon(){const t=new K;return this.renderHull(t),t.value()}renderTriangle(t,e){const n=null==e?e=new W:void 0,{points:i,triangles:r}=this,o=2*r[t*=3],s=2*r[t+1],a=2*r[t+2];return e.moveTo(i[o],i[o+1]),e.lineTo(i[s],i[s+1]),e.lineTo(i[a],i[a+1]),e.closePath(),n&&n.value()}*trianglePolygons(){const{triangles:t}=this;for(let e=0,n=t.length/3;e<n;++e)yield this.trianglePolygon(e)}trianglePolygon(t){const e=new K;return this.renderTriangle(t,e),e.value()}}var it;!function(t){t.BASIC="BASIC",t.GRID_SQUARE="GRID_SQUARE"}(it||(it={}));var rt={type:it.BASIC,componentSpacing:50},ot=function(t,e){void 0===e&&(e=rt),e!==rt&&(e=r(r({},rt),e));var n=r(r({},e),{componentSpacing:void 0!==e.componentSpacing?e.componentSpacing:lt(t)}),i=t.map((function(t){return st(t)})),o={nodes:i,edges:ut(i)};return A(o,n),{shifts:o.nodes.map((function(t){var e=t.base;return{dx:e.x,dy:e.y}})),fullness:ct(i)}},st=function(t){var e,n,i=[];try{for(var r=o(t.nodes),s=r.next();!s.done;s=r.next()){var a=s.value;i.push({x:a.x,y:a.y}),i.push({x:a.x+a.width,y:a.y}),i.push({x:a.x,y:a.y+a.height}),i.push({x:a.x+a.width,y:a.y+a.height})}}catch(t){e={error:t}}finally{try{s&&!s.done&&(n=r.return)&&n.call(r)}finally{if(e)throw e.error}}return d.fromPoints(i)},at=function(t){var e,n,i={minX:Number.MAX_SAFE_INTEGER,maxX:Number.MIN_SAFE_INTEGER,minY:Number.MAX_SAFE_INTEGER,maxY:Number.MIN_SAFE_INTEGER};try{for(var r=o(t),s=r.next();!s.done;s=r.next()){var a=s.value.boundingBox;a.minX<i.minX&&(i.minX=a.minX),a.maxX>i.maxX&&(i.maxX=a.maxX),a.minY<i.minY&&(i.minY=a.minY),a.maxY>i.maxY&&(i.maxY=a.maxY)}}catch(t){e={error:t}}finally{try{s&&!s.done&&(n=r.return)&&n.call(r)}finally{if(e)throw e.error}}return i},ut=function(t){for(var e,n,i=Array.from({length:t.length},(function(){return[]})),r=(g(t.map((function(t){return t.boundingBox}))),function(t,e){for(var n,i,r=e.map(N),s=Array.from({length:e.length},(function(){return[]})),a=nt.from(r).voronoi([Number.MIN_SAFE_INTEGER,Number.MIN_SAFE_INTEGER,Number.MAX_SAFE_INTEGER,Number.MAX_SAFE_INTEGER]),u=0;u<e.length;++u)try{for(var l=(n=void 0,o(a.neighbors(u))),c=l.next();!c.done;c=l.next()){var h=c.value;s[u].push(h)}}catch(t){n={error:t}}finally{try{c&&!c.done&&(i=l.return)&&i.call(l)}finally{if(n)throw n.error}}return s}(0,t.map((function(t){return t.center})))),s=0;s<r.length;++s)try{for(var a=(e=void 0,o(r[s])),u=a.next();!u.done;u=a.next()){var l=u.value;l>s&&i[s].push(l)}}catch(t){e={error:t}}finally{try{u&&!u.done&&(n=a.return)&&n.call(a)}finally{if(e)throw e.error}}return i},lt=function(t){var e,n,i=0,r=0;try{for(var s=o(t),a=s.next();!a.done;a=s.next()){var u=a.value;if(u.edges.length>0){r+=1;var l=u.edges[0];i+=Math.sqrt(h({x:l.startX,y:l.startY},{x:l.endX,y:l.endY}))}}}catch(t){e={error:t}}finally{try{a&&!a.done&&(n=s.return)&&n.call(s)}finally{if(e)throw e.error}}return i/r*1.5},ct=function(t){var e=t.map((function(t){return t.boundingBox})),n=g(e);return e.map((function(t){return f(t)})).reduce((function(t,e){return t+e}))/f(n)*100}}])},t.exports=i()}])}));
-
-/***/ }),
-
-/***/ "./node_modules/cytoscape-qtip/cytoscape-qtip.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/cytoscape-qtip/cytoscape-qtip.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-Copyright (c) The Cytoscape Consortium
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-
-;(function( $, $$ ){ 'use strict';
-
-  var isObject = function(o){
-    return o != null && typeof o === 'object';
-  };
-
-  var isFunction = function(o){
-    return o != null && typeof o === 'function';
-  };
-
-  var isNumber = function(o){
-    return o != null && typeof o === 'number';
-  };
-
-  var isString = function(o){
-    return o != null && typeof o === 'string';
-  };
-
-  var isUndef = function(o){
-    return o === undefined;
-  };
-
-  var wrap = function(obj, target) {
-    if( isFunction(obj) ) {
-      return function(event, api){
-        return obj.apply( target, [event, api] );
-      };
-    } else {
-      return obj;
-    }
-  };
-
-  var fixDomContainer = function(ele) {
-    return ele && ( ele[0] === window ) ? undefined : ele;
-  };
-
-  var throttle = function(func, wait, options) {
-    var leading = true,
-        trailing = true;
-
-    if (options === false) {
-      leading = false;
-    } else if (isObject(options)) {
-      leading = 'leading' in options ? options.leading : leading;
-      trailing = 'trailing' in options ? options.trailing : trailing;
-    }
-    options = options || {};
-    options.leading = leading;
-    options.maxWait = wait;
-    options.trailing = trailing;
-
-    return debounce(func, wait, options);
-  };
-
-  var debounce = function(func, wait, options) { // ported lodash debounce function
-    var args,
-        maxTimeoutId,
-        result,
-        stamp,
-        thisArg,
-        timeoutId,
-        trailingCall,
-        lastCalled = 0,
-        maxWait = false,
-        trailing = true;
-
-    if (!isFunction(func)) {
-      return;
-    }
-    wait = Math.max(0, wait) || 0;
-    if (options === true) {
-      var leading = true;
-      trailing = false;
-    } else if (isObject(options)) {
-      leading = options.leading;
-      maxWait = 'maxWait' in options && (Math.max(wait, options.maxWait) || 0);
-      trailing = 'trailing' in options ? options.trailing : trailing;
-    }
-    var delayed = function() {
-      var remaining = wait - (Date.now() - stamp);
-      if (remaining <= 0) {
-        if (maxTimeoutId) {
-          clearTimeout(maxTimeoutId);
-        }
-        var isCalled = trailingCall;
-        maxTimeoutId = timeoutId = trailingCall = undefined;
-        if (isCalled) {
-          lastCalled = Date.now();
-          result = func.apply(thisArg, args);
-          if (!timeoutId && !maxTimeoutId) {
-            args = thisArg = null;
-          }
-        }
-      } else {
-        timeoutId = setTimeout(delayed, remaining);
-      }
-    };
-
-    var maxDelayed = function() {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      maxTimeoutId = timeoutId = trailingCall = undefined;
-      if (trailing || (maxWait !== wait)) {
-        lastCalled = Date.now();
-        result = func.apply(thisArg, args);
-        if (!timeoutId && !maxTimeoutId) {
-          args = thisArg = null;
-        }
-      }
-    };
-
-    return function() {
-      args = arguments;
-      stamp = Date.now();
-      thisArg = this;
-      trailingCall = trailing && (timeoutId || !leading);
-
-      if (maxWait === false) {
-        var leadingCall = leading && !timeoutId;
-      } else {
-        if (!maxTimeoutId && !leading) {
-          lastCalled = stamp;
-        }
-        var remaining = maxWait - (stamp - lastCalled),
-            isCalled = remaining <= 0;
-
-        if (isCalled) {
-          if (maxTimeoutId) {
-            maxTimeoutId = clearTimeout(maxTimeoutId);
-          }
-          lastCalled = stamp;
-          result = func.apply(thisArg, args);
-        }
-        else if (!maxTimeoutId) {
-          maxTimeoutId = setTimeout(maxDelayed, remaining);
-        }
-      }
-      if (isCalled && timeoutId) {
-        timeoutId = clearTimeout(timeoutId);
-      }
-      else if (!timeoutId && wait !== maxWait) {
-        timeoutId = setTimeout(delayed, wait);
-      }
-      if (leadingCall) {
-        isCalled = true;
-        result = func.apply(thisArg, args);
-      }
-      if (isCalled && !timeoutId && !maxTimeoutId) {
-        args = thisArg = null;
-      }
-      return result;
-    };
-  };
-
-  function register( $$, $ ){
-
-    // use a single dummy dom ele as target for every qtip
-    var $qtipContainer = $('<div></div>');
-    var viewportDebounceRate = 250;
-
-    $qtipContainer.css({
-      'z-index': -1,
-      'position': 'absolute'
-    });
-
-    function generateOpts( target, passedOpts ){
-      var qtip = target.scratch().qtip;
-      var opts = $.extend( {}, passedOpts );
-
-      if( !opts.id ){
-        opts.id = 'cy-qtip-target-' + ( Date.now() + Math.round( Math.random() * 10000) );
-      }
-
-      if( !qtip.$domEle ){
-        qtip.$domEle = $qtipContainer;
-      }
-
-      // qtip should be positioned relative to cy dom container
-      opts.position = opts.position || {};
-      opts.position.container = fixDomContainer(opts.position.container) || $( document.body );
-      opts.position.viewport = fixDomContainer(opts.position.viewport) || $( document.body );
-      opts.position.target = [0, 0];
-      opts.position.my = opts.position.my || 'top center';
-      opts.position.at = opts.position.at || 'bottom center';
-
-      // adjust
-      var adjust = opts.position.adjust = opts.position.adjust || {};
-      adjust.method = adjust.method || 'flip';
-      adjust.mouse = false;
-
-      // default show event
-      opts.show = opts.show || {};
-
-      if( isUndef(opts.show.event) ){
-        opts.show.event = 'tap';
-      }
-
-      // default hide event
-      opts.hide = opts.hide || {};
-      opts.hide.cyViewport = opts.hide.cyViewport === undefined ? true : opts.hide.cyViewport;
-
-      if( isUndef(opts.hide.event) ){
-        opts.hide.event = 'unfocus';
-      }
-
-      // so multiple qtips can exist at once (only works on recent qtip2 versions)
-      opts.overwrite = false;
-
-      if( opts.content ){
-        if ( isFunction(opts.content) || isString(opts.content) ){
-          opts.content = wrap( opts.content, target );
-        } else {
-          opts.content = {
-            text: wrap( opts.content.text, target ),
-            title: wrap( opts.content.title, target )
-          };
-        }
-      }
-
-      return opts;
-    }
-
-    function updatePosition(ele, qtip, evt){
-      var e = evt;
-      var isCy = isFunction( ele.pan );
-      var isEle = !isCy;
-      var isNode = isEle && ele.isNode();
-      var cy = isCy ? ele : ele.cy();
-      var cOff = cy.container().getBoundingClientRect();
-      var pos = isNode ? ele.renderedPosition() : ( e ? e.renderedPosition || e.cyRenderedPosition : undefined );
-      if( !pos || pos.x == null || isNaN(pos.x) ){ return; }
-
-      var bb = isNode ? ele.renderedBoundingBox({
-        includeNodes: true,
-        includeEdges: false,
-        includeLabels: false,
-        includeShadows: false
-      }) : {
-        x1: pos.x - 1,
-        x2: pos.x + 1,
-        w: 3,
-        y1: pos.y - 1,
-        y2: pos.y + 1,
-        h: 3
-      };
-
-      if( qtip.$domEle.parent().length === 0 ){
-        qtip.$domEle.appendTo(document.body);
-      }
-
-      qtip.$domEle.css({
-        'width': bb.w,
-        'height': bb.h,
-        'top': bb.y1 + cOff.top + window.pageYOffset,
-        'left': bb.x1 + cOff.left + window.pageXOffset,
-        'position': 'absolute',
-        'pointer-events': 'none',
-        'background': 'red',
-        'z-index': 99999999,
-        'opacity': 0.5,
-        'visibility': 'hidden'
-      });
-
-      qtip.api.set('position.target', qtip.$domEle);
-    }
-
-    $$('collection', 'qtip', function( passedOpts ){
-      var eles = this;
-      var cy = this.cy();
-      var container = cy.container();
-
-      if( passedOpts === 'api' ){
-        var qtip = this.scratch().qtip;
-        return qtip ? qtip.api : null;
-      }
-
-      eles.each(function(ele, i){
-        // Perform 2.x and 1.x backwards compatibility check
-        if(isNumber(ele)){
-          ele = i;
-        }
-        var scratch = ele.scratch();
-        var qtip = scratch.qtip = scratch.qtip || {};
-        var opts = generateOpts( ele, passedOpts );
-        var adjNums = opts.position.adjust;
-
-        qtip.$domEle.qtip( opts );
-        var qtipApi = qtip.api = qtip.$domEle.qtip('api'); // save api ref
-        qtip.$domEle.removeData('qtip'); // remove qtip dom/api ref to be safe
-
-        updatePosition(ele, qtip);
-
-        ele.on( opts.show.event, function(e){
-          updatePosition(ele, qtip, e);
-          qtipApi.show();
-        } );
-
-        ele.on( opts.hide.event, function(e){
-          qtipApi.hide();
-        } );
-
-        if( opts.hide.cyViewport ){
-          cy.on('viewport', debounce(function(){
-            qtipApi.hide();
-          }, viewportDebounceRate, { leading: true }) );
-        }
-
-        if( opts.position.adjust.cyViewport ){
-          cy.on('pan zoom', debounce(function(e){
-            updatePosition(ele, qtip, e);
-
-            qtipApi.reposition();
-          }, viewportDebounceRate, { trailing: true }) );
-        }
-
-      });
-
-      return this; // chainability
-
-    });
-
-    $$('core', 'qtip', function( passedOpts ){
-      var cy = this;
-      var container = cy.container();
-
-      if( passedOpts === 'api' ){
-        var qtip = this.scratch().qtip;
-        return qtip ? qtip.api : null;
-      }
-
-      var scratch = cy.scratch();
-      var qtip = scratch.qtip = scratch.qtip || {};
-      var opts = generateOpts( cy, passedOpts );
-
-
-      qtip.$domEle.qtip( opts );
-      var qtipApi = qtip.api = qtip.$domEle.qtip('api'); // save api ref
-      qtip.$domEle.removeData('qtip'); // remove qtip dom/api ref to be safe
-
-      cy.on( opts.show.event, function(e){
-        if( !opts.show.cyBgOnly || (opts.show.cyBgOnly && (e.target === cy || e.cyTarget === cy)) ){
-          updatePosition(cy, qtip, e);
-
-          qtipApi.show();
-        }
-      } );
-
-      cy.on( opts.hide.event, function(e){
-        if( !opts.hide.cyBgOnly || (opts.hide.cyBgOnly && (e.target === cy || e.cyTarget === cy)) ){
-          qtipApi.hide();
-        }
-      } );
-
-      if( opts.hide.cyViewport ){
-        cy.on('viewport', debounce(function(){
-          qtipApi.hide();
-        }, viewportDebounceRate, { leading: true }) );
-      }
-
-      return this; // chainability
-
-    });
-
-  }
-
-  if(  true && module.exports ){ // expose as a commonjs module
-    module.exports = function( cytoscape ){
-      var oldJq = window.jQuery;
-      var old$ = window.$;
-
-      var jQuery = window.jQuery = window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // qtip requires global jquery
-      var qtip = __webpack_require__(/*! qtip2 */ "./node_modules/qtip2/dist/jquery.qtip.js");
-
-      register( cytoscape, jQuery );
-
-      window.jQuery = oldJq;
-      window.$ = old$;
-    };
-  } else if( true ){ // expose as an amd/requirejs module
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){
-      return register;
-    }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  }
-
-  if( $ && $$ ){
-    register( $$, $ );
-  }
-
-})(
-  typeof jQuery !== 'undefined' ? jQuery : null,
-  typeof cytoscape !== 'undefined' ? cytoscape : null
-);
-
 
 /***/ }),
 
@@ -46094,6 +50196,5241 @@ return jQuery;
 
 /***/ }),
 
+/***/ "./node_modules/layout-base/layout-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/layout-base/layout-base.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else {}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function LayoutConstants() {}
+
+/**
+ * Layout Quality: 0:draft, 1:default, 2:proof
+ */
+LayoutConstants.QUALITY = 1;
+
+/**
+ * Default parameters
+ */
+LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED = false;
+LayoutConstants.DEFAULT_INCREMENTAL = false;
+LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT = true;
+LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT = false;
+LayoutConstants.DEFAULT_ANIMATION_PERIOD = 50;
+LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = false;
+
+// -----------------------------------------------------------------------------
+// Section: General other constants
+// -----------------------------------------------------------------------------
+/*
+ * Margins of a graph to be applied on bouding rectangle of its contents. We
+ * assume margins on all four sides to be uniform.
+ */
+LayoutConstants.DEFAULT_GRAPH_MARGIN = 15;
+
+/*
+ * Whether to consider labels in node dimensions or not
+ */
+LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = false;
+
+/*
+ * Default dimension of a non-compound node.
+ */
+LayoutConstants.SIMPLE_NODE_SIZE = 40;
+
+/*
+ * Default dimension of a non-compound node.
+ */
+LayoutConstants.SIMPLE_NODE_HALF_SIZE = LayoutConstants.SIMPLE_NODE_SIZE / 2;
+
+/*
+ * Empty compound node size. When a compound node is empty, its both
+ * dimensions should be of this value.
+ */
+LayoutConstants.EMPTY_COMPOUND_NODE_SIZE = 40;
+
+/*
+ * Minimum length that an edge should take during layout
+ */
+LayoutConstants.MIN_EDGE_LENGTH = 1;
+
+/*
+ * World boundaries that layout operates on
+ */
+LayoutConstants.WORLD_BOUNDARY = 1000000;
+
+/*
+ * World boundaries that random positioning can be performed with
+ */
+LayoutConstants.INITIAL_WORLD_BOUNDARY = LayoutConstants.WORLD_BOUNDARY / 1000;
+
+/*
+ * Coordinates of the world center
+ */
+LayoutConstants.WORLD_CENTER_X = 1200;
+LayoutConstants.WORLD_CENTER_Y = 900;
+
+module.exports = LayoutConstants;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraphObject = __webpack_require__(2);
+var IGeometry = __webpack_require__(8);
+var IMath = __webpack_require__(9);
+
+function LEdge(source, target, vEdge) {
+  LGraphObject.call(this, vEdge);
+
+  this.isOverlapingSourceAndTarget = false;
+  this.vGraphObject = vEdge;
+  this.bendpoints = [];
+  this.source = source;
+  this.target = target;
+}
+
+LEdge.prototype = Object.create(LGraphObject.prototype);
+
+for (var prop in LGraphObject) {
+  LEdge[prop] = LGraphObject[prop];
+}
+
+LEdge.prototype.getSource = function () {
+  return this.source;
+};
+
+LEdge.prototype.getTarget = function () {
+  return this.target;
+};
+
+LEdge.prototype.isInterGraph = function () {
+  return this.isInterGraph;
+};
+
+LEdge.prototype.getLength = function () {
+  return this.length;
+};
+
+LEdge.prototype.isOverlapingSourceAndTarget = function () {
+  return this.isOverlapingSourceAndTarget;
+};
+
+LEdge.prototype.getBendpoints = function () {
+  return this.bendpoints;
+};
+
+LEdge.prototype.getLca = function () {
+  return this.lca;
+};
+
+LEdge.prototype.getSourceInLca = function () {
+  return this.sourceInLca;
+};
+
+LEdge.prototype.getTargetInLca = function () {
+  return this.targetInLca;
+};
+
+LEdge.prototype.getOtherEnd = function (node) {
+  if (this.source === node) {
+    return this.target;
+  } else if (this.target === node) {
+    return this.source;
+  } else {
+    throw "Node is not incident with this edge";
+  }
+};
+
+LEdge.prototype.getOtherEndInGraph = function (node, graph) {
+  var otherEnd = this.getOtherEnd(node);
+  var root = graph.getGraphManager().getRoot();
+
+  while (true) {
+    if (otherEnd.getOwner() == graph) {
+      return otherEnd;
+    }
+
+    if (otherEnd.getOwner() == root) {
+      break;
+    }
+
+    otherEnd = otherEnd.getOwner().getParent();
+  }
+
+  return null;
+};
+
+LEdge.prototype.updateLength = function () {
+  var clipPointCoordinates = new Array(4);
+
+  this.isOverlapingSourceAndTarget = IGeometry.getIntersection(this.target.getRect(), this.source.getRect(), clipPointCoordinates);
+
+  if (!this.isOverlapingSourceAndTarget) {
+    this.lengthX = clipPointCoordinates[0] - clipPointCoordinates[2];
+    this.lengthY = clipPointCoordinates[1] - clipPointCoordinates[3];
+
+    if (Math.abs(this.lengthX) < 1.0) {
+      this.lengthX = IMath.sign(this.lengthX);
+    }
+
+    if (Math.abs(this.lengthY) < 1.0) {
+      this.lengthY = IMath.sign(this.lengthY);
+    }
+
+    this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+  }
+};
+
+LEdge.prototype.updateLengthSimple = function () {
+  this.lengthX = this.target.getCenterX() - this.source.getCenterX();
+  this.lengthY = this.target.getCenterY() - this.source.getCenterY();
+
+  if (Math.abs(this.lengthX) < 1.0) {
+    this.lengthX = IMath.sign(this.lengthX);
+  }
+
+  if (Math.abs(this.lengthY) < 1.0) {
+    this.lengthY = IMath.sign(this.lengthY);
+  }
+
+  this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+};
+
+module.exports = LEdge;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function LGraphObject(vGraphObject) {
+  this.vGraphObject = vGraphObject;
+}
+
+module.exports = LGraphObject;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraphObject = __webpack_require__(2);
+var Integer = __webpack_require__(10);
+var RectangleD = __webpack_require__(13);
+var LayoutConstants = __webpack_require__(0);
+var RandomSeed = __webpack_require__(16);
+var PointD = __webpack_require__(5);
+
+function LNode(gm, loc, size, vNode) {
+  //Alternative constructor 1 : LNode(LGraphManager gm, Point loc, Dimension size, Object vNode)
+  if (size == null && vNode == null) {
+    vNode = loc;
+  }
+
+  LGraphObject.call(this, vNode);
+
+  //Alternative constructor 2 : LNode(Layout layout, Object vNode)
+  if (gm.graphManager != null) gm = gm.graphManager;
+
+  this.estimatedSize = Integer.MIN_VALUE;
+  this.inclusionTreeDepth = Integer.MAX_VALUE;
+  this.vGraphObject = vNode;
+  this.edges = [];
+  this.graphManager = gm;
+
+  if (size != null && loc != null) this.rect = new RectangleD(loc.x, loc.y, size.width, size.height);else this.rect = new RectangleD();
+}
+
+LNode.prototype = Object.create(LGraphObject.prototype);
+for (var prop in LGraphObject) {
+  LNode[prop] = LGraphObject[prop];
+}
+
+LNode.prototype.getEdges = function () {
+  return this.edges;
+};
+
+LNode.prototype.getChild = function () {
+  return this.child;
+};
+
+LNode.prototype.getOwner = function () {
+  //  if (this.owner != null) {
+  //    if (!(this.owner == null || this.owner.getNodes().indexOf(this) > -1)) {
+  //      throw "assert failed";
+  //    }
+  //  }
+
+  return this.owner;
+};
+
+LNode.prototype.getWidth = function () {
+  return this.rect.width;
+};
+
+LNode.prototype.setWidth = function (width) {
+  this.rect.width = width;
+};
+
+LNode.prototype.getHeight = function () {
+  return this.rect.height;
+};
+
+LNode.prototype.setHeight = function (height) {
+  this.rect.height = height;
+};
+
+LNode.prototype.getCenterX = function () {
+  return this.rect.x + this.rect.width / 2;
+};
+
+LNode.prototype.getCenterY = function () {
+  return this.rect.y + this.rect.height / 2;
+};
+
+LNode.prototype.getCenter = function () {
+  return new PointD(this.rect.x + this.rect.width / 2, this.rect.y + this.rect.height / 2);
+};
+
+LNode.prototype.getLocation = function () {
+  return new PointD(this.rect.x, this.rect.y);
+};
+
+LNode.prototype.getRect = function () {
+  return this.rect;
+};
+
+LNode.prototype.getDiagonal = function () {
+  return Math.sqrt(this.rect.width * this.rect.width + this.rect.height * this.rect.height);
+};
+
+/**
+ * This method returns half the diagonal length of this node.
+ */
+LNode.prototype.getHalfTheDiagonal = function () {
+  return Math.sqrt(this.rect.height * this.rect.height + this.rect.width * this.rect.width) / 2;
+};
+
+LNode.prototype.setRect = function (upperLeft, dimension) {
+  this.rect.x = upperLeft.x;
+  this.rect.y = upperLeft.y;
+  this.rect.width = dimension.width;
+  this.rect.height = dimension.height;
+};
+
+LNode.prototype.setCenter = function (cx, cy) {
+  this.rect.x = cx - this.rect.width / 2;
+  this.rect.y = cy - this.rect.height / 2;
+};
+
+LNode.prototype.setLocation = function (x, y) {
+  this.rect.x = x;
+  this.rect.y = y;
+};
+
+LNode.prototype.moveBy = function (dx, dy) {
+  this.rect.x += dx;
+  this.rect.y += dy;
+};
+
+LNode.prototype.getEdgeListToNode = function (to) {
+  var edgeList = [];
+  var edge;
+  var self = this;
+
+  self.edges.forEach(function (edge) {
+
+    if (edge.target == to) {
+      if (edge.source != self) throw "Incorrect edge source!";
+
+      edgeList.push(edge);
+    }
+  });
+
+  return edgeList;
+};
+
+LNode.prototype.getEdgesBetween = function (other) {
+  var edgeList = [];
+  var edge;
+
+  var self = this;
+  self.edges.forEach(function (edge) {
+
+    if (!(edge.source == self || edge.target == self)) throw "Incorrect edge source and/or target";
+
+    if (edge.target == other || edge.source == other) {
+      edgeList.push(edge);
+    }
+  });
+
+  return edgeList;
+};
+
+LNode.prototype.getNeighborsList = function () {
+  var neighbors = new Set();
+
+  var self = this;
+  self.edges.forEach(function (edge) {
+
+    if (edge.source == self) {
+      neighbors.add(edge.target);
+    } else {
+      if (edge.target != self) {
+        throw "Incorrect incidency!";
+      }
+
+      neighbors.add(edge.source);
+    }
+  });
+
+  return neighbors;
+};
+
+LNode.prototype.withChildren = function () {
+  var withNeighborsList = new Set();
+  var childNode;
+  var children;
+
+  withNeighborsList.add(this);
+
+  if (this.child != null) {
+    var nodes = this.child.getNodes();
+    for (var i = 0; i < nodes.length; i++) {
+      childNode = nodes[i];
+      children = childNode.withChildren();
+      children.forEach(function (node) {
+        withNeighborsList.add(node);
+      });
+    }
+  }
+
+  return withNeighborsList;
+};
+
+LNode.prototype.getNoOfChildren = function () {
+  var noOfChildren = 0;
+  var childNode;
+
+  if (this.child == null) {
+    noOfChildren = 1;
+  } else {
+    var nodes = this.child.getNodes();
+    for (var i = 0; i < nodes.length; i++) {
+      childNode = nodes[i];
+
+      noOfChildren += childNode.getNoOfChildren();
+    }
+  }
+
+  if (noOfChildren == 0) {
+    noOfChildren = 1;
+  }
+  return noOfChildren;
+};
+
+LNode.prototype.getEstimatedSize = function () {
+  if (this.estimatedSize == Integer.MIN_VALUE) {
+    throw "assert failed";
+  }
+  return this.estimatedSize;
+};
+
+LNode.prototype.calcEstimatedSize = function () {
+  if (this.child == null) {
+    return this.estimatedSize = (this.rect.width + this.rect.height) / 2;
+  } else {
+    this.estimatedSize = this.child.calcEstimatedSize();
+    this.rect.width = this.estimatedSize;
+    this.rect.height = this.estimatedSize;
+
+    return this.estimatedSize;
+  }
+};
+
+LNode.prototype.scatter = function () {
+  var randomCenterX;
+  var randomCenterY;
+
+  var minX = -LayoutConstants.INITIAL_WORLD_BOUNDARY;
+  var maxX = LayoutConstants.INITIAL_WORLD_BOUNDARY;
+  randomCenterX = LayoutConstants.WORLD_CENTER_X + RandomSeed.nextDouble() * (maxX - minX) + minX;
+
+  var minY = -LayoutConstants.INITIAL_WORLD_BOUNDARY;
+  var maxY = LayoutConstants.INITIAL_WORLD_BOUNDARY;
+  randomCenterY = LayoutConstants.WORLD_CENTER_Y + RandomSeed.nextDouble() * (maxY - minY) + minY;
+
+  this.rect.x = randomCenterX;
+  this.rect.y = randomCenterY;
+};
+
+LNode.prototype.updateBounds = function () {
+  if (this.getChild() == null) {
+    throw "assert failed";
+  }
+  if (this.getChild().getNodes().length != 0) {
+    // wrap the children nodes by re-arranging the boundaries
+    var childGraph = this.getChild();
+    childGraph.updateBounds(true);
+
+    this.rect.x = childGraph.getLeft();
+    this.rect.y = childGraph.getTop();
+
+    this.setWidth(childGraph.getRight() - childGraph.getLeft());
+    this.setHeight(childGraph.getBottom() - childGraph.getTop());
+
+    // Update compound bounds considering its label properties    
+    if (LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS) {
+
+      var width = childGraph.getRight() - childGraph.getLeft();
+      var height = childGraph.getBottom() - childGraph.getTop();
+
+      if (this.labelWidth) {
+        if (this.labelPosHorizontal == "left") {
+          this.rect.x -= this.labelWidth;
+          this.setWidth(width + this.labelWidth);
+        } else if (this.labelPosHorizontal == "center" && this.labelWidth > width) {
+          this.rect.x -= (this.labelWidth - width) / 2;
+          this.setWidth(this.labelWidth);
+        } else if (this.labelPosHorizontal == "right") {
+          this.setWidth(width + this.labelWidth);
+        }
+      }
+
+      if (this.labelHeight) {
+        if (this.labelPosVertical == "top") {
+          this.rect.y -= this.labelHeight;
+          this.setHeight(height + this.labelHeight);
+        } else if (this.labelPosVertical == "center" && this.labelHeight > height) {
+          this.rect.y -= (this.labelHeight - height) / 2;
+          this.setHeight(this.labelHeight);
+        } else if (this.labelPosVertical == "bottom") {
+          this.setHeight(height + this.labelHeight);
+        }
+      }
+    }
+  }
+};
+
+LNode.prototype.getInclusionTreeDepth = function () {
+  if (this.inclusionTreeDepth == Integer.MAX_VALUE) {
+    throw "assert failed";
+  }
+  return this.inclusionTreeDepth;
+};
+
+LNode.prototype.transform = function (trans) {
+  var left = this.rect.x;
+
+  if (left > LayoutConstants.WORLD_BOUNDARY) {
+    left = LayoutConstants.WORLD_BOUNDARY;
+  } else if (left < -LayoutConstants.WORLD_BOUNDARY) {
+    left = -LayoutConstants.WORLD_BOUNDARY;
+  }
+
+  var top = this.rect.y;
+
+  if (top > LayoutConstants.WORLD_BOUNDARY) {
+    top = LayoutConstants.WORLD_BOUNDARY;
+  } else if (top < -LayoutConstants.WORLD_BOUNDARY) {
+    top = -LayoutConstants.WORLD_BOUNDARY;
+  }
+
+  var leftTop = new PointD(left, top);
+  var vLeftTop = trans.inverseTransformPoint(leftTop);
+
+  this.setLocation(vLeftTop.x, vLeftTop.y);
+};
+
+LNode.prototype.getLeft = function () {
+  return this.rect.x;
+};
+
+LNode.prototype.getRight = function () {
+  return this.rect.x + this.rect.width;
+};
+
+LNode.prototype.getTop = function () {
+  return this.rect.y;
+};
+
+LNode.prototype.getBottom = function () {
+  return this.rect.y + this.rect.height;
+};
+
+LNode.prototype.getParent = function () {
+  if (this.owner == null) {
+    return null;
+  }
+
+  return this.owner.getParent();
+};
+
+module.exports = LNode;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LayoutConstants = __webpack_require__(0);
+
+function FDLayoutConstants() {}
+
+//FDLayoutConstants inherits static props in LayoutConstants
+for (var prop in LayoutConstants) {
+  FDLayoutConstants[prop] = LayoutConstants[prop];
+}
+
+FDLayoutConstants.MAX_ITERATIONS = 2500;
+
+FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+FDLayoutConstants.DEFAULT_SPRING_STRENGTH = 0.45;
+FDLayoutConstants.DEFAULT_REPULSION_STRENGTH = 4500.0;
+FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = 0.4;
+FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = 1.0;
+FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = 3.8;
+FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = 1.5;
+FDLayoutConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION = true;
+FDLayoutConstants.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION = true;
+FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = 0.3;
+FDLayoutConstants.COOLING_ADAPTATION_FACTOR = 0.33;
+FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT = 1000;
+FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT = 5000;
+FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL = 100.0;
+FDLayoutConstants.MAX_NODE_DISPLACEMENT = FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL * 3;
+FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10.0;
+FDLayoutConstants.CONVERGENCE_CHECK_PERIOD = 100;
+FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = 0.1;
+FDLayoutConstants.MIN_EDGE_LENGTH = 1;
+FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD = 10;
+
+module.exports = FDLayoutConstants;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function PointD(x, y) {
+  if (x == null && y == null) {
+    this.x = 0;
+    this.y = 0;
+  } else {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+PointD.prototype.getX = function () {
+  return this.x;
+};
+
+PointD.prototype.getY = function () {
+  return this.y;
+};
+
+PointD.prototype.setX = function (x) {
+  this.x = x;
+};
+
+PointD.prototype.setY = function (y) {
+  this.y = y;
+};
+
+PointD.prototype.getDifference = function (pt) {
+  return new DimensionD(this.x - pt.x, this.y - pt.y);
+};
+
+PointD.prototype.getCopy = function () {
+  return new PointD(this.x, this.y);
+};
+
+PointD.prototype.translate = function (dim) {
+  this.x += dim.width;
+  this.y += dim.height;
+  return this;
+};
+
+module.exports = PointD;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraphObject = __webpack_require__(2);
+var Integer = __webpack_require__(10);
+var LayoutConstants = __webpack_require__(0);
+var LGraphManager = __webpack_require__(7);
+var LNode = __webpack_require__(3);
+var LEdge = __webpack_require__(1);
+var RectangleD = __webpack_require__(13);
+var Point = __webpack_require__(12);
+var LinkedList = __webpack_require__(11);
+
+function LGraph(parent, obj2, vGraph) {
+  LGraphObject.call(this, vGraph);
+  this.estimatedSize = Integer.MIN_VALUE;
+  this.margin = LayoutConstants.DEFAULT_GRAPH_MARGIN;
+  this.edges = [];
+  this.nodes = [];
+  this.isConnected = false;
+  this.parent = parent;
+
+  if (obj2 != null && obj2 instanceof LGraphManager) {
+    this.graphManager = obj2;
+  } else if (obj2 != null && obj2 instanceof Layout) {
+    this.graphManager = obj2.graphManager;
+  }
+}
+
+LGraph.prototype = Object.create(LGraphObject.prototype);
+for (var prop in LGraphObject) {
+  LGraph[prop] = LGraphObject[prop];
+}
+
+LGraph.prototype.getNodes = function () {
+  return this.nodes;
+};
+
+LGraph.prototype.getEdges = function () {
+  return this.edges;
+};
+
+LGraph.prototype.getGraphManager = function () {
+  return this.graphManager;
+};
+
+LGraph.prototype.getParent = function () {
+  return this.parent;
+};
+
+LGraph.prototype.getLeft = function () {
+  return this.left;
+};
+
+LGraph.prototype.getRight = function () {
+  return this.right;
+};
+
+LGraph.prototype.getTop = function () {
+  return this.top;
+};
+
+LGraph.prototype.getBottom = function () {
+  return this.bottom;
+};
+
+LGraph.prototype.isConnected = function () {
+  return this.isConnected;
+};
+
+LGraph.prototype.add = function (obj1, sourceNode, targetNode) {
+  if (sourceNode == null && targetNode == null) {
+    var newNode = obj1;
+    if (this.graphManager == null) {
+      throw "Graph has no graph mgr!";
+    }
+    if (this.getNodes().indexOf(newNode) > -1) {
+      throw "Node already in graph!";
+    }
+    newNode.owner = this;
+    this.getNodes().push(newNode);
+
+    return newNode;
+  } else {
+    var newEdge = obj1;
+    if (!(this.getNodes().indexOf(sourceNode) > -1 && this.getNodes().indexOf(targetNode) > -1)) {
+      throw "Source or target not in graph!";
+    }
+
+    if (!(sourceNode.owner == targetNode.owner && sourceNode.owner == this)) {
+      throw "Both owners must be this graph!";
+    }
+
+    if (sourceNode.owner != targetNode.owner) {
+      return null;
+    }
+
+    // set source and target
+    newEdge.source = sourceNode;
+    newEdge.target = targetNode;
+
+    // set as intra-graph edge
+    newEdge.isInterGraph = false;
+
+    // add to graph edge list
+    this.getEdges().push(newEdge);
+
+    // add to incidency lists
+    sourceNode.edges.push(newEdge);
+
+    if (targetNode != sourceNode) {
+      targetNode.edges.push(newEdge);
+    }
+
+    return newEdge;
+  }
+};
+
+LGraph.prototype.remove = function (obj) {
+  var node = obj;
+  if (obj instanceof LNode) {
+    if (node == null) {
+      throw "Node is null!";
+    }
+    if (!(node.owner != null && node.owner == this)) {
+      throw "Owner graph is invalid!";
+    }
+    if (this.graphManager == null) {
+      throw "Owner graph manager is invalid!";
+    }
+    // remove incident edges first (make a copy to do it safely)
+    var edgesToBeRemoved = node.edges.slice();
+    var edge;
+    var s = edgesToBeRemoved.length;
+    for (var i = 0; i < s; i++) {
+      edge = edgesToBeRemoved[i];
+
+      if (edge.isInterGraph) {
+        this.graphManager.remove(edge);
+      } else {
+        edge.source.owner.remove(edge);
+      }
+    }
+
+    // now the node itself
+    var index = this.nodes.indexOf(node);
+    if (index == -1) {
+      throw "Node not in owner node list!";
+    }
+
+    this.nodes.splice(index, 1);
+  } else if (obj instanceof LEdge) {
+    var edge = obj;
+    if (edge == null) {
+      throw "Edge is null!";
+    }
+    if (!(edge.source != null && edge.target != null)) {
+      throw "Source and/or target is null!";
+    }
+    if (!(edge.source.owner != null && edge.target.owner != null && edge.source.owner == this && edge.target.owner == this)) {
+      throw "Source and/or target owner is invalid!";
+    }
+
+    var sourceIndex = edge.source.edges.indexOf(edge);
+    var targetIndex = edge.target.edges.indexOf(edge);
+    if (!(sourceIndex > -1 && targetIndex > -1)) {
+      throw "Source and/or target doesn't know this edge!";
+    }
+
+    edge.source.edges.splice(sourceIndex, 1);
+
+    if (edge.target != edge.source) {
+      edge.target.edges.splice(targetIndex, 1);
+    }
+
+    var index = edge.source.owner.getEdges().indexOf(edge);
+    if (index == -1) {
+      throw "Not in owner's edge list!";
+    }
+
+    edge.source.owner.getEdges().splice(index, 1);
+  }
+};
+
+LGraph.prototype.updateLeftTop = function () {
+  var top = Integer.MAX_VALUE;
+  var left = Integer.MAX_VALUE;
+  var nodeTop;
+  var nodeLeft;
+  var margin;
+
+  var nodes = this.getNodes();
+  var s = nodes.length;
+
+  for (var i = 0; i < s; i++) {
+    var lNode = nodes[i];
+    nodeTop = lNode.getTop();
+    nodeLeft = lNode.getLeft();
+
+    if (top > nodeTop) {
+      top = nodeTop;
+    }
+
+    if (left > nodeLeft) {
+      left = nodeLeft;
+    }
+  }
+
+  // Do we have any nodes in this graph?
+  if (top == Integer.MAX_VALUE) {
+    return null;
+  }
+
+  if (nodes[0].getParent().paddingLeft != undefined) {
+    margin = nodes[0].getParent().paddingLeft;
+  } else {
+    margin = this.margin;
+  }
+
+  this.left = left - margin;
+  this.top = top - margin;
+
+  // Apply the margins and return the result
+  return new Point(this.left, this.top);
+};
+
+LGraph.prototype.updateBounds = function (recursive) {
+  // calculate bounds
+  var left = Integer.MAX_VALUE;
+  var right = -Integer.MAX_VALUE;
+  var top = Integer.MAX_VALUE;
+  var bottom = -Integer.MAX_VALUE;
+  var nodeLeft;
+  var nodeRight;
+  var nodeTop;
+  var nodeBottom;
+  var margin;
+
+  var nodes = this.nodes;
+  var s = nodes.length;
+  for (var i = 0; i < s; i++) {
+    var lNode = nodes[i];
+
+    if (recursive && lNode.child != null) {
+      lNode.updateBounds();
+    }
+    nodeLeft = lNode.getLeft();
+    nodeRight = lNode.getRight();
+    nodeTop = lNode.getTop();
+    nodeBottom = lNode.getBottom();
+
+    if (left > nodeLeft) {
+      left = nodeLeft;
+    }
+
+    if (right < nodeRight) {
+      right = nodeRight;
+    }
+
+    if (top > nodeTop) {
+      top = nodeTop;
+    }
+
+    if (bottom < nodeBottom) {
+      bottom = nodeBottom;
+    }
+  }
+
+  var boundingRect = new RectangleD(left, top, right - left, bottom - top);
+  if (left == Integer.MAX_VALUE) {
+    this.left = this.parent.getLeft();
+    this.right = this.parent.getRight();
+    this.top = this.parent.getTop();
+    this.bottom = this.parent.getBottom();
+  }
+
+  if (nodes[0].getParent().paddingLeft != undefined) {
+    margin = nodes[0].getParent().paddingLeft;
+  } else {
+    margin = this.margin;
+  }
+
+  this.left = boundingRect.x - margin;
+  this.right = boundingRect.x + boundingRect.width + margin;
+  this.top = boundingRect.y - margin;
+  this.bottom = boundingRect.y + boundingRect.height + margin;
+};
+
+LGraph.calculateBounds = function (nodes) {
+  var left = Integer.MAX_VALUE;
+  var right = -Integer.MAX_VALUE;
+  var top = Integer.MAX_VALUE;
+  var bottom = -Integer.MAX_VALUE;
+  var nodeLeft;
+  var nodeRight;
+  var nodeTop;
+  var nodeBottom;
+
+  var s = nodes.length;
+
+  for (var i = 0; i < s; i++) {
+    var lNode = nodes[i];
+    nodeLeft = lNode.getLeft();
+    nodeRight = lNode.getRight();
+    nodeTop = lNode.getTop();
+    nodeBottom = lNode.getBottom();
+
+    if (left > nodeLeft) {
+      left = nodeLeft;
+    }
+
+    if (right < nodeRight) {
+      right = nodeRight;
+    }
+
+    if (top > nodeTop) {
+      top = nodeTop;
+    }
+
+    if (bottom < nodeBottom) {
+      bottom = nodeBottom;
+    }
+  }
+
+  var boundingRect = new RectangleD(left, top, right - left, bottom - top);
+
+  return boundingRect;
+};
+
+LGraph.prototype.getInclusionTreeDepth = function () {
+  if (this == this.graphManager.getRoot()) {
+    return 1;
+  } else {
+    return this.parent.getInclusionTreeDepth();
+  }
+};
+
+LGraph.prototype.getEstimatedSize = function () {
+  if (this.estimatedSize == Integer.MIN_VALUE) {
+    throw "assert failed";
+  }
+  return this.estimatedSize;
+};
+
+LGraph.prototype.calcEstimatedSize = function () {
+  var size = 0;
+  var nodes = this.nodes;
+  var s = nodes.length;
+
+  for (var i = 0; i < s; i++) {
+    var lNode = nodes[i];
+    size += lNode.calcEstimatedSize();
+  }
+
+  if (size == 0) {
+    this.estimatedSize = LayoutConstants.EMPTY_COMPOUND_NODE_SIZE;
+  } else {
+    this.estimatedSize = size / Math.sqrt(this.nodes.length);
+  }
+
+  return this.estimatedSize;
+};
+
+LGraph.prototype.updateConnected = function () {
+  var self = this;
+  if (this.nodes.length == 0) {
+    this.isConnected = true;
+    return;
+  }
+
+  var queue = new LinkedList();
+  var visited = new Set();
+  var currentNode = this.nodes[0];
+  var neighborEdges;
+  var currentNeighbor;
+  var childrenOfNode = currentNode.withChildren();
+  childrenOfNode.forEach(function (node) {
+    queue.push(node);
+    visited.add(node);
+  });
+
+  while (queue.length !== 0) {
+    currentNode = queue.shift();
+
+    // Traverse all neighbors of this node
+    neighborEdges = currentNode.getEdges();
+    var size = neighborEdges.length;
+    for (var i = 0; i < size; i++) {
+      var neighborEdge = neighborEdges[i];
+      currentNeighbor = neighborEdge.getOtherEndInGraph(currentNode, this);
+
+      // Add unvisited neighbors to the list to visit
+      if (currentNeighbor != null && !visited.has(currentNeighbor)) {
+        var childrenOfNeighbor = currentNeighbor.withChildren();
+
+        childrenOfNeighbor.forEach(function (node) {
+          queue.push(node);
+          visited.add(node);
+        });
+      }
+    }
+  }
+
+  this.isConnected = false;
+
+  if (visited.size >= this.nodes.length) {
+    var noOfVisitedInThisGraph = 0;
+
+    visited.forEach(function (visitedNode) {
+      if (visitedNode.owner == self) {
+        noOfVisitedInThisGraph++;
+      }
+    });
+
+    if (noOfVisitedInThisGraph == this.nodes.length) {
+      this.isConnected = true;
+    }
+  }
+};
+
+module.exports = LGraph;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LGraph;
+var LEdge = __webpack_require__(1);
+
+function LGraphManager(layout) {
+  LGraph = __webpack_require__(6); // It may be better to initilize this out of this function but it gives an error (Right-hand side of 'instanceof' is not callable) now.
+  this.layout = layout;
+
+  this.graphs = [];
+  this.edges = [];
+}
+
+LGraphManager.prototype.addRoot = function () {
+  var ngraph = this.layout.newGraph();
+  var nnode = this.layout.newNode(null);
+  var root = this.add(ngraph, nnode);
+  this.setRootGraph(root);
+  return this.rootGraph;
+};
+
+LGraphManager.prototype.add = function (newGraph, parentNode, newEdge, sourceNode, targetNode) {
+  //there are just 2 parameters are passed then it adds an LGraph else it adds an LEdge
+  if (newEdge == null && sourceNode == null && targetNode == null) {
+    if (newGraph == null) {
+      throw "Graph is null!";
+    }
+    if (parentNode == null) {
+      throw "Parent node is null!";
+    }
+    if (this.graphs.indexOf(newGraph) > -1) {
+      throw "Graph already in this graph mgr!";
+    }
+
+    this.graphs.push(newGraph);
+
+    if (newGraph.parent != null) {
+      throw "Already has a parent!";
+    }
+    if (parentNode.child != null) {
+      throw "Already has a child!";
+    }
+
+    newGraph.parent = parentNode;
+    parentNode.child = newGraph;
+
+    return newGraph;
+  } else {
+    //change the order of the parameters
+    targetNode = newEdge;
+    sourceNode = parentNode;
+    newEdge = newGraph;
+    var sourceGraph = sourceNode.getOwner();
+    var targetGraph = targetNode.getOwner();
+
+    if (!(sourceGraph != null && sourceGraph.getGraphManager() == this)) {
+      throw "Source not in this graph mgr!";
+    }
+    if (!(targetGraph != null && targetGraph.getGraphManager() == this)) {
+      throw "Target not in this graph mgr!";
+    }
+
+    if (sourceGraph == targetGraph) {
+      newEdge.isInterGraph = false;
+      return sourceGraph.add(newEdge, sourceNode, targetNode);
+    } else {
+      newEdge.isInterGraph = true;
+
+      // set source and target
+      newEdge.source = sourceNode;
+      newEdge.target = targetNode;
+
+      // add edge to inter-graph edge list
+      if (this.edges.indexOf(newEdge) > -1) {
+        throw "Edge already in inter-graph edge list!";
+      }
+
+      this.edges.push(newEdge);
+
+      // add edge to source and target incidency lists
+      if (!(newEdge.source != null && newEdge.target != null)) {
+        throw "Edge source and/or target is null!";
+      }
+
+      if (!(newEdge.source.edges.indexOf(newEdge) == -1 && newEdge.target.edges.indexOf(newEdge) == -1)) {
+        throw "Edge already in source and/or target incidency list!";
+      }
+
+      newEdge.source.edges.push(newEdge);
+      newEdge.target.edges.push(newEdge);
+
+      return newEdge;
+    }
+  }
+};
+
+LGraphManager.prototype.remove = function (lObj) {
+  if (lObj instanceof LGraph) {
+    var graph = lObj;
+    if (graph.getGraphManager() != this) {
+      throw "Graph not in this graph mgr";
+    }
+    if (!(graph == this.rootGraph || graph.parent != null && graph.parent.graphManager == this)) {
+      throw "Invalid parent node!";
+    }
+
+    // first the edges (make a copy to do it safely)
+    var edgesToBeRemoved = [];
+
+    edgesToBeRemoved = edgesToBeRemoved.concat(graph.getEdges());
+
+    var edge;
+    var s = edgesToBeRemoved.length;
+    for (var i = 0; i < s; i++) {
+      edge = edgesToBeRemoved[i];
+      graph.remove(edge);
+    }
+
+    // then the nodes (make a copy to do it safely)
+    var nodesToBeRemoved = [];
+
+    nodesToBeRemoved = nodesToBeRemoved.concat(graph.getNodes());
+
+    var node;
+    s = nodesToBeRemoved.length;
+    for (var i = 0; i < s; i++) {
+      node = nodesToBeRemoved[i];
+      graph.remove(node);
+    }
+
+    // check if graph is the root
+    if (graph == this.rootGraph) {
+      this.setRootGraph(null);
+    }
+
+    // now remove the graph itself
+    var index = this.graphs.indexOf(graph);
+    this.graphs.splice(index, 1);
+
+    // also reset the parent of the graph
+    graph.parent = null;
+  } else if (lObj instanceof LEdge) {
+    edge = lObj;
+    if (edge == null) {
+      throw "Edge is null!";
+    }
+    if (!edge.isInterGraph) {
+      throw "Not an inter-graph edge!";
+    }
+    if (!(edge.source != null && edge.target != null)) {
+      throw "Source and/or target is null!";
+    }
+
+    // remove edge from source and target nodes' incidency lists
+
+    if (!(edge.source.edges.indexOf(edge) != -1 && edge.target.edges.indexOf(edge) != -1)) {
+      throw "Source and/or target doesn't know this edge!";
+    }
+
+    var index = edge.source.edges.indexOf(edge);
+    edge.source.edges.splice(index, 1);
+    index = edge.target.edges.indexOf(edge);
+    edge.target.edges.splice(index, 1);
+
+    // remove edge from owner graph manager's inter-graph edge list
+
+    if (!(edge.source.owner != null && edge.source.owner.getGraphManager() != null)) {
+      throw "Edge owner graph or owner graph manager is null!";
+    }
+    if (edge.source.owner.getGraphManager().edges.indexOf(edge) == -1) {
+      throw "Not in owner graph manager's edge list!";
+    }
+
+    var index = edge.source.owner.getGraphManager().edges.indexOf(edge);
+    edge.source.owner.getGraphManager().edges.splice(index, 1);
+  }
+};
+
+LGraphManager.prototype.updateBounds = function () {
+  this.rootGraph.updateBounds(true);
+};
+
+LGraphManager.prototype.getGraphs = function () {
+  return this.graphs;
+};
+
+LGraphManager.prototype.getAllNodes = function () {
+  if (this.allNodes == null) {
+    var nodeList = [];
+    var graphs = this.getGraphs();
+    var s = graphs.length;
+    for (var i = 0; i < s; i++) {
+      nodeList = nodeList.concat(graphs[i].getNodes());
+    }
+    this.allNodes = nodeList;
+  }
+  return this.allNodes;
+};
+
+LGraphManager.prototype.resetAllNodes = function () {
+  this.allNodes = null;
+};
+
+LGraphManager.prototype.resetAllEdges = function () {
+  this.allEdges = null;
+};
+
+LGraphManager.prototype.resetAllNodesToApplyGravitation = function () {
+  this.allNodesToApplyGravitation = null;
+};
+
+LGraphManager.prototype.getAllEdges = function () {
+  if (this.allEdges == null) {
+    var edgeList = [];
+    var graphs = this.getGraphs();
+    var s = graphs.length;
+    for (var i = 0; i < graphs.length; i++) {
+      edgeList = edgeList.concat(graphs[i].getEdges());
+    }
+
+    edgeList = edgeList.concat(this.edges);
+
+    this.allEdges = edgeList;
+  }
+  return this.allEdges;
+};
+
+LGraphManager.prototype.getAllNodesToApplyGravitation = function () {
+  return this.allNodesToApplyGravitation;
+};
+
+LGraphManager.prototype.setAllNodesToApplyGravitation = function (nodeList) {
+  if (this.allNodesToApplyGravitation != null) {
+    throw "assert failed";
+  }
+
+  this.allNodesToApplyGravitation = nodeList;
+};
+
+LGraphManager.prototype.getRoot = function () {
+  return this.rootGraph;
+};
+
+LGraphManager.prototype.setRootGraph = function (graph) {
+  if (graph.getGraphManager() != this) {
+    throw "Root not in this graph mgr!";
+  }
+
+  this.rootGraph = graph;
+  // root graph must have a root node associated with it for convenience
+  if (graph.parent == null) {
+    graph.parent = this.layout.newNode("Root node");
+  }
+};
+
+LGraphManager.prototype.getLayout = function () {
+  return this.layout;
+};
+
+LGraphManager.prototype.isOneAncestorOfOther = function (firstNode, secondNode) {
+  if (!(firstNode != null && secondNode != null)) {
+    throw "assert failed";
+  }
+
+  if (firstNode == secondNode) {
+    return true;
+  }
+  // Is second node an ancestor of the first one?
+  var ownerGraph = firstNode.getOwner();
+  var parentNode;
+
+  do {
+    parentNode = ownerGraph.getParent();
+
+    if (parentNode == null) {
+      break;
+    }
+
+    if (parentNode == secondNode) {
+      return true;
+    }
+
+    ownerGraph = parentNode.getOwner();
+    if (ownerGraph == null) {
+      break;
+    }
+  } while (true);
+  // Is first node an ancestor of the second one?
+  ownerGraph = secondNode.getOwner();
+
+  do {
+    parentNode = ownerGraph.getParent();
+
+    if (parentNode == null) {
+      break;
+    }
+
+    if (parentNode == firstNode) {
+      return true;
+    }
+
+    ownerGraph = parentNode.getOwner();
+    if (ownerGraph == null) {
+      break;
+    }
+  } while (true);
+
+  return false;
+};
+
+LGraphManager.prototype.calcLowestCommonAncestors = function () {
+  var edge;
+  var sourceNode;
+  var targetNode;
+  var sourceAncestorGraph;
+  var targetAncestorGraph;
+
+  var edges = this.getAllEdges();
+  var s = edges.length;
+  for (var i = 0; i < s; i++) {
+    edge = edges[i];
+
+    sourceNode = edge.source;
+    targetNode = edge.target;
+    edge.lca = null;
+    edge.sourceInLca = sourceNode;
+    edge.targetInLca = targetNode;
+
+    if (sourceNode == targetNode) {
+      edge.lca = sourceNode.getOwner();
+      continue;
+    }
+
+    sourceAncestorGraph = sourceNode.getOwner();
+
+    while (edge.lca == null) {
+      edge.targetInLca = targetNode;
+      targetAncestorGraph = targetNode.getOwner();
+
+      while (edge.lca == null) {
+        if (targetAncestorGraph == sourceAncestorGraph) {
+          edge.lca = targetAncestorGraph;
+          break;
+        }
+
+        if (targetAncestorGraph == this.rootGraph) {
+          break;
+        }
+
+        if (edge.lca != null) {
+          throw "assert failed";
+        }
+        edge.targetInLca = targetAncestorGraph.getParent();
+        targetAncestorGraph = edge.targetInLca.getOwner();
+      }
+
+      if (sourceAncestorGraph == this.rootGraph) {
+        break;
+      }
+
+      if (edge.lca == null) {
+        edge.sourceInLca = sourceAncestorGraph.getParent();
+        sourceAncestorGraph = edge.sourceInLca.getOwner();
+      }
+    }
+
+    if (edge.lca == null) {
+      throw "assert failed";
+    }
+  }
+};
+
+LGraphManager.prototype.calcLowestCommonAncestor = function (firstNode, secondNode) {
+  if (firstNode == secondNode) {
+    return firstNode.getOwner();
+  }
+  var firstOwnerGraph = firstNode.getOwner();
+
+  do {
+    if (firstOwnerGraph == null) {
+      break;
+    }
+    var secondOwnerGraph = secondNode.getOwner();
+
+    do {
+      if (secondOwnerGraph == null) {
+        break;
+      }
+
+      if (secondOwnerGraph == firstOwnerGraph) {
+        return secondOwnerGraph;
+      }
+      secondOwnerGraph = secondOwnerGraph.getParent().getOwner();
+    } while (true);
+
+    firstOwnerGraph = firstOwnerGraph.getParent().getOwner();
+  } while (true);
+
+  return firstOwnerGraph;
+};
+
+LGraphManager.prototype.calcInclusionTreeDepths = function (graph, depth) {
+  if (graph == null && depth == null) {
+    graph = this.rootGraph;
+    depth = 1;
+  }
+  var node;
+
+  var nodes = graph.getNodes();
+  var s = nodes.length;
+  for (var i = 0; i < s; i++) {
+    node = nodes[i];
+    node.inclusionTreeDepth = depth;
+
+    if (node.child != null) {
+      this.calcInclusionTreeDepths(node.child, depth + 1);
+    }
+  }
+};
+
+LGraphManager.prototype.includesInvalidEdge = function () {
+  var edge;
+  var edgesToRemove = [];
+
+  var s = this.edges.length;
+  for (var i = 0; i < s; i++) {
+    edge = this.edges[i];
+
+    if (this.isOneAncestorOfOther(edge.source, edge.target)) {
+      edgesToRemove.push(edge);
+    }
+  }
+
+  // Remove invalid edges from graph manager
+  for (var i = 0; i < edgesToRemove.length; i++) {
+    this.remove(edgesToRemove[i]);
+  }
+
+  // Invalid edges are cleared, so return false
+  return false;
+};
+
+module.exports = LGraphManager;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * This class maintains a list of static geometry related utility methods.
+ *
+ *
+ * Copyright: i-Vis Research Group, Bilkent University, 2007 - present
+ */
+
+var Point = __webpack_require__(12);
+
+function IGeometry() {}
+
+/**
+ * This method calculates *half* the amount in x and y directions of the two
+ * input rectangles needed to separate them keeping their respective
+ * positioning, and returns the result in the input array. An input
+ * separation buffer added to the amount in both directions. We assume that
+ * the two rectangles do intersect.
+ */
+IGeometry.calcSeparationAmount = function (rectA, rectB, overlapAmount, separationBuffer) {
+  if (!rectA.intersects(rectB)) {
+    throw "assert failed";
+  }
+
+  var directions = new Array(2);
+
+  this.decideDirectionsForOverlappingNodes(rectA, rectB, directions);
+
+  overlapAmount[0] = Math.min(rectA.getRight(), rectB.getRight()) - Math.max(rectA.x, rectB.x);
+  overlapAmount[1] = Math.min(rectA.getBottom(), rectB.getBottom()) - Math.max(rectA.y, rectB.y);
+
+  // update the overlapping amounts for the following cases:
+  if (rectA.getX() <= rectB.getX() && rectA.getRight() >= rectB.getRight()) {
+    /* Case x.1:
+    *
+    * rectA
+    * 	|                       |
+    * 	|        _________      |
+    * 	|        |       |      |
+    * 	|________|_______|______|
+    * 			 |       |
+    *           |       |
+    *        rectB
+    */
+    overlapAmount[0] += Math.min(rectB.getX() - rectA.getX(), rectA.getRight() - rectB.getRight());
+  } else if (rectB.getX() <= rectA.getX() && rectB.getRight() >= rectA.getRight()) {
+    /* Case x.2:
+    *
+    * rectB
+    * 	|                       |
+    * 	|        _________      |
+    * 	|        |       |      |
+    * 	|________|_______|______|
+    * 			 |       |
+    *           |       |
+    *        rectA
+    */
+    overlapAmount[0] += Math.min(rectA.getX() - rectB.getX(), rectB.getRight() - rectA.getRight());
+  }
+  if (rectA.getY() <= rectB.getY() && rectA.getBottom() >= rectB.getBottom()) {
+    /* Case y.1:
+     *          ________ rectA
+     *         |
+     *         |
+     *   ______|____  rectB
+     *         |    |
+     *         |    |
+     *   ______|____|
+     *         |
+     *         |
+     *         |________
+     *
+     */
+    overlapAmount[1] += Math.min(rectB.getY() - rectA.getY(), rectA.getBottom() - rectB.getBottom());
+  } else if (rectB.getY() <= rectA.getY() && rectB.getBottom() >= rectA.getBottom()) {
+    /* Case y.2:
+    *          ________ rectB
+    *         |
+    *         |
+    *   ______|____  rectA
+    *         |    |
+    *         |    |
+    *   ______|____|
+    *         |
+    *         |
+    *         |________
+    *
+    */
+    overlapAmount[1] += Math.min(rectA.getY() - rectB.getY(), rectB.getBottom() - rectA.getBottom());
+  }
+
+  // find slope of the line passes two centers
+  var slope = Math.abs((rectB.getCenterY() - rectA.getCenterY()) / (rectB.getCenterX() - rectA.getCenterX()));
+  // if centers are overlapped
+  if (rectB.getCenterY() === rectA.getCenterY() && rectB.getCenterX() === rectA.getCenterX()) {
+    // assume the slope is 1 (45 degree)
+    slope = 1.0;
+  }
+
+  var moveByY = slope * overlapAmount[0];
+  var moveByX = overlapAmount[1] / slope;
+  if (overlapAmount[0] < moveByX) {
+    moveByX = overlapAmount[0];
+  } else {
+    moveByY = overlapAmount[1];
+  }
+  // return half the amount so that if each rectangle is moved by these
+  // amounts in opposite directions, overlap will be resolved
+  overlapAmount[0] = -1 * directions[0] * (moveByX / 2 + separationBuffer);
+  overlapAmount[1] = -1 * directions[1] * (moveByY / 2 + separationBuffer);
+};
+
+/**
+ * This method decides the separation direction of overlapping nodes
+ *
+ * if directions[0] = -1, then rectA goes left
+ * if directions[0] = 1,  then rectA goes right
+ * if directions[1] = -1, then rectA goes up
+ * if directions[1] = 1,  then rectA goes down
+ */
+IGeometry.decideDirectionsForOverlappingNodes = function (rectA, rectB, directions) {
+  if (rectA.getCenterX() < rectB.getCenterX()) {
+    directions[0] = -1;
+  } else {
+    directions[0] = 1;
+  }
+
+  if (rectA.getCenterY() < rectB.getCenterY()) {
+    directions[1] = -1;
+  } else {
+    directions[1] = 1;
+  }
+};
+
+/**
+ * This method calculates the intersection (clipping) points of the two
+ * input rectangles with line segment defined by the centers of these two
+ * rectangles. The clipping points are saved in the input double array and
+ * whether or not the two rectangles overlap is returned.
+ */
+IGeometry.getIntersection2 = function (rectA, rectB, result) {
+  //result[0-1] will contain clipPoint of rectA, result[2-3] will contain clipPoint of rectB
+  var p1x = rectA.getCenterX();
+  var p1y = rectA.getCenterY();
+  var p2x = rectB.getCenterX();
+  var p2y = rectB.getCenterY();
+
+  //if two rectangles intersect, then clipping points are centers
+  if (rectA.intersects(rectB)) {
+    result[0] = p1x;
+    result[1] = p1y;
+    result[2] = p2x;
+    result[3] = p2y;
+    return true;
+  }
+  //variables for rectA
+  var topLeftAx = rectA.getX();
+  var topLeftAy = rectA.getY();
+  var topRightAx = rectA.getRight();
+  var bottomLeftAx = rectA.getX();
+  var bottomLeftAy = rectA.getBottom();
+  var bottomRightAx = rectA.getRight();
+  var halfWidthA = rectA.getWidthHalf();
+  var halfHeightA = rectA.getHeightHalf();
+  //variables for rectB
+  var topLeftBx = rectB.getX();
+  var topLeftBy = rectB.getY();
+  var topRightBx = rectB.getRight();
+  var bottomLeftBx = rectB.getX();
+  var bottomLeftBy = rectB.getBottom();
+  var bottomRightBx = rectB.getRight();
+  var halfWidthB = rectB.getWidthHalf();
+  var halfHeightB = rectB.getHeightHalf();
+
+  //flag whether clipping points are found
+  var clipPointAFound = false;
+  var clipPointBFound = false;
+
+  // line is vertical
+  if (p1x === p2x) {
+    if (p1y > p2y) {
+      result[0] = p1x;
+      result[1] = topLeftAy;
+      result[2] = p2x;
+      result[3] = bottomLeftBy;
+      return false;
+    } else if (p1y < p2y) {
+      result[0] = p1x;
+      result[1] = bottomLeftAy;
+      result[2] = p2x;
+      result[3] = topLeftBy;
+      return false;
+    } else {
+      //not line, return null;
+    }
+  }
+  // line is horizontal
+  else if (p1y === p2y) {
+      if (p1x > p2x) {
+        result[0] = topLeftAx;
+        result[1] = p1y;
+        result[2] = topRightBx;
+        result[3] = p2y;
+        return false;
+      } else if (p1x < p2x) {
+        result[0] = topRightAx;
+        result[1] = p1y;
+        result[2] = topLeftBx;
+        result[3] = p2y;
+        return false;
+      } else {
+        //not valid line, return null;
+      }
+    } else {
+      //slopes of rectA's and rectB's diagonals
+      var slopeA = rectA.height / rectA.width;
+      var slopeB = rectB.height / rectB.width;
+
+      //slope of line between center of rectA and center of rectB
+      var slopePrime = (p2y - p1y) / (p2x - p1x);
+      var cardinalDirectionA = void 0;
+      var cardinalDirectionB = void 0;
+      var tempPointAx = void 0;
+      var tempPointAy = void 0;
+      var tempPointBx = void 0;
+      var tempPointBy = void 0;
+
+      //determine whether clipping point is the corner of nodeA
+      if (-slopeA === slopePrime) {
+        if (p1x > p2x) {
+          result[0] = bottomLeftAx;
+          result[1] = bottomLeftAy;
+          clipPointAFound = true;
+        } else {
+          result[0] = topRightAx;
+          result[1] = topLeftAy;
+          clipPointAFound = true;
+        }
+      } else if (slopeA === slopePrime) {
+        if (p1x > p2x) {
+          result[0] = topLeftAx;
+          result[1] = topLeftAy;
+          clipPointAFound = true;
+        } else {
+          result[0] = bottomRightAx;
+          result[1] = bottomLeftAy;
+          clipPointAFound = true;
+        }
+      }
+
+      //determine whether clipping point is the corner of nodeB
+      if (-slopeB === slopePrime) {
+        if (p2x > p1x) {
+          result[2] = bottomLeftBx;
+          result[3] = bottomLeftBy;
+          clipPointBFound = true;
+        } else {
+          result[2] = topRightBx;
+          result[3] = topLeftBy;
+          clipPointBFound = true;
+        }
+      } else if (slopeB === slopePrime) {
+        if (p2x > p1x) {
+          result[2] = topLeftBx;
+          result[3] = topLeftBy;
+          clipPointBFound = true;
+        } else {
+          result[2] = bottomRightBx;
+          result[3] = bottomLeftBy;
+          clipPointBFound = true;
+        }
+      }
+
+      //if both clipping points are corners
+      if (clipPointAFound && clipPointBFound) {
+        return false;
+      }
+
+      //determine Cardinal Direction of rectangles
+      if (p1x > p2x) {
+        if (p1y > p2y) {
+          cardinalDirectionA = this.getCardinalDirection(slopeA, slopePrime, 4);
+          cardinalDirectionB = this.getCardinalDirection(slopeB, slopePrime, 2);
+        } else {
+          cardinalDirectionA = this.getCardinalDirection(-slopeA, slopePrime, 3);
+          cardinalDirectionB = this.getCardinalDirection(-slopeB, slopePrime, 1);
+        }
+      } else {
+        if (p1y > p2y) {
+          cardinalDirectionA = this.getCardinalDirection(-slopeA, slopePrime, 1);
+          cardinalDirectionB = this.getCardinalDirection(-slopeB, slopePrime, 3);
+        } else {
+          cardinalDirectionA = this.getCardinalDirection(slopeA, slopePrime, 2);
+          cardinalDirectionB = this.getCardinalDirection(slopeB, slopePrime, 4);
+        }
+      }
+      //calculate clipping Point if it is not found before
+      if (!clipPointAFound) {
+        switch (cardinalDirectionA) {
+          case 1:
+            tempPointAy = topLeftAy;
+            tempPointAx = p1x + -halfHeightA / slopePrime;
+            result[0] = tempPointAx;
+            result[1] = tempPointAy;
+            break;
+          case 2:
+            tempPointAx = bottomRightAx;
+            tempPointAy = p1y + halfWidthA * slopePrime;
+            result[0] = tempPointAx;
+            result[1] = tempPointAy;
+            break;
+          case 3:
+            tempPointAy = bottomLeftAy;
+            tempPointAx = p1x + halfHeightA / slopePrime;
+            result[0] = tempPointAx;
+            result[1] = tempPointAy;
+            break;
+          case 4:
+            tempPointAx = bottomLeftAx;
+            tempPointAy = p1y + -halfWidthA * slopePrime;
+            result[0] = tempPointAx;
+            result[1] = tempPointAy;
+            break;
+        }
+      }
+      if (!clipPointBFound) {
+        switch (cardinalDirectionB) {
+          case 1:
+            tempPointBy = topLeftBy;
+            tempPointBx = p2x + -halfHeightB / slopePrime;
+            result[2] = tempPointBx;
+            result[3] = tempPointBy;
+            break;
+          case 2:
+            tempPointBx = bottomRightBx;
+            tempPointBy = p2y + halfWidthB * slopePrime;
+            result[2] = tempPointBx;
+            result[3] = tempPointBy;
+            break;
+          case 3:
+            tempPointBy = bottomLeftBy;
+            tempPointBx = p2x + halfHeightB / slopePrime;
+            result[2] = tempPointBx;
+            result[3] = tempPointBy;
+            break;
+          case 4:
+            tempPointBx = bottomLeftBx;
+            tempPointBy = p2y + -halfWidthB * slopePrime;
+            result[2] = tempPointBx;
+            result[3] = tempPointBy;
+            break;
+        }
+      }
+    }
+  return false;
+};
+
+/**
+ * This method returns in which cardinal direction does input point stays
+ * 1: North
+ * 2: East
+ * 3: South
+ * 4: West
+ */
+IGeometry.getCardinalDirection = function (slope, slopePrime, line) {
+  if (slope > slopePrime) {
+    return line;
+  } else {
+    return 1 + line % 4;
+  }
+};
+
+/**
+ * This method calculates the intersection of the two lines defined by
+ * point pairs (s1,s2) and (f1,f2).
+ */
+IGeometry.getIntersection = function (s1, s2, f1, f2) {
+  if (f2 == null) {
+    return this.getIntersection2(s1, s2, f1);
+  }
+
+  var x1 = s1.x;
+  var y1 = s1.y;
+  var x2 = s2.x;
+  var y2 = s2.y;
+  var x3 = f1.x;
+  var y3 = f1.y;
+  var x4 = f2.x;
+  var y4 = f2.y;
+  var x = void 0,
+      y = void 0; // intersection point
+  var a1 = void 0,
+      a2 = void 0,
+      b1 = void 0,
+      b2 = void 0,
+      c1 = void 0,
+      c2 = void 0; // coefficients of line eqns.
+  var denom = void 0;
+
+  a1 = y2 - y1;
+  b1 = x1 - x2;
+  c1 = x2 * y1 - x1 * y2; // { a1*x + b1*y + c1 = 0 is line 1 }
+
+  a2 = y4 - y3;
+  b2 = x3 - x4;
+  c2 = x4 * y3 - x3 * y4; // { a2*x + b2*y + c2 = 0 is line 2 }
+
+  denom = a1 * b2 - a2 * b1;
+
+  if (denom === 0) {
+    return null;
+  }
+
+  x = (b1 * c2 - b2 * c1) / denom;
+  y = (a2 * c1 - a1 * c2) / denom;
+
+  return new Point(x, y);
+};
+
+/**
+ * This method finds and returns the angle of the vector from the + x-axis
+ * in clockwise direction (compatible w/ Java coordinate system!).
+ */
+IGeometry.angleOfVector = function (Cx, Cy, Nx, Ny) {
+  var C_angle = void 0;
+
+  if (Cx !== Nx) {
+    C_angle = Math.atan((Ny - Cy) / (Nx - Cx));
+
+    if (Nx < Cx) {
+      C_angle += Math.PI;
+    } else if (Ny < Cy) {
+      C_angle += this.TWO_PI;
+    }
+  } else if (Ny < Cy) {
+    C_angle = this.ONE_AND_HALF_PI; // 270 degrees
+  } else {
+    C_angle = this.HALF_PI; // 90 degrees
+  }
+
+  return C_angle;
+};
+
+/**
+ * This method checks whether the given two line segments (one with point
+ * p1 and p2, the other with point p3 and p4) intersect at a point other
+ * than these points.
+ */
+IGeometry.doIntersect = function (p1, p2, p3, p4) {
+  var a = p1.x;
+  var b = p1.y;
+  var c = p2.x;
+  var d = p2.y;
+  var p = p3.x;
+  var q = p3.y;
+  var r = p4.x;
+  var s = p4.y;
+  var det = (c - a) * (s - q) - (r - p) * (d - b);
+
+  if (det === 0) {
+    return false;
+  } else {
+    var lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+    var gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+    return 0 < lambda && lambda < 1 && 0 < gamma && gamma < 1;
+  }
+};
+
+/**
+ * This method checks and calculates the intersection of 
+ * a line segment and a circle.
+ */
+IGeometry.findCircleLineIntersections = function (Ex, Ey, Lx, Ly, Cx, Cy, r) {
+
+  // E is the starting point of the ray,
+  // L is the end point of the ray,
+  // C is the center of sphere you're testing against
+  // r is the radius of that sphere
+
+  // Compute:
+  // d = L - E ( Direction vector of ray, from start to end )
+  // f = E - C ( Vector from center sphere to ray start )
+
+  // Then the intersection is found by..
+  // P = E + t * d
+  // This is a parametric equation:
+  // Px = Ex + tdx
+  // Py = Ey + tdy
+
+  // get a, b, c values
+  var a = (Lx - Ex) * (Lx - Ex) + (Ly - Ey) * (Ly - Ey);
+  var b = 2 * ((Ex - Cx) * (Lx - Ex) + (Ey - Cy) * (Ly - Ey));
+  var c = (Ex - Cx) * (Ex - Cx) + (Ey - Cy) * (Ey - Cy) - r * r;
+
+  // get discriminant
+  var disc = b * b - 4 * a * c;
+  if (disc >= 0) {
+    // insert into quadratic formula
+    var t1 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+    var t2 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+    var intersections = null;
+    if (t1 >= 0 && t1 <= 1) {
+      // t1 is the intersection, and it's closer than t2
+      // (since t1 uses -b - discriminant)
+      // Impale, Poke
+      return [t1];
+    }
+
+    // here t1 didn't intersect so we are either started
+    // inside the sphere or completely past it
+    if (t2 >= 0 && t2 <= 1) {
+      // ExitWound
+      return [t2];
+    }
+
+    return intersections;
+  } else return null;
+};
+
+// -----------------------------------------------------------------------------
+// Section: Class Constants
+// -----------------------------------------------------------------------------
+/**
+ * Some useful pre-calculated constants
+ */
+IGeometry.HALF_PI = 0.5 * Math.PI;
+IGeometry.ONE_AND_HALF_PI = 1.5 * Math.PI;
+IGeometry.TWO_PI = 2.0 * Math.PI;
+IGeometry.THREE_PI = 3.0 * Math.PI;
+
+module.exports = IGeometry;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function IMath() {}
+
+/**
+ * This method returns the sign of the input value.
+ */
+IMath.sign = function (value) {
+  if (value > 0) {
+    return 1;
+  } else if (value < 0) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+IMath.floor = function (value) {
+  return value < 0 ? Math.ceil(value) : Math.floor(value);
+};
+
+IMath.ceil = function (value) {
+  return value < 0 ? Math.floor(value) : Math.ceil(value);
+};
+
+module.exports = IMath;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function Integer() {}
+
+Integer.MAX_VALUE = 2147483647;
+Integer.MIN_VALUE = -2147483648;
+
+module.exports = Integer;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var nodeFrom = function nodeFrom(value) {
+  return { value: value, next: null, prev: null };
+};
+
+var add = function add(prev, node, next, list) {
+  if (prev !== null) {
+    prev.next = node;
+  } else {
+    list.head = node;
+  }
+
+  if (next !== null) {
+    next.prev = node;
+  } else {
+    list.tail = node;
+  }
+
+  node.prev = prev;
+  node.next = next;
+
+  list.length++;
+
+  return node;
+};
+
+var _remove = function _remove(node, list) {
+  var prev = node.prev,
+      next = node.next;
+
+
+  if (prev !== null) {
+    prev.next = next;
+  } else {
+    list.head = next;
+  }
+
+  if (next !== null) {
+    next.prev = prev;
+  } else {
+    list.tail = prev;
+  }
+
+  node.prev = node.next = null;
+
+  list.length--;
+
+  return node;
+};
+
+var LinkedList = function () {
+  function LinkedList(vals) {
+    var _this = this;
+
+    _classCallCheck(this, LinkedList);
+
+    this.length = 0;
+    this.head = null;
+    this.tail = null;
+
+    if (vals != null) {
+      vals.forEach(function (v) {
+        return _this.push(v);
+      });
+    }
+  }
+
+  _createClass(LinkedList, [{
+    key: "size",
+    value: function size() {
+      return this.length;
+    }
+  }, {
+    key: "insertBefore",
+    value: function insertBefore(val, otherNode) {
+      return add(otherNode.prev, nodeFrom(val), otherNode, this);
+    }
+  }, {
+    key: "insertAfter",
+    value: function insertAfter(val, otherNode) {
+      return add(otherNode, nodeFrom(val), otherNode.next, this);
+    }
+  }, {
+    key: "insertNodeBefore",
+    value: function insertNodeBefore(newNode, otherNode) {
+      return add(otherNode.prev, newNode, otherNode, this);
+    }
+  }, {
+    key: "insertNodeAfter",
+    value: function insertNodeAfter(newNode, otherNode) {
+      return add(otherNode, newNode, otherNode.next, this);
+    }
+  }, {
+    key: "push",
+    value: function push(val) {
+      return add(this.tail, nodeFrom(val), null, this);
+    }
+  }, {
+    key: "unshift",
+    value: function unshift(val) {
+      return add(null, nodeFrom(val), this.head, this);
+    }
+  }, {
+    key: "remove",
+    value: function remove(node) {
+      return _remove(node, this);
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      return _remove(this.tail, this).value;
+    }
+  }, {
+    key: "popNode",
+    value: function popNode() {
+      return _remove(this.tail, this);
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      return _remove(this.head, this).value;
+    }
+  }, {
+    key: "shiftNode",
+    value: function shiftNode() {
+      return _remove(this.head, this);
+    }
+  }, {
+    key: "get_object_at",
+    value: function get_object_at(index) {
+      if (index <= this.length()) {
+        var i = 1;
+        var current = this.head;
+        while (i < index) {
+          current = current.next;
+          i++;
+        }
+        return current.value;
+      }
+    }
+  }, {
+    key: "set_object_at",
+    value: function set_object_at(index, value) {
+      if (index <= this.length()) {
+        var i = 1;
+        var current = this.head;
+        while (i < index) {
+          current = current.next;
+          i++;
+        }
+        current.value = value;
+      }
+    }
+  }]);
+
+  return LinkedList;
+}();
+
+module.exports = LinkedList;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+ *This class is the javascript implementation of the Point.java class in jdk
+ */
+function Point(x, y, p) {
+  this.x = null;
+  this.y = null;
+  if (x == null && y == null && p == null) {
+    this.x = 0;
+    this.y = 0;
+  } else if (typeof x == 'number' && typeof y == 'number' && p == null) {
+    this.x = x;
+    this.y = y;
+  } else if (x.constructor.name == 'Point' && y == null && p == null) {
+    p = x;
+    this.x = p.x;
+    this.y = p.y;
+  }
+}
+
+Point.prototype.getX = function () {
+  return this.x;
+};
+
+Point.prototype.getY = function () {
+  return this.y;
+};
+
+Point.prototype.getLocation = function () {
+  return new Point(this.x, this.y);
+};
+
+Point.prototype.setLocation = function (x, y, p) {
+  if (x.constructor.name == 'Point' && y == null && p == null) {
+    p = x;
+    this.setLocation(p.x, p.y);
+  } else if (typeof x == 'number' && typeof y == 'number' && p == null) {
+    //if both parameters are integer just move (x,y) location
+    if (parseInt(x) == x && parseInt(y) == y) {
+      this.move(x, y);
+    } else {
+      this.x = Math.floor(x + 0.5);
+      this.y = Math.floor(y + 0.5);
+    }
+  }
+};
+
+Point.prototype.move = function (x, y) {
+  this.x = x;
+  this.y = y;
+};
+
+Point.prototype.translate = function (dx, dy) {
+  this.x += dx;
+  this.y += dy;
+};
+
+Point.prototype.equals = function (obj) {
+  if (obj.constructor.name == "Point") {
+    var pt = obj;
+    return this.x == pt.x && this.y == pt.y;
+  }
+  return this == obj;
+};
+
+Point.prototype.toString = function () {
+  return new Point().constructor.name + "[x=" + this.x + ",y=" + this.y + "]";
+};
+
+module.exports = Point;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function RectangleD(x, y, width, height) {
+  this.x = 0;
+  this.y = 0;
+  this.width = 0;
+  this.height = 0;
+
+  if (x != null && y != null && width != null && height != null) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+}
+
+RectangleD.prototype.getX = function () {
+  return this.x;
+};
+
+RectangleD.prototype.setX = function (x) {
+  this.x = x;
+};
+
+RectangleD.prototype.getY = function () {
+  return this.y;
+};
+
+RectangleD.prototype.setY = function (y) {
+  this.y = y;
+};
+
+RectangleD.prototype.getWidth = function () {
+  return this.width;
+};
+
+RectangleD.prototype.setWidth = function (width) {
+  this.width = width;
+};
+
+RectangleD.prototype.getHeight = function () {
+  return this.height;
+};
+
+RectangleD.prototype.setHeight = function (height) {
+  this.height = height;
+};
+
+RectangleD.prototype.getRight = function () {
+  return this.x + this.width;
+};
+
+RectangleD.prototype.getBottom = function () {
+  return this.y + this.height;
+};
+
+RectangleD.prototype.intersects = function (a) {
+  if (this.getRight() < a.x) {
+    return false;
+  }
+
+  if (this.getBottom() < a.y) {
+    return false;
+  }
+
+  if (a.getRight() < this.x) {
+    return false;
+  }
+
+  if (a.getBottom() < this.y) {
+    return false;
+  }
+
+  return true;
+};
+
+RectangleD.prototype.getCenterX = function () {
+  return this.x + this.width / 2;
+};
+
+RectangleD.prototype.getMinX = function () {
+  return this.getX();
+};
+
+RectangleD.prototype.getMaxX = function () {
+  return this.getX() + this.width;
+};
+
+RectangleD.prototype.getCenterY = function () {
+  return this.y + this.height / 2;
+};
+
+RectangleD.prototype.getMinY = function () {
+  return this.getY();
+};
+
+RectangleD.prototype.getMaxY = function () {
+  return this.getY() + this.height;
+};
+
+RectangleD.prototype.getWidthHalf = function () {
+  return this.width / 2;
+};
+
+RectangleD.prototype.getHeightHalf = function () {
+  return this.height / 2;
+};
+
+module.exports = RectangleD;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function UniqueIDGeneretor() {}
+
+UniqueIDGeneretor.lastID = 0;
+
+UniqueIDGeneretor.createID = function (obj) {
+  if (UniqueIDGeneretor.isPrimitive(obj)) {
+    return obj;
+  }
+  if (obj.uniqueID != null) {
+    return obj.uniqueID;
+  }
+  obj.uniqueID = UniqueIDGeneretor.getString();
+  UniqueIDGeneretor.lastID++;
+  return obj.uniqueID;
+};
+
+UniqueIDGeneretor.getString = function (id) {
+  if (id == null) id = UniqueIDGeneretor.lastID;
+  return "Object#" + id + "";
+};
+
+UniqueIDGeneretor.isPrimitive = function (arg) {
+  var type = typeof arg === "undefined" ? "undefined" : _typeof(arg);
+  return arg == null || type != "object" && type != "function";
+};
+
+module.exports = UniqueIDGeneretor;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var LayoutConstants = __webpack_require__(0);
+var LGraphManager = __webpack_require__(7);
+var LNode = __webpack_require__(3);
+var LEdge = __webpack_require__(1);
+var LGraph = __webpack_require__(6);
+var PointD = __webpack_require__(5);
+var Transform = __webpack_require__(17);
+var Emitter = __webpack_require__(29);
+
+function Layout(isRemoteUse) {
+  Emitter.call(this);
+
+  //Layout Quality: 0:draft, 1:default, 2:proof
+  this.layoutQuality = LayoutConstants.QUALITY;
+  //Whether layout should create bendpoints as needed or not
+  this.createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+  //Whether layout should be incremental or not
+  this.incremental = LayoutConstants.DEFAULT_INCREMENTAL;
+  //Whether we animate from before to after layout node positions
+  this.animationOnLayout = LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT;
+  //Whether we animate the layout process or not
+  this.animationDuringLayout = LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT;
+  //Number iterations that should be done between two successive animations
+  this.animationPeriod = LayoutConstants.DEFAULT_ANIMATION_PERIOD;
+  /**
+   * Whether or not leaf nodes (non-compound nodes) are of uniform sizes. When
+   * they are, both spring and repulsion forces between two leaf nodes can be
+   * calculated without the expensive clipping point calculations, resulting
+   * in major speed-up.
+   */
+  this.uniformLeafNodeSizes = LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES;
+  /**
+   * This is used for creation of bendpoints by using dummy nodes and edges.
+   * Maps an LEdge to its dummy bendpoint path.
+   */
+  this.edgeToDummyNodes = new Map();
+  this.graphManager = new LGraphManager(this);
+  this.isLayoutFinished = false;
+  this.isSubLayout = false;
+  this.isRemoteUse = false;
+
+  if (isRemoteUse != null) {
+    this.isRemoteUse = isRemoteUse;
+  }
+}
+
+Layout.RANDOM_SEED = 1;
+
+Layout.prototype = Object.create(Emitter.prototype);
+
+Layout.prototype.getGraphManager = function () {
+  return this.graphManager;
+};
+
+Layout.prototype.getAllNodes = function () {
+  return this.graphManager.getAllNodes();
+};
+
+Layout.prototype.getAllEdges = function () {
+  return this.graphManager.getAllEdges();
+};
+
+Layout.prototype.getAllNodesToApplyGravitation = function () {
+  return this.graphManager.getAllNodesToApplyGravitation();
+};
+
+Layout.prototype.newGraphManager = function () {
+  var gm = new LGraphManager(this);
+  this.graphManager = gm;
+  return gm;
+};
+
+Layout.prototype.newGraph = function (vGraph) {
+  return new LGraph(null, this.graphManager, vGraph);
+};
+
+Layout.prototype.newNode = function (vNode) {
+  return new LNode(this.graphManager, vNode);
+};
+
+Layout.prototype.newEdge = function (vEdge) {
+  return new LEdge(null, null, vEdge);
+};
+
+Layout.prototype.checkLayoutSuccess = function () {
+  return this.graphManager.getRoot() == null || this.graphManager.getRoot().getNodes().length == 0 || this.graphManager.includesInvalidEdge();
+};
+
+Layout.prototype.runLayout = function () {
+  this.isLayoutFinished = false;
+
+  if (this.tilingPreLayout) {
+    this.tilingPreLayout();
+  }
+
+  this.initParameters();
+  var isLayoutSuccessfull;
+
+  if (this.checkLayoutSuccess()) {
+    isLayoutSuccessfull = false;
+  } else {
+    isLayoutSuccessfull = this.layout();
+  }
+
+  if (LayoutConstants.ANIMATE === 'during') {
+    // If this is a 'during' layout animation. Layout is not finished yet. 
+    // We need to perform these in index.js when layout is really finished.
+    return false;
+  }
+
+  if (isLayoutSuccessfull) {
+    if (!this.isSubLayout) {
+      this.doPostLayout();
+    }
+  }
+
+  if (this.tilingPostLayout) {
+    this.tilingPostLayout();
+  }
+
+  this.isLayoutFinished = true;
+
+  return isLayoutSuccessfull;
+};
+
+/**
+ * This method performs the operations required after layout.
+ */
+Layout.prototype.doPostLayout = function () {
+  //assert !isSubLayout : "Should not be called on sub-layout!";
+  // Propagate geometric changes to v-level objects
+  if (!this.incremental) {
+    this.transform();
+  }
+  this.update();
+};
+
+/**
+ * This method updates the geometry of the target graph according to
+ * calculated layout.
+ */
+Layout.prototype.update2 = function () {
+  // update bend points
+  if (this.createBendsAsNeeded) {
+    this.createBendpointsFromDummyNodes();
+
+    // reset all edges, since the topology has changed
+    this.graphManager.resetAllEdges();
+  }
+
+  // perform edge, node and root updates if layout is not called
+  // remotely
+  if (!this.isRemoteUse) {
+    // update all edges
+    var edge;
+    var allEdges = this.graphManager.getAllEdges();
+    for (var i = 0; i < allEdges.length; i++) {
+      edge = allEdges[i];
+      //      this.update(edge);
+    }
+
+    // recursively update nodes
+    var node;
+    var nodes = this.graphManager.getRoot().getNodes();
+    for (var i = 0; i < nodes.length; i++) {
+      node = nodes[i];
+      //      this.update(node);
+    }
+
+    // update root graph
+    this.update(this.graphManager.getRoot());
+  }
+};
+
+Layout.prototype.update = function (obj) {
+  if (obj == null) {
+    this.update2();
+  } else if (obj instanceof LNode) {
+    var node = obj;
+    if (node.getChild() != null) {
+      // since node is compound, recursively update child nodes
+      var nodes = node.getChild().getNodes();
+      for (var i = 0; i < nodes.length; i++) {
+        update(nodes[i]);
+      }
+    }
+
+    // if the l-level node is associated with a v-level graph object,
+    // then it is assumed that the v-level node implements the
+    // interface Updatable.
+    if (node.vGraphObject != null) {
+      // cast to Updatable without any type check
+      var vNode = node.vGraphObject;
+
+      // call the update method of the interface
+      vNode.update(node);
+    }
+  } else if (obj instanceof LEdge) {
+    var edge = obj;
+    // if the l-level edge is associated with a v-level graph object,
+    // then it is assumed that the v-level edge implements the
+    // interface Updatable.
+
+    if (edge.vGraphObject != null) {
+      // cast to Updatable without any type check
+      var vEdge = edge.vGraphObject;
+
+      // call the update method of the interface
+      vEdge.update(edge);
+    }
+  } else if (obj instanceof LGraph) {
+    var graph = obj;
+    // if the l-level graph is associated with a v-level graph object,
+    // then it is assumed that the v-level object implements the
+    // interface Updatable.
+
+    if (graph.vGraphObject != null) {
+      // cast to Updatable without any type check
+      var vGraph = graph.vGraphObject;
+
+      // call the update method of the interface
+      vGraph.update(graph);
+    }
+  }
+};
+
+/**
+ * This method is used to set all layout parameters to default values
+ * determined at compile time.
+ */
+Layout.prototype.initParameters = function () {
+  if (!this.isSubLayout) {
+    this.layoutQuality = LayoutConstants.QUALITY;
+    this.animationDuringLayout = LayoutConstants.DEFAULT_ANIMATION_DURING_LAYOUT;
+    this.animationPeriod = LayoutConstants.DEFAULT_ANIMATION_PERIOD;
+    this.animationOnLayout = LayoutConstants.DEFAULT_ANIMATION_ON_LAYOUT;
+    this.incremental = LayoutConstants.DEFAULT_INCREMENTAL;
+    this.createBendsAsNeeded = LayoutConstants.DEFAULT_CREATE_BENDS_AS_NEEDED;
+    this.uniformLeafNodeSizes = LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES;
+  }
+
+  if (this.animationDuringLayout) {
+    this.animationOnLayout = false;
+  }
+};
+
+Layout.prototype.transform = function (newLeftTop) {
+  if (newLeftTop == undefined) {
+    this.transform(new PointD(0, 0));
+  } else {
+    // create a transformation object (from Eclipse to layout). When an
+    // inverse transform is applied, we get upper-left coordinate of the
+    // drawing or the root graph at given input coordinate (some margins
+    // already included in calculation of left-top).
+
+    var trans = new Transform();
+    var leftTop = this.graphManager.getRoot().updateLeftTop();
+
+    if (leftTop != null) {
+      trans.setWorldOrgX(newLeftTop.x);
+      trans.setWorldOrgY(newLeftTop.y);
+
+      trans.setDeviceOrgX(leftTop.x);
+      trans.setDeviceOrgY(leftTop.y);
+
+      var nodes = this.getAllNodes();
+      var node;
+
+      for (var i = 0; i < nodes.length; i++) {
+        node = nodes[i];
+        node.transform(trans);
+      }
+    }
+  }
+};
+
+Layout.prototype.positionNodesRandomly = function (graph) {
+
+  if (graph == undefined) {
+    //assert !this.incremental;
+    this.positionNodesRandomly(this.getGraphManager().getRoot());
+    this.getGraphManager().getRoot().updateBounds(true);
+  } else {
+    var lNode;
+    var childGraph;
+
+    var nodes = graph.getNodes();
+    for (var i = 0; i < nodes.length; i++) {
+      lNode = nodes[i];
+      childGraph = lNode.getChild();
+
+      if (childGraph == null) {
+        lNode.scatter();
+      } else if (childGraph.getNodes().length == 0) {
+        lNode.scatter();
+      } else {
+        this.positionNodesRandomly(childGraph);
+        lNode.updateBounds();
+      }
+    }
+  }
+};
+
+/**
+ * This method returns a list of trees where each tree is represented as a
+ * list of l-nodes. The method returns a list of size 0 when:
+ * - The graph is not flat or
+ * - One of the component(s) of the graph is not a tree.
+ */
+Layout.prototype.getFlatForest = function () {
+  var flatForest = [];
+  var isForest = true;
+
+  // Quick reference for all nodes in the graph manager associated with
+  // this layout. The list should not be changed.
+  var allNodes = this.graphManager.getRoot().getNodes();
+
+  // First be sure that the graph is flat
+  var isFlat = true;
+
+  for (var i = 0; i < allNodes.length; i++) {
+    if (allNodes[i].getChild() != null) {
+      isFlat = false;
+    }
+  }
+
+  // Return empty forest if the graph is not flat.
+  if (!isFlat) {
+    return flatForest;
+  }
+
+  // Run BFS for each component of the graph.
+
+  var visited = new Set();
+  var toBeVisited = [];
+  var parents = new Map();
+  var unProcessedNodes = [];
+
+  unProcessedNodes = unProcessedNodes.concat(allNodes);
+
+  // Each iteration of this loop finds a component of the graph and
+  // decides whether it is a tree or not. If it is a tree, adds it to the
+  // forest and continued with the next component.
+
+  while (unProcessedNodes.length > 0 && isForest) {
+    toBeVisited.push(unProcessedNodes[0]);
+
+    // Start the BFS. Each iteration of this loop visits a node in a
+    // BFS manner.
+    while (toBeVisited.length > 0 && isForest) {
+      //pool operation
+      var currentNode = toBeVisited[0];
+      toBeVisited.splice(0, 1);
+      visited.add(currentNode);
+
+      // Traverse all neighbors of this node
+      var neighborEdges = currentNode.getEdges();
+
+      for (var i = 0; i < neighborEdges.length; i++) {
+        var currentNeighbor = neighborEdges[i].getOtherEnd(currentNode);
+
+        // If BFS is not growing from this neighbor.
+        if (parents.get(currentNode) != currentNeighbor) {
+          // We haven't previously visited this neighbor.
+          if (!visited.has(currentNeighbor)) {
+            toBeVisited.push(currentNeighbor);
+            parents.set(currentNeighbor, currentNode);
+          }
+          // Since we have previously visited this neighbor and
+          // this neighbor is not parent of currentNode, given
+          // graph contains a component that is not tree, hence
+          // it is not a forest.
+          else {
+              isForest = false;
+              break;
+            }
+        }
+      }
+    }
+
+    // The graph contains a component that is not a tree. Empty
+    // previously found trees. The method will end.
+    if (!isForest) {
+      flatForest = [];
+    }
+    // Save currently visited nodes as a tree in our forest. Reset
+    // visited and parents lists. Continue with the next component of
+    // the graph, if any.
+    else {
+        var temp = [].concat(_toConsumableArray(visited));
+        flatForest.push(temp);
+        //flatForest = flatForest.concat(temp);
+        //unProcessedNodes.removeAll(visited);
+        for (var i = 0; i < temp.length; i++) {
+          var value = temp[i];
+          var index = unProcessedNodes.indexOf(value);
+          if (index > -1) {
+            unProcessedNodes.splice(index, 1);
+          }
+        }
+        visited = new Set();
+        parents = new Map();
+      }
+  }
+
+  return flatForest;
+};
+
+/**
+ * This method creates dummy nodes (an l-level node with minimal dimensions)
+ * for the given edge (one per bendpoint). The existing l-level structure
+ * is updated accordingly.
+ */
+Layout.prototype.createDummyNodesForBendpoints = function (edge) {
+  var dummyNodes = [];
+  var prev = edge.source;
+
+  var graph = this.graphManager.calcLowestCommonAncestor(edge.source, edge.target);
+
+  for (var i = 0; i < edge.bendpoints.length; i++) {
+    // create new dummy node
+    var dummyNode = this.newNode(null);
+    dummyNode.setRect(new Point(0, 0), new Dimension(1, 1));
+
+    graph.add(dummyNode);
+
+    // create new dummy edge between prev and dummy node
+    var dummyEdge = this.newEdge(null);
+    this.graphManager.add(dummyEdge, prev, dummyNode);
+
+    dummyNodes.add(dummyNode);
+    prev = dummyNode;
+  }
+
+  var dummyEdge = this.newEdge(null);
+  this.graphManager.add(dummyEdge, prev, edge.target);
+
+  this.edgeToDummyNodes.set(edge, dummyNodes);
+
+  // remove real edge from graph manager if it is inter-graph
+  if (edge.isInterGraph()) {
+    this.graphManager.remove(edge);
+  }
+  // else, remove the edge from the current graph
+  else {
+      graph.remove(edge);
+    }
+
+  return dummyNodes;
+};
+
+/**
+ * This method creates bendpoints for edges from the dummy nodes
+ * at l-level.
+ */
+Layout.prototype.createBendpointsFromDummyNodes = function () {
+  var edges = [];
+  edges = edges.concat(this.graphManager.getAllEdges());
+  edges = [].concat(_toConsumableArray(this.edgeToDummyNodes.keys())).concat(edges);
+
+  for (var k = 0; k < edges.length; k++) {
+    var lEdge = edges[k];
+
+    if (lEdge.bendpoints.length > 0) {
+      var path = this.edgeToDummyNodes.get(lEdge);
+
+      for (var i = 0; i < path.length; i++) {
+        var dummyNode = path[i];
+        var p = new PointD(dummyNode.getCenterX(), dummyNode.getCenterY());
+
+        // update bendpoint's location according to dummy node
+        var ebp = lEdge.bendpoints.get(i);
+        ebp.x = p.x;
+        ebp.y = p.y;
+
+        // remove the dummy node, dummy edges incident with this
+        // dummy node is also removed (within the remove method)
+        dummyNode.getOwner().remove(dummyNode);
+      }
+
+      // add the real edge to graph
+      this.graphManager.add(lEdge, lEdge.source, lEdge.target);
+    }
+  }
+};
+
+Layout.transform = function (sliderValue, defaultValue, minDiv, maxMul) {
+  if (minDiv != undefined && maxMul != undefined) {
+    var value = defaultValue;
+
+    if (sliderValue <= 50) {
+      var minValue = defaultValue / minDiv;
+      value -= (defaultValue - minValue) / 50 * (50 - sliderValue);
+    } else {
+      var maxValue = defaultValue * maxMul;
+      value += (maxValue - defaultValue) / 50 * (sliderValue - 50);
+    }
+
+    return value;
+  } else {
+    var a, b;
+
+    if (sliderValue <= 50) {
+      a = 9.0 * defaultValue / 500.0;
+      b = defaultValue / 10.0;
+    } else {
+      a = 9.0 * defaultValue / 50.0;
+      b = -8 * defaultValue;
+    }
+
+    return a * sliderValue + b;
+  }
+};
+
+/**
+ * This method finds and returns the center of the given nodes, assuming
+ * that the given nodes form a tree in themselves.
+ */
+Layout.findCenterOfTree = function (nodes) {
+  var list = [];
+  list = list.concat(nodes);
+
+  var removedNodes = [];
+  var remainingDegrees = new Map();
+  var foundCenter = false;
+  var centerNode = null;
+
+  if (list.length == 1 || list.length == 2) {
+    foundCenter = true;
+    centerNode = list[0];
+  }
+
+  for (var i = 0; i < list.length; i++) {
+    var node = list[i];
+    var degree = node.getNeighborsList().size;
+    remainingDegrees.set(node, node.getNeighborsList().size);
+
+    if (degree == 1) {
+      removedNodes.push(node);
+    }
+  }
+
+  var tempList = [];
+  tempList = tempList.concat(removedNodes);
+
+  while (!foundCenter) {
+    var tempList2 = [];
+    tempList2 = tempList2.concat(tempList);
+    tempList = [];
+
+    for (var i = 0; i < list.length; i++) {
+      var node = list[i];
+
+      var index = list.indexOf(node);
+      if (index >= 0) {
+        list.splice(index, 1);
+      }
+
+      var neighbours = node.getNeighborsList();
+
+      neighbours.forEach(function (neighbour) {
+        if (removedNodes.indexOf(neighbour) < 0) {
+          var otherDegree = remainingDegrees.get(neighbour);
+          var newDegree = otherDegree - 1;
+
+          if (newDegree == 1) {
+            tempList.push(neighbour);
+          }
+
+          remainingDegrees.set(neighbour, newDegree);
+        }
+      });
+    }
+
+    removedNodes = removedNodes.concat(tempList);
+
+    if (list.length == 1 || list.length == 2) {
+      foundCenter = true;
+      centerNode = list[0];
+    }
+  }
+
+  return centerNode;
+};
+
+/**
+ * During the coarsening process, this layout may be referenced by two graph managers
+ * this setter function grants access to change the currently being used graph manager
+ */
+Layout.prototype.setGraphManager = function (gm) {
+  this.graphManager = gm;
+};
+
+module.exports = Layout;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function RandomSeed() {}
+// adapted from: https://stackoverflow.com/a/19303725
+RandomSeed.seed = 1;
+RandomSeed.x = 0;
+
+RandomSeed.nextDouble = function () {
+  RandomSeed.x = Math.sin(RandomSeed.seed++) * 10000;
+  return RandomSeed.x - Math.floor(RandomSeed.x);
+};
+
+module.exports = RandomSeed;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var PointD = __webpack_require__(5);
+
+function Transform(x, y) {
+  this.lworldOrgX = 0.0;
+  this.lworldOrgY = 0.0;
+  this.ldeviceOrgX = 0.0;
+  this.ldeviceOrgY = 0.0;
+  this.lworldExtX = 1.0;
+  this.lworldExtY = 1.0;
+  this.ldeviceExtX = 1.0;
+  this.ldeviceExtY = 1.0;
+}
+
+Transform.prototype.getWorldOrgX = function () {
+  return this.lworldOrgX;
+};
+
+Transform.prototype.setWorldOrgX = function (wox) {
+  this.lworldOrgX = wox;
+};
+
+Transform.prototype.getWorldOrgY = function () {
+  return this.lworldOrgY;
+};
+
+Transform.prototype.setWorldOrgY = function (woy) {
+  this.lworldOrgY = woy;
+};
+
+Transform.prototype.getWorldExtX = function () {
+  return this.lworldExtX;
+};
+
+Transform.prototype.setWorldExtX = function (wex) {
+  this.lworldExtX = wex;
+};
+
+Transform.prototype.getWorldExtY = function () {
+  return this.lworldExtY;
+};
+
+Transform.prototype.setWorldExtY = function (wey) {
+  this.lworldExtY = wey;
+};
+
+/* Device related */
+
+Transform.prototype.getDeviceOrgX = function () {
+  return this.ldeviceOrgX;
+};
+
+Transform.prototype.setDeviceOrgX = function (dox) {
+  this.ldeviceOrgX = dox;
+};
+
+Transform.prototype.getDeviceOrgY = function () {
+  return this.ldeviceOrgY;
+};
+
+Transform.prototype.setDeviceOrgY = function (doy) {
+  this.ldeviceOrgY = doy;
+};
+
+Transform.prototype.getDeviceExtX = function () {
+  return this.ldeviceExtX;
+};
+
+Transform.prototype.setDeviceExtX = function (dex) {
+  this.ldeviceExtX = dex;
+};
+
+Transform.prototype.getDeviceExtY = function () {
+  return this.ldeviceExtY;
+};
+
+Transform.prototype.setDeviceExtY = function (dey) {
+  this.ldeviceExtY = dey;
+};
+
+Transform.prototype.transformX = function (x) {
+  var xDevice = 0.0;
+  var worldExtX = this.lworldExtX;
+  if (worldExtX != 0.0) {
+    xDevice = this.ldeviceOrgX + (x - this.lworldOrgX) * this.ldeviceExtX / worldExtX;
+  }
+
+  return xDevice;
+};
+
+Transform.prototype.transformY = function (y) {
+  var yDevice = 0.0;
+  var worldExtY = this.lworldExtY;
+  if (worldExtY != 0.0) {
+    yDevice = this.ldeviceOrgY + (y - this.lworldOrgY) * this.ldeviceExtY / worldExtY;
+  }
+
+  return yDevice;
+};
+
+Transform.prototype.inverseTransformX = function (x) {
+  var xWorld = 0.0;
+  var deviceExtX = this.ldeviceExtX;
+  if (deviceExtX != 0.0) {
+    xWorld = this.lworldOrgX + (x - this.ldeviceOrgX) * this.lworldExtX / deviceExtX;
+  }
+
+  return xWorld;
+};
+
+Transform.prototype.inverseTransformY = function (y) {
+  var yWorld = 0.0;
+  var deviceExtY = this.ldeviceExtY;
+  if (deviceExtY != 0.0) {
+    yWorld = this.lworldOrgY + (y - this.ldeviceOrgY) * this.lworldExtY / deviceExtY;
+  }
+  return yWorld;
+};
+
+Transform.prototype.inverseTransformPoint = function (inPoint) {
+  var outPoint = new PointD(this.inverseTransformX(inPoint.x), this.inverseTransformY(inPoint.y));
+  return outPoint;
+};
+
+module.exports = Transform;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var Layout = __webpack_require__(15);
+var FDLayoutConstants = __webpack_require__(4);
+var LayoutConstants = __webpack_require__(0);
+var IGeometry = __webpack_require__(8);
+var IMath = __webpack_require__(9);
+
+function FDLayout() {
+  Layout.call(this);
+
+  this.useSmartIdealEdgeLengthCalculation = FDLayoutConstants.DEFAULT_USE_SMART_IDEAL_EDGE_LENGTH_CALCULATION;
+  this.gravityConstant = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH;
+  this.compoundGravityConstant = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH;
+  this.gravityRangeFactor = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR;
+  this.compoundGravityRangeFactor = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR;
+  this.displacementThresholdPerNode = 3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
+  this.coolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+  this.initialCoolingFactor = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL;
+  this.totalDisplacement = 0.0;
+  this.oldTotalDisplacement = 0.0;
+  this.maxIterations = FDLayoutConstants.MAX_ITERATIONS;
+}
+
+FDLayout.prototype = Object.create(Layout.prototype);
+
+for (var prop in Layout) {
+  FDLayout[prop] = Layout[prop];
+}
+
+FDLayout.prototype.initParameters = function () {
+  Layout.prototype.initParameters.call(this, arguments);
+
+  this.totalIterations = 0;
+  this.notAnimatedIterations = 0;
+
+  this.useFRGridVariant = FDLayoutConstants.DEFAULT_USE_SMART_REPULSION_RANGE_CALCULATION;
+
+  this.grid = [];
+};
+
+FDLayout.prototype.calcIdealEdgeLengths = function () {
+  var edge;
+  var originalIdealLength;
+  var lcaDepth;
+  var source;
+  var target;
+  var sizeOfSourceInLca;
+  var sizeOfTargetInLca;
+
+  var allEdges = this.getGraphManager().getAllEdges();
+  for (var i = 0; i < allEdges.length; i++) {
+    edge = allEdges[i];
+
+    originalIdealLength = edge.idealLength;
+
+    if (edge.isInterGraph) {
+      source = edge.getSource();
+      target = edge.getTarget();
+
+      sizeOfSourceInLca = edge.getSourceInLca().getEstimatedSize();
+      sizeOfTargetInLca = edge.getTargetInLca().getEstimatedSize();
+
+      if (this.useSmartIdealEdgeLengthCalculation) {
+        edge.idealLength += sizeOfSourceInLca + sizeOfTargetInLca - 2 * LayoutConstants.SIMPLE_NODE_SIZE;
+      }
+
+      lcaDepth = edge.getLca().getInclusionTreeDepth();
+
+      edge.idealLength += originalIdealLength * FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR * (source.getInclusionTreeDepth() + target.getInclusionTreeDepth() - 2 * lcaDepth);
+    }
+  }
+};
+
+FDLayout.prototype.initSpringEmbedder = function () {
+
+  var s = this.getAllNodes().length;
+  if (this.incremental) {
+    if (s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) {
+      this.coolingFactor = Math.max(this.coolingFactor * FDLayoutConstants.COOLING_ADAPTATION_FACTOR, this.coolingFactor - (s - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) / (FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) * this.coolingFactor * (1 - FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+    }
+    this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT_INCREMENTAL;
+  } else {
+    if (s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) {
+      this.coolingFactor = Math.max(FDLayoutConstants.COOLING_ADAPTATION_FACTOR, 1.0 - (s - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) / (FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) * (1 - FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+    } else {
+      this.coolingFactor = 1.0;
+    }
+    this.initialCoolingFactor = this.coolingFactor;
+    this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT;
+  }
+
+  this.maxIterations = Math.max(this.getAllNodes().length * 5, this.maxIterations);
+
+  // Reassign this attribute by using new constant value
+  this.displacementThresholdPerNode = 3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
+  this.totalDisplacementThreshold = this.displacementThresholdPerNode * this.getAllNodes().length;
+
+  this.repulsionRange = this.calcRepulsionRange();
+};
+
+FDLayout.prototype.calcSpringForces = function () {
+  var lEdges = this.getAllEdges();
+  var edge;
+
+  for (var i = 0; i < lEdges.length; i++) {
+    edge = lEdges[i];
+
+    this.calcSpringForce(edge, edge.idealLength);
+  }
+};
+
+FDLayout.prototype.calcRepulsionForces = function () {
+  var gridUpdateAllowed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var forceToNodeSurroundingUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var i, j;
+  var nodeA, nodeB;
+  var lNodes = this.getAllNodes();
+  var processedNodeSet;
+
+  if (this.useFRGridVariant) {
+    if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed) {
+      this.updateGrid();
+    }
+
+    processedNodeSet = new Set();
+
+    // calculate repulsion forces between each nodes and its surrounding
+    for (i = 0; i < lNodes.length; i++) {
+      nodeA = lNodes[i];
+      this.calculateRepulsionForceOfANode(nodeA, processedNodeSet, gridUpdateAllowed, forceToNodeSurroundingUpdate);
+      processedNodeSet.add(nodeA);
+    }
+  } else {
+    for (i = 0; i < lNodes.length; i++) {
+      nodeA = lNodes[i];
+
+      for (j = i + 1; j < lNodes.length; j++) {
+        nodeB = lNodes[j];
+
+        // If both nodes are not members of the same graph, skip.
+        if (nodeA.getOwner() != nodeB.getOwner()) {
+          continue;
+        }
+
+        this.calcRepulsionForce(nodeA, nodeB);
+      }
+    }
+  }
+};
+
+FDLayout.prototype.calcGravitationalForces = function () {
+  var node;
+  var lNodes = this.getAllNodesToApplyGravitation();
+
+  for (var i = 0; i < lNodes.length; i++) {
+    node = lNodes[i];
+    this.calcGravitationalForce(node);
+  }
+};
+
+FDLayout.prototype.moveNodes = function () {
+  var lNodes = this.getAllNodes();
+  var node;
+
+  for (var i = 0; i < lNodes.length; i++) {
+    node = lNodes[i];
+    node.move();
+  }
+};
+
+FDLayout.prototype.calcSpringForce = function (edge, idealLength) {
+  var sourceNode = edge.getSource();
+  var targetNode = edge.getTarget();
+
+  var length;
+  var springForce;
+  var springForceX;
+  var springForceY;
+
+  // Update edge length
+  if (this.uniformLeafNodeSizes && sourceNode.getChild() == null && targetNode.getChild() == null) {
+    edge.updateLengthSimple();
+  } else {
+    edge.updateLength();
+
+    if (edge.isOverlapingSourceAndTarget) {
+      return;
+    }
+  }
+
+  length = edge.getLength();
+
+  if (length == 0) return;
+
+  // Calculate spring forces
+  springForce = edge.edgeElasticity * (length - idealLength);
+
+  // Project force onto x and y axes
+  springForceX = springForce * (edge.lengthX / length);
+  springForceY = springForce * (edge.lengthY / length);
+
+  // Apply forces on the end nodes
+  sourceNode.springForceX += springForceX;
+  sourceNode.springForceY += springForceY;
+  targetNode.springForceX -= springForceX;
+  targetNode.springForceY -= springForceY;
+};
+
+FDLayout.prototype.calcRepulsionForce = function (nodeA, nodeB) {
+  var rectA = nodeA.getRect();
+  var rectB = nodeB.getRect();
+  var overlapAmount = new Array(2);
+  var clipPoints = new Array(4);
+  var distanceX;
+  var distanceY;
+  var distanceSquared;
+  var distance;
+  var repulsionForce;
+  var repulsionForceX;
+  var repulsionForceY;
+
+  if (rectA.intersects(rectB)) // two nodes overlap
+    {
+      // calculate separation amount in x and y directions
+      IGeometry.calcSeparationAmount(rectA, rectB, overlapAmount, FDLayoutConstants.DEFAULT_EDGE_LENGTH / 2.0);
+
+      repulsionForceX = 2 * overlapAmount[0];
+      repulsionForceY = 2 * overlapAmount[1];
+
+      var childrenConstant = nodeA.noOfChildren * nodeB.noOfChildren / (nodeA.noOfChildren + nodeB.noOfChildren);
+
+      // Apply forces on the two nodes
+      nodeA.repulsionForceX -= childrenConstant * repulsionForceX;
+      nodeA.repulsionForceY -= childrenConstant * repulsionForceY;
+      nodeB.repulsionForceX += childrenConstant * repulsionForceX;
+      nodeB.repulsionForceY += childrenConstant * repulsionForceY;
+    } else // no overlap
+    {
+      // calculate distance
+
+      if (this.uniformLeafNodeSizes && nodeA.getChild() == null && nodeB.getChild() == null) // simply base repulsion on distance of node centers
+        {
+          distanceX = rectB.getCenterX() - rectA.getCenterX();
+          distanceY = rectB.getCenterY() - rectA.getCenterY();
+        } else // use clipping points
+        {
+          IGeometry.getIntersection(rectA, rectB, clipPoints);
+
+          distanceX = clipPoints[2] - clipPoints[0];
+          distanceY = clipPoints[3] - clipPoints[1];
+        }
+
+      // No repulsion range. FR grid variant should take care of this.
+      if (Math.abs(distanceX) < FDLayoutConstants.MIN_REPULSION_DIST) {
+        distanceX = IMath.sign(distanceX) * FDLayoutConstants.MIN_REPULSION_DIST;
+      }
+
+      if (Math.abs(distanceY) < FDLayoutConstants.MIN_REPULSION_DIST) {
+        distanceY = IMath.sign(distanceY) * FDLayoutConstants.MIN_REPULSION_DIST;
+      }
+
+      distanceSquared = distanceX * distanceX + distanceY * distanceY;
+      distance = Math.sqrt(distanceSquared);
+
+      // Here we use half of the nodes' repulsion values for backward compatibility
+      repulsionForce = (nodeA.nodeRepulsion / 2 + nodeB.nodeRepulsion / 2) * nodeA.noOfChildren * nodeB.noOfChildren / distanceSquared;
+
+      // Project force onto x and y axes
+      repulsionForceX = repulsionForce * distanceX / distance;
+      repulsionForceY = repulsionForce * distanceY / distance;
+
+      // Apply forces on the two nodes    
+      nodeA.repulsionForceX -= repulsionForceX;
+      nodeA.repulsionForceY -= repulsionForceY;
+      nodeB.repulsionForceX += repulsionForceX;
+      nodeB.repulsionForceY += repulsionForceY;
+    }
+};
+
+FDLayout.prototype.calcGravitationalForce = function (node) {
+  var ownerGraph;
+  var ownerCenterX;
+  var ownerCenterY;
+  var distanceX;
+  var distanceY;
+  var absDistanceX;
+  var absDistanceY;
+  var estimatedSize;
+  ownerGraph = node.getOwner();
+
+  ownerCenterX = (ownerGraph.getRight() + ownerGraph.getLeft()) / 2;
+  ownerCenterY = (ownerGraph.getTop() + ownerGraph.getBottom()) / 2;
+  distanceX = node.getCenterX() - ownerCenterX;
+  distanceY = node.getCenterY() - ownerCenterY;
+  absDistanceX = Math.abs(distanceX) + node.getWidth() / 2;
+  absDistanceY = Math.abs(distanceY) + node.getHeight() / 2;
+
+  if (node.getOwner() == this.graphManager.getRoot()) // in the root graph
+    {
+      estimatedSize = ownerGraph.getEstimatedSize() * this.gravityRangeFactor;
+
+      if (absDistanceX > estimatedSize || absDistanceY > estimatedSize) {
+        node.gravitationForceX = -this.gravityConstant * distanceX;
+        node.gravitationForceY = -this.gravityConstant * distanceY;
+      }
+    } else // inside a compound
+    {
+      estimatedSize = ownerGraph.getEstimatedSize() * this.compoundGravityRangeFactor;
+
+      if (absDistanceX > estimatedSize || absDistanceY > estimatedSize) {
+        node.gravitationForceX = -this.gravityConstant * distanceX * this.compoundGravityConstant;
+        node.gravitationForceY = -this.gravityConstant * distanceY * this.compoundGravityConstant;
+      }
+    }
+};
+
+FDLayout.prototype.isConverged = function () {
+  var converged;
+  var oscilating = false;
+
+  if (this.totalIterations > this.maxIterations / 3) {
+    oscilating = Math.abs(this.totalDisplacement - this.oldTotalDisplacement) < 2;
+  }
+
+  converged = this.totalDisplacement < this.totalDisplacementThreshold;
+
+  this.oldTotalDisplacement = this.totalDisplacement;
+
+  return converged || oscilating;
+};
+
+FDLayout.prototype.animate = function () {
+  if (this.animationDuringLayout && !this.isSubLayout) {
+    if (this.notAnimatedIterations == this.animationPeriod) {
+      this.update();
+      this.notAnimatedIterations = 0;
+    } else {
+      this.notAnimatedIterations++;
+    }
+  }
+};
+
+//This method calculates the number of children (weight) for all nodes
+FDLayout.prototype.calcNoOfChildrenForAllNodes = function () {
+  var node;
+  var allNodes = this.graphManager.getAllNodes();
+
+  for (var i = 0; i < allNodes.length; i++) {
+    node = allNodes[i];
+    node.noOfChildren = node.getNoOfChildren();
+  }
+};
+
+// -----------------------------------------------------------------------------
+// Section: FR-Grid Variant Repulsion Force Calculation
+// -----------------------------------------------------------------------------
+
+FDLayout.prototype.calcGrid = function (graph) {
+
+  var sizeX = 0;
+  var sizeY = 0;
+
+  sizeX = parseInt(Math.ceil((graph.getRight() - graph.getLeft()) / this.repulsionRange));
+  sizeY = parseInt(Math.ceil((graph.getBottom() - graph.getTop()) / this.repulsionRange));
+
+  var grid = new Array(sizeX);
+
+  for (var i = 0; i < sizeX; i++) {
+    grid[i] = new Array(sizeY);
+  }
+
+  for (var i = 0; i < sizeX; i++) {
+    for (var j = 0; j < sizeY; j++) {
+      grid[i][j] = new Array();
+    }
+  }
+
+  return grid;
+};
+
+FDLayout.prototype.addNodeToGrid = function (v, left, top) {
+
+  var startX = 0;
+  var finishX = 0;
+  var startY = 0;
+  var finishY = 0;
+
+  startX = parseInt(Math.floor((v.getRect().x - left) / this.repulsionRange));
+  finishX = parseInt(Math.floor((v.getRect().width + v.getRect().x - left) / this.repulsionRange));
+  startY = parseInt(Math.floor((v.getRect().y - top) / this.repulsionRange));
+  finishY = parseInt(Math.floor((v.getRect().height + v.getRect().y - top) / this.repulsionRange));
+
+  for (var i = startX; i <= finishX; i++) {
+    for (var j = startY; j <= finishY; j++) {
+      this.grid[i][j].push(v);
+      v.setGridCoordinates(startX, finishX, startY, finishY);
+    }
+  }
+};
+
+FDLayout.prototype.updateGrid = function () {
+  var i;
+  var nodeA;
+  var lNodes = this.getAllNodes();
+
+  this.grid = this.calcGrid(this.graphManager.getRoot());
+
+  // put all nodes to proper grid cells
+  for (i = 0; i < lNodes.length; i++) {
+    nodeA = lNodes[i];
+    this.addNodeToGrid(nodeA, this.graphManager.getRoot().getLeft(), this.graphManager.getRoot().getTop());
+  }
+};
+
+FDLayout.prototype.calculateRepulsionForceOfANode = function (nodeA, processedNodeSet, gridUpdateAllowed, forceToNodeSurroundingUpdate) {
+
+  if (this.totalIterations % FDLayoutConstants.GRID_CALCULATION_CHECK_PERIOD == 1 && gridUpdateAllowed || forceToNodeSurroundingUpdate) {
+    var surrounding = new Set();
+    nodeA.surrounding = new Array();
+    var nodeB;
+    var grid = this.grid;
+
+    for (var i = nodeA.startX - 1; i < nodeA.finishX + 2; i++) {
+      for (var j = nodeA.startY - 1; j < nodeA.finishY + 2; j++) {
+        if (!(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length)) {
+          for (var k = 0; k < grid[i][j].length; k++) {
+            nodeB = grid[i][j][k];
+
+            // If both nodes are not members of the same graph, 
+            // or both nodes are the same, skip.
+            if (nodeA.getOwner() != nodeB.getOwner() || nodeA == nodeB) {
+              continue;
+            }
+
+            // check if the repulsion force between
+            // nodeA and nodeB has already been calculated
+            if (!processedNodeSet.has(nodeB) && !surrounding.has(nodeB)) {
+              var distanceX = Math.abs(nodeA.getCenterX() - nodeB.getCenterX()) - (nodeA.getWidth() / 2 + nodeB.getWidth() / 2);
+              var distanceY = Math.abs(nodeA.getCenterY() - nodeB.getCenterY()) - (nodeA.getHeight() / 2 + nodeB.getHeight() / 2);
+
+              // if the distance between nodeA and nodeB 
+              // is less then calculation range
+              if (distanceX <= this.repulsionRange && distanceY <= this.repulsionRange) {
+                //then add nodeB to surrounding of nodeA
+                surrounding.add(nodeB);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    nodeA.surrounding = [].concat(_toConsumableArray(surrounding));
+  }
+  for (i = 0; i < nodeA.surrounding.length; i++) {
+    this.calcRepulsionForce(nodeA, nodeA.surrounding[i]);
+  }
+};
+
+FDLayout.prototype.calcRepulsionRange = function () {
+  return 0.0;
+};
+
+module.exports = FDLayout;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LEdge = __webpack_require__(1);
+var FDLayoutConstants = __webpack_require__(4);
+
+function FDLayoutEdge(source, target, vEdge) {
+  LEdge.call(this, source, target, vEdge);
+
+  // Ideal length and elasticity value for this edge
+  this.idealLength = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+  this.edgeElasticity = FDLayoutConstants.DEFAULT_SPRING_STRENGTH;
+}
+
+FDLayoutEdge.prototype = Object.create(LEdge.prototype);
+
+for (var prop in LEdge) {
+  FDLayoutEdge[prop] = LEdge[prop];
+}
+
+module.exports = FDLayoutEdge;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LNode = __webpack_require__(3);
+var FDLayoutConstants = __webpack_require__(4);
+
+function FDLayoutNode(gm, loc, size, vNode) {
+  // alternative constructor is handled inside LNode
+  LNode.call(this, gm, loc, size, vNode);
+
+  // Repulsion value of this node
+  this.nodeRepulsion = FDLayoutConstants.DEFAULT_REPULSION_STRENGTH;
+
+  //Spring, repulsion and gravitational forces acting on this node
+  this.springForceX = 0;
+  this.springForceY = 0;
+  this.repulsionForceX = 0;
+  this.repulsionForceY = 0;
+  this.gravitationForceX = 0;
+  this.gravitationForceY = 0;
+  //Amount by which this node is to be moved in this iteration
+  this.displacementX = 0;
+  this.displacementY = 0;
+
+  //Start and finish grid coordinates that this node is fallen into
+  this.startX = 0;
+  this.finishX = 0;
+  this.startY = 0;
+  this.finishY = 0;
+
+  //Geometric neighbors of this node
+  this.surrounding = [];
+}
+
+FDLayoutNode.prototype = Object.create(LNode.prototype);
+
+for (var prop in LNode) {
+  FDLayoutNode[prop] = LNode[prop];
+}
+
+FDLayoutNode.prototype.setGridCoordinates = function (_startX, _finishX, _startY, _finishY) {
+  this.startX = _startX;
+  this.finishX = _finishX;
+  this.startY = _startY;
+  this.finishY = _finishY;
+};
+
+module.exports = FDLayoutNode;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function DimensionD(width, height) {
+  this.width = 0;
+  this.height = 0;
+  if (width !== null && height !== null) {
+    this.height = height;
+    this.width = width;
+  }
+}
+
+DimensionD.prototype.getWidth = function () {
+  return this.width;
+};
+
+DimensionD.prototype.setWidth = function (width) {
+  this.width = width;
+};
+
+DimensionD.prototype.getHeight = function () {
+  return this.height;
+};
+
+DimensionD.prototype.setHeight = function (height) {
+  this.height = height;
+};
+
+module.exports = DimensionD;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var UniqueIDGeneretor = __webpack_require__(14);
+
+function HashMap() {
+  this.map = {};
+  this.keys = [];
+}
+
+HashMap.prototype.put = function (key, value) {
+  var theId = UniqueIDGeneretor.createID(key);
+  if (!this.contains(theId)) {
+    this.map[theId] = value;
+    this.keys.push(key);
+  }
+};
+
+HashMap.prototype.contains = function (key) {
+  var theId = UniqueIDGeneretor.createID(key);
+  return this.map[key] != null;
+};
+
+HashMap.prototype.get = function (key) {
+  var theId = UniqueIDGeneretor.createID(key);
+  return this.map[theId];
+};
+
+HashMap.prototype.keySet = function () {
+  return this.keys;
+};
+
+module.exports = HashMap;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var UniqueIDGeneretor = __webpack_require__(14);
+
+function HashSet() {
+  this.set = {};
+}
+;
+
+HashSet.prototype.add = function (obj) {
+  var theId = UniqueIDGeneretor.createID(obj);
+  if (!this.contains(theId)) this.set[theId] = obj;
+};
+
+HashSet.prototype.remove = function (obj) {
+  delete this.set[UniqueIDGeneretor.createID(obj)];
+};
+
+HashSet.prototype.clear = function () {
+  this.set = {};
+};
+
+HashSet.prototype.contains = function (obj) {
+  return this.set[UniqueIDGeneretor.createID(obj)] == obj;
+};
+
+HashSet.prototype.isEmpty = function () {
+  return this.size() === 0;
+};
+
+HashSet.prototype.size = function () {
+  return Object.keys(this.set).length;
+};
+
+//concats this.set to the given list
+HashSet.prototype.addAllTo = function (list) {
+  var keys = Object.keys(this.set);
+  var length = keys.length;
+  for (var i = 0; i < length; i++) {
+    list.push(this.set[keys[i]]);
+  }
+};
+
+HashSet.prototype.size = function () {
+  return Object.keys(this.set).length;
+};
+
+HashSet.prototype.addAll = function (list) {
+  var s = list.length;
+  for (var i = 0; i < s; i++) {
+    var v = list[i];
+    this.add(v);
+  }
+};
+
+module.exports = HashSet;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Some matrix (1d and 2d array) operations
+function Matrix() {}
+
+/**
+ * matrix multiplication
+ * array1, array2 and result are 2d arrays
+ */
+Matrix.multMat = function (array1, array2) {
+  var result = [];
+
+  for (var i = 0; i < array1.length; i++) {
+    result[i] = [];
+    for (var j = 0; j < array2[0].length; j++) {
+      result[i][j] = 0;
+      for (var k = 0; k < array1[0].length; k++) {
+        result[i][j] += array1[i][k] * array2[k][j];
+      }
+    }
+  }
+  return result;
+};
+
+/**
+ * matrix transpose
+ * array and result are 2d arrays
+ */
+Matrix.transpose = function (array) {
+  var result = [];
+
+  for (var i = 0; i < array[0].length; i++) {
+    result[i] = [];
+    for (var j = 0; j < array.length; j++) {
+      result[i][j] = array[j][i];
+    }
+  }
+
+  return result;
+};
+
+/**
+ * multiply array with constant
+ * array and result are 1d arrays
+ */
+Matrix.multCons = function (array, constant) {
+  var result = [];
+
+  for (var i = 0; i < array.length; i++) {
+    result[i] = array[i] * constant;
+  }
+
+  return result;
+};
+
+/**
+ * substract two arrays
+ * array1, array2 and result are 1d arrays
+ */
+Matrix.minusOp = function (array1, array2) {
+  var result = [];
+
+  for (var i = 0; i < array1.length; i++) {
+    result[i] = array1[i] - array2[i];
+  }
+
+  return result;
+};
+
+/**
+ * dot product of two arrays with same size
+ * array1 and array2 are 1d arrays
+ */
+Matrix.dotProduct = function (array1, array2) {
+  var product = 0;
+
+  for (var i = 0; i < array1.length; i++) {
+    product += array1[i] * array2[i];
+  }
+
+  return product;
+};
+
+/**
+ * magnitude of an array
+ * array is 1d array
+ */
+Matrix.mag = function (array) {
+  return Math.sqrt(this.dotProduct(array, array));
+};
+
+/**
+ * normalization of an array
+ * array and result are 1d array
+ */
+Matrix.normalize = function (array) {
+  var result = [];
+  var magnitude = this.mag(array);
+
+  for (var i = 0; i < array.length; i++) {
+    result[i] = array[i] / magnitude;
+  }
+
+  return result;
+};
+
+/**
+ * multiply an array with centering matrix
+ * array and result are 1d array
+ */
+Matrix.multGamma = function (array) {
+  var result = [];
+  var sum = 0;
+
+  for (var i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+
+  sum *= -1 / array.length;
+
+  for (var _i = 0; _i < array.length; _i++) {
+    result[_i] = sum + array[_i];
+  }
+  return result;
+};
+
+/**
+ * a special matrix multiplication
+ * result = 0.5 * C * INV * C^T * array
+ * array and result are 1d, C and INV are 2d arrays
+ */
+Matrix.multL = function (array, C, INV) {
+  var result = [];
+  var temp1 = [];
+  var temp2 = [];
+
+  // multiply by C^T
+  for (var i = 0; i < C[0].length; i++) {
+    var sum = 0;
+    for (var j = 0; j < C.length; j++) {
+      sum += -0.5 * C[j][i] * array[j];
+    }
+    temp1[i] = sum;
+  }
+  // multiply the result by INV
+  for (var _i2 = 0; _i2 < INV.length; _i2++) {
+    var _sum = 0;
+    for (var _j = 0; _j < INV.length; _j++) {
+      _sum += INV[_i2][_j] * temp1[_j];
+    }
+    temp2[_i2] = _sum;
+  }
+  // multiply the result by C
+  for (var _i3 = 0; _i3 < C.length; _i3++) {
+    var _sum2 = 0;
+    for (var _j2 = 0; _j2 < C[0].length; _j2++) {
+      _sum2 += C[_i3][_j2] * temp2[_j2];
+    }
+    result[_i3] = _sum2;
+  }
+
+  return result;
+};
+
+module.exports = Matrix;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * A classic Quicksort algorithm with Hoare's partition
+ * - Works also on LinkedList objects
+ *
+ * Copyright: i-Vis Research Group, Bilkent University, 2007 - present
+ */
+
+var LinkedList = __webpack_require__(11);
+
+var Quicksort = function () {
+    function Quicksort(A, compareFunction) {
+        _classCallCheck(this, Quicksort);
+
+        if (compareFunction !== null || compareFunction !== undefined) this.compareFunction = this._defaultCompareFunction;
+
+        var length = void 0;
+        if (A instanceof LinkedList) length = A.size();else length = A.length;
+
+        this._quicksort(A, 0, length - 1);
+    }
+
+    _createClass(Quicksort, [{
+        key: '_quicksort',
+        value: function _quicksort(A, p, r) {
+            if (p < r) {
+                var q = this._partition(A, p, r);
+                this._quicksort(A, p, q);
+                this._quicksort(A, q + 1, r);
+            }
+        }
+    }, {
+        key: '_partition',
+        value: function _partition(A, p, r) {
+            var x = this._get(A, p);
+            var i = p;
+            var j = r;
+            while (true) {
+                while (this.compareFunction(x, this._get(A, j))) {
+                    j--;
+                }while (this.compareFunction(this._get(A, i), x)) {
+                    i++;
+                }if (i < j) {
+                    this._swap(A, i, j);
+                    i++;
+                    j--;
+                } else return j;
+            }
+        }
+    }, {
+        key: '_get',
+        value: function _get(object, index) {
+            if (object instanceof LinkedList) return object.get_object_at(index);else return object[index];
+        }
+    }, {
+        key: '_set',
+        value: function _set(object, index, value) {
+            if (object instanceof LinkedList) object.set_object_at(index, value);else object[index] = value;
+        }
+    }, {
+        key: '_swap',
+        value: function _swap(A, i, j) {
+            var temp = this._get(A, i);
+            this._set(A, i, this._get(A, j));
+            this._set(A, j, temp);
+        }
+    }, {
+        key: '_defaultCompareFunction',
+        value: function _defaultCompareFunction(a, b) {
+            return b > a;
+        }
+    }]);
+
+    return Quicksort;
+}();
+
+module.exports = Quicksort;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Singular Value Decomposition implementation
+function SVD() {};
+
+/* Below singular value decomposition (svd) code including hypot function is adopted from https://github.com/dragonfly-ai/JamaJS
+   Some changes are applied to make the code compatible with the fcose code and to make it independent from Jama.
+   Input matrix is changed to a 2D array instead of Jama matrix. Matrix dimensions are taken according to 2D array instead of using Jama functions.
+   An object that includes singular value components is created for return. 
+   The types of input parameters of the hypot function are removed. 
+   let is used instead of var for the variable initialization.
+*/
+/*
+                               Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "{}"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright {yyyy} {name of copyright owner}
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+SVD.svd = function (A) {
+  this.U = null;
+  this.V = null;
+  this.s = null;
+  this.m = 0;
+  this.n = 0;
+  this.m = A.length;
+  this.n = A[0].length;
+  var nu = Math.min(this.m, this.n);
+  this.s = function (s) {
+    var a = [];
+    while (s-- > 0) {
+      a.push(0);
+    }return a;
+  }(Math.min(this.m + 1, this.n));
+  this.U = function (dims) {
+    var allocate = function allocate(dims) {
+      if (dims.length == 0) {
+        return 0;
+      } else {
+        var array = [];
+        for (var i = 0; i < dims[0]; i++) {
+          array.push(allocate(dims.slice(1)));
+        }
+        return array;
+      }
+    };
+    return allocate(dims);
+  }([this.m, nu]);
+  this.V = function (dims) {
+    var allocate = function allocate(dims) {
+      if (dims.length == 0) {
+        return 0;
+      } else {
+        var array = [];
+        for (var i = 0; i < dims[0]; i++) {
+          array.push(allocate(dims.slice(1)));
+        }
+        return array;
+      }
+    };
+    return allocate(dims);
+  }([this.n, this.n]);
+  var e = function (s) {
+    var a = [];
+    while (s-- > 0) {
+      a.push(0);
+    }return a;
+  }(this.n);
+  var work = function (s) {
+    var a = [];
+    while (s-- > 0) {
+      a.push(0);
+    }return a;
+  }(this.m);
+  var wantu = true;
+  var wantv = true;
+  var nct = Math.min(this.m - 1, this.n);
+  var nrt = Math.max(0, Math.min(this.n - 2, this.m));
+  for (var k = 0; k < Math.max(nct, nrt); k++) {
+    if (k < nct) {
+      this.s[k] = 0;
+      for (var i = k; i < this.m; i++) {
+        this.s[k] = SVD.hypot(this.s[k], A[i][k]);
+      }
+      ;
+      if (this.s[k] !== 0.0) {
+        if (A[k][k] < 0.0) {
+          this.s[k] = -this.s[k];
+        }
+        for (var _i = k; _i < this.m; _i++) {
+          A[_i][k] /= this.s[k];
+        }
+        ;
+        A[k][k] += 1.0;
+      }
+      this.s[k] = -this.s[k];
+    }
+    for (var j = k + 1; j < this.n; j++) {
+      if (function (lhs, rhs) {
+        return lhs && rhs;
+      }(k < nct, this.s[k] !== 0.0)) {
+        var t = 0;
+        for (var _i2 = k; _i2 < this.m; _i2++) {
+          t += A[_i2][k] * A[_i2][j];
+        }
+        ;
+        t = -t / A[k][k];
+        for (var _i3 = k; _i3 < this.m; _i3++) {
+          A[_i3][j] += t * A[_i3][k];
+        }
+        ;
+      }
+      e[j] = A[k][j];
+    }
+    ;
+    if (function (lhs, rhs) {
+      return lhs && rhs;
+    }(wantu, k < nct)) {
+      for (var _i4 = k; _i4 < this.m; _i4++) {
+        this.U[_i4][k] = A[_i4][k];
+      }
+      ;
+    }
+    if (k < nrt) {
+      e[k] = 0;
+      for (var _i5 = k + 1; _i5 < this.n; _i5++) {
+        e[k] = SVD.hypot(e[k], e[_i5]);
+      }
+      ;
+      if (e[k] !== 0.0) {
+        if (e[k + 1] < 0.0) {
+          e[k] = -e[k];
+        }
+        for (var _i6 = k + 1; _i6 < this.n; _i6++) {
+          e[_i6] /= e[k];
+        }
+        ;
+        e[k + 1] += 1.0;
+      }
+      e[k] = -e[k];
+      if (function (lhs, rhs) {
+        return lhs && rhs;
+      }(k + 1 < this.m, e[k] !== 0.0)) {
+        for (var _i7 = k + 1; _i7 < this.m; _i7++) {
+          work[_i7] = 0.0;
+        }
+        ;
+        for (var _j = k + 1; _j < this.n; _j++) {
+          for (var _i8 = k + 1; _i8 < this.m; _i8++) {
+            work[_i8] += e[_j] * A[_i8][_j];
+          }
+          ;
+        }
+        ;
+        for (var _j2 = k + 1; _j2 < this.n; _j2++) {
+          var _t = -e[_j2] / e[k + 1];
+          for (var _i9 = k + 1; _i9 < this.m; _i9++) {
+            A[_i9][_j2] += _t * work[_i9];
+          }
+          ;
+        }
+        ;
+      }
+      if (wantv) {
+        for (var _i10 = k + 1; _i10 < this.n; _i10++) {
+          this.V[_i10][k] = e[_i10];
+        };
+      }
+    }
+  };
+  var p = Math.min(this.n, this.m + 1);
+  if (nct < this.n) {
+    this.s[nct] = A[nct][nct];
+  }
+  if (this.m < p) {
+    this.s[p - 1] = 0.0;
+  }
+  if (nrt + 1 < p) {
+    e[nrt] = A[nrt][p - 1];
+  }
+  e[p - 1] = 0.0;
+  if (wantu) {
+    for (var _j3 = nct; _j3 < nu; _j3++) {
+      for (var _i11 = 0; _i11 < this.m; _i11++) {
+        this.U[_i11][_j3] = 0.0;
+      }
+      ;
+      this.U[_j3][_j3] = 1.0;
+    };
+    for (var _k = nct - 1; _k >= 0; _k--) {
+      if (this.s[_k] !== 0.0) {
+        for (var _j4 = _k + 1; _j4 < nu; _j4++) {
+          var _t2 = 0;
+          for (var _i12 = _k; _i12 < this.m; _i12++) {
+            _t2 += this.U[_i12][_k] * this.U[_i12][_j4];
+          };
+          _t2 = -_t2 / this.U[_k][_k];
+          for (var _i13 = _k; _i13 < this.m; _i13++) {
+            this.U[_i13][_j4] += _t2 * this.U[_i13][_k];
+          };
+        };
+        for (var _i14 = _k; _i14 < this.m; _i14++) {
+          this.U[_i14][_k] = -this.U[_i14][_k];
+        };
+        this.U[_k][_k] = 1.0 + this.U[_k][_k];
+        for (var _i15 = 0; _i15 < _k - 1; _i15++) {
+          this.U[_i15][_k] = 0.0;
+        };
+      } else {
+        for (var _i16 = 0; _i16 < this.m; _i16++) {
+          this.U[_i16][_k] = 0.0;
+        };
+        this.U[_k][_k] = 1.0;
+      }
+    };
+  }
+  if (wantv) {
+    for (var _k2 = this.n - 1; _k2 >= 0; _k2--) {
+      if (function (lhs, rhs) {
+        return lhs && rhs;
+      }(_k2 < nrt, e[_k2] !== 0.0)) {
+        for (var _j5 = _k2 + 1; _j5 < nu; _j5++) {
+          var _t3 = 0;
+          for (var _i17 = _k2 + 1; _i17 < this.n; _i17++) {
+            _t3 += this.V[_i17][_k2] * this.V[_i17][_j5];
+          };
+          _t3 = -_t3 / this.V[_k2 + 1][_k2];
+          for (var _i18 = _k2 + 1; _i18 < this.n; _i18++) {
+            this.V[_i18][_j5] += _t3 * this.V[_i18][_k2];
+          };
+        };
+      }
+      for (var _i19 = 0; _i19 < this.n; _i19++) {
+        this.V[_i19][_k2] = 0.0;
+      };
+      this.V[_k2][_k2] = 1.0;
+    };
+  }
+  var pp = p - 1;
+  var iter = 0;
+  var eps = Math.pow(2.0, -52.0);
+  var tiny = Math.pow(2.0, -966.0);
+  while (p > 0) {
+    var _k3 = void 0;
+    var kase = void 0;
+    for (_k3 = p - 2; _k3 >= -1; _k3--) {
+      if (_k3 === -1) {
+        break;
+      }
+      if (Math.abs(e[_k3]) <= tiny + eps * (Math.abs(this.s[_k3]) + Math.abs(this.s[_k3 + 1]))) {
+        e[_k3] = 0.0;
+        break;
+      }
+    };
+    if (_k3 === p - 2) {
+      kase = 4;
+    } else {
+      var ks = void 0;
+      for (ks = p - 1; ks >= _k3; ks--) {
+        if (ks === _k3) {
+          break;
+        }
+        var _t4 = (ks !== p ? Math.abs(e[ks]) : 0.0) + (ks !== _k3 + 1 ? Math.abs(e[ks - 1]) : 0.0);
+        if (Math.abs(this.s[ks]) <= tiny + eps * _t4) {
+          this.s[ks] = 0.0;
+          break;
+        }
+      };
+      if (ks === _k3) {
+        kase = 3;
+      } else if (ks === p - 1) {
+        kase = 1;
+      } else {
+        kase = 2;
+        _k3 = ks;
+      }
+    }
+    _k3++;
+    switch (kase) {
+      case 1:
+        {
+          var f = e[p - 2];
+          e[p - 2] = 0.0;
+          for (var _j6 = p - 2; _j6 >= _k3; _j6--) {
+            var _t5 = SVD.hypot(this.s[_j6], f);
+            var cs = this.s[_j6] / _t5;
+            var sn = f / _t5;
+            this.s[_j6] = _t5;
+            if (_j6 !== _k3) {
+              f = -sn * e[_j6 - 1];
+              e[_j6 - 1] = cs * e[_j6 - 1];
+            }
+            if (wantv) {
+              for (var _i20 = 0; _i20 < this.n; _i20++) {
+                _t5 = cs * this.V[_i20][_j6] + sn * this.V[_i20][p - 1];
+                this.V[_i20][p - 1] = -sn * this.V[_i20][_j6] + cs * this.V[_i20][p - 1];
+                this.V[_i20][_j6] = _t5;
+              };
+            }
+          };
+        };
+        break;
+      case 2:
+        {
+          var _f = e[_k3 - 1];
+          e[_k3 - 1] = 0.0;
+          for (var _j7 = _k3; _j7 < p; _j7++) {
+            var _t6 = SVD.hypot(this.s[_j7], _f);
+            var _cs = this.s[_j7] / _t6;
+            var _sn = _f / _t6;
+            this.s[_j7] = _t6;
+            _f = -_sn * e[_j7];
+            e[_j7] = _cs * e[_j7];
+            if (wantu) {
+              for (var _i21 = 0; _i21 < this.m; _i21++) {
+                _t6 = _cs * this.U[_i21][_j7] + _sn * this.U[_i21][_k3 - 1];
+                this.U[_i21][_k3 - 1] = -_sn * this.U[_i21][_j7] + _cs * this.U[_i21][_k3 - 1];
+                this.U[_i21][_j7] = _t6;
+              };
+            }
+          };
+        };
+        break;
+      case 3:
+        {
+          var scale = Math.max(Math.max(Math.max(Math.max(Math.abs(this.s[p - 1]), Math.abs(this.s[p - 2])), Math.abs(e[p - 2])), Math.abs(this.s[_k3])), Math.abs(e[_k3]));
+          var sp = this.s[p - 1] / scale;
+          var spm1 = this.s[p - 2] / scale;
+          var epm1 = e[p - 2] / scale;
+          var sk = this.s[_k3] / scale;
+          var ek = e[_k3] / scale;
+          var b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0;
+          var c = sp * epm1 * (sp * epm1);
+          var shift = 0.0;
+          if (function (lhs, rhs) {
+            return lhs || rhs;
+          }(b !== 0.0, c !== 0.0)) {
+            shift = Math.sqrt(b * b + c);
+            if (b < 0.0) {
+              shift = -shift;
+            }
+            shift = c / (b + shift);
+          }
+          var _f2 = (sk + sp) * (sk - sp) + shift;
+          var g = sk * ek;
+          for (var _j8 = _k3; _j8 < p - 1; _j8++) {
+            var _t7 = SVD.hypot(_f2, g);
+            var _cs2 = _f2 / _t7;
+            var _sn2 = g / _t7;
+            if (_j8 !== _k3) {
+              e[_j8 - 1] = _t7;
+            }
+            _f2 = _cs2 * this.s[_j8] + _sn2 * e[_j8];
+            e[_j8] = _cs2 * e[_j8] - _sn2 * this.s[_j8];
+            g = _sn2 * this.s[_j8 + 1];
+            this.s[_j8 + 1] = _cs2 * this.s[_j8 + 1];
+            if (wantv) {
+              for (var _i22 = 0; _i22 < this.n; _i22++) {
+                _t7 = _cs2 * this.V[_i22][_j8] + _sn2 * this.V[_i22][_j8 + 1];
+                this.V[_i22][_j8 + 1] = -_sn2 * this.V[_i22][_j8] + _cs2 * this.V[_i22][_j8 + 1];
+                this.V[_i22][_j8] = _t7;
+              };
+            }
+            _t7 = SVD.hypot(_f2, g);
+            _cs2 = _f2 / _t7;
+            _sn2 = g / _t7;
+            this.s[_j8] = _t7;
+            _f2 = _cs2 * e[_j8] + _sn2 * this.s[_j8 + 1];
+            this.s[_j8 + 1] = -_sn2 * e[_j8] + _cs2 * this.s[_j8 + 1];
+            g = _sn2 * e[_j8 + 1];
+            e[_j8 + 1] = _cs2 * e[_j8 + 1];
+            if (wantu && _j8 < this.m - 1) {
+              for (var _i23 = 0; _i23 < this.m; _i23++) {
+                _t7 = _cs2 * this.U[_i23][_j8] + _sn2 * this.U[_i23][_j8 + 1];
+                this.U[_i23][_j8 + 1] = -_sn2 * this.U[_i23][_j8] + _cs2 * this.U[_i23][_j8 + 1];
+                this.U[_i23][_j8] = _t7;
+              };
+            }
+          };
+          e[p - 2] = _f2;
+          iter = iter + 1;
+        };
+        break;
+      case 4:
+        {
+          if (this.s[_k3] <= 0.0) {
+            this.s[_k3] = this.s[_k3] < 0.0 ? -this.s[_k3] : 0.0;
+            if (wantv) {
+              for (var _i24 = 0; _i24 <= pp; _i24++) {
+                this.V[_i24][_k3] = -this.V[_i24][_k3];
+              };
+            }
+          }
+          while (_k3 < pp) {
+            if (this.s[_k3] >= this.s[_k3 + 1]) {
+              break;
+            }
+            var _t8 = this.s[_k3];
+            this.s[_k3] = this.s[_k3 + 1];
+            this.s[_k3 + 1] = _t8;
+            if (wantv && _k3 < this.n - 1) {
+              for (var _i25 = 0; _i25 < this.n; _i25++) {
+                _t8 = this.V[_i25][_k3 + 1];
+                this.V[_i25][_k3 + 1] = this.V[_i25][_k3];
+                this.V[_i25][_k3] = _t8;
+              };
+            }
+            if (wantu && _k3 < this.m - 1) {
+              for (var _i26 = 0; _i26 < this.m; _i26++) {
+                _t8 = this.U[_i26][_k3 + 1];
+                this.U[_i26][_k3 + 1] = this.U[_i26][_k3];
+                this.U[_i26][_k3] = _t8;
+              };
+            }
+            _k3++;
+          };
+          iter = 0;
+          p--;
+        };
+        break;
+    }
+  };
+  var result = { U: this.U, V: this.V, S: this.s };
+  return result;
+};
+
+// sqrt(a^2 + b^2) without under/overflow.
+SVD.hypot = function (a, b) {
+  var r = void 0;
+  if (Math.abs(a) > Math.abs(b)) {
+    r = b / a;
+    r = Math.abs(a) * Math.sqrt(1 + r * r);
+  } else if (b != 0) {
+    r = a / b;
+    r = Math.abs(b) * Math.sqrt(1 + r * r);
+  } else {
+    r = 0.0;
+  }
+  return r;
+};
+
+module.exports = SVD;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ *   Needleman-Wunsch algorithm is an procedure to compute the optimal global alignment of two string
+ *   sequences by S.B.Needleman and C.D.Wunsch (1970).
+ *
+ *   Aside from the inputs, you can assign the scores for,
+ *   - Match: The two characters at the current index are same.
+ *   - Mismatch: The two characters at the current index are different.
+ *   - Insertion/Deletion(gaps): The best alignment involves one letter aligning to a gap in the other string.
+ */
+
+var NeedlemanWunsch = function () {
+    function NeedlemanWunsch(sequence1, sequence2) {
+        var match_score = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+        var mismatch_penalty = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : -1;
+        var gap_penalty = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : -1;
+
+        _classCallCheck(this, NeedlemanWunsch);
+
+        this.sequence1 = sequence1;
+        this.sequence2 = sequence2;
+        this.match_score = match_score;
+        this.mismatch_penalty = mismatch_penalty;
+        this.gap_penalty = gap_penalty;
+
+        // Just the remove redundancy
+        this.iMax = sequence1.length + 1;
+        this.jMax = sequence2.length + 1;
+
+        // Grid matrix of scores
+        this.grid = new Array(this.iMax);
+        for (var i = 0; i < this.iMax; i++) {
+            this.grid[i] = new Array(this.jMax);
+
+            for (var j = 0; j < this.jMax; j++) {
+                this.grid[i][j] = 0;
+            }
+        }
+
+        // Traceback matrix (2D array, each cell is an array of boolean values for [`Diag`, `Up`, `Left`] positions)
+        this.tracebackGrid = new Array(this.iMax);
+        for (var _i = 0; _i < this.iMax; _i++) {
+            this.tracebackGrid[_i] = new Array(this.jMax);
+
+            for (var _j = 0; _j < this.jMax; _j++) {
+                this.tracebackGrid[_i][_j] = [null, null, null];
+            }
+        }
+
+        // The aligned sequences (return multiple possibilities)
+        this.alignments = [];
+
+        // Final alignment score
+        this.score = -1;
+
+        // Calculate scores and tracebacks
+        this.computeGrids();
+    }
+
+    _createClass(NeedlemanWunsch, [{
+        key: "getScore",
+        value: function getScore() {
+            return this.score;
+        }
+    }, {
+        key: "getAlignments",
+        value: function getAlignments() {
+            return this.alignments;
+        }
+
+        // Main dynamic programming procedure
+
+    }, {
+        key: "computeGrids",
+        value: function computeGrids() {
+            // Fill in the first row
+            for (var j = 1; j < this.jMax; j++) {
+                this.grid[0][j] = this.grid[0][j - 1] + this.gap_penalty;
+                this.tracebackGrid[0][j] = [false, false, true];
+            }
+
+            // Fill in the first column
+            for (var i = 1; i < this.iMax; i++) {
+                this.grid[i][0] = this.grid[i - 1][0] + this.gap_penalty;
+                this.tracebackGrid[i][0] = [false, true, false];
+            }
+
+            // Fill the rest of the grid
+            for (var _i2 = 1; _i2 < this.iMax; _i2++) {
+                for (var _j2 = 1; _j2 < this.jMax; _j2++) {
+                    // Find the max score(s) among [`Diag`, `Up`, `Left`]
+                    var diag = void 0;
+                    if (this.sequence1[_i2 - 1] === this.sequence2[_j2 - 1]) diag = this.grid[_i2 - 1][_j2 - 1] + this.match_score;else diag = this.grid[_i2 - 1][_j2 - 1] + this.mismatch_penalty;
+
+                    var up = this.grid[_i2 - 1][_j2] + this.gap_penalty;
+                    var left = this.grid[_i2][_j2 - 1] + this.gap_penalty;
+
+                    // If there exists multiple max values, capture them for multiple paths
+                    var maxOf = [diag, up, left];
+                    var indices = this.arrayAllMaxIndexes(maxOf);
+
+                    // Update Grids
+                    this.grid[_i2][_j2] = maxOf[indices[0]];
+                    this.tracebackGrid[_i2][_j2] = [indices.includes(0), indices.includes(1), indices.includes(2)];
+                }
+            }
+
+            // Update alignment score
+            this.score = this.grid[this.iMax - 1][this.jMax - 1];
+        }
+
+        // Gets all possible valid sequence combinations
+
+    }, {
+        key: "alignmentTraceback",
+        value: function alignmentTraceback() {
+            var inProcessAlignments = [];
+
+            inProcessAlignments.push({ pos: [this.sequence1.length, this.sequence2.length],
+                seq1: "",
+                seq2: ""
+            });
+
+            while (inProcessAlignments[0]) {
+                var current = inProcessAlignments[0];
+                var directions = this.tracebackGrid[current.pos[0]][current.pos[1]];
+
+                if (directions[0]) {
+                    inProcessAlignments.push({ pos: [current.pos[0] - 1, current.pos[1] - 1],
+                        seq1: this.sequence1[current.pos[0] - 1] + current.seq1,
+                        seq2: this.sequence2[current.pos[1] - 1] + current.seq2
+                    });
+                }
+                if (directions[1]) {
+                    inProcessAlignments.push({ pos: [current.pos[0] - 1, current.pos[1]],
+                        seq1: this.sequence1[current.pos[0] - 1] + current.seq1,
+                        seq2: '-' + current.seq2
+                    });
+                }
+                if (directions[2]) {
+                    inProcessAlignments.push({ pos: [current.pos[0], current.pos[1] - 1],
+                        seq1: '-' + current.seq1,
+                        seq2: this.sequence2[current.pos[1] - 1] + current.seq2
+                    });
+                }
+
+                if (current.pos[0] === 0 && current.pos[1] === 0) this.alignments.push({ sequence1: current.seq1,
+                    sequence2: current.seq2
+                });
+
+                inProcessAlignments.shift();
+            }
+
+            return this.alignments;
+        }
+
+        // Helper Functions
+
+    }, {
+        key: "getAllIndexes",
+        value: function getAllIndexes(arr, val) {
+            var indexes = [],
+                i = -1;
+            while ((i = arr.indexOf(val, i + 1)) !== -1) {
+                indexes.push(i);
+            }
+            return indexes;
+        }
+    }, {
+        key: "arrayAllMaxIndexes",
+        value: function arrayAllMaxIndexes(array) {
+            return this.getAllIndexes(array, Math.max.apply(null, array));
+        }
+    }]);
+
+    return NeedlemanWunsch;
+}();
+
+module.exports = NeedlemanWunsch;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var layoutBase = function layoutBase() {
+  return;
+};
+
+layoutBase.FDLayout = __webpack_require__(18);
+layoutBase.FDLayoutConstants = __webpack_require__(4);
+layoutBase.FDLayoutEdge = __webpack_require__(19);
+layoutBase.FDLayoutNode = __webpack_require__(20);
+layoutBase.DimensionD = __webpack_require__(21);
+layoutBase.HashMap = __webpack_require__(22);
+layoutBase.HashSet = __webpack_require__(23);
+layoutBase.IGeometry = __webpack_require__(8);
+layoutBase.IMath = __webpack_require__(9);
+layoutBase.Integer = __webpack_require__(10);
+layoutBase.Point = __webpack_require__(12);
+layoutBase.PointD = __webpack_require__(5);
+layoutBase.RandomSeed = __webpack_require__(16);
+layoutBase.RectangleD = __webpack_require__(13);
+layoutBase.Transform = __webpack_require__(17);
+layoutBase.UniqueIDGeneretor = __webpack_require__(14);
+layoutBase.Quicksort = __webpack_require__(25);
+layoutBase.LinkedList = __webpack_require__(11);
+layoutBase.LGraphObject = __webpack_require__(2);
+layoutBase.LGraph = __webpack_require__(6);
+layoutBase.LEdge = __webpack_require__(1);
+layoutBase.LGraphManager = __webpack_require__(7);
+layoutBase.LNode = __webpack_require__(3);
+layoutBase.Layout = __webpack_require__(15);
+layoutBase.LayoutConstants = __webpack_require__(0);
+layoutBase.NeedlemanWunsch = __webpack_require__(27);
+layoutBase.Matrix = __webpack_require__(24);
+layoutBase.SVD = __webpack_require__(26);
+
+module.exports = layoutBase;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function Emitter() {
+  this.listeners = [];
+}
+
+var p = Emitter.prototype;
+
+p.addListener = function (event, callback) {
+  this.listeners.push({
+    event: event,
+    callback: callback
+  });
+};
+
+p.removeListener = function (event, callback) {
+  for (var i = this.listeners.length; i >= 0; i--) {
+    var l = this.listeners[i];
+
+    if (l.event === event && l.callback === callback) {
+      this.listeners.splice(i, 1);
+    }
+  }
+};
+
+p.emit = function (event, data) {
+  for (var i = 0; i < this.listeners.length; i++) {
+    var l = this.listeners[i];
+
+    if (event === l.event) {
+      l.callback(data);
+    }
+  }
+};
+
+module.exports = Emitter;
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_Hash.js":
 /*!**************************************!*\
   !*** ./node_modules/lodash/_Hash.js ***!
@@ -48795,3505 +58132,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/qtip2/dist/jquery.qtip.js":
-/*!************************************************!*\
-  !*** ./node_modules/qtip2/dist/jquery.qtip.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
- * qTip2 - Pretty powerful tooltips - v3.0.3
- * http://qtip2.com
- *
- * Copyright (c) 2016 
- * Released under the MIT licenses
- * http://jquery.org/license
- *
- * Date: Wed May 11 2016 10:31 GMT+0100+0100
- * Plugins: tips modal viewport svg imagemap ie6
- * Styles: core basic css3
- */
-/*global window: false, jQuery: false, console: false, define: false */
-
-/* Cache window, document, undefined */
-(function( window, document, undefined ) {
-
-// Uses AMD or browser globals to create a jQuery plugin.
-(function( factory ) {
-	"use strict";
-	if(true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	}
-	else {}
-}
-(function($) {
-	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
-;// Munge the primitives - Paul Irish tip
-var TRUE = true,
-FALSE = false,
-NULL = null,
-
-// Common variables
-X = 'x', Y = 'y',
-WIDTH = 'width',
-HEIGHT = 'height',
-
-// Positioning sides
-TOP = 'top',
-LEFT = 'left',
-BOTTOM = 'bottom',
-RIGHT = 'right',
-CENTER = 'center',
-
-// Position adjustment types
-FLIP = 'flip',
-FLIPINVERT = 'flipinvert',
-SHIFT = 'shift',
-
-// Shortcut vars
-QTIP, PROTOTYPE, CORNER, CHECKS,
-PLUGINS = {},
-NAMESPACE = 'qtip',
-ATTR_HAS = 'data-hasqtip',
-ATTR_ID = 'data-qtip-id',
-WIDGET = ['ui-widget', 'ui-tooltip'],
-SELECTOR = '.'+NAMESPACE,
-INACTIVE_EVENTS = 'click dblclick mousedown mouseup mousemove mouseleave mouseenter'.split(' '),
-
-CLASS_FIXED = NAMESPACE+'-fixed',
-CLASS_DEFAULT = NAMESPACE + '-default',
-CLASS_FOCUS = NAMESPACE + '-focus',
-CLASS_HOVER = NAMESPACE + '-hover',
-CLASS_DISABLED = NAMESPACE+'-disabled',
-
-replaceSuffix = '_replacedByqTip',
-oldtitle = 'oldtitle',
-trackingBound,
-
-// Browser detection
-BROWSER = {
-	/*
-	 * IE version detection
-	 *
-	 * Adapted from: http://ajaxian.com/archives/attack-of-the-ie-conditional-comment
-	 * Credit to James Padolsey for the original implemntation!
-	 */
-	ie: (function() {
-		/* eslint-disable no-empty */
-		var v, i;
-		for (
-			v = 4, i = document.createElement('div');
-			(i.innerHTML = '<!--[if gt IE ' + v + ']><i></i><![endif]-->') && i.getElementsByTagName('i')[0];
-			v+=1
-		) {}
-		return v > 4 ? v : NaN;
-		/* eslint-enable no-empty */
-	})(),
-
-	/*
-	 * iOS version detection
-	 */
-	iOS: parseFloat(
-		('' + (/CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i.exec(navigator.userAgent) || [0,''])[1])
-		.replace('undefined', '3_2').replace('_', '.').replace('_', '')
-	) || FALSE
-};
-;function QTip(target, options, id, attr) {
-	// Elements and ID
-	this.id = id;
-	this.target = target;
-	this.tooltip = NULL;
-	this.elements = { target: target };
-
-	// Internal constructs
-	this._id = NAMESPACE + '-' + id;
-	this.timers = { img: {} };
-	this.options = options;
-	this.plugins = {};
-
-	// Cache object
-	this.cache = {
-		event: {},
-		target: $(),
-		disabled: FALSE,
-		attr: attr,
-		onTooltip: FALSE,
-		lastClass: ''
-	};
-
-	// Set the initial flags
-	this.rendered = this.destroyed = this.disabled = this.waiting =
-		this.hiddenDuringWait = this.positioning = this.triggering = FALSE;
-}
-PROTOTYPE = QTip.prototype;
-
-PROTOTYPE._when = function(deferreds) {
-	return $.when.apply($, deferreds);
-};
-
-PROTOTYPE.render = function(show) {
-	if(this.rendered || this.destroyed) { return this; } // If tooltip has already been rendered, exit
-
-	var self = this,
-		options = this.options,
-		cache = this.cache,
-		elements = this.elements,
-		text = options.content.text,
-		title = options.content.title,
-		button = options.content.button,
-		posOptions = options.position,
-		deferreds = [];
-
-	// Add ARIA attributes to target
-	$.attr(this.target[0], 'aria-describedby', this._id);
-
-	// Create public position object that tracks current position corners
-	cache.posClass = this._createPosClass(
-		(this.position = { my: posOptions.my, at: posOptions.at }).my
-	);
-
-	// Create tooltip element
-	this.tooltip = elements.tooltip = $('<div/>', {
-		'id': this._id,
-		'class': [ NAMESPACE, CLASS_DEFAULT, options.style.classes, cache.posClass ].join(' '),
-		'width': options.style.width || '',
-		'height': options.style.height || '',
-		'tracking': posOptions.target === 'mouse' && posOptions.adjust.mouse,
-
-		/* ARIA specific attributes */
-		'role': 'alert',
-		'aria-live': 'polite',
-		'aria-atomic': FALSE,
-		'aria-describedby': this._id + '-content',
-		'aria-hidden': TRUE
-	})
-	.toggleClass(CLASS_DISABLED, this.disabled)
-	.attr(ATTR_ID, this.id)
-	.data(NAMESPACE, this)
-	.appendTo(posOptions.container)
-	.append(
-		// Create content element
-		elements.content = $('<div />', {
-			'class': NAMESPACE + '-content',
-			'id': this._id + '-content',
-			'aria-atomic': TRUE
-		})
-	);
-
-	// Set rendered flag and prevent redundant reposition calls for now
-	this.rendered = -1;
-	this.positioning = TRUE;
-
-	// Create title...
-	if(title) {
-		this._createTitle();
-
-		// Update title only if its not a callback (called in toggle if so)
-		if(!$.isFunction(title)) {
-			deferreds.push( this._updateTitle(title, FALSE) );
-		}
-	}
-
-	// Create button
-	if(button) { this._createButton(); }
-
-	// Set proper rendered flag and update content if not a callback function (called in toggle)
-	if(!$.isFunction(text)) {
-		deferreds.push( this._updateContent(text, FALSE) );
-	}
-	this.rendered = TRUE;
-
-	// Setup widget classes
-	this._setWidget();
-
-	// Initialize 'render' plugins
-	$.each(PLUGINS, function(name) {
-		var instance;
-		if(this.initialize === 'render' && (instance = this(self))) {
-			self.plugins[name] = instance;
-		}
-	});
-
-	// Unassign initial events and assign proper events
-	this._unassignEvents();
-	this._assignEvents();
-
-	// When deferreds have completed
-	this._when(deferreds).then(function() {
-		// tooltiprender event
-		self._trigger('render');
-
-		// Reset flags
-		self.positioning = FALSE;
-
-		// Show tooltip if not hidden during wait period
-		if(!self.hiddenDuringWait && (options.show.ready || show)) {
-			self.toggle(TRUE, cache.event, FALSE);
-		}
-		self.hiddenDuringWait = FALSE;
-	});
-
-	// Expose API
-	QTIP.api[this.id] = this;
-
-	return this;
-};
-
-PROTOTYPE.destroy = function(immediate) {
-	// Set flag the signify destroy is taking place to plugins
-	// and ensure it only gets destroyed once!
-	if(this.destroyed) { return this.target; }
-
-	function process() {
-		if(this.destroyed) { return; }
-		this.destroyed = TRUE;
-
-		var target = this.target,
-			title = target.attr(oldtitle),
-			timer;
-
-		// Destroy tooltip if rendered
-		if(this.rendered) {
-			this.tooltip.stop(1,0).find('*').remove().end().remove();
-		}
-
-		// Destroy all plugins
-		$.each(this.plugins, function() {
-			this.destroy && this.destroy();
-		});
-
-		// Clear timers
-		for (timer in this.timers) {
-			if (this.timers.hasOwnProperty(timer)) {
-				clearTimeout(this.timers[timer]);
-			}
-		}
-
-		// Remove api object and ARIA attributes
-		target.removeData(NAMESPACE)
-			.removeAttr(ATTR_ID)
-			.removeAttr(ATTR_HAS)
-			.removeAttr('aria-describedby');
-
-		// Reset old title attribute if removed
-		if(this.options.suppress && title) {
-			target.attr('title', title).removeAttr(oldtitle);
-		}
-
-		// Remove qTip events associated with this API
-		this._unassignEvents();
-
-		// Remove ID from used id objects, and delete object references
-		// for better garbage collection and leak protection
-		this.options = this.elements = this.cache = this.timers =
-			this.plugins = this.mouse = NULL;
-
-		// Delete epoxsed API object
-		delete QTIP.api[this.id];
-	}
-
-	// If an immediate destroy is needed
-	if((immediate !== TRUE || this.triggering === 'hide') && this.rendered) {
-		this.tooltip.one('tooltiphidden', $.proxy(process, this));
-		!this.triggering && this.hide();
-	}
-
-	// If we're not in the process of hiding... process
-	else { process.call(this); }
-
-	return this.target;
-};
-;function invalidOpt(a) {
-	return a === NULL || $.type(a) !== 'object';
-}
-
-function invalidContent(c) {
-	return !($.isFunction(c) || 
-            c && c.attr || 
-            c.length || 
-            $.type(c) === 'object' && (c.jquery || c.then));
-}
-
-// Option object sanitizer
-function sanitizeOptions(opts) {
-	var content, text, ajax, once;
-
-	if(invalidOpt(opts)) { return FALSE; }
-
-	if(invalidOpt(opts.metadata)) {
-		opts.metadata = { type: opts.metadata };
-	}
-
-	if('content' in opts) {
-		content = opts.content;
-
-		if(invalidOpt(content) || content.jquery || content.done) {
-			text = invalidContent(content) ? FALSE : content;
-			content = opts.content = {
-				text: text
-			};
-		}
-		else { text = content.text; }
-
-		// DEPRECATED - Old content.ajax plugin functionality
-		// Converts it into the proper Deferred syntax
-		if('ajax' in content) {
-			ajax = content.ajax;
-			once = ajax && ajax.once !== FALSE;
-			delete content.ajax;
-
-			content.text = function(event, api) {
-				var loading = text || $(this).attr(api.options.content.attr) || 'Loading...',
-
-				deferred = $.ajax(
-					$.extend({}, ajax, { context: api })
-				)
-				.then(ajax.success, NULL, ajax.error)
-				.then(function(newContent) {
-					if(newContent && once) { api.set('content.text', newContent); }
-					return newContent;
-				},
-				function(xhr, status, error) {
-					if(api.destroyed || xhr.status === 0) { return; }
-					api.set('content.text', status + ': ' + error);
-				});
-
-				return !once ? (api.set('content.text', loading), deferred) : loading;
-			};
-		}
-
-		if('title' in content) {
-			if($.isPlainObject(content.title)) {
-				content.button = content.title.button;
-				content.title = content.title.text;
-			}
-
-			if(invalidContent(content.title || FALSE)) {
-				content.title = FALSE;
-			}
-		}
-	}
-
-	if('position' in opts && invalidOpt(opts.position)) {
-		opts.position = { my: opts.position, at: opts.position };
-	}
-
-	if('show' in opts && invalidOpt(opts.show)) {
-		opts.show = opts.show.jquery ? { target: opts.show } :
-			opts.show === TRUE ? { ready: TRUE } : { event: opts.show };
-	}
-
-	if('hide' in opts && invalidOpt(opts.hide)) {
-		opts.hide = opts.hide.jquery ? { target: opts.hide } : { event: opts.hide };
-	}
-
-	if('style' in opts && invalidOpt(opts.style)) {
-		opts.style = { classes: opts.style };
-	}
-
-	// Sanitize plugin options
-	$.each(PLUGINS, function() {
-		this.sanitize && this.sanitize(opts);
-	});
-
-	return opts;
-}
-
-// Setup builtin .set() option checks
-CHECKS = PROTOTYPE.checks = {
-	builtin: {
-		// Core checks
-		'^id$': function(obj, o, v, prev) {
-			var id = v === TRUE ? QTIP.nextid : v,
-				newId = NAMESPACE + '-' + id;
-
-			if(id !== FALSE && id.length > 0 && !$('#'+newId).length) {
-				this._id = newId;
-
-				if(this.rendered) {
-					this.tooltip[0].id = this._id;
-					this.elements.content[0].id = this._id + '-content';
-					this.elements.title[0].id = this._id + '-title';
-				}
-			}
-			else { obj[o] = prev; }
-		},
-		'^prerender': function(obj, o, v) {
-			v && !this.rendered && this.render(this.options.show.ready);
-		},
-
-		// Content checks
-		'^content.text$': function(obj, o, v) {
-			this._updateContent(v);
-		},
-		'^content.attr$': function(obj, o, v, prev) {
-			if(this.options.content.text === this.target.attr(prev)) {
-				this._updateContent( this.target.attr(v) );
-			}
-		},
-		'^content.title$': function(obj, o, v) {
-			// Remove title if content is null
-			if(!v) { return this._removeTitle(); }
-
-			// If title isn't already created, create it now and update
-			v && !this.elements.title && this._createTitle();
-			this._updateTitle(v);
-		},
-		'^content.button$': function(obj, o, v) {
-			this._updateButton(v);
-		},
-		'^content.title.(text|button)$': function(obj, o, v) {
-			this.set('content.'+o, v); // Backwards title.text/button compat
-		},
-
-		// Position checks
-		'^position.(my|at)$': function(obj, o, v){
-			if('string' === typeof v) {
-				this.position[o] = obj[o] = new CORNER(v, o === 'at');
-			}
-		},
-		'^position.container$': function(obj, o, v){
-			this.rendered && this.tooltip.appendTo(v);
-		},
-
-		// Show checks
-		'^show.ready$': function(obj, o, v) {
-			v && (!this.rendered && this.render(TRUE) || this.toggle(TRUE));
-		},
-
-		// Style checks
-		'^style.classes$': function(obj, o, v, p) {
-			this.rendered && this.tooltip.removeClass(p).addClass(v);
-		},
-		'^style.(width|height)': function(obj, o, v) {
-			this.rendered && this.tooltip.css(o, v);
-		},
-		'^style.widget|content.title': function() {
-			this.rendered && this._setWidget();
-		},
-		'^style.def': function(obj, o, v) {
-			this.rendered && this.tooltip.toggleClass(CLASS_DEFAULT, !!v);
-		},
-
-		// Events check
-		'^events.(render|show|move|hide|focus|blur)$': function(obj, o, v) {
-			this.rendered && this.tooltip[($.isFunction(v) ? '' : 'un') + 'bind']('tooltip'+o, v);
-		},
-
-		// Properties which require event reassignment
-		'^(show|hide|position).(event|target|fixed|inactive|leave|distance|viewport|adjust)': function() {
-			if(!this.rendered) { return; }
-
-			// Set tracking flag
-			var posOptions = this.options.position;
-			this.tooltip.attr('tracking', posOptions.target === 'mouse' && posOptions.adjust.mouse);
-
-			// Reassign events
-			this._unassignEvents();
-			this._assignEvents();
-		}
-	}
-};
-
-// Dot notation converter
-function convertNotation(options, notation) {
-	var i = 0, obj, option = options,
-
-	// Split notation into array
-	levels = notation.split('.');
-
-	// Loop through
-	while(option = option[ levels[i++] ]) {
-		if(i < levels.length) { obj = option; }
-	}
-
-	return [obj || options, levels.pop()];
-}
-
-PROTOTYPE.get = function(notation) {
-	if(this.destroyed) { return this; }
-
-	var o = convertNotation(this.options, notation.toLowerCase()),
-		result = o[0][ o[1] ];
-
-	return result.precedance ? result.string() : result;
-};
-
-function setCallback(notation, args) {
-	var category, rule, match;
-
-	for(category in this.checks) {
-		if (!this.checks.hasOwnProperty(category)) { continue; }
-
-		for(rule in this.checks[category]) {
-			if (!this.checks[category].hasOwnProperty(rule)) { continue; }
-
-			if(match = (new RegExp(rule, 'i')).exec(notation)) {
-				args.push(match);
-
-				if(category === 'builtin' || this.plugins[category]) {
-					this.checks[category][rule].apply(
-						this.plugins[category] || this, args
-					);
-				}
-			}
-		}
-	}
-}
-
-var rmove = /^position\.(my|at|adjust|target|container|viewport)|style|content|show\.ready/i,
-	rrender = /^prerender|show\.ready/i;
-
-PROTOTYPE.set = function(option, value) {
-	if(this.destroyed) { return this; }
-
-	var rendered = this.rendered,
-		reposition = FALSE,
-		options = this.options,
-		name;
-
-	// Convert singular option/value pair into object form
-	if('string' === typeof option) {
-		name = option; option = {}; option[name] = value;
-	}
-	else { option = $.extend({}, option); }
-
-	// Set all of the defined options to their new values
-	$.each(option, function(notation, val) {
-		if(rendered && rrender.test(notation)) {
-			delete option[notation]; return;
-		}
-
-		// Set new obj value
-		var obj = convertNotation(options, notation.toLowerCase()), previous;
-		previous = obj[0][ obj[1] ];
-		obj[0][ obj[1] ] = val && val.nodeType ? $(val) : val;
-
-		// Also check if we need to reposition
-		reposition = rmove.test(notation) || reposition;
-
-		// Set the new params for the callback
-		option[notation] = [obj[0], obj[1], val, previous];
-	});
-
-	// Re-sanitize options
-	sanitizeOptions(options);
-
-	/*
-	 * Execute any valid callbacks for the set options
-	 * Also set positioning flag so we don't get loads of redundant repositioning calls.
-	 */
-	this.positioning = TRUE;
-	$.each(option, $.proxy(setCallback, this));
-	this.positioning = FALSE;
-
-	// Update position if needed
-	if(this.rendered && this.tooltip[0].offsetWidth > 0 && reposition) {
-		this.reposition( options.position.target === 'mouse' ? NULL : this.cache.event );
-	}
-
-	return this;
-};
-;PROTOTYPE._update = function(content, element) {
-	var self = this,
-		cache = this.cache;
-
-	// Make sure tooltip is rendered and content is defined. If not return
-	if(!this.rendered || !content) { return FALSE; }
-
-	// Use function to parse content
-	if($.isFunction(content)) {
-		content = content.call(this.elements.target, cache.event, this) || '';
-	}
-
-	// Handle deferred content
-	if($.isFunction(content.then)) {
-		cache.waiting = TRUE;
-		return content.then(function(c) {
-			cache.waiting = FALSE;
-			return self._update(c, element);
-		}, NULL, function(e) {
-			return self._update(e, element);
-		});
-	}
-
-	// If content is null... return false
-	if(content === FALSE || !content && content !== '') { return FALSE; }
-
-	// Append new content if its a DOM array and show it if hidden
-	if(content.jquery && content.length > 0) {
-		element.empty().append(
-			content.css({ display: 'block', visibility: 'visible' })
-		);
-	}
-
-	// Content is a regular string, insert the new content
-	else { element.html(content); }
-
-	// Wait for content to be loaded, and reposition
-	return this._waitForContent(element).then(function(images) {
-		if(self.rendered && self.tooltip[0].offsetWidth > 0) {
-			self.reposition(cache.event, !images.length);
-		}
-	});
-};
-
-PROTOTYPE._waitForContent = function(element) {
-	var cache = this.cache;
-
-	// Set flag
-	cache.waiting = TRUE;
-
-	// If imagesLoaded is included, ensure images have loaded and return promise
-	return ( $.fn.imagesLoaded ? element.imagesLoaded() : new $.Deferred().resolve([]) )
-		.done(function() { cache.waiting = FALSE; })
-		.promise();
-};
-
-PROTOTYPE._updateContent = function(content, reposition) {
-	this._update(content, this.elements.content, reposition);
-};
-
-PROTOTYPE._updateTitle = function(content, reposition) {
-	if(this._update(content, this.elements.title, reposition) === FALSE) {
-		this._removeTitle(FALSE);
-	}
-};
-
-PROTOTYPE._createTitle = function()
-{
-	var elements = this.elements,
-		id = this._id+'-title';
-
-	// Destroy previous title element, if present
-	if(elements.titlebar) { this._removeTitle(); }
-
-	// Create title bar and title elements
-	elements.titlebar = $('<div />', {
-		'class': NAMESPACE + '-titlebar ' + (this.options.style.widget ? createWidgetClass('header') : '')
-	})
-	.append(
-		elements.title = $('<div />', {
-			'id': id,
-			'class': NAMESPACE + '-title',
-			'aria-atomic': TRUE
-		})
-	)
-	.insertBefore(elements.content)
-
-	// Button-specific events
-	.delegate('.qtip-close', 'mousedown keydown mouseup keyup mouseout', function(event) {
-		$(this).toggleClass('ui-state-active ui-state-focus', event.type.substr(-4) === 'down');
-	})
-	.delegate('.qtip-close', 'mouseover mouseout', function(event){
-		$(this).toggleClass('ui-state-hover', event.type === 'mouseover');
-	});
-
-	// Create button if enabled
-	if(this.options.content.button) { this._createButton(); }
-};
-
-PROTOTYPE._removeTitle = function(reposition)
-{
-	var elements = this.elements;
-
-	if(elements.title) {
-		elements.titlebar.remove();
-		elements.titlebar = elements.title = elements.button = NULL;
-
-		// Reposition if enabled
-		if(reposition !== FALSE) { this.reposition(); }
-	}
-};
-;PROTOTYPE._createPosClass = function(my) {
-	return NAMESPACE + '-pos-' + (my || this.options.position.my).abbrev();
-};
-
-PROTOTYPE.reposition = function(event, effect) {
-	if(!this.rendered || this.positioning || this.destroyed) { return this; }
-
-	// Set positioning flag
-	this.positioning = TRUE;
-
-	var cache = this.cache,
-		tooltip = this.tooltip,
-		posOptions = this.options.position,
-		target = posOptions.target,
-		my = posOptions.my,
-		at = posOptions.at,
-		viewport = posOptions.viewport,
-		container = posOptions.container,
-		adjust = posOptions.adjust,
-		method = adjust.method.split(' '),
-		tooltipWidth = tooltip.outerWidth(FALSE),
-		tooltipHeight = tooltip.outerHeight(FALSE),
-		targetWidth = 0,
-		targetHeight = 0,
-		type = tooltip.css('position'),
-		position = { left: 0, top: 0 },
-		visible = tooltip[0].offsetWidth > 0,
-		isScroll = event && event.type === 'scroll',
-		win = $(window),
-		doc = container[0].ownerDocument,
-		mouse = this.mouse,
-		pluginCalculations, offset, adjusted, newClass;
-
-	// Check if absolute position was passed
-	if($.isArray(target) && target.length === 2) {
-		// Force left top and set position
-		at = { x: LEFT, y: TOP };
-		position = { left: target[0], top: target[1] };
-	}
-
-	// Check if mouse was the target
-	else if(target === 'mouse') {
-		// Force left top to allow flipping
-		at = { x: LEFT, y: TOP };
-
-		// Use the mouse origin that caused the show event, if distance hiding is enabled
-		if((!adjust.mouse || this.options.hide.distance) && cache.origin && cache.origin.pageX) {
-			event =  cache.origin;
-		}
-
-		// Use cached event for resize/scroll events
-		else if(!event || event && (event.type === 'resize' || event.type === 'scroll')) {
-			event = cache.event;
-		}
-
-		// Otherwise, use the cached mouse coordinates if available
-		else if(mouse && mouse.pageX) {
-			event = mouse;
-		}
-
-		// Calculate body and container offset and take them into account below
-		if(type !== 'static') { position = container.offset(); }
-		if(doc.body.offsetWidth !== (window.innerWidth || doc.documentElement.clientWidth)) {
-			offset = $(document.body).offset();
-		}
-
-		// Use event coordinates for position
-		position = {
-			left: event.pageX - position.left + (offset && offset.left || 0),
-			top: event.pageY - position.top + (offset && offset.top || 0)
-		};
-
-		// Scroll events are a pain, some browsers
-		if(adjust.mouse && isScroll && mouse) {
-			position.left -= (mouse.scrollX || 0) - win.scrollLeft();
-			position.top -= (mouse.scrollY || 0) - win.scrollTop();
-		}
-	}
-
-	// Target wasn't mouse or absolute...
-	else {
-		// Check if event targetting is being used
-		if(target === 'event') {
-			if(event && event.target && event.type !== 'scroll' && event.type !== 'resize') {
-				cache.target = $(event.target);
-			}
-			else if(!event.target) {
-				cache.target = this.elements.target;
-			}
-		}
-		else if(target !== 'event'){
-			cache.target = $(target.jquery ? target : this.elements.target);
-		}
-		target = cache.target;
-
-		// Parse the target into a jQuery object and make sure there's an element present
-		target = $(target).eq(0);
-		if(target.length === 0) { return this; }
-
-		// Check if window or document is the target
-		else if(target[0] === document || target[0] === window) {
-			targetWidth = BROWSER.iOS ? window.innerWidth : target.width();
-			targetHeight = BROWSER.iOS ? window.innerHeight : target.height();
-
-			if(target[0] === window) {
-				position = {
-					top: (viewport || target).scrollTop(),
-					left: (viewport || target).scrollLeft()
-				};
-			}
-		}
-
-		// Check if the target is an <AREA> element
-		else if(PLUGINS.imagemap && target.is('area')) {
-			pluginCalculations = PLUGINS.imagemap(this, target, at, PLUGINS.viewport ? method : FALSE);
-		}
-
-		// Check if the target is an SVG element
-		else if(PLUGINS.svg && target && target[0].ownerSVGElement) {
-			pluginCalculations = PLUGINS.svg(this, target, at, PLUGINS.viewport ? method : FALSE);
-		}
-
-		// Otherwise use regular jQuery methods
-		else {
-			targetWidth = target.outerWidth(FALSE);
-			targetHeight = target.outerHeight(FALSE);
-			position = target.offset();
-		}
-
-		// Parse returned plugin values into proper variables
-		if(pluginCalculations) {
-			targetWidth = pluginCalculations.width;
-			targetHeight = pluginCalculations.height;
-			offset = pluginCalculations.offset;
-			position = pluginCalculations.position;
-		}
-
-		// Adjust position to take into account offset parents
-		position = this.reposition.offset(target, position, container);
-
-		// Adjust for position.fixed tooltips (and also iOS scroll bug in v3.2-4.0 & v4.3-4.3.2)
-		if(BROWSER.iOS > 3.1 && BROWSER.iOS < 4.1 ||
-			BROWSER.iOS >= 4.3 && BROWSER.iOS < 4.33 ||
-			!BROWSER.iOS && type === 'fixed'
-		){
-			position.left -= win.scrollLeft();
-			position.top -= win.scrollTop();
-		}
-
-		// Adjust position relative to target
-		if(!pluginCalculations || pluginCalculations && pluginCalculations.adjustable !== FALSE) {
-			position.left += at.x === RIGHT ? targetWidth : at.x === CENTER ? targetWidth / 2 : 0;
-			position.top += at.y === BOTTOM ? targetHeight : at.y === CENTER ? targetHeight / 2 : 0;
-		}
-	}
-
-	// Adjust position relative to tooltip
-	position.left += adjust.x + (my.x === RIGHT ? -tooltipWidth : my.x === CENTER ? -tooltipWidth / 2 : 0);
-	position.top += adjust.y + (my.y === BOTTOM ? -tooltipHeight : my.y === CENTER ? -tooltipHeight / 2 : 0);
-
-	// Use viewport adjustment plugin if enabled
-	if(PLUGINS.viewport) {
-		adjusted = position.adjusted = PLUGINS.viewport(
-			this, position, posOptions, targetWidth, targetHeight, tooltipWidth, tooltipHeight
-		);
-
-		// Apply offsets supplied by positioning plugin (if used)
-		if(offset && adjusted.left) { position.left += offset.left; }
-		if(offset && adjusted.top) {  position.top += offset.top; }
-
-		// Apply any new 'my' position
-		if(adjusted.my) { this.position.my = adjusted.my; }
-	}
-
-	// Viewport adjustment is disabled, set values to zero
-	else { position.adjusted = { left: 0, top: 0 }; }
-
-	// Set tooltip position class if it's changed
-	if(cache.posClass !== (newClass = this._createPosClass(this.position.my))) {
-		cache.posClass = newClass;
-		tooltip.removeClass(cache.posClass).addClass(newClass);
-	}
-
-	// tooltipmove event
-	if(!this._trigger('move', [position, viewport.elem || viewport], event)) { return this; }
-	delete position.adjusted;
-
-	// If effect is disabled, target it mouse, no animation is defined or positioning gives NaN out, set CSS directly
-	if(effect === FALSE || !visible || isNaN(position.left) || isNaN(position.top) || target === 'mouse' || !$.isFunction(posOptions.effect)) {
-		tooltip.css(position);
-	}
-
-	// Use custom function if provided
-	else if($.isFunction(posOptions.effect)) {
-		posOptions.effect.call(tooltip, this, $.extend({}, position));
-		tooltip.queue(function(next) {
-			// Reset attributes to avoid cross-browser rendering bugs
-			$(this).css({ opacity: '', height: '' });
-			if(BROWSER.ie) { this.style.removeAttribute('filter'); }
-
-			next();
-		});
-	}
-
-	// Set positioning flag
-	this.positioning = FALSE;
-
-	return this;
-};
-
-// Custom (more correct for qTip!) offset calculator
-PROTOTYPE.reposition.offset = function(elem, pos, container) {
-	if(!container[0]) { return pos; }
-
-	var ownerDocument = $(elem[0].ownerDocument),
-		quirks = !!BROWSER.ie && document.compatMode !== 'CSS1Compat',
-		parent = container[0],
-		scrolled, position, parentOffset, overflow;
-
-	function scroll(e, i) {
-		pos.left += i * e.scrollLeft();
-		pos.top += i * e.scrollTop();
-	}
-
-	// Compensate for non-static containers offset
-	do {
-		if((position = $.css(parent, 'position')) !== 'static') {
-			if(position === 'fixed') {
-				parentOffset = parent.getBoundingClientRect();
-				scroll(ownerDocument, -1);
-			}
-			else {
-				parentOffset = $(parent).position();
-				parentOffset.left += parseFloat($.css(parent, 'borderLeftWidth')) || 0;
-				parentOffset.top += parseFloat($.css(parent, 'borderTopWidth')) || 0;
-			}
-
-			pos.left -= parentOffset.left + (parseFloat($.css(parent, 'marginLeft')) || 0);
-			pos.top -= parentOffset.top + (parseFloat($.css(parent, 'marginTop')) || 0);
-
-			// If this is the first parent element with an overflow of "scroll" or "auto", store it
-			if(!scrolled && (overflow = $.css(parent, 'overflow')) !== 'hidden' && overflow !== 'visible') { scrolled = $(parent); }
-		}
-	}
-	while(parent = parent.offsetParent);
-
-	// Compensate for containers scroll if it also has an offsetParent (or in IE quirks mode)
-	if(scrolled && (scrolled[0] !== ownerDocument[0] || quirks)) {
-		scroll(scrolled, 1);
-	}
-
-	return pos;
-};
-
-// Corner class
-var C = (CORNER = PROTOTYPE.reposition.Corner = function(corner, forceY) {
-	corner = ('' + corner).replace(/([A-Z])/, ' $1').replace(/middle/gi, CENTER).toLowerCase();
-	this.x = (corner.match(/left|right/i) || corner.match(/center/) || ['inherit'])[0].toLowerCase();
-	this.y = (corner.match(/top|bottom|center/i) || ['inherit'])[0].toLowerCase();
-	this.forceY = !!forceY;
-
-	var f = corner.charAt(0);
-	this.precedance = f === 't' || f === 'b' ? Y : X;
-}).prototype;
-
-C.invert = function(z, center) {
-	this[z] = this[z] === LEFT ? RIGHT : this[z] === RIGHT ? LEFT : center || this[z];
-};
-
-C.string = function(join) {
-	var x = this.x, y = this.y;
-
-	var result = x !== y ?
-		x === 'center' || y !== 'center' && (this.precedance === Y || this.forceY) ? 
-			[y,x] : 
-			[x,y] :
-		[x];
-
-	return join !== false ? result.join(' ') : result;
-};
-
-C.abbrev = function() {
-	var result = this.string(false);
-	return result[0].charAt(0) + (result[1] && result[1].charAt(0) || '');
-};
-
-C.clone = function() {
-	return new CORNER( this.string(), this.forceY );
-};
-
-;
-PROTOTYPE.toggle = function(state, event) {
-	var cache = this.cache,
-		options = this.options,
-		tooltip = this.tooltip;
-
-	// Try to prevent flickering when tooltip overlaps show element
-	if(event) {
-		if((/over|enter/).test(event.type) && cache.event && (/out|leave/).test(cache.event.type) &&
-			options.show.target.add(event.target).length === options.show.target.length &&
-			tooltip.has(event.relatedTarget).length) {
-			return this;
-		}
-
-		// Cache event
-		cache.event = $.event.fix(event);
-	}
-
-	// If we're currently waiting and we've just hidden... stop it
-	this.waiting && !state && (this.hiddenDuringWait = TRUE);
-
-	// Render the tooltip if showing and it isn't already
-	if(!this.rendered) { return state ? this.render(1) : this; }
-	else if(this.destroyed || this.disabled) { return this; }
-
-	var type = state ? 'show' : 'hide',
-		opts = this.options[type],
-		posOptions = this.options.position,
-		contentOptions = this.options.content,
-		width = this.tooltip.css('width'),
-		visible = this.tooltip.is(':visible'),
-		animate = state || opts.target.length === 1,
-		sameTarget = !event || opts.target.length < 2 || cache.target[0] === event.target,
-		identicalState, allow, after;
-
-	// Detect state if valid one isn't provided
-	if((typeof state).search('boolean|number')) { state = !visible; }
-
-	// Check if the tooltip is in an identical state to the new would-be state
-	identicalState = !tooltip.is(':animated') && visible === state && sameTarget;
-
-	// Fire tooltip(show/hide) event and check if destroyed
-	allow = !identicalState ? !!this._trigger(type, [90]) : NULL;
-
-	// Check to make sure the tooltip wasn't destroyed in the callback
-	if(this.destroyed) { return this; }
-
-	// If the user didn't stop the method prematurely and we're showing the tooltip, focus it
-	if(allow !== FALSE && state) { this.focus(event); }
-
-	// If the state hasn't changed or the user stopped it, return early
-	if(!allow || identicalState) { return this; }
-
-	// Set ARIA hidden attribute
-	$.attr(tooltip[0], 'aria-hidden', !!!state);
-
-	// Execute state specific properties
-	if(state) {
-		// Store show origin coordinates
-		this.mouse && (cache.origin = $.event.fix(this.mouse));
-
-		// Update tooltip content & title if it's a dynamic function
-		if($.isFunction(contentOptions.text)) { this._updateContent(contentOptions.text, FALSE); }
-		if($.isFunction(contentOptions.title)) { this._updateTitle(contentOptions.title, FALSE); }
-
-		// Cache mousemove events for positioning purposes (if not already tracking)
-		if(!trackingBound && posOptions.target === 'mouse' && posOptions.adjust.mouse) {
-			$(document).bind('mousemove.'+NAMESPACE, this._storeMouse);
-			trackingBound = TRUE;
-		}
-
-		// Update the tooltip position (set width first to prevent viewport/max-width issues)
-		if(!width) { tooltip.css('width', tooltip.outerWidth(FALSE)); }
-		this.reposition(event, arguments[2]);
-		if(!width) { tooltip.css('width', ''); }
-
-		// Hide other tooltips if tooltip is solo
-		if(!!opts.solo) {
-			(typeof opts.solo === 'string' ? $(opts.solo) : $(SELECTOR, opts.solo))
-				.not(tooltip).not(opts.target).qtip('hide', new $.Event('tooltipsolo'));
-		}
-	}
-	else {
-		// Clear show timer if we're hiding
-		clearTimeout(this.timers.show);
-
-		// Remove cached origin on hide
-		delete cache.origin;
-
-		// Remove mouse tracking event if not needed (all tracking qTips are hidden)
-		if(trackingBound && !$(SELECTOR+'[tracking="true"]:visible', opts.solo).not(tooltip).length) {
-			$(document).unbind('mousemove.'+NAMESPACE);
-			trackingBound = FALSE;
-		}
-
-		// Blur the tooltip
-		this.blur(event);
-	}
-
-	// Define post-animation, state specific properties
-	after = $.proxy(function() {
-		if(state) {
-			// Prevent antialias from disappearing in IE by removing filter
-			if(BROWSER.ie) { tooltip[0].style.removeAttribute('filter'); }
-
-			// Remove overflow setting to prevent tip bugs
-			tooltip.css('overflow', '');
-
-			// Autofocus elements if enabled
-			if('string' === typeof opts.autofocus) {
-				$(this.options.show.autofocus, tooltip).focus();
-			}
-
-			// If set, hide tooltip when inactive for delay period
-			this.options.show.target.trigger('qtip-'+this.id+'-inactive');
-		}
-		else {
-			// Reset CSS states
-			tooltip.css({
-				display: '',
-				visibility: '',
-				opacity: '',
-				left: '',
-				top: ''
-			});
-		}
-
-		// tooltipvisible/tooltiphidden events
-		this._trigger(state ? 'visible' : 'hidden');
-	}, this);
-
-	// If no effect type is supplied, use a simple toggle
-	if(opts.effect === FALSE || animate === FALSE) {
-		tooltip[ type ]();
-		after();
-	}
-
-	// Use custom function if provided
-	else if($.isFunction(opts.effect)) {
-		tooltip.stop(1, 1);
-		opts.effect.call(tooltip, this);
-		tooltip.queue('fx', function(n) {
-			after(); n();
-		});
-	}
-
-	// Use basic fade function by default
-	else { tooltip.fadeTo(90, state ? 1 : 0, after); }
-
-	// If inactive hide method is set, active it
-	if(state) { opts.target.trigger('qtip-'+this.id+'-inactive'); }
-
-	return this;
-};
-
-PROTOTYPE.show = function(event) { return this.toggle(TRUE, event); };
-
-PROTOTYPE.hide = function(event) { return this.toggle(FALSE, event); };
-;PROTOTYPE.focus = function(event) {
-	if(!this.rendered || this.destroyed) { return this; }
-
-	var qtips = $(SELECTOR),
-		tooltip = this.tooltip,
-		curIndex = parseInt(tooltip[0].style.zIndex, 10),
-		newIndex = QTIP.zindex + qtips.length;
-
-	// Only update the z-index if it has changed and tooltip is not already focused
-	if(!tooltip.hasClass(CLASS_FOCUS)) {
-		// tooltipfocus event
-		if(this._trigger('focus', [newIndex], event)) {
-			// Only update z-index's if they've changed
-			if(curIndex !== newIndex) {
-				// Reduce our z-index's and keep them properly ordered
-				qtips.each(function() {
-					if(this.style.zIndex > curIndex) {
-						this.style.zIndex = this.style.zIndex - 1;
-					}
-				});
-
-				// Fire blur event for focused tooltip
-				qtips.filter('.' + CLASS_FOCUS).qtip('blur', event);
-			}
-
-			// Set the new z-index
-			tooltip.addClass(CLASS_FOCUS)[0].style.zIndex = newIndex;
-		}
-	}
-
-	return this;
-};
-
-PROTOTYPE.blur = function(event) {
-	if(!this.rendered || this.destroyed) { return this; }
-
-	// Set focused status to FALSE
-	this.tooltip.removeClass(CLASS_FOCUS);
-
-	// tooltipblur event
-	this._trigger('blur', [ this.tooltip.css('zIndex') ], event);
-
-	return this;
-};
-;PROTOTYPE.disable = function(state) {
-	if(this.destroyed) { return this; }
-
-	// If 'toggle' is passed, toggle the current state
-	if(state === 'toggle') {
-		state = !(this.rendered ? this.tooltip.hasClass(CLASS_DISABLED) : this.disabled);
-	}
-
-	// Disable if no state passed
-	else if('boolean' !== typeof state) {
-		state = TRUE;
-	}
-
-	if(this.rendered) {
-		this.tooltip.toggleClass(CLASS_DISABLED, state)
-			.attr('aria-disabled', state);
-	}
-
-	this.disabled = !!state;
-
-	return this;
-};
-
-PROTOTYPE.enable = function() { return this.disable(FALSE); };
-;PROTOTYPE._createButton = function()
-{
-	var self = this,
-		elements = this.elements,
-		tooltip = elements.tooltip,
-		button = this.options.content.button,
-		isString = typeof button === 'string',
-		close = isString ? button : 'Close tooltip';
-
-	if(elements.button) { elements.button.remove(); }
-
-	// Use custom button if one was supplied by user, else use default
-	if(button.jquery) {
-		elements.button = button;
-	}
-	else {
-		elements.button = $('<a />', {
-			'class': 'qtip-close ' + (this.options.style.widget ? '' : NAMESPACE+'-icon'),
-			'title': close,
-			'aria-label': close
-		})
-		.prepend(
-			$('<span />', {
-				'class': 'ui-icon ui-icon-close',
-				'html': '&times;'
-			})
-		);
-	}
-
-	// Create button and setup attributes
-	elements.button.appendTo(elements.titlebar || tooltip)
-		.attr('role', 'button')
-		.click(function(event) {
-			if(!tooltip.hasClass(CLASS_DISABLED)) { self.hide(event); }
-			return FALSE;
-		});
-};
-
-PROTOTYPE._updateButton = function(button)
-{
-	// Make sure tooltip is rendered and if not, return
-	if(!this.rendered) { return FALSE; }
-
-	var elem = this.elements.button;
-	if(button) { this._createButton(); }
-	else { elem.remove(); }
-};
-;// Widget class creator
-function createWidgetClass(cls) {
-	return WIDGET.concat('').join(cls ? '-'+cls+' ' : ' ');
-}
-
-// Widget class setter method
-PROTOTYPE._setWidget = function()
-{
-	var on = this.options.style.widget,
-		elements = this.elements,
-		tooltip = elements.tooltip,
-		disabled = tooltip.hasClass(CLASS_DISABLED);
-
-	tooltip.removeClass(CLASS_DISABLED);
-	CLASS_DISABLED = on ? 'ui-state-disabled' : 'qtip-disabled';
-	tooltip.toggleClass(CLASS_DISABLED, disabled);
-
-	tooltip.toggleClass('ui-helper-reset '+createWidgetClass(), on).toggleClass(CLASS_DEFAULT, this.options.style.def && !on);
-
-	if(elements.content) {
-		elements.content.toggleClass( createWidgetClass('content'), on);
-	}
-	if(elements.titlebar) {
-		elements.titlebar.toggleClass( createWidgetClass('header'), on);
-	}
-	if(elements.button) {
-		elements.button.toggleClass(NAMESPACE+'-icon', !on);
-	}
-};
-;function delay(callback, duration) {
-	// If tooltip has displayed, start hide timer
-	if(duration > 0) {
-		return setTimeout(
-			$.proxy(callback, this), duration
-		);
-	}
-	else{ callback.call(this); }
-}
-
-function showMethod(event) {
-	if(this.tooltip.hasClass(CLASS_DISABLED)) { return; }
-
-	// Clear hide timers
-	clearTimeout(this.timers.show);
-	clearTimeout(this.timers.hide);
-
-	// Start show timer
-	this.timers.show = delay.call(this,
-		function() { this.toggle(TRUE, event); },
-		this.options.show.delay
-	);
-}
-
-function hideMethod(event) {
-	if(this.tooltip.hasClass(CLASS_DISABLED) || this.destroyed) { return; }
-
-	// Check if new target was actually the tooltip element
-	var relatedTarget = $(event.relatedTarget),
-		ontoTooltip = relatedTarget.closest(SELECTOR)[0] === this.tooltip[0],
-		ontoTarget = relatedTarget[0] === this.options.show.target[0];
-
-	// Clear timers and stop animation queue
-	clearTimeout(this.timers.show);
-	clearTimeout(this.timers.hide);
-
-	// Prevent hiding if tooltip is fixed and event target is the tooltip.
-	// Or if mouse positioning is enabled and cursor momentarily overlaps
-	if(this !== relatedTarget[0] &&
-		(this.options.position.target === 'mouse' && ontoTooltip) ||
-		this.options.hide.fixed && (
-			(/mouse(out|leave|move)/).test(event.type) && (ontoTooltip || ontoTarget))
-		)
-	{
-		/* eslint-disable no-empty */
-		try {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		} catch(e) {}
-		/* eslint-enable no-empty */
-
-		return;
-	}
-
-	// If tooltip has displayed, start hide timer
-	this.timers.hide = delay.call(this,
-		function() { this.toggle(FALSE, event); },
-		this.options.hide.delay,
-		this
-	);
-}
-
-function inactiveMethod(event) {
-	if(this.tooltip.hasClass(CLASS_DISABLED) || !this.options.hide.inactive) { return; }
-
-	// Clear timer
-	clearTimeout(this.timers.inactive);
-
-	this.timers.inactive = delay.call(this,
-		function(){ this.hide(event); },
-		this.options.hide.inactive
-	);
-}
-
-function repositionMethod(event) {
-	if(this.rendered && this.tooltip[0].offsetWidth > 0) { this.reposition(event); }
-}
-
-// Store mouse coordinates
-PROTOTYPE._storeMouse = function(event) {
-	(this.mouse = $.event.fix(event)).type = 'mousemove';
-	return this;
-};
-
-// Bind events
-PROTOTYPE._bind = function(targets, events, method, suffix, context) {
-	if(!targets || !method || !events.length) { return; }
-	var ns = '.' + this._id + (suffix ? '-'+suffix : '');
-	$(targets).bind(
-		(events.split ? events : events.join(ns + ' ')) + ns,
-		$.proxy(method, context || this)
-	);
-	return this;
-};
-PROTOTYPE._unbind = function(targets, suffix) {
-	targets && $(targets).unbind('.' + this._id + (suffix ? '-'+suffix : ''));
-	return this;
-};
-
-// Global delegation helper
-function delegate(selector, events, method) {
-	$(document.body).delegate(selector,
-		(events.split ? events : events.join('.'+NAMESPACE + ' ')) + '.'+NAMESPACE,
-		function() {
-			var api = QTIP.api[ $.attr(this, ATTR_ID) ];
-			api && !api.disabled && method.apply(api, arguments);
-		}
-	);
-}
-// Event trigger
-PROTOTYPE._trigger = function(type, args, event) {
-	var callback = new $.Event('tooltip'+type);
-	callback.originalEvent = event && $.extend({}, event) || this.cache.event || NULL;
-
-	this.triggering = type;
-	this.tooltip.trigger(callback, [this].concat(args || []));
-	this.triggering = FALSE;
-
-	return !callback.isDefaultPrevented();
-};
-
-PROTOTYPE._bindEvents = function(showEvents, hideEvents, showTargets, hideTargets, showCallback, hideCallback) {
-	// Get tasrgets that lye within both
-	var similarTargets = showTargets.filter( hideTargets ).add( hideTargets.filter(showTargets) ),
-		toggleEvents = [];
-
-	// If hide and show targets are the same...
-	if(similarTargets.length) {
-
-		// Filter identical show/hide events
-		$.each(hideEvents, function(i, type) {
-			var showIndex = $.inArray(type, showEvents);
-
-			// Both events are identical, remove from both hide and show events
-			// and append to toggleEvents
-			showIndex > -1 && toggleEvents.push( showEvents.splice( showIndex, 1 )[0] );
-		});
-
-		// Toggle events are special case of identical show/hide events, which happen in sequence
-		if(toggleEvents.length) {
-			// Bind toggle events to the similar targets
-			this._bind(similarTargets, toggleEvents, function(event) {
-				var state = this.rendered ? this.tooltip[0].offsetWidth > 0 : false;
-				(state ? hideCallback : showCallback).call(this, event);
-			});
-
-			// Remove the similar targets from the regular show/hide bindings
-			showTargets = showTargets.not(similarTargets);
-			hideTargets = hideTargets.not(similarTargets);
-		}
-	}
-
-	// Apply show/hide/toggle events
-	this._bind(showTargets, showEvents, showCallback);
-	this._bind(hideTargets, hideEvents, hideCallback);
-};
-
-PROTOTYPE._assignInitialEvents = function(event) {
-	var options = this.options,
-		showTarget = options.show.target,
-		hideTarget = options.hide.target,
-		showEvents = options.show.event ? $.trim('' + options.show.event).split(' ') : [],
-		hideEvents = options.hide.event ? $.trim('' + options.hide.event).split(' ') : [];
-
-	// Catch remove/removeqtip events on target element to destroy redundant tooltips
-	this._bind(this.elements.target, ['remove', 'removeqtip'], function() {
-		this.destroy(true);
-	}, 'destroy');
-
-	/*
-	 * Make sure hoverIntent functions properly by using mouseleave as a hide event if
-	 * mouseenter/mouseout is used for show.event, even if it isn't in the users options.
-	 */
-	if(/mouse(over|enter)/i.test(options.show.event) && !/mouse(out|leave)/i.test(options.hide.event)) {
-		hideEvents.push('mouseleave');
-	}
-
-	/*
-	 * Also make sure initial mouse targetting works correctly by caching mousemove coords
-	 * on show targets before the tooltip has rendered. Also set onTarget when triggered to
-	 * keep mouse tracking working.
-	 */
-	this._bind(showTarget, 'mousemove', function(moveEvent) {
-		this._storeMouse(moveEvent);
-		this.cache.onTarget = TRUE;
-	});
-
-	// Define hoverIntent function
-	function hoverIntent(hoverEvent) {
-		// Only continue if tooltip isn't disabled
-		if(this.disabled || this.destroyed) { return FALSE; }
-
-		// Cache the event data
-		this.cache.event = hoverEvent && $.event.fix(hoverEvent);
-		this.cache.target = hoverEvent && $(hoverEvent.target);
-
-		// Start the event sequence
-		clearTimeout(this.timers.show);
-		this.timers.show = delay.call(this,
-			function() { this.render(typeof hoverEvent === 'object' || options.show.ready); },
-			options.prerender ? 0 : options.show.delay
-		);
-	}
-
-	// Filter and bind events
-	this._bindEvents(showEvents, hideEvents, showTarget, hideTarget, hoverIntent, function() {
-		if(!this.timers) { return FALSE; }
-		clearTimeout(this.timers.show);
-	});
-
-	// Prerendering is enabled, create tooltip now
-	if(options.show.ready || options.prerender) { hoverIntent.call(this, event); }
-};
-
-// Event assignment method
-PROTOTYPE._assignEvents = function() {
-	var self = this,
-		options = this.options,
-		posOptions = options.position,
-
-		tooltip = this.tooltip,
-		showTarget = options.show.target,
-		hideTarget = options.hide.target,
-		containerTarget = posOptions.container,
-		viewportTarget = posOptions.viewport,
-		documentTarget = $(document),
-		windowTarget = $(window),
-
-		showEvents = options.show.event ? $.trim('' + options.show.event).split(' ') : [],
-		hideEvents = options.hide.event ? $.trim('' + options.hide.event).split(' ') : [];
-
-
-	// Assign passed event callbacks
-	$.each(options.events, function(name, callback) {
-		self._bind(tooltip, name === 'toggle' ? ['tooltipshow','tooltiphide'] : ['tooltip'+name], callback, null, tooltip);
-	});
-
-	// Hide tooltips when leaving current window/frame (but not select/option elements)
-	if(/mouse(out|leave)/i.test(options.hide.event) && options.hide.leave === 'window') {
-		this._bind(documentTarget, ['mouseout', 'blur'], function(event) {
-			if(!/select|option/.test(event.target.nodeName) && !event.relatedTarget) {
-				this.hide(event);
-			}
-		});
-	}
-
-	// Enable hide.fixed by adding appropriate class
-	if(options.hide.fixed) {
-		hideTarget = hideTarget.add( tooltip.addClass(CLASS_FIXED) );
-	}
-
-	/*
-	 * Make sure hoverIntent functions properly by using mouseleave to clear show timer if
-	 * mouseenter/mouseout is used for show.event, even if it isn't in the users options.
-	 */
-	else if(/mouse(over|enter)/i.test(options.show.event)) {
-		this._bind(hideTarget, 'mouseleave', function() {
-			clearTimeout(this.timers.show);
-		});
-	}
-
-	// Hide tooltip on document mousedown if unfocus events are enabled
-	if(('' + options.hide.event).indexOf('unfocus') > -1) {
-		this._bind(containerTarget.closest('html'), ['mousedown', 'touchstart'], function(event) {
-			var elem = $(event.target),
-				enabled = this.rendered && !this.tooltip.hasClass(CLASS_DISABLED) && this.tooltip[0].offsetWidth > 0,
-				isAncestor = elem.parents(SELECTOR).filter(this.tooltip[0]).length > 0;
-
-			if(elem[0] !== this.target[0] && elem[0] !== this.tooltip[0] && !isAncestor &&
-				!this.target.has(elem[0]).length && enabled
-			) {
-				this.hide(event);
-			}
-		});
-	}
-
-	// Check if the tooltip hides when inactive
-	if('number' === typeof options.hide.inactive) {
-		// Bind inactive method to show target(s) as a custom event
-		this._bind(showTarget, 'qtip-'+this.id+'-inactive', inactiveMethod, 'inactive');
-
-		// Define events which reset the 'inactive' event handler
-		this._bind(hideTarget.add(tooltip), QTIP.inactiveEvents, inactiveMethod);
-	}
-
-	// Filter and bind events
-	this._bindEvents(showEvents, hideEvents, showTarget, hideTarget, showMethod, hideMethod);
-
-	// Mouse movement bindings
-	this._bind(showTarget.add(tooltip), 'mousemove', function(event) {
-		// Check if the tooltip hides when mouse is moved a certain distance
-		if('number' === typeof options.hide.distance) {
-			var origin = this.cache.origin || {},
-				limit = this.options.hide.distance,
-				abs = Math.abs;
-
-			// Check if the movement has gone beyond the limit, and hide it if so
-			if(abs(event.pageX - origin.pageX) >= limit || abs(event.pageY - origin.pageY) >= limit) {
-				this.hide(event);
-			}
-		}
-
-		// Cache mousemove coords on show targets
-		this._storeMouse(event);
-	});
-
-	// Mouse positioning events
-	if(posOptions.target === 'mouse') {
-		// If mouse adjustment is on...
-		if(posOptions.adjust.mouse) {
-			// Apply a mouseleave event so we don't get problems with overlapping
-			if(options.hide.event) {
-				// Track if we're on the target or not
-				this._bind(showTarget, ['mouseenter', 'mouseleave'], function(event) {
-					if(!this.cache) {return FALSE; }
-					this.cache.onTarget = event.type === 'mouseenter';
-				});
-			}
-
-			// Update tooltip position on mousemove
-			this._bind(documentTarget, 'mousemove', function(event) {
-				// Update the tooltip position only if the tooltip is visible and adjustment is enabled
-				if(this.rendered && this.cache.onTarget && !this.tooltip.hasClass(CLASS_DISABLED) && this.tooltip[0].offsetWidth > 0) {
-					this.reposition(event);
-				}
-			});
-		}
-	}
-
-	// Adjust positions of the tooltip on window resize if enabled
-	if(posOptions.adjust.resize || viewportTarget.length) {
-		this._bind( $.event.special.resize ? viewportTarget : windowTarget, 'resize', repositionMethod );
-	}
-
-	// Adjust tooltip position on scroll of the window or viewport element if present
-	if(posOptions.adjust.scroll) {
-		this._bind( windowTarget.add(posOptions.container), 'scroll', repositionMethod );
-	}
-};
-
-// Un-assignment method
-PROTOTYPE._unassignEvents = function() {
-	var options = this.options,
-		showTargets = options.show.target,
-		hideTargets = options.hide.target,
-		targets = $.grep([
-			this.elements.target[0],
-			this.rendered && this.tooltip[0],
-			options.position.container[0],
-			options.position.viewport[0],
-			options.position.container.closest('html')[0], // unfocus
-			window,
-			document
-		], function(i) {
-			return typeof i === 'object';
-		});
-
-	// Add show and hide targets if they're valid
-	if(showTargets && showTargets.toArray) {
-		targets = targets.concat(showTargets.toArray());
-	}
-	if(hideTargets && hideTargets.toArray) {
-		targets = targets.concat(hideTargets.toArray());
-	}
-
-	// Unbind the events
-	this._unbind(targets)
-		._unbind(targets, 'destroy')
-		._unbind(targets, 'inactive');
-};
-
-// Apply common event handlers using delegate (avoids excessive .bind calls!)
-$(function() {
-	delegate(SELECTOR, ['mouseenter', 'mouseleave'], function(event) {
-		var state = event.type === 'mouseenter',
-			tooltip = $(event.currentTarget),
-			target = $(event.relatedTarget || event.target),
-			options = this.options;
-
-		// On mouseenter...
-		if(state) {
-			// Focus the tooltip on mouseenter (z-index stacking)
-			this.focus(event);
-
-			// Clear hide timer on tooltip hover to prevent it from closing
-			tooltip.hasClass(CLASS_FIXED) && !tooltip.hasClass(CLASS_DISABLED) && clearTimeout(this.timers.hide);
-		}
-
-		// On mouseleave...
-		else {
-			// When mouse tracking is enabled, hide when we leave the tooltip and not onto the show target (if a hide event is set)
-			if(options.position.target === 'mouse' && options.position.adjust.mouse &&
-				options.hide.event && options.show.target && !target.closest(options.show.target[0]).length) {
-				this.hide(event);
-			}
-		}
-
-		// Add hover class
-		tooltip.toggleClass(CLASS_HOVER, state);
-	});
-
-	// Define events which reset the 'inactive' event handler
-	delegate('['+ATTR_ID+']', INACTIVE_EVENTS, inactiveMethod);
-});
-;// Initialization method
-function init(elem, id, opts) {
-	var obj, posOptions, attr, config, title,
-
-	// Setup element references
-	docBody = $(document.body),
-
-	// Use document body instead of document element if needed
-	newTarget = elem[0] === document ? docBody : elem,
-
-	// Grab metadata from element if plugin is present
-	metadata = elem.metadata ? elem.metadata(opts.metadata) : NULL,
-
-	// If metadata type if HTML5, grab 'name' from the object instead, or use the regular data object otherwise
-	metadata5 = opts.metadata.type === 'html5' && metadata ? metadata[opts.metadata.name] : NULL,
-
-	// Grab data from metadata.name (or data-qtipopts as fallback) using .data() method,
-	html5 = elem.data(opts.metadata.name || 'qtipopts');
-
-	// If we don't get an object returned attempt to parse it manualyl without parseJSON
-	/* eslint-disable no-empty */
-	try { html5 = typeof html5 === 'string' ? $.parseJSON(html5) : html5; }
-	catch(e) {}
-	/* eslint-enable no-empty */
-
-	// Merge in and sanitize metadata
-	config = $.extend(TRUE, {}, QTIP.defaults, opts,
-		typeof html5 === 'object' ? sanitizeOptions(html5) : NULL,
-		sanitizeOptions(metadata5 || metadata));
-
-	// Re-grab our positioning options now we've merged our metadata and set id to passed value
-	posOptions = config.position;
-	config.id = id;
-
-	// Setup missing content if none is detected
-	if('boolean' === typeof config.content.text) {
-		attr = elem.attr(config.content.attr);
-
-		// Grab from supplied attribute if available
-		if(config.content.attr !== FALSE && attr) { config.content.text = attr; }
-
-		// No valid content was found, abort render
-		else { return FALSE; }
-	}
-
-	// Setup target options
-	if(!posOptions.container.length) { posOptions.container = docBody; }
-	if(posOptions.target === FALSE) { posOptions.target = newTarget; }
-	if(config.show.target === FALSE) { config.show.target = newTarget; }
-	if(config.show.solo === TRUE) { config.show.solo = posOptions.container.closest('body'); }
-	if(config.hide.target === FALSE) { config.hide.target = newTarget; }
-	if(config.position.viewport === TRUE) { config.position.viewport = posOptions.container; }
-
-	// Ensure we only use a single container
-	posOptions.container = posOptions.container.eq(0);
-
-	// Convert position corner values into x and y strings
-	posOptions.at = new CORNER(posOptions.at, TRUE);
-	posOptions.my = new CORNER(posOptions.my);
-
-	// Destroy previous tooltip if overwrite is enabled, or skip element if not
-	if(elem.data(NAMESPACE)) {
-		if(config.overwrite) {
-			elem.qtip('destroy', true);
-		}
-		else if(config.overwrite === FALSE) {
-			return FALSE;
-		}
-	}
-
-	// Add has-qtip attribute
-	elem.attr(ATTR_HAS, id);
-
-	// Remove title attribute and store it if present
-	if(config.suppress && (title = elem.attr('title'))) {
-		// Final attr call fixes event delegatiom and IE default tooltip showing problem
-		elem.removeAttr('title').attr(oldtitle, title).attr('title', '');
-	}
-
-	// Initialize the tooltip and add API reference
-	obj = new QTip(elem, config, id, !!attr);
-	elem.data(NAMESPACE, obj);
-
-	return obj;
-}
-
-// jQuery $.fn extension method
-QTIP = $.fn.qtip = function(options, notation, newValue)
-{
-	var command = ('' + options).toLowerCase(), // Parse command
-		returned = NULL,
-		args = $.makeArray(arguments).slice(1),
-		event = args[args.length - 1],
-		opts = this[0] ? $.data(this[0], NAMESPACE) : NULL;
-
-	// Check for API request
-	if(!arguments.length && opts || command === 'api') {
-		return opts;
-	}
-
-	// Execute API command if present
-	else if('string' === typeof options) {
-		this.each(function() {
-			var api = $.data(this, NAMESPACE);
-			if(!api) { return TRUE; }
-
-			// Cache the event if possible
-			if(event && event.timeStamp) { api.cache.event = event; }
-
-			// Check for specific API commands
-			if(notation && (command === 'option' || command === 'options')) {
-				if(newValue !== undefined || $.isPlainObject(notation)) {
-					api.set(notation, newValue);
-				}
-				else {
-					returned = api.get(notation);
-					return FALSE;
-				}
-			}
-
-			// Execute API command
-			else if(api[command]) {
-				api[command].apply(api, args);
-			}
-		});
-
-		return returned !== NULL ? returned : this;
-	}
-
-	// No API commands. validate provided options and setup qTips
-	else if('object' === typeof options || !arguments.length) {
-		// Sanitize options first
-		opts = sanitizeOptions($.extend(TRUE, {}, options));
-
-		return this.each(function(i) {
-			var api, id;
-
-			// Find next available ID, or use custom ID if provided
-			id = $.isArray(opts.id) ? opts.id[i] : opts.id;
-			id = !id || id === FALSE || id.length < 1 || QTIP.api[id] ? QTIP.nextid++ : id;
-
-			// Initialize the qTip and re-grab newly sanitized options
-			api = init($(this), id, opts);
-			if(api === FALSE) { return TRUE; }
-			else { QTIP.api[id] = api; }
-
-			// Initialize plugins
-			$.each(PLUGINS, function() {
-				if(this.initialize === 'initialize') { this(api); }
-			});
-
-			// Assign initial pre-render events
-			api._assignInitialEvents(event);
-		});
-	}
-};
-
-// Expose class
-$.qtip = QTip;
-
-// Populated in render method
-QTIP.api = {};
-;$.each({
-	/* Allow other plugins to successfully retrieve the title of an element with a qTip applied */
-	attr: function(attr, val) {
-		if(this.length) {
-			var self = this[0],
-				title = 'title',
-				api = $.data(self, 'qtip');
-
-			if(attr === title && api && api.options && 'object' === typeof api && 'object' === typeof api.options && api.options.suppress) {
-				if(arguments.length < 2) {
-					return $.attr(self, oldtitle);
-				}
-
-				// If qTip is rendered and title was originally used as content, update it
-				if(api && api.options.content.attr === title && api.cache.attr) {
-					api.set('content.text', val);
-				}
-
-				// Use the regular attr method to set, then cache the result
-				return this.attr(oldtitle, val);
-			}
-		}
-
-		return $.fn['attr'+replaceSuffix].apply(this, arguments);
-	},
-
-	/* Allow clone to correctly retrieve cached title attributes */
-	clone: function(keepData) {
-		// Clone our element using the real clone method
-		var elems = $.fn['clone'+replaceSuffix].apply(this, arguments);
-
-		// Grab all elements with an oldtitle set, and change it to regular title attribute, if keepData is false
-		if(!keepData) {
-			elems.filter('['+oldtitle+']').attr('title', function() {
-				return $.attr(this, oldtitle);
-			})
-			.removeAttr(oldtitle);
-		}
-
-		return elems;
-	}
-}, function(name, func) {
-	if(!func || $.fn[name+replaceSuffix]) { return TRUE; }
-
-	var old = $.fn[name+replaceSuffix] = $.fn[name];
-	$.fn[name] = function() {
-		return func.apply(this, arguments) || old.apply(this, arguments);
-	};
-});
-
-/* Fire off 'removeqtip' handler in $.cleanData if jQuery UI not present (it already does similar).
- * This snippet is taken directly from jQuery UI source code found here:
- *     http://code.jquery.com/ui/jquery-ui-git.js
- */
-if(!$.ui) {
-	$['cleanData'+replaceSuffix] = $.cleanData;
-	$.cleanData = function( elems ) {
-		for(var i = 0, elem; (elem = $( elems[i] )).length; i++) {
-			if(elem.attr(ATTR_HAS)) {
-				/* eslint-disable no-empty */
-				try { elem.triggerHandler('removeqtip'); }
-				catch( e ) {}
-				/* eslint-enable no-empty */
-			}
-		}
-		$['cleanData'+replaceSuffix].apply(this, arguments);
-	};
-}
-;// qTip version
-QTIP.version = '3.0.3';
-
-// Base ID for all qTips
-QTIP.nextid = 0;
-
-// Inactive events array
-QTIP.inactiveEvents = INACTIVE_EVENTS;
-
-// Base z-index for all qTips
-QTIP.zindex = 15000;
-
-// Define configuration defaults
-QTIP.defaults = {
-	prerender: FALSE,
-	id: FALSE,
-	overwrite: TRUE,
-	suppress: TRUE,
-	content: {
-		text: TRUE,
-		attr: 'title',
-		title: FALSE,
-		button: FALSE
-	},
-	position: {
-		my: 'top left',
-		at: 'bottom right',
-		target: FALSE,
-		container: FALSE,
-		viewport: FALSE,
-		adjust: {
-			x: 0, y: 0,
-			mouse: TRUE,
-			scroll: TRUE,
-			resize: TRUE,
-			method: 'flipinvert flipinvert'
-		},
-		effect: function(api, pos) {
-			$(this).animate(pos, {
-				duration: 200,
-				queue: FALSE
-			});
-		}
-	},
-	show: {
-		target: FALSE,
-		event: 'mouseenter',
-		effect: TRUE,
-		delay: 90,
-		solo: FALSE,
-		ready: FALSE,
-		autofocus: FALSE
-	},
-	hide: {
-		target: FALSE,
-		event: 'mouseleave',
-		effect: TRUE,
-		delay: 0,
-		fixed: FALSE,
-		inactive: FALSE,
-		leave: 'window',
-		distance: FALSE
-	},
-	style: {
-		classes: '',
-		widget: FALSE,
-		width: FALSE,
-		height: FALSE,
-		def: TRUE
-	},
-	events: {
-		render: NULL,
-		move: NULL,
-		show: NULL,
-		hide: NULL,
-		toggle: NULL,
-		visible: NULL,
-		hidden: NULL,
-		focus: NULL,
-		blur: NULL
-	}
-};
-;var TIP,
-createVML,
-SCALE,
-PIXEL_RATIO,
-BACKING_STORE_RATIO,
-
-// Common CSS strings
-MARGIN = 'margin',
-BORDER = 'border',
-COLOR = 'color',
-BG_COLOR = 'background-color',
-TRANSPARENT = 'transparent',
-IMPORTANT = ' !important',
-
-// Check if the browser supports <canvas/> elements
-HASCANVAS = !!document.createElement('canvas').getContext,
-
-// Invalid colour values used in parseColours()
-INVALID = /rgba?\(0, 0, 0(, 0)?\)|transparent|#123456/i;
-
-// Camel-case method, taken from jQuery source
-// http://code.jquery.com/jquery-1.8.0.js
-function camel(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-/*
- * Modified from Modernizr's testPropsAll()
- * http://modernizr.com/downloads/modernizr-latest.js
- */
-var cssProps = {}, cssPrefixes = ['Webkit', 'O', 'Moz', 'ms'];
-function vendorCss(elem, prop) {
-	var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-		props = (prop + ' ' + cssPrefixes.join(ucProp + ' ') + ucProp).split(' '),
-		cur, val, i = 0;
-
-	// If the property has already been mapped...
-	if(cssProps[prop]) { return elem.css(cssProps[prop]); }
-
-	while(cur = props[i++]) {
-		if((val = elem.css(cur)) !== undefined) {
-			cssProps[prop] = cur;
-			return val;
-		}
-	}
-}
-
-// Parse a given elements CSS property into an int
-function intCss(elem, prop) {
-	return Math.ceil(parseFloat(vendorCss(elem, prop)));
-}
-
-
-// VML creation (for IE only)
-if(!HASCANVAS) {
-	createVML = function(tag, props, style) {
-		return '<qtipvml:'+tag+' xmlns="urn:schemas-microsoft.com:vml" class="qtip-vml" '+(props||'')+
-			' style="behavior: url(#default#VML); '+(style||'')+ '" />';
-	};
-}
-
-// Canvas only definitions
-else {
-	PIXEL_RATIO = window.devicePixelRatio || 1;
-	BACKING_STORE_RATIO = (function() {
-		var context = document.createElement('canvas').getContext('2d');
-		return context.backingStorePixelRatio || context.webkitBackingStorePixelRatio || context.mozBackingStorePixelRatio ||
-				context.msBackingStorePixelRatio || context.oBackingStorePixelRatio || 1;
-	})();
-	SCALE = PIXEL_RATIO / BACKING_STORE_RATIO;
-}
-
-
-function Tip(qtip, options) {
-	this._ns = 'tip';
-	this.options = options;
-	this.offset = options.offset;
-	this.size = [ options.width, options.height ];
-
-	// Initialize
-	this.qtip = qtip;
-	this.init(qtip);
-}
-
-$.extend(Tip.prototype, {
-	init: function(qtip) {
-		var context, tip;
-
-		// Create tip element and prepend to the tooltip
-		tip = this.element = qtip.elements.tip = $('<div />', { 'class': NAMESPACE+'-tip' }).prependTo(qtip.tooltip);
-
-		// Create tip drawing element(s)
-		if(HASCANVAS) {
-			// save() as soon as we create the canvas element so FF2 doesn't bork on our first restore()!
-			context = $('<canvas />').appendTo(this.element)[0].getContext('2d');
-
-			// Setup constant parameters
-			context.lineJoin = 'miter';
-			context.miterLimit = 100000;
-			context.save();
-		}
-		else {
-			context = createVML('shape', 'coordorigin="0,0"', 'position:absolute;');
-			this.element.html(context + context);
-
-			// Prevent mousing down on the tip since it causes problems with .live() handling in IE due to VML
-			qtip._bind( $('*', tip).add(tip), ['click', 'mousedown'], function(event) { event.stopPropagation(); }, this._ns);
-		}
-
-		// Bind update events
-		qtip._bind(qtip.tooltip, 'tooltipmove', this.reposition, this._ns, this);
-
-		// Create it
-		this.create();
-	},
-
-	_swapDimensions: function() {
-		this.size[0] = this.options.height;
-		this.size[1] = this.options.width;
-	},
-	_resetDimensions: function() {
-		this.size[0] = this.options.width;
-		this.size[1] = this.options.height;
-	},
-
-	_useTitle: function(corner) {
-		var titlebar = this.qtip.elements.titlebar;
-		return titlebar && (
-			corner.y === TOP || corner.y === CENTER && this.element.position().top + this.size[1] / 2 + this.options.offset < titlebar.outerHeight(TRUE)
-		);
-	},
-
-	_parseCorner: function(corner) {
-		var my = this.qtip.options.position.my;
-
-		// Detect corner and mimic properties
-		if(corner === FALSE || my === FALSE) {
-			corner = FALSE;
-		}
-		else if(corner === TRUE) {
-			corner = new CORNER( my.string() );
-		}
-		else if(!corner.string) {
-			corner = new CORNER(corner);
-			corner.fixed = TRUE;
-		}
-
-		return corner;
-	},
-
-	_parseWidth: function(corner, side, use) {
-		var elements = this.qtip.elements,
-			prop = BORDER + camel(side) + 'Width';
-
-		return (use ? intCss(use, prop) : 
-			intCss(elements.content, prop) ||
-			intCss(this._useTitle(corner) && elements.titlebar || elements.content, prop) ||
-			intCss(elements.tooltip, prop)
-		) || 0;
-	},
-
-	_parseRadius: function(corner) {
-		var elements = this.qtip.elements,
-			prop = BORDER + camel(corner.y) + camel(corner.x) + 'Radius';
-
-		return BROWSER.ie < 9 ? 0 :
-			intCss(this._useTitle(corner) && elements.titlebar || elements.content, prop) ||
-			intCss(elements.tooltip, prop) || 0;
-	},
-
-	_invalidColour: function(elem, prop, compare) {
-		var val = elem.css(prop);
-		return !val || compare && val === elem.css(compare) || INVALID.test(val) ? FALSE : val;
-	},
-
-	_parseColours: function(corner) {
-		var elements = this.qtip.elements,
-			tip = this.element.css('cssText', ''),
-			borderSide = BORDER + camel(corner[ corner.precedance ]) + camel(COLOR),
-			colorElem = this._useTitle(corner) && elements.titlebar || elements.content,
-			css = this._invalidColour, color = [];
-
-		// Attempt to detect the background colour from various elements, left-to-right precedance
-		color[0] = css(tip, BG_COLOR) || css(colorElem, BG_COLOR) || css(elements.content, BG_COLOR) ||
-			css(elements.tooltip, BG_COLOR) || tip.css(BG_COLOR);
-
-		// Attempt to detect the correct border side colour from various elements, left-to-right precedance
-		color[1] = css(tip, borderSide, COLOR) || css(colorElem, borderSide, COLOR) ||
-			css(elements.content, borderSide, COLOR) || css(elements.tooltip, borderSide, COLOR) || elements.tooltip.css(borderSide);
-
-		// Reset background and border colours
-		$('*', tip).add(tip).css('cssText', BG_COLOR+':'+TRANSPARENT+IMPORTANT+';'+BORDER+':0'+IMPORTANT+';');
-
-		return color;
-	},
-
-	_calculateSize: function(corner) {
-		var y = corner.precedance === Y,
-			width = this.options.width,
-			height = this.options.height,
-			isCenter = corner.abbrev() === 'c',
-			base = (y ? width: height) * (isCenter ? 0.5 : 1),
-			pow = Math.pow,
-			round = Math.round,
-			bigHyp, ratio, result,
-
-		smallHyp = Math.sqrt( pow(base, 2) + pow(height, 2) ),
-		hyp = [
-			this.border / base * smallHyp,
-			this.border / height * smallHyp
-		];
-
-		hyp[2] = Math.sqrt( pow(hyp[0], 2) - pow(this.border, 2) );
-		hyp[3] = Math.sqrt( pow(hyp[1], 2) - pow(this.border, 2) );
-
-		bigHyp = smallHyp + hyp[2] + hyp[3] + (isCenter ? 0 : hyp[0]);
-		ratio = bigHyp / smallHyp;
-
-		result = [ round(ratio * width), round(ratio * height) ];
-		return y ? result : result.reverse();
-	},
-
-	// Tip coordinates calculator
-	_calculateTip: function(corner, size, scale) {
-		scale = scale || 1;
-		size = size || this.size;
-
-		var width = size[0] * scale,
-			height = size[1] * scale,
-			width2 = Math.ceil(width / 2), height2 = Math.ceil(height / 2),
-
-		// Define tip coordinates in terms of height and width values
-		tips = {
-			br:	[0,0,		width,height,	width,0],
-			bl:	[0,0,		width,0,		0,height],
-			tr:	[0,height,	width,0,		width,height],
-			tl:	[0,0,		0,height,		width,height],
-			tc:	[0,height,	width2,0,		width,height],
-			bc:	[0,0,		width,0,		width2,height],
-			rc:	[0,0,		width,height2,	0,height],
-			lc:	[width,0,	width,height,	0,height2]
-		};
-
-		// Set common side shapes
-		tips.lt = tips.br; tips.rt = tips.bl;
-		tips.lb = tips.tr; tips.rb = tips.tl;
-
-		return tips[ corner.abbrev() ];
-	},
-
-	// Tip coordinates drawer (canvas)
-	_drawCoords: function(context, coords) {
-		context.beginPath();
-		context.moveTo(coords[0], coords[1]);
-		context.lineTo(coords[2], coords[3]);
-		context.lineTo(coords[4], coords[5]);
-		context.closePath();
-	},
-
-	create: function() {
-		// Determine tip corner
-		var c = this.corner = (HASCANVAS || BROWSER.ie) && this._parseCorner(this.options.corner);
-
-		// If we have a tip corner...
-		this.enabled = !!this.corner && this.corner.abbrev() !== 'c';
-		if(this.enabled) {
-			// Cache it
-			this.qtip.cache.corner = c.clone();
-
-			// Create it
-			this.update();
-		}
-
-		// Toggle tip element
-		this.element.toggle(this.enabled);
-
-		return this.corner;
-	},
-
-	update: function(corner, position) {
-		if(!this.enabled) { return this; }
-
-		var elements = this.qtip.elements,
-			tip = this.element,
-			inner = tip.children(),
-			options = this.options,
-			curSize = this.size,
-			mimic = options.mimic,
-			round = Math.round,
-			color, precedance, context,
-			coords, bigCoords, translate, newSize, border;
-
-		// Re-determine tip if not already set
-		if(!corner) { corner = this.qtip.cache.corner || this.corner; }
-
-		// Use corner property if we detect an invalid mimic value
-		if(mimic === FALSE) { mimic = corner; }
-
-		// Otherwise inherit mimic properties from the corner object as necessary
-		else {
-			mimic = new CORNER(mimic);
-			mimic.precedance = corner.precedance;
-
-			if(mimic.x === 'inherit') { mimic.x = corner.x; }
-			else if(mimic.y === 'inherit') { mimic.y = corner.y; }
-			else if(mimic.x === mimic.y) {
-				mimic[ corner.precedance ] = corner[ corner.precedance ];
-			}
-		}
-		precedance = mimic.precedance;
-
-		// Ensure the tip width.height are relative to the tip position
-		if(corner.precedance === X) { this._swapDimensions(); }
-		else { this._resetDimensions(); }
-
-		// Update our colours
-		color = this.color = this._parseColours(corner);
-
-		// Detect border width, taking into account colours
-		if(color[1] !== TRANSPARENT) {
-			// Grab border width
-			border = this.border = this._parseWidth(corner, corner[corner.precedance]);
-
-			// If border width isn't zero, use border color as fill if it's not invalid (1.0 style tips)
-			if(options.border && border < 1 && !INVALID.test(color[1])) { color[0] = color[1]; }
-
-			// Set border width (use detected border width if options.border is true)
-			this.border = border = options.border !== TRUE ? options.border : border;
-		}
-
-		// Border colour was invalid, set border to zero
-		else { this.border = border = 0; }
-
-		// Determine tip size
-		newSize = this.size = this._calculateSize(corner);
-		tip.css({
-			width: newSize[0],
-			height: newSize[1],
-			lineHeight: newSize[1]+'px'
-		});
-
-		// Calculate tip translation
-		if(corner.precedance === Y) {
-			translate = [
-				round(mimic.x === LEFT ? border : mimic.x === RIGHT ? newSize[0] - curSize[0] - border : (newSize[0] - curSize[0]) / 2),
-				round(mimic.y === TOP ? newSize[1] - curSize[1] : 0)
-			];
-		}
-		else {
-			translate = [
-				round(mimic.x === LEFT ? newSize[0] - curSize[0] : 0),
-				round(mimic.y === TOP ? border : mimic.y === BOTTOM ? newSize[1] - curSize[1] - border : (newSize[1] - curSize[1]) / 2)
-			];
-		}
-
-		// Canvas drawing implementation
-		if(HASCANVAS) {
-			// Grab canvas context and clear/save it
-			context = inner[0].getContext('2d');
-			context.restore(); context.save();
-			context.clearRect(0,0,6000,6000);
-
-			// Calculate coordinates
-			coords = this._calculateTip(mimic, curSize, SCALE);
-			bigCoords = this._calculateTip(mimic, this.size, SCALE);
-
-			// Set the canvas size using calculated size
-			inner.attr(WIDTH, newSize[0] * SCALE).attr(HEIGHT, newSize[1] * SCALE);
-			inner.css(WIDTH, newSize[0]).css(HEIGHT, newSize[1]);
-
-			// Draw the outer-stroke tip
-			this._drawCoords(context, bigCoords);
-			context.fillStyle = color[1];
-			context.fill();
-
-			// Draw the actual tip
-			context.translate(translate[0] * SCALE, translate[1] * SCALE);
-			this._drawCoords(context, coords);
-			context.fillStyle = color[0];
-			context.fill();
-		}
-
-		// VML (IE Proprietary implementation)
-		else {
-			// Calculate coordinates
-			coords = this._calculateTip(mimic);
-
-			// Setup coordinates string
-			coords = 'm' + coords[0] + ',' + coords[1] + ' l' + coords[2] +
-				',' + coords[3] + ' ' + coords[4] + ',' + coords[5] + ' xe';
-
-			// Setup VML-specific offset for pixel-perfection
-			translate[2] = border && /^(r|b)/i.test(corner.string()) ?
-				BROWSER.ie === 8 ? 2 : 1 : 0;
-
-			// Set initial CSS
-			inner.css({
-				coordsize: newSize[0]+border + ' ' + newSize[1]+border,
-				antialias: ''+(mimic.string().indexOf(CENTER) > -1),
-				left: translate[0] - translate[2] * Number(precedance === X),
-				top: translate[1] - translate[2] * Number(precedance === Y),
-				width: newSize[0] + border,
-				height: newSize[1] + border
-			})
-			.each(function(i) {
-				var $this = $(this);
-
-				// Set shape specific attributes
-				$this[ $this.prop ? 'prop' : 'attr' ]({
-					coordsize: newSize[0]+border + ' ' + newSize[1]+border,
-					path: coords,
-					fillcolor: color[0],
-					filled: !!i,
-					stroked: !i
-				})
-				.toggle(!!(border || i));
-
-				// Check if border is enabled and add stroke element
-				!i && $this.html( createVML(
-					'stroke', 'weight="'+border*2+'px" color="'+color[1]+'" miterlimit="1000" joinstyle="miter"'
-				) );
-			});
-		}
-
-		// Opera bug #357 - Incorrect tip position
-		// https://github.com/Craga89/qTip2/issues/367
-		window.opera && setTimeout(function() {
-			elements.tip.css({
-				display: 'inline-block',
-				visibility: 'visible'
-			});
-		}, 1);
-
-		// Position if needed
-		if(position !== FALSE) { this.calculate(corner, newSize); }
-	},
-
-	calculate: function(corner, size) {
-		if(!this.enabled) { return FALSE; }
-
-		var self = this,
-			elements = this.qtip.elements,
-			tip = this.element,
-			userOffset = this.options.offset,
-			position = {},
-			precedance, corners;
-
-		// Inherit corner if not provided
-		corner = corner || this.corner;
-		precedance = corner.precedance;
-
-		// Determine which tip dimension to use for adjustment
-		size = size || this._calculateSize(corner);
-
-		// Setup corners and offset array
-		corners = [ corner.x, corner.y ];
-		if(precedance === X) { corners.reverse(); }
-
-		// Calculate tip position
-		$.each(corners, function(i, side) {
-			var b, bc, br;
-
-			if(side === CENTER) {
-				b = precedance === Y ? LEFT : TOP;
-				position[ b ] = '50%';
-				position[MARGIN+'-' + b] = -Math.round(size[ precedance === Y ? 0 : 1 ] / 2) + userOffset;
-			}
-			else {
-				b = self._parseWidth(corner, side, elements.tooltip);
-				bc = self._parseWidth(corner, side, elements.content);
-				br = self._parseRadius(corner);
-
-				position[ side ] = Math.max(-self.border, i ? bc : userOffset + (br > b ? br : -b));
-			}
-		});
-
-		// Adjust for tip size
-		position[ corner[precedance] ] -= size[ precedance === X ? 0 : 1 ];
-
-		// Set and return new position
-		tip.css({ margin: '', top: '', bottom: '', left: '', right: '' }).css(position);
-		return position;
-	},
-
-	reposition: function(event, api, pos) {
-		if(!this.enabled) { return; }
-
-		var cache = api.cache,
-			newCorner = this.corner.clone(),
-			adjust = pos.adjusted,
-			method = api.options.position.adjust.method.split(' '),
-			horizontal = method[0],
-			vertical = method[1] || method[0],
-			shift = { left: FALSE, top: FALSE, x: 0, y: 0 },
-			offset, css = {}, props;
-
-		function shiftflip(direction, precedance, popposite, side, opposite) {
-			// Horizontal - Shift or flip method
-			if(direction === SHIFT && newCorner.precedance === precedance && adjust[side] && newCorner[popposite] !== CENTER) {
-				newCorner.precedance = newCorner.precedance === X ? Y : X;
-			}
-			else if(direction !== SHIFT && adjust[side]){
-				newCorner[precedance] = newCorner[precedance] === CENTER ?
-					adjust[side] > 0 ? side : opposite :
-					newCorner[precedance] === side ? opposite : side;
-			}
-		}
-
-		function shiftonly(xy, side, opposite) {
-			if(newCorner[xy] === CENTER) {
-				css[MARGIN+'-'+side] = shift[xy] = offset[MARGIN+'-'+side] - adjust[side];
-			}
-			else {
-				props = offset[opposite] !== undefined ?
-					[ adjust[side], -offset[side] ] : [ -adjust[side], offset[side] ];
-
-				if( (shift[xy] = Math.max(props[0], props[1])) > props[0] ) {
-					pos[side] -= adjust[side];
-					shift[side] = FALSE;
-				}
-
-				css[ offset[opposite] !== undefined ? opposite : side ] = shift[xy];
-			}
-		}
-
-		// If our tip position isn't fixed e.g. doesn't adjust with viewport...
-		if(this.corner.fixed !== TRUE) {
-			// Perform shift/flip adjustments
-			shiftflip(horizontal, X, Y, LEFT, RIGHT);
-			shiftflip(vertical, Y, X, TOP, BOTTOM);
-
-			// Update and redraw the tip if needed (check cached details of last drawn tip)
-			if(newCorner.string() !== cache.corner.string() || cache.cornerTop !== adjust.top || cache.cornerLeft !== adjust.left) {
-				this.update(newCorner, FALSE);
-			}
-		}
-
-		// Setup tip offset properties
-		offset = this.calculate(newCorner);
-
-		// Readjust offset object to make it left/top
-		if(offset.right !== undefined) { offset.left = -offset.right; }
-		if(offset.bottom !== undefined) { offset.top = -offset.bottom; }
-		offset.user = this.offset;
-
-		// Perform shift adjustments
-		shift.left = horizontal === SHIFT && !!adjust.left;
-		if(shift.left) {
-			shiftonly(X, LEFT, RIGHT);
-		}
-		shift.top = vertical === SHIFT && !!adjust.top;
-		if(shift.top) {
-			shiftonly(Y, TOP, BOTTOM);
-		}
-
-		/*
-		* If the tip is adjusted in both dimensions, or in a
-		* direction that would cause it to be anywhere but the
-		* outer border, hide it!
-		*/
-		this.element.css(css).toggle(
-			!(shift.x && shift.y || newCorner.x === CENTER && shift.y || newCorner.y === CENTER && shift.x)
-		);
-
-		// Adjust position to accomodate tip dimensions
-		pos.left -= offset.left.charAt ? offset.user :
-			horizontal !== SHIFT || shift.top || !shift.left && !shift.top ? offset.left + this.border : 0;
-		pos.top -= offset.top.charAt ? offset.user :
-			vertical !== SHIFT || shift.left || !shift.left && !shift.top ? offset.top + this.border : 0;
-
-		// Cache details
-		cache.cornerLeft = adjust.left; cache.cornerTop = adjust.top;
-		cache.corner = newCorner.clone();
-	},
-
-	destroy: function() {
-		// Unbind events
-		this.qtip._unbind(this.qtip.tooltip, this._ns);
-
-		// Remove the tip element(s)
-		if(this.qtip.elements.tip) {
-			this.qtip.elements.tip.find('*')
-				.remove().end().remove();
-		}
-	}
-});
-
-TIP = PLUGINS.tip = function(api) {
-	return new Tip(api, api.options.style.tip);
-};
-
-// Initialize tip on render
-TIP.initialize = 'render';
-
-// Setup plugin sanitization options
-TIP.sanitize = function(options) {
-	if(options.style && 'tip' in options.style) {
-		var opts = options.style.tip;
-		if(typeof opts !== 'object') { opts = options.style.tip = { corner: opts }; }
-		if(!(/string|boolean/i).test(typeof opts.corner)) { opts.corner = TRUE; }
-	}
-};
-
-// Add new option checks for the plugin
-CHECKS.tip = {
-	'^position.my|style.tip.(corner|mimic|border)$': function() {
-		// Make sure a tip can be drawn
-		this.create();
-
-		// Reposition the tooltip
-		this.qtip.reposition();
-	},
-	'^style.tip.(height|width)$': function(obj) {
-		// Re-set dimensions and redraw the tip
-		this.size = [ obj.width, obj.height ];
-		this.update();
-
-		// Reposition the tooltip
-		this.qtip.reposition();
-	},
-	'^content.title|style.(classes|widget)$': function() {
-		this.update();
-	}
-};
-
-// Extend original qTip defaults
-$.extend(TRUE, QTIP.defaults, {
-	style: {
-		tip: {
-			corner: TRUE,
-			mimic: FALSE,
-			width: 6,
-			height: 6,
-			border: TRUE,
-			offset: 0
-		}
-	}
-});
-;var MODAL, OVERLAY,
-	MODALCLASS = 'qtip-modal',
-	MODALSELECTOR = '.'+MODALCLASS;
-
-OVERLAY = function()
-{
-	var self = this,
-		focusableElems = {},
-		current,
-		prevState,
-		elem;
-
-	// Modified code from jQuery UI 1.10.0 source
-	// http://code.jquery.com/ui/1.10.0/jquery-ui.js
-	function focusable(element) {
-		// Use the defined focusable checker when possible
-		if($.expr[':'].focusable) { return $.expr[':'].focusable; }
-
-		var isTabIndexNotNaN = !isNaN($.attr(element, 'tabindex')),
-			nodeName = element.nodeName && element.nodeName.toLowerCase(),
-			map, mapName, img;
-
-		if('area' === nodeName) {
-			map = element.parentNode;
-			mapName = map.name;
-			if(!element.href || !mapName || map.nodeName.toLowerCase() !== 'map') {
-				return false;
-			}
-			img = $('img[usemap=#' + mapName + ']')[0];
-			return !!img && img.is(':visible');
-		}
-
-		return /input|select|textarea|button|object/.test( nodeName ) ?
-			!element.disabled :
-			'a' === nodeName ?
-				element.href || isTabIndexNotNaN :
-				isTabIndexNotNaN
-		;
-	}
-
-	// Focus inputs using cached focusable elements (see update())
-	function focusInputs(blurElems) {
-		// Blurring body element in IE causes window.open windows to unfocus!
-		if(focusableElems.length < 1 && blurElems.length) { blurElems.not('body').blur(); }
-
-		// Focus the inputs
-		else { focusableElems.first().focus(); }
-	}
-
-	// Steal focus from elements outside tooltip
-	function stealFocus(event) {
-		if(!elem.is(':visible')) { return; }
-
-		var target = $(event.target),
-			tooltip = current.tooltip,
-			container = target.closest(SELECTOR),
-			targetOnTop;
-
-		// Determine if input container target is above this
-		targetOnTop = container.length < 1 ? FALSE :
-			parseInt(container[0].style.zIndex, 10) > parseInt(tooltip[0].style.zIndex, 10);
-
-		// If we're showing a modal, but focus has landed on an input below
-		// this modal, divert focus to the first visible input in this modal
-		// or if we can't find one... the tooltip itself
-		if(!targetOnTop && target.closest(SELECTOR)[0] !== tooltip[0]) {
-			focusInputs(target);
-		}
-	}
-
-	$.extend(self, {
-		init: function() {
-			// Create document overlay
-			elem = self.elem = $('<div />', {
-				id: 'qtip-overlay',
-				html: '<div></div>',
-				mousedown: function() { return FALSE; }
-			})
-			.hide();
-
-			// Make sure we can't focus anything outside the tooltip
-			$(document.body).bind('focusin'+MODALSELECTOR, stealFocus);
-
-			// Apply keyboard "Escape key" close handler
-			$(document).bind('keydown'+MODALSELECTOR, function(event) {
-				if(current && current.options.show.modal.escape && event.keyCode === 27) {
-					current.hide(event);
-				}
-			});
-
-			// Apply click handler for blur option
-			elem.bind('click'+MODALSELECTOR, function(event) {
-				if(current && current.options.show.modal.blur) {
-					current.hide(event);
-				}
-			});
-
-			return self;
-		},
-
-		update: function(api) {
-			// Update current API reference
-			current = api;
-
-			// Update focusable elements if enabled
-			if(api.options.show.modal.stealfocus !== FALSE) {
-				focusableElems = api.tooltip.find('*').filter(function() {
-					return focusable(this);
-				});
-			}
-			else { focusableElems = []; }
-		},
-
-		toggle: function(api, state, duration) {
-			var tooltip = api.tooltip,
-				options = api.options.show.modal,
-				effect = options.effect,
-				type = state ? 'show': 'hide',
-				visible = elem.is(':visible'),
-				visibleModals = $(MODALSELECTOR).filter(':visible:not(:animated)').not(tooltip);
-
-			// Set active tooltip API reference
-			self.update(api);
-
-			// If the modal can steal the focus...
-			// Blur the current item and focus anything in the modal we an
-			if(state && options.stealfocus !== FALSE) {
-				focusInputs( $(':focus') );
-			}
-
-			// Toggle backdrop cursor style on show
-			elem.toggleClass('blurs', options.blur);
-
-			// Append to body on show
-			if(state) {
-				elem.appendTo(document.body);
-			}
-
-			// Prevent modal from conflicting with show.solo, and don't hide backdrop is other modals are visible
-			if(elem.is(':animated') && visible === state && prevState !== FALSE || !state && visibleModals.length) {
-				return self;
-			}
-
-			// Stop all animations
-			elem.stop(TRUE, FALSE);
-
-			// Use custom function if provided
-			if($.isFunction(effect)) {
-				effect.call(elem, state);
-			}
-
-			// If no effect type is supplied, use a simple toggle
-			else if(effect === FALSE) {
-				elem[ type ]();
-			}
-
-			// Use basic fade function
-			else {
-				elem.fadeTo( parseInt(duration, 10) || 90, state ? 1 : 0, function() {
-					if(!state) { elem.hide(); }
-				});
-			}
-
-			// Reset position and detach from body on hide
-			if(!state) {
-				elem.queue(function(next) {
-					elem.css({ left: '', top: '' });
-					if(!$(MODALSELECTOR).length) { elem.detach(); }
-					next();
-				});
-			}
-
-			// Cache the state
-			prevState = state;
-
-			// If the tooltip is destroyed, set reference to null
-			if(current.destroyed) { current = NULL; }
-
-			return self;
-		}
-	});
-
-	self.init();
-};
-OVERLAY = new OVERLAY();
-
-function Modal(api, options) {
-	this.options = options;
-	this._ns = '-modal';
-
-	this.qtip = api;
-	this.init(api);
-}
-
-$.extend(Modal.prototype, {
-	init: function(qtip) {
-		var tooltip = qtip.tooltip;
-
-		// If modal is disabled... return
-		if(!this.options.on) { return this; }
-
-		// Set overlay reference
-		qtip.elements.overlay = OVERLAY.elem;
-
-		// Add unique attribute so we can grab modal tooltips easily via a SELECTOR, and set z-index
-		tooltip.addClass(MODALCLASS).css('z-index', QTIP.modal_zindex + $(MODALSELECTOR).length);
-
-		// Apply our show/hide/focus modal events
-		qtip._bind(tooltip, ['tooltipshow', 'tooltiphide'], function(event, api, duration) {
-			var oEvent = event.originalEvent;
-
-			// Make sure mouseout doesn't trigger a hide when showing the modal and mousing onto backdrop
-			if(event.target === tooltip[0]) {
-				if(oEvent && event.type === 'tooltiphide' && /mouse(leave|enter)/.test(oEvent.type) && $(oEvent.relatedTarget).closest(OVERLAY.elem[0]).length) {
-					/* eslint-disable no-empty */
-					try { event.preventDefault(); }
-					catch(e) {}
-					/* eslint-enable no-empty */
-				}
-				else if(!oEvent || oEvent && oEvent.type !== 'tooltipsolo') {
-					this.toggle(event, event.type === 'tooltipshow', duration);
-				}
-			}
-		}, this._ns, this);
-
-		// Adjust modal z-index on tooltip focus
-		qtip._bind(tooltip, 'tooltipfocus', function(event, api) {
-			// If focus was cancelled before it reached us, don't do anything
-			if(event.isDefaultPrevented() || event.target !== tooltip[0]) { return; }
-
-			var qtips = $(MODALSELECTOR),
-
-			// Keep the modal's lower than other, regular qtips
-			newIndex = QTIP.modal_zindex + qtips.length,
-			curIndex = parseInt(tooltip[0].style.zIndex, 10);
-
-			// Set overlay z-index
-			OVERLAY.elem[0].style.zIndex = newIndex - 1;
-
-			// Reduce modal z-index's and keep them properly ordered
-			qtips.each(function() {
-				if(this.style.zIndex > curIndex) {
-					this.style.zIndex -= 1;
-				}
-			});
-
-			// Fire blur event for focused tooltip
-			qtips.filter('.' + CLASS_FOCUS).qtip('blur', event.originalEvent);
-
-			// Set the new z-index
-			tooltip.addClass(CLASS_FOCUS)[0].style.zIndex = newIndex;
-
-			// Set current
-			OVERLAY.update(api);
-
-			// Prevent default handling
-			/* eslint-disable no-empty */
-			try { event.preventDefault(); }
-			catch(e) {}
-			/* eslint-enable no-empty */
-		}, this._ns, this);
-
-		// Focus any other visible modals when this one hides
-		qtip._bind(tooltip, 'tooltiphide', function(event) {
-			if(event.target === tooltip[0]) {
-				$(MODALSELECTOR).filter(':visible').not(tooltip).last().qtip('focus', event);
-			}
-		}, this._ns, this);
-	},
-
-	toggle: function(event, state, duration) {
-		// Make sure default event hasn't been prevented
-		if(event && event.isDefaultPrevented()) { return this; }
-
-		// Toggle it
-		OVERLAY.toggle(this.qtip, !!state, duration);
-	},
-
-	destroy: function() {
-		// Remove modal class
-		this.qtip.tooltip.removeClass(MODALCLASS);
-
-		// Remove bound events
-		this.qtip._unbind(this.qtip.tooltip, this._ns);
-
-		// Delete element reference
-		OVERLAY.toggle(this.qtip, FALSE);
-		delete this.qtip.elements.overlay;
-	}
-});
-
-
-MODAL = PLUGINS.modal = function(api) {
-	return new Modal(api, api.options.show.modal);
-};
-
-// Setup sanitiztion rules
-MODAL.sanitize = function(opts) {
-	if(opts.show) {
-		if(typeof opts.show.modal !== 'object') { opts.show.modal = { on: !!opts.show.modal }; }
-		else if(typeof opts.show.modal.on === 'undefined') { opts.show.modal.on = TRUE; }
-	}
-};
-
-// Base z-index for all modal tooltips (use qTip core z-index as a base)
-/* eslint-disable camelcase */
-QTIP.modal_zindex = QTIP.zindex - 200;
-/* eslint-enable camelcase */
-
-// Plugin needs to be initialized on render
-MODAL.initialize = 'render';
-
-// Setup option set checks
-CHECKS.modal = {
-	'^show.modal.(on|blur)$': function() {
-		// Initialise
-		this.destroy();
-		this.init();
-
-		// Show the modal if not visible already and tooltip is visible
-		this.qtip.elems.overlay.toggle(
-			this.qtip.tooltip[0].offsetWidth > 0
-		);
-	}
-};
-
-// Extend original api defaults
-$.extend(TRUE, QTIP.defaults, {
-	show: {
-		modal: {
-			on: FALSE,
-			effect: TRUE,
-			blur: TRUE,
-			stealfocus: TRUE,
-			escape: TRUE
-		}
-	}
-});
-;PLUGINS.viewport = function(api, position, posOptions, targetWidth, targetHeight, elemWidth, elemHeight)
-{
-	var target = posOptions.target,
-		tooltip = api.elements.tooltip,
-		my = posOptions.my,
-		at = posOptions.at,
-		adjust = posOptions.adjust,
-		method = adjust.method.split(' '),
-		methodX = method[0],
-		methodY = method[1] || method[0],
-		viewport = posOptions.viewport,
-		container = posOptions.container,
-		adjusted = { left: 0, top: 0 },
-		fixed, newMy, containerOffset, containerStatic,
-		viewportWidth, viewportHeight, viewportScroll, viewportOffset;
-
-	// If viewport is not a jQuery element, or it's the window/document, or no adjustment method is used... return
-	if(!viewport.jquery || target[0] === window || target[0] === document.body || adjust.method === 'none') {
-		return adjusted;
-	}
-
-	// Cach container details
-	containerOffset = container.offset() || adjusted;
-	containerStatic = container.css('position') === 'static';
-
-	// Cache our viewport details
-	fixed = tooltip.css('position') === 'fixed';
-	viewportWidth = viewport[0] === window ? viewport.width() : viewport.outerWidth(FALSE);
-	viewportHeight = viewport[0] === window ? viewport.height() : viewport.outerHeight(FALSE);
-	viewportScroll = { left: fixed ? 0 : viewport.scrollLeft(), top: fixed ? 0 : viewport.scrollTop() };
-	viewportOffset = viewport.offset() || adjusted;
-
-	// Generic calculation method
-	function calculate(side, otherSide, type, adjustment, side1, side2, lengthName, targetLength, elemLength) {
-		var initialPos = position[side1],
-			mySide = my[side],
-			atSide = at[side],
-			isShift = type === SHIFT,
-			myLength = mySide === side1 ? elemLength : mySide === side2 ? -elemLength : -elemLength / 2,
-			atLength = atSide === side1 ? targetLength : atSide === side2 ? -targetLength : -targetLength / 2,
-			sideOffset = viewportScroll[side1] + viewportOffset[side1] - (containerStatic ? 0 : containerOffset[side1]),
-			overflow1 = sideOffset - initialPos,
-			overflow2 = initialPos + elemLength - (lengthName === WIDTH ? viewportWidth : viewportHeight) - sideOffset,
-			offset = myLength - (my.precedance === side || mySide === my[otherSide] ? atLength : 0) - (atSide === CENTER ? targetLength / 2 : 0);
-
-		// shift
-		if(isShift) {
-			offset = (mySide === side1 ? 1 : -1) * myLength;
-
-			// Adjust position but keep it within viewport dimensions
-			position[side1] += overflow1 > 0 ? overflow1 : overflow2 > 0 ? -overflow2 : 0;
-			position[side1] = Math.max(
-				-containerOffset[side1] + viewportOffset[side1],
-				initialPos - offset,
-				Math.min(
-					Math.max(
-						-containerOffset[side1] + viewportOffset[side1] + (lengthName === WIDTH ? viewportWidth : viewportHeight),
-						initialPos + offset
-					),
-					position[side1],
-
-					// Make sure we don't adjust complete off the element when using 'center'
-					mySide === 'center' ? initialPos - myLength : 1E9
-				)
-			);
-
-		}
-
-		// flip/flipinvert
-		else {
-			// Update adjustment amount depending on if using flipinvert or flip
-			adjustment *= type === FLIPINVERT ? 2 : 0;
-
-			// Check for overflow on the left/top
-			if(overflow1 > 0 && (mySide !== side1 || overflow2 > 0)) {
-				position[side1] -= offset + adjustment;
-				newMy.invert(side, side1);
-			}
-
-			// Check for overflow on the bottom/right
-			else if(overflow2 > 0 && (mySide !== side2 || overflow1 > 0)  ) {
-				position[side1] -= (mySide === CENTER ? -offset : offset) + adjustment;
-				newMy.invert(side, side2);
-			}
-
-			// Make sure we haven't made things worse with the adjustment and reset if so
-			if(position[side1] < viewportScroll[side1] && -position[side1] > overflow2) {
-				position[side1] = initialPos; newMy = my.clone();
-			}
-		}
-
-		return position[side1] - initialPos;
-	}
-
-	// Set newMy if using flip or flipinvert methods
-	if(methodX !== 'shift' || methodY !== 'shift') { newMy = my.clone(); }
-
-	// Adjust position based onviewport and adjustment options
-	adjusted = {
-		left: methodX !== 'none' ? calculate( X, Y, methodX, adjust.x, LEFT, RIGHT, WIDTH, targetWidth, elemWidth ) : 0,
-		top: methodY !== 'none' ? calculate( Y, X, methodY, adjust.y, TOP, BOTTOM, HEIGHT, targetHeight, elemHeight ) : 0,
-		my: newMy
-	};
-
-	return adjusted;
-};
-;PLUGINS.polys = {
-	// POLY area coordinate calculator
-	//	Special thanks to Ed Cradock for helping out with this.
-	//	Uses a binary search algorithm to find suitable coordinates.
-	polygon: function(baseCoords, corner) {
-		var result = {
-			width: 0, height: 0,
-			position: {
-				top: 1e10, right: 0,
-				bottom: 0, left: 1e10
-			},
-			adjustable: FALSE
-		},
-		i = 0, next,
-		coords = [],
-		compareX = 1, compareY = 1,
-		realX = 0, realY = 0,
-		newWidth, newHeight;
-
-		// First pass, sanitize coords and determine outer edges
-		i = baseCoords.length; 
-		while(i--) {
-			next = [ parseInt(baseCoords[--i], 10), parseInt(baseCoords[i+1], 10) ];
-
-			if(next[0] > result.position.right){ result.position.right = next[0]; }
-			if(next[0] < result.position.left){ result.position.left = next[0]; }
-			if(next[1] > result.position.bottom){ result.position.bottom = next[1]; }
-			if(next[1] < result.position.top){ result.position.top = next[1]; }
-
-			coords.push(next);
-		}
-
-		// Calculate height and width from outer edges
-		newWidth = result.width = Math.abs(result.position.right - result.position.left);
-		newHeight = result.height = Math.abs(result.position.bottom - result.position.top);
-
-		// If it's the center corner...
-		if(corner.abbrev() === 'c') {
-			result.position = {
-				left: result.position.left + result.width / 2,
-				top: result.position.top + result.height / 2
-			};
-		}
-		else {
-			// Second pass, use a binary search algorithm to locate most suitable coordinate
-			while(newWidth > 0 && newHeight > 0 && compareX > 0 && compareY > 0)
-			{
-				newWidth = Math.floor(newWidth / 2);
-				newHeight = Math.floor(newHeight / 2);
-
-				if(corner.x === LEFT){ compareX = newWidth; }
-				else if(corner.x === RIGHT){ compareX = result.width - newWidth; }
-				else{ compareX += Math.floor(newWidth / 2); }
-
-				if(corner.y === TOP){ compareY = newHeight; }
-				else if(corner.y === BOTTOM){ compareY = result.height - newHeight; }
-				else{ compareY += Math.floor(newHeight / 2); }
-
-				i = coords.length;
-				while(i--)
-				{
-					if(coords.length < 2){ break; }
-
-					realX = coords[i][0] - result.position.left;
-					realY = coords[i][1] - result.position.top;
-
-					if(
-						corner.x === LEFT && realX >= compareX ||
-						corner.x === RIGHT && realX <= compareX ||
-						corner.x === CENTER && (realX < compareX || realX > result.width - compareX) ||
-						corner.y === TOP && realY >= compareY ||
-						corner.y === BOTTOM && realY <= compareY ||
-						corner.y === CENTER && (realY < compareY || realY > result.height - compareY)) {
-						coords.splice(i, 1);
-					}
-				}
-			}
-			result.position = { left: coords[0][0], top: coords[0][1] };
-		}
-
-		return result;
-	},
-
-	rect: function(ax, ay, bx, by) {
-		return {
-			width: Math.abs(bx - ax),
-			height: Math.abs(by - ay),
-			position: {
-				left: Math.min(ax, bx),
-				top: Math.min(ay, by)
-			}
-		};
-	},
-
-	_angles: {
-		tc: 3 / 2, tr: 7 / 4, tl: 5 / 4,
-		bc: 1 / 2, br: 1 / 4, bl: 3 / 4,
-		rc: 2, lc: 1, c: 0
-	},
-	ellipse: function(cx, cy, rx, ry, corner) {
-		var c = PLUGINS.polys._angles[ corner.abbrev() ],
-			rxc = c === 0 ? 0 : rx * Math.cos( c * Math.PI ),
-			rys = ry * Math.sin( c * Math.PI );
-
-		return {
-			width: rx * 2 - Math.abs(rxc),
-			height: ry * 2 - Math.abs(rys),
-			position: {
-				left: cx + rxc,
-				top: cy + rys
-			},
-			adjustable: FALSE
-		};
-	},
-	circle: function(cx, cy, r, corner) {
-		return PLUGINS.polys.ellipse(cx, cy, r, r, corner);
-	}
-};
-;PLUGINS.svg = function(api, svg, corner)
-{
-	var elem = svg[0],
-		root = $(elem.ownerSVGElement),
-		ownerDocument = elem.ownerDocument,
-		strokeWidth2 = (parseInt(svg.css('stroke-width'), 10) || 0) / 2,
-		frameOffset, mtx, transformed,
-		len, next, i, points,
-		result, position;
-
-	// Ascend the parentNode chain until we find an element with getBBox()
-	while(!elem.getBBox) { elem = elem.parentNode; }
-	if(!elem.getBBox || !elem.parentNode) { return FALSE; }
-
-	// Determine which shape calculation to use
-	switch(elem.nodeName) {
-		case 'ellipse':
-		case 'circle':
-			result = PLUGINS.polys.ellipse(
-				elem.cx.baseVal.value,
-				elem.cy.baseVal.value,
-				(elem.rx || elem.r).baseVal.value + strokeWidth2,
-				(elem.ry || elem.r).baseVal.value + strokeWidth2,
-				corner
-			);
-		break;
-
-		case 'line':
-		case 'polygon':
-		case 'polyline':
-			// Determine points object (line has none, so mimic using array)
-			points = elem.points || [
-				{ x: elem.x1.baseVal.value, y: elem.y1.baseVal.value },
-				{ x: elem.x2.baseVal.value, y: elem.y2.baseVal.value }
-			];
-
-			for(result = [], i = -1, len = points.numberOfItems || points.length; ++i < len;) {
-				next = points.getItem ? points.getItem(i) : points[i];
-				result.push.apply(result, [next.x, next.y]);
-			}
-
-			result = PLUGINS.polys.polygon(result, corner);
-		break;
-
-		// Unknown shape or rectangle? Use bounding box
-		default:
-			result = elem.getBBox();
-			result = {
-				width: result.width,
-				height: result.height,
-				position: {
-					left: result.x,
-					top: result.y
-				}
-			};
-		break;
-	}
-
-	// Shortcut assignments
-	position = result.position;
-	root = root[0];
-
-	// Convert position into a pixel value
-	if(root.createSVGPoint) {
-		mtx = elem.getScreenCTM();
-		points = root.createSVGPoint();
-
-		points.x = position.left;
-		points.y = position.top;
-		transformed = points.matrixTransform( mtx );
-		position.left = transformed.x;
-		position.top = transformed.y;
-	}
-
-	// Check the element is not in a child document, and if so, adjust for frame elements offset
-	if(ownerDocument !== document && api.position.target !== 'mouse') {
-		frameOffset = $((ownerDocument.defaultView || ownerDocument.parentWindow).frameElement).offset();
-		if(frameOffset) {
-			position.left += frameOffset.left;
-			position.top += frameOffset.top;
-		}
-	}
-
-	// Adjust by scroll offset of owner document
-	ownerDocument = $(ownerDocument);
-	position.left += ownerDocument.scrollLeft();
-	position.top += ownerDocument.scrollTop();
-
-	return result;
-};
-;PLUGINS.imagemap = function(api, area, corner)
-{
-	if(!area.jquery) { area = $(area); }
-
-	var shape = (area.attr('shape') || 'rect').toLowerCase().replace('poly', 'polygon'),
-		image = $('img[usemap="#'+area.parent('map').attr('name')+'"]'),
-		coordsString = $.trim(area.attr('coords')),
-		coordsArray = coordsString.replace(/,$/, '').split(','),
-		imageOffset, coords, i, result, len;
-
-	// If we can't find the image using the map...
-	if(!image.length) { return FALSE; }
-
-	// Pass coordinates string if polygon
-	if(shape === 'polygon') {
-		result = PLUGINS.polys.polygon(coordsArray, corner);
-	}
-
-	// Otherwise parse the coordinates and pass them as arguments
-	else if(PLUGINS.polys[shape]) {
-		for(i = -1, len = coordsArray.length, coords = []; ++i < len;) {
-			coords.push( parseInt(coordsArray[i], 10) );
-		}
-
-		result = PLUGINS.polys[shape].apply(
-			this, coords.concat(corner)
-		);
-	}
-
-	// If no shapre calculation method was found, return false
-	else { return FALSE; }
-
-	// Make sure we account for padding and borders on the image
-	imageOffset = image.offset();
-	imageOffset.left += Math.ceil((image.outerWidth(FALSE) - image.width()) / 2);
-	imageOffset.top += Math.ceil((image.outerHeight(FALSE) - image.height()) / 2);
-
-	// Add image position to offset coordinates
-	result.position.left += imageOffset.left;
-	result.position.top += imageOffset.top;
-
-	return result;
-};
-;var IE6,
-
-/*
- * BGIFrame adaption (http://plugins.jquery.com/project/bgiframe)
- * Special thanks to Brandon Aaron
- */
-BGIFRAME = '<iframe class="qtip-bgiframe" frameborder="0" tabindex="-1" src="javascript:\'\';" ' +
-	' style="display:block; position:absolute; z-index:-1; filter:alpha(opacity=0); ' +
-		'-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";"></iframe>';
-
-function Ie6(api) {
-	this._ns = 'ie6';
-
-	this.qtip = api;
-	this.init(api);
-}
-
-$.extend(Ie6.prototype, {
-	_scroll : function() {
-		var overlay = this.qtip.elements.overlay;
-		overlay && (overlay[0].style.top = $(window).scrollTop() + 'px');
-	},
-
-	init: function(qtip) {
-		var tooltip = qtip.tooltip;
-
-		// Create the BGIFrame element if needed
-		if($('select, object').length < 1) {
-			this.bgiframe = qtip.elements.bgiframe = $(BGIFRAME).appendTo(tooltip);
-
-			// Update BGIFrame on tooltip move
-			qtip._bind(tooltip, 'tooltipmove', this.adjustBGIFrame, this._ns, this);
-		}
-
-		// redraw() container for width/height calculations
-		this.redrawContainer = $('<div/>', { id: NAMESPACE+'-rcontainer' })
-			.appendTo(document.body);
-
-		// Fixup modal plugin if present too
-		if( qtip.elements.overlay && qtip.elements.overlay.addClass('qtipmodal-ie6fix') ) {
-			qtip._bind(window, ['scroll', 'resize'], this._scroll, this._ns, this);
-			qtip._bind(tooltip, ['tooltipshow'], this._scroll, this._ns, this);
-		}
-
-		// Set dimensions
-		this.redraw();
-	},
-
-	adjustBGIFrame: function() {
-		var tooltip = this.qtip.tooltip,
-			dimensions = {
-				height: tooltip.outerHeight(FALSE),
-				width: tooltip.outerWidth(FALSE)
-			},
-			plugin = this.qtip.plugins.tip,
-			tip = this.qtip.elements.tip,
-			tipAdjust, offset;
-
-		// Adjust border offset
-		offset = parseInt(tooltip.css('borderLeftWidth'), 10) || 0;
-		offset = { left: -offset, top: -offset };
-
-		// Adjust for tips plugin
-		if(plugin && tip) {
-			tipAdjust = plugin.corner.precedance === 'x' ? [WIDTH, LEFT] : [HEIGHT, TOP];
-			offset[ tipAdjust[1] ] -= tip[ tipAdjust[0] ]();
-		}
-
-		// Update bgiframe
-		this.bgiframe.css(offset).css(dimensions);
-	},
-
-	// Max/min width simulator function
-	redraw: function() {
-		if(this.qtip.rendered < 1 || this.drawing) { return this; }
-
-		var tooltip = this.qtip.tooltip,
-			style = this.qtip.options.style,
-			container = this.qtip.options.position.container,
-			perc, width, max, min;
-
-		// Set drawing flag
-		this.qtip.drawing = 1;
-
-		// If tooltip has a set height/width, just set it... like a boss!
-		if(style.height) { tooltip.css(HEIGHT, style.height); }
-		if(style.width) { tooltip.css(WIDTH, style.width); }
-
-		// Simulate max/min width if not set width present...
-		else {
-			// Reset width and add fluid class
-			tooltip.css(WIDTH, '').appendTo(this.redrawContainer);
-
-			// Grab our tooltip width (add 1 if odd so we don't get wrapping problems.. huzzah!)
-			width = tooltip.width();
-			if(width % 2 < 1) { width += 1; }
-
-			// Grab our max/min properties
-			max = tooltip.css('maxWidth') || '';
-			min = tooltip.css('minWidth') || '';
-
-			// Parse into proper pixel values
-			perc = (max + min).indexOf('%') > -1 ? container.width() / 100 : 0;
-			max = (max.indexOf('%') > -1 ? perc : 1 * parseInt(max, 10)) || width;
-			min = (min.indexOf('%') > -1 ? perc : 1 * parseInt(min, 10)) || 0;
-
-			// Determine new dimension size based on max/min/current values
-			width = max + min ? Math.min(Math.max(width, min), max) : width;
-
-			// Set the newly calculated width and remvoe fluid class
-			tooltip.css(WIDTH, Math.round(width)).appendTo(container);
-		}
-
-		// Set drawing flag
-		this.drawing = 0;
-
-		return this;
-	},
-
-	destroy: function() {
-		// Remove iframe
-		this.bgiframe && this.bgiframe.remove();
-
-		// Remove bound events
-		this.qtip._unbind([window, this.qtip.tooltip], this._ns);
-	}
-});
-
-IE6 = PLUGINS.ie6 = function(api) {
-	// Proceed only if the browser is IE6
-	return BROWSER.ie === 6 ? new Ie6(api) : FALSE;
-};
-
-IE6.initialize = 'render';
-
-CHECKS.ie6 = {
-	'^content|style$': function() {
-		this.redraw();
-	}
-};
-;}));
-}( window, document ));
-
-
-/***/ }),
-
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -54793,7 +60631,11 @@ var render = function() {
                     i > 0 ? _c("span", [_vm._v(", ")]) : _vm._e(),
                     !_vm.utils.URLUtils.isURL(l)
                       ? _c("a", { staticClass: "locator" }, [
-                          _vm._v("\n            " + _vm._s(l) + "\n          ")
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.displayLocator(l)) +
+                              "\n          "
+                          )
                         ])
                       : _vm._e(),
                     _vm.utils.URLUtils.isURL(l)
@@ -54801,11 +60643,13 @@ var render = function() {
                           "a",
                           {
                             staticClass: "locator",
-                            attrs: { href: l, target: "_blank" }
+                            attrs: { href: l, title: l, target: "_blank" }
                           },
                           [
                             _vm._v(
-                              "\n            " + _vm._s(l) + "\n          "
+                              "\n             " +
+                                _vm._s(_vm.displayLocator(l)) +
+                                "\n          "
                             )
                           ]
                         )
@@ -55162,10 +61006,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "TermsRelationshipNetwork" }, [
-    _vm._v("\n  " + _vm._s(_vm.localConfig.graphTerm) + "\n  "),
-    _c("div", { ref: "cy", attrs: { id: "cy" } })
-  ])
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.localConfig.termFocus,
+          expression: "localConfig.termFocus"
+        }
+      ],
+      staticClass: "TermsRelationshipNetwork"
+    },
+    [
+      _c("div", { staticClass: "ui message" }, [
+        _c("div", { staticClass: "header-row" }, [
+          _c("div", { staticClass: "header ellipsis" }, [
+            _vm._v(
+              "\n        " + _vm._s(_vm.localConfig.termFocus) + "\n      "
+            )
+          ]),
+          _vm._v(" "),
+          _vm.graphData.locators
+            ? _c(
+                "div",
+                { staticClass: "locators" },
+                [
+                  _vm._l(_vm.graphData.locators, function(loc) {
+                    return [
+                      _vm.utils.URLUtils.isURL(loc)
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "ui mini button",
+                              attrs: {
+                                type: "button",
+                                href: loc,
+                                title: loc,
+                                target: "_blank"
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.displayLocator(loc)))]
+                          )
+                        : _c(
+                            "a",
+                            {
+                              staticClass: "ui mini disabled button",
+                              attrs: { type: "button" }
+                            },
+                            [_vm._v(_vm._s(_vm.displayLocator(loc)))]
+                          )
+                    ]
+                  })
+                ],
+                2
+              )
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm.graphData.sn
+          ? _c("p", { staticClass: "sn" }, [_vm._v(_vm._s(_vm.graphData.sn))])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { ref: "cy", attrs: { id: "cy" } })
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55205,20 +61112,6 @@ var render = function() {
           }
         },
         [_vm._v(_vm._s(_vm.$t("DATA")))]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "item",
-          class: { active: _vm.localConfig.view === "configuration" },
-          on: {
-            click: function($event) {
-              _vm.localConfig.view = "configuration"
-            }
-          }
-        },
-        [_vm._v(_vm._s(_vm.$t("CONFIG")))]
       ),
       _vm._v(" "),
       _c(
@@ -68387,6 +74280,9 @@ let app = {
     graphData () {
       return this.getGraphData(this.list)
     },
+    complexest () {
+      return this.getComplexestTerm(this.list)
+    },
     searchMatched () {
       if (this.localConfig.searchIndex === '') {
         this.localConfig.searchIndexCurrent = -1
@@ -68627,6 +74523,9 @@ let app = {
     graphData () {
       return this.getGraphData(this.list)
     },
+    complexest () {
+      return this.getComplexestTerm(this.list)
+    },
     searchMatched () {
       if (this.localConfig.searchThesaurus === '') {
         this.localConfig.searchThesaurusCurrent = -1
@@ -68813,6 +74712,41 @@ module.exports = function (List) {
       }
     }
   }
+
+  let locatorSizeLimit = 8
+  List.methods.displayLocator = function (loc) {
+    if (loc.length < locatorSizeLimit) {
+      return loc
+    }
+
+    let half = Math.ceil(locatorSizeLimit / 2) - 1
+    return loc.slice(0, half) + '...' + loc.slice(half * -1)
+  }
+
+  List.methods.getComplexestTerm = function (list) {
+    let maxScore = 0
+    let complexest
+
+    for (let i = 0; i < list.length; i++) {
+      
+      let score = 0
+      let types = Object.keys(list[i].crossReference)
+      score = score + (types.length * types.length)
+
+      types.forEach(type => {
+        score = score + list[i].crossReference[type].length
+      })
+
+      if (i === 0 || 
+          score > maxScore) {
+        maxScore = score
+        complexest = list[i]
+      }
+    }
+
+    return complexest
+  }
+  
 }
 
 /***/ }),
@@ -69055,10 +74989,24 @@ module.exports = function (List) {
     // })
 
     let ele = this.$refs.item[pos]
-    let offsetTop = (ele.offsetTop + ele.offsetHeight / 2)
+    if (ele === undefined) {
+      return false
+    }
+
+    let eleHalf = ele.offsetHeight / 2
+    let containerHalf = (this.$refs.container.offsetHeight / 2)
+
+    if (eleHalf > containerHalf) {
+      eleHalf = containerHalf - 30
+    }
+    let offsetTop = (ele.offsetTop + eleHalf)
 
     // let scrollTop = this.$refs.container.scrollTop
-    offsetTop = offsetTop - (this.$refs.container.offsetHeight / 2)
+    
+
+    offsetTop = offsetTop - containerHalf
+
+
     // console.log(offsetTop)
     this.$refs.container.scrollTo({top: offsetTop, behavior: "smooth"})
   }
@@ -69745,25 +75693,39 @@ module.exports = function (app) {
 
 module.exports = function (app) {
 
-  app.methods.setDefaultGraphTerm = function () {
-    if (this.localConfig.graphTerm) {
+  app.methods.setDefaultTermFocus = function () {
+    if (this.localConfig.termFocus) {
       return false
     }
 
     // await this.utils.AsyncUtils.sleep(100)
 
     if (this.$parent.$refs.ListThesaurus.list.length > 0) {
-      this.localConfig.graphTerm = this.$parent.$refs.ListThesaurus.list[0].term
+      this.localConfig.termFocus = this.$parent.$refs.ListThesaurus.complexest.term
     }
     else if (this.$parent.$refs.ListIndex.list.length > 0) {
-      this.localConfig.graphTerm = this.$parent.$refs.ListIndex.list[0].term
+      this.localConfig.termFocus = this.$parent.$refs.ListIndex.complexest.term
     }
   }
 
   app.methods.scrollToTermFocus = function () {
-    console.log('go')
+    // console.log(this.config.inited, this.localConfig.view)
+    if (this.config.inited === false || this.localConfig.view !== 'browse') {
+      return false
+    }
+    // console.log('go')
     this.$parent.$refs.ListIndex.scrollToTermFocus()
     this.$parent.$refs.ListThesaurus.scrollToTermFocus()
+  }
+
+  let locatorSizeLimit = 8
+  app.methods.displayLocator = function (loc) {
+    if (loc.length < locatorSizeLimit) {
+      return loc
+    }
+
+    let half = Math.ceil(locatorSizeLimit / 2) - 1
+    return loc.slice(0, half) + '...' + loc.slice(half * -1)
   }
 }
 
@@ -69784,9 +75746,15 @@ const cytoscape = __webpack_require__(/*! cytoscape */ "./node_modules/cytoscape
 const layoutUtilities = __webpack_require__(/*! cytoscape-layout-utilities */ "./node_modules/cytoscape-layout-utilities/cytoscape-layout-utilities.js");
 cytoscape.use( layoutUtilities ); // register extension
 
-// https://www.npmjs.com/package/cytoscape-qtip
-const cyqtip = __webpack_require__(/*! cytoscape-qtip */ "./node_modules/cytoscape-qtip/cytoscape-qtip.js");
-cyqtip( cytoscape );
+// https://www.npmjs.com/package/cytoscape-fcose
+const fcose = __webpack_require__(/*! cytoscape-fcose */ "./node_modules/cytoscape-fcose/cytoscape-fcose.js");
+cytoscape.use( fcose ); // register extension
+
+// https://www.npmjs.com/package/cytoscape-popper
+// const popper = require('cytoscape-popper');
+// cyqtip( popper );
+
+const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")
 
 // console.log(cyqtip)
 // console.log(defaultStylesheet)
@@ -69825,10 +75793,15 @@ module.exports = function (app) {
     //   constraints.fixedNodeConstraint = JSON.parse(JSON.stringify(fixedNodeConstraint));
     // });
     initialLayout.run();
+
   }
 
   // cyqtip(cytoscape)
   app.methods.initCytoscapeVis = function () {
+    if (this.config.inited === false || !this.graphData) {
+      return false
+    }
+
     let vue = this
     cy = window.cy = cytoscape({
       container: this.$refs.cy,
@@ -69859,13 +75832,13 @@ module.exports = function (app) {
 
     cy.on('click', 'node', function (e) {
       // console.log(this.data('classes'))
-      if (!this.data('classes') || this.data('classes').indexOf('term') === -1) {
+      if (!this.classes() || this.classes().indexOf('term') === -1) {
         return false
       }
 
-      if (this.data('classes').indexOf('root') === -1) {
+      if (this.classes().indexOf('root') === -1) {
         // window.alert(this.data('id'))
-        vue.localConfig.termFocus = this.data('id')
+        vue.localConfig.termFocus = vue.nodeJoinLine(this.data('id'))
       }
       else {
         vue.scrollToTermFocus()
@@ -69880,17 +75853,19 @@ module.exports = function (app) {
       // console.log('aaa')
       $('body').css('cursor', 'pointer');
 
-      var node = e.cyTarget;
-      node.qtip({
-           content: 'hello',
-           show: {
-              event: e.type,
-              ready: true
-           },
-           hide: {
-              event: 'mouseout unfocus'
-           }
-      }, e);
+      // var node = e.cyTarget;
+      // node.qtip({
+      
+      // this.qtip({
+      //      content: 'hello',
+      //      show: {
+      //         event: e.type,
+      //         ready: true
+      //      },
+      //      hide: {
+      //         event: 'mouseout unfocus'
+      //      }
+      // }, e);
     });
 
     cy.on('mouseout', 'node', function (e) {
@@ -69964,8 +75939,15 @@ module.exports = function (app) {
     }
 
     let index = this.$parent.$refs.ListIndex.graphData
+    if (!index) {
+      return false
+    }
+
     // console.log(index)
     let thesaurus = this.$parent.$refs.ListThesaurus.graphData
+    if (!thesaurus) {
+      return false
+    }
 
     let data = {
       ...thesaurus,
@@ -69983,6 +75965,10 @@ module.exports = function (app) {
 
   app.methods.nodeBreakLine = function (term) {
     return term.split(' ').join('\n')
+  }
+
+  app.methods.nodeJoinLine = function (term) {
+    return term.split('\n').join(' ')
   }
 }
 
@@ -70006,11 +75992,11 @@ module.exports = function (app) {
   }
 
   app.watch['localConfig.dataIndex'] = function () {
-    this.setDefaultGraphTerm()
+    this.setDefaultTermFocus()
   }
 
   app.watch['localConfig.dataThesaurus'] = function () {
-    this.setDefaultGraphTerm()
+    this.setDefaultTermFocus()
   }
 
   app.watch['localConfig.termFocus'] = function () {
@@ -70023,8 +76009,22 @@ module.exports = function (app) {
     }
 
     setTimeout(() => {
+      this.scrollToTermFocus()
       this.setupGraphData()
+      
     }, 100)
+  }
+
+  app.watch['localConfig.view'] = function () {
+    if (this.localConfig.view !== 'browse') {
+      return false
+    }
+
+    this.scrollToTermFocus()
+    this.setupGraphData()
+    // setTimeout(() => {
+    //   this.initCytoscapeVis()
+    // }, 100)
   }
 }
 
@@ -70549,6 +76549,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")
+
 let app = {
   props: ['config', 'localConfig', 'utils'],
   data () {    

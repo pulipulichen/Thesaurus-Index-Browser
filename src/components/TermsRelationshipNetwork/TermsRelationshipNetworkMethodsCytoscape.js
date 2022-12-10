@@ -6,9 +6,15 @@ const cytoscape = require('cytoscape');
 const layoutUtilities = require('cytoscape-layout-utilities');
 cytoscape.use( layoutUtilities ); // register extension
 
-// https://www.npmjs.com/package/cytoscape-qtip
-const cyqtip = require('cytoscape-qtip');
-cyqtip( cytoscape );
+// https://www.npmjs.com/package/cytoscape-fcose
+const fcose = require('cytoscape-fcose');
+cytoscape.use( fcose ); // register extension
+
+// https://www.npmjs.com/package/cytoscape-popper
+// const popper = require('cytoscape-popper');
+// cyqtip( popper );
+
+const $ = require('jquery')
 
 // console.log(cyqtip)
 // console.log(defaultStylesheet)
@@ -47,10 +53,15 @@ module.exports = function (app) {
     //   constraints.fixedNodeConstraint = JSON.parse(JSON.stringify(fixedNodeConstraint));
     // });
     initialLayout.run();
+
   }
 
   // cyqtip(cytoscape)
   app.methods.initCytoscapeVis = function () {
+    if (this.config.inited === false || !this.graphData) {
+      return false
+    }
+
     let vue = this
     cy = window.cy = cytoscape({
       container: this.$refs.cy,
@@ -81,13 +92,13 @@ module.exports = function (app) {
 
     cy.on('click', 'node', function (e) {
       // console.log(this.data('classes'))
-      if (!this.data('classes') || this.data('classes').indexOf('term') === -1) {
+      if (!this.classes() || this.classes().indexOf('term') === -1) {
         return false
       }
 
-      if (this.data('classes').indexOf('root') === -1) {
+      if (this.classes().indexOf('root') === -1) {
         // window.alert(this.data('id'))
-        vue.localConfig.termFocus = this.data('id')
+        vue.localConfig.termFocus = vue.nodeJoinLine(this.data('id'))
       }
       else {
         vue.scrollToTermFocus()
@@ -102,17 +113,19 @@ module.exports = function (app) {
       // console.log('aaa')
       $('body').css('cursor', 'pointer');
 
-      var node = e.cyTarget;
-      node.qtip({
-           content: 'hello',
-           show: {
-              event: e.type,
-              ready: true
-           },
-           hide: {
-              event: 'mouseout unfocus'
-           }
-      }, e);
+      // var node = e.cyTarget;
+      // node.qtip({
+      
+      // this.qtip({
+      //      content: 'hello',
+      //      show: {
+      //         event: e.type,
+      //         ready: true
+      //      },
+      //      hide: {
+      //         event: 'mouseout unfocus'
+      //      }
+      // }, e);
     });
 
     cy.on('mouseout', 'node', function (e) {
@@ -186,8 +199,15 @@ module.exports = function (app) {
     }
 
     let index = this.$parent.$refs.ListIndex.graphData
+    if (!index) {
+      return false
+    }
+
     // console.log(index)
     let thesaurus = this.$parent.$refs.ListThesaurus.graphData
+    if (!thesaurus) {
+      return false
+    }
 
     let data = {
       ...thesaurus,
@@ -205,5 +225,9 @@ module.exports = function (app) {
 
   app.methods.nodeBreakLine = function (term) {
     return term.split(' ').join('\n')
+  }
+
+  app.methods.nodeJoinLine = function (term) {
+    return term.split('\n').join(' ')
   }
 }

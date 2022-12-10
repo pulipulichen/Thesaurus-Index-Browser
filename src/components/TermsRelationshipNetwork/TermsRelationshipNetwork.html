@@ -1,5 +1,30 @@
-<div class="TermsRelationshipNetwork">
-  {{ localConfig.graphTerm }}
+<div class="TermsRelationshipNetwork" v-show="localConfig.termFocus">
+  
+  <div class="ui message">
+    <div class="header-row">
+      <div class="header ellipsis">
+        {{ localConfig.termFocus}}
+      </div>
+      <div class="locators"
+        v-if="graphData.locators">
+        <template v-for="loc in graphData.locators">
+          <a type="button" 
+             v-if="utils.URLUtils.isURL(loc)"
+             class="ui mini button"
+             :href="loc"
+             :title="loc"
+             target="_blank">{{ displayLocator(loc) }}</a>
+          <a type="button" 
+             v-else
+             class="ui mini disabled button">{{ displayLocator(loc) }}</a>
+        </template>
+      </div>
+    </div>
+      
+    <p class="sn" v-if="graphData.sn">{{ graphData.sn }}</p>
+  </div>
+  
+  
   <div id="cy" ref="cy"></div>
 
 </div>

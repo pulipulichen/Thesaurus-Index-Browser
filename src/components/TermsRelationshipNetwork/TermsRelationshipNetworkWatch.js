@@ -9,11 +9,11 @@ module.exports = function (app) {
   }
 
   app.watch['localConfig.dataIndex'] = function () {
-    this.setDefaultGraphTerm()
+    this.setDefaultTermFocus()
   }
 
   app.watch['localConfig.dataThesaurus'] = function () {
-    this.setDefaultGraphTerm()
+    this.setDefaultTermFocus()
   }
 
   app.watch['localConfig.termFocus'] = function () {
@@ -26,7 +26,21 @@ module.exports = function (app) {
     }
 
     setTimeout(() => {
+      this.scrollToTermFocus()
       this.setupGraphData()
+      
     }, 100)
+  }
+
+  app.watch['localConfig.view'] = function () {
+    if (this.localConfig.view !== 'browse') {
+      return false
+    }
+
+    this.scrollToTermFocus()
+    this.setupGraphData()
+    // setTimeout(() => {
+    //   this.initCytoscapeVis()
+    // }, 100)
   }
 }

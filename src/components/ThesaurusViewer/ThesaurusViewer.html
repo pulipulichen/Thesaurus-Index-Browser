@@ -1,0 +1,24 @@
+<div class="ThesaurusViewer ui segment">
+  <div class="ui card" 
+    v-for="item in thesarusList">
+    <div class="term">{{ item.term }}</div>
+    <div class="relationship"
+      v-if="isRelationshipExists(item)">
+      <div class="bt">
+        <div class="bt-term" v-for="t in item.bt">BT {{t}}</div>
+      </div>
+      <div class="nt">
+        <div class="nt-term" v-for="t in item.nt">NT {{t}}</div>
+      </div>
+      <div class="rt">
+        <div class="rt-term" v-for="t in item.rt">RT {{t}}</div>
+      </div>
+      <div class="use">
+        <div class="use-term" v-for="t in item.used">USE {{t}}</div>
+      </div>
+      <div class="uf">
+        <div class="uf-term" v-for="t in item.uf">UF {{t}}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="ListIndex list">
+  
+  <h2 class="ui top attached green inverted segment header">
+    {{ $t('Index') }}
+    <span v-if="list.length > 0">({{ list.length }})</span>
+  </h2>
+  <div class="ui attached segment search">
+    <div class="input">
+      <input type="text" 
+        :placeholder="$t('Search...')" 
+        v-model="localConfig.searchIndex"
+        @keyup.enter.exact.prevent="searchNext('searchIndexCurrent')"
+        @keyup.enter.shift.exact.prevent="searchPrev('searchIndexCurrent')" />
+    </div>
+    <div class="navigation"
+      v-if="localConfig.searchIndex !== ''">
+      <template v-if="searchMatched.length > 1">
+        <span>
+          {{ localConfig.searchIndexCurrent + 1 }}/{{searchMatched.length}} 
+        </span>
+        <i class="arrow alternate circle left icon" @click="searchPrev('searchIndexCurrent')"></i>
+        <i class="arrow alternate circle right icon" @click="searchNext('searchIndexCurrent')"></i>
+      </template>
+      <i v-if="localConfig.searchIndex !== ''" 
+         @click="localConfig.searchIndex = ''"
+        class="x icon icon"></i>
+    </div>
+  </div>
+  <div class="ui attached segment list-container" ref="container">
+    <ol class="ui list" >
+      <li class="term"
+          :id="buildCrossReferenceHref('index', item.term)"
+          v-for="(item, itemIndex) in list"
+          :class="{highlight: shouldBeHighlighted(itemIndex), focus: shouldBeFocus(itemIndex, localConfig.searchIndexCurrent), 'strong-focus': shouldBeStrongFocus(item.term) }"
+          ref="item"
+          @click.self="localConfig.termFocus = item.term">
+        <strong v-html="displayTerm(item.term, localConfig.searchIndex)"
+          @click.self="localConfig.termFocus = item.term"
+          class="term"></strong><span v-if="item.locators && item.locators.length > 0">, </span>
+
+        <template v-for="(l, i) in item.locators">
+          <span v-if="i > 0">, </span><a class="locator" v-if="!utils.URLUtils.isURL(l)">
+            {{ l }}
+          </a><a class="locator" 
+             v-if="utils.URLUtils.isURL(l)"
+             :href="l"
+             target="_blank">
+            {{ l }}
+          </a>
+        </template>
+
+        <div class="cross-reference" 
+          v-for="keyword in crossReferenceKeywords">
+          <div v-for="ref in item.crossReference[keyword]">
+            <a @click="localConfig.termFocus = ref"
+              v-if="terms.indexOf(ref) > -1">
+              <strong>{{ keyword }}</strong>
+              {{ ref }}
+            </a>
+            <a class="disabled" v-else>
+              <strong>{{ keyword }}</strong>
+              {{ ref }}
+            </a>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>

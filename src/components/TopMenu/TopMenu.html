@@ -1,0 +1,25 @@
+<div class="TopMenu">
+  <div class="ui top fixed menu">
+    <div class="item">
+      <img src="./favicon40.png">
+    </div>
+    <a class="item" :class="{'active': (localConfig.view === 'data')}" @click="localConfig.view = 'data'">{{ $t("DATA")
+      }}</a>
+    <a class="item" :class="{'active': (localConfig.view === 'configuration')}"
+      @click="localConfig.view = 'configuration'">{{ $t("CONFIG") }}</a>
+    <a class="item" :class="{'active': (localConfig.view === 'browse')}" @click="localConfig.view = 'browse'">{{
+      $t("BROWSE") }}</a>
+
+    <div class="right menu">
+      <div class="item">
+        <div class="ui transparent icon input">
+          <input type="text" 
+            v-model="localConfig.searchGlobal"
+            :placeholder="$t('Search...')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="padding"></div>
+</div>

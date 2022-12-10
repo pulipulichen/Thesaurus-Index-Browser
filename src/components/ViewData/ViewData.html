@@ -1,0 +1,34 @@
+<div class="ViewData">
+  <div class="ui equal width grid form">
+    <div class="column">
+      <div class="field">
+        <button type="button" 
+          class="ui right floated mini button"
+          @click="resetThesaurusConfirm">
+          {{ $t('DEMO') }}
+        </button>
+        <label for="dataThesaurus">
+          {{ $t('Thesaurus') }}
+        </label>
+        <textarea 
+          id="dataThesaurus"
+          class="data-textarea" v-model="localConfig.dataThesaurus"></textarea>
+      </div>
+    </div>
+    <div class="column">
+      <div class="field">
+        <button type="button" 
+          class="ui right floated mini button"
+          @click="resetIndexConfirm">
+          {{ $t('DEMO') }}
+        </button>
+        <label for="dataIndex">
+          {{ $t('Index') }}
+        </label>
+        <textarea 
+          id="dataIndex"
+          class="data-textarea" v-model="localConfig.dataIndex"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

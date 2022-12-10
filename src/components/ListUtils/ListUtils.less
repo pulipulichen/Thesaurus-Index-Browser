@@ -1,0 +1,112 @@
+.list {
+  height: calc(100vh - 161px);
+  // background-color: red;
+}
+
+.header {
+  user-select: none;
+  cursor: default;
+  height: 40px;
+  font-size: 1.5rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 40px !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  border-width: 0 !important;
+}
+
+.search {
+  display:flex;
+  align-items: center;
+
+  padding: 0 !important;
+
+  .input {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 2rem;
+    font-size: 1.5rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .navigation {
+    // float: right;
+    min-width: fit-content;
+    max-width: fit-content;
+    user-select: none;
+    text-align: right;
+    margin-left: 1rem;4
+    // background-color: yellow;
+
+    i {
+      cursor: pointer;
+
+    }
+  }
+}
+
+.list-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  
+  max-height: calc(100vh - 135px);
+
+  padding-top: 0.5rem;
+  // padding-bottom: 1rem;
+
+  strong.term {
+    cursor: pointer;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .highlight {
+    background-color: #fbfdef;
+
+    &::v-deep .matched {
+      color: red; 
+    }
+  }
+
+  .focus {
+    background-color: yellow;
+  }
+
+  .strong-focus {
+    background-color: yellow;
+    color: red;
+  }
+
+  .cross-reference a {
+    display: block !important;
+    margin-top: 0.3rem;
+    cursor: pointer;
+  }
+
+  a.disabled {
+    color: grey;
+  }
+
+  .sn {
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    text-align: justify;
+  }
+}

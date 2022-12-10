@@ -1,4 +1,34 @@
 <div class="Index">
-ok
-<div id="cy"></div>
+
+  <TopMenu 
+    ref="TopMenu"
+    v-bind:config="config"
+    v-bind:localConfig="localConfig"
+    v-bind:utils="utils">
+  </TopMenu>
+
+  <ViewData 
+    v-show="localConfig.view === 'data'"
+    ref="ViewData"
+    v-bind:config="config"
+    v-bind:localConfig="localConfig"
+    v-bind:utils="utils">
+  </ViewData>
+
+  <ViewConfiguration 
+    v-show="localConfig.view === 'configuration'"
+    ref="ViewConfiguration"
+    v-bind:config="config"
+    v-bind:localConfig="localConfig"
+    v-bind:utils="utils">
+  </ViewConfiguration>
+  
+  <ViewBrowse 
+    v-show="localConfig.view === 'browse'"
+    ref="ViewBrowse"
+    v-bind:config="config"
+    v-bind:localConfig="localConfig"
+    v-bind:utils="utils">
+  </ViewBrowse>
+
 </div>

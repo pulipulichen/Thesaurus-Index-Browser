@@ -1,0 +1,26 @@
+<div class="ViewBrowse ui grid">
+  <div class="sidebar four wide column">
+    <ListThesaurus 
+      ref="ListThesaurus"
+      v-bind:config="config"
+      v-bind:localConfig="localConfig"
+      v-bind:utils="utils">
+    </ListThesaurus>
+  </div>
+  <div class="graph eight wide column">
+    <TermsRelationshipNetwork 
+      ref="TermsRelationshipNetwork"
+      v-bind:config="config"
+      v-bind:localConfig="localConfig"
+      v-bind:utils="utils">
+    </TermsRelationshipNetwork>
+  </div>
+  <div class="sidebar four wide column">
+    <ListIndex 
+      ref="ListIndex"
+      v-bind:config="config"
+      v-bind:localConfig="localConfig"
+      v-bind:utils="utils">
+    </ListIndex>
+  </div>
+</div>

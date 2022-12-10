@@ -1,22 +1,23 @@
 let localConfig = {
   locale: 'zh-TW',
-  displayConfigurationPanel: true,
   
-  data: [],
-  headers: [],
-  classFieldName: 'class',
-  classDataType: 'nominal',
-  classifierModelJSON: null,
-  
-  classifier: 'DecisionTree',
-  
-  filename: null,
-  modelJSON: null,
-  modelEvaluations: [],
-  
-  searchKeyword: '',
-  
-  KNearestNeighborsOptionsK: 3
+  view: 'data',
+
+  dataIndex: ``,
+  dataThesaurus: ``,
+  // currentTerm: ``,
+
+  searchGlobal: ``,
+  searchIndex: ``,
+  searchThesaurus: ``,
+
+  searchIndexCurrent: -1,
+  searchIndexCurrentPos: -1,
+  searchThesaurusCurrent: -1,
+  searchThesaurusCurrentPos: -1,
+
+  termFocus: null,
+  graphTerm: null
 }
 
 export default localConfig

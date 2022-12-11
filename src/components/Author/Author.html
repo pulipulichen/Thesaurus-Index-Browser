@@ -18,17 +18,23 @@
           <i class="github icon"></i>
           {{ $t('GitHub') }}
         </a>
+        <a class="ui basic warning button"
+           :href="config.urlIssue"
+           target="_blank">
+          <i class="bug icon"></i>
+          {{ $t('Issue') }}
+        </a>
         <a class="ui basic button"
            href="https://blog.pulipuli.info/"
            target="_blank">
           <i class="blogger icon"></i>
           {{ $t('Blog') }}
         </a>
-        <a class="ui basic warning button"
-           :href="config.urlIssue"
+        <a class="ui basic button"
+           href="https://blog.pulipuli.info/p/donation.html"
            target="_blank">
-          <i class="bug icon"></i>
-          {{ $t('Issue') }}
+          <i class="money bill alternate outline icon"></i>
+          {{ $t('Donate') }}
         </a>
       </div>
     </div>

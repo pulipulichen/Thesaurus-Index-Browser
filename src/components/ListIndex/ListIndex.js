@@ -102,6 +102,9 @@ let app = {
       this.localConfig.searchIndex = ''
       let pos = this.terms.indexOf(term)
       this.scrollIntoView(pos)
+    },
+    alert (l) {
+      window.alert(l)
     }
   }
 }

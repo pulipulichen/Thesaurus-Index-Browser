@@ -37,7 +37,8 @@ export default function (app) {
       this.setupCrossReference(keyword, nodes, edges, (ingoingKeywords.indexOf(keyword) > -1))
     })
 
-    // console.log(nodes)
+    console.log(nodes)
+    console.log(edges)
 
     return {
       nodes,
@@ -83,10 +84,29 @@ export default function (app) {
     let rel = []
 
     let refRT = this.getRef('RT')
+    if (Array.isArray(refRT)) {
+      refRT = refRT.map(t => this.nodeBreakLine(t))
+    }
+
     let refNT = this.getRef('NT')
+    if (Array.isArray(refNT)) {
+      refNT = refNT.map(t => this.nodeBreakLine(t))
+    }
+
     let refBT = this.getRef('BT')
+    if (Array.isArray(refBT)) {
+      refBT = refBT.map(t => this.nodeBreakLine(t))
+    }
+
     let refUSE = this.getRef('USE')
+    if (Array.isArray(refUSE)) {
+      refUSE = refUSE.map(t => this.nodeBreakLine(t))
+    }
+
     let refUF = this.getRef('UF')
+    if (Array.isArray(refUF)) {
+      refUF = refUF.map(t => this.nodeBreakLine(t))
+    }
 
     if (refRT) {
       rel.push({

@@ -109,7 +109,7 @@ export default function (app) {
 
       if (this.classes().indexOf('root') === -1) {
         // window.alert(this.data('id'))
-        vue.localConfig.termFocus = vue.nodeJoinLine(this.data('id'))
+        vue.localConfig.termFocus = this.data('term')
       }
       else {
         vue.scrollToTermFocus()
@@ -173,7 +173,8 @@ export default function (app) {
         ref.length === 0) {
       return false      
     }
-    return ref.map(r => this.nodeBreakLine(r))
+    // return ref.map(r => this.nodeBreakLine(r))
+    return ref
   }
 
   app.methods.setupCrossReference = function (keyword, nodes, edges, isIngoing = false) {
@@ -191,12 +192,13 @@ export default function (app) {
     }
 
     ref.forEach((term, i) => {
-      nodes.push({ data: { id: term, parent: keyword }, classes: ['term'] })
+      nodes.push({ data: { id: this.nodeBreakLine(term), parent: keyword, sourceTerm: term }, classes: ['term'] })
 
       if (i > 0) {
         // edges.push({ data: { source: term, target: ref[0], classes: ['reference'] } },)
       }
     })
+
   }
 
   app.methods.setupGraphData = function () {
@@ -211,18 +213,24 @@ export default function (app) {
 
     let index = this.$parent.$refs.ListIndex.graphData
     if (!index) {
-      return false
+      console.error('no index')
+      // return false
     }
 
     // console.log(index)
     let thesaurus = this.$parent.$refs.ListThesaurus.graphData
     if (!thesaurus) {
+      console.error('no thesaurus')
       return false
     }
 
     let data = {
-      ...thesaurus,
-      locators: index.locators
+      ...thesaurus
+      // locators: index.locators
+    }
+
+    if (index && index.locators) {
+      data.locators = index.locators
     }
 
     // console.log(data)
@@ -234,8 +242,36 @@ export default function (app) {
     }, 100)
   }
 
+  app.methods.hasChinese = function (text) {
+    return /[\u4e00-\u9fa5]/.test(text)
+  }
+
+  let nodeWidth = 3
   app.methods.nodeBreakLine = function (term) {
-    return term.split(' ').join('\n')
+    let output = []
+    term.split(' ').map(word => {
+      if (this.hasChinese(word) === false) {
+        output.push(word)
+        return false
+      }
+      
+      while (word.length > nodeWidth) {
+        let part = word.slice(0, nodeWidth)
+        word = word.slice(nodeWidth)
+
+        output.push(part.trim())
+      }
+      
+      if (word.length > 0 && word.trim() !== '') {
+        output.push(word.trim())
+      }
+    })
+
+
+    // console.log(output.join('\n'))
+    return output.join('\n')
+
+    // return term.split(' ').join('\n')
   }
 
   app.methods.nodeJoinLine = function (term) {

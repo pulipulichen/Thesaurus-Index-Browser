@@ -39,7 +39,7 @@
           class="term"></strong><span v-if="item.locators && item.locators.length > 0">, </span>
 
         <template v-for="(l, i) in item.locators">
-          <span v-if="i > 0">, </span><a class="locator" v-if="!utils.URLUtils.isURL(l)">
+          <span v-if="i > 0">, </span><a class="locator" v-if="!utils.URLUtils.isURL(l)" :title="l" @click="alert(l)">
             {{ displayLocator(l) }}
           </a><a class="locator" 
              v-if="utils.URLUtils.isURL(l)"

@@ -37,8 +37,8 @@ export default function (app) {
       this.setupCrossReference(keyword, nodes, edges, (ingoingKeywords.indexOf(keyword) > -1))
     })
 
-    console.log(nodes)
-    console.log(edges)
+    // console.log(nodes)
+    // console.log(edges)
 
     return {
       nodes,

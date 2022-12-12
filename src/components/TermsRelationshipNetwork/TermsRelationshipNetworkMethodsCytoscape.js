@@ -192,7 +192,7 @@ export default function (app) {
     }
 
     ref.forEach((term, i) => {
-      nodes.push({ data: { id: this.nodeBreakLine(term), parent: keyword, sourceTerm: term }, classes: ['term'] })
+      nodes.push({ data: { id: this.nodeBreakLine(term), parent: keyword, term }, classes: ['term'] })
 
       if (i > 0) {
         // edges.push({ data: { source: term, target: ref[0], classes: ['reference'] } },)
@@ -221,6 +221,7 @@ export default function (app) {
     let thesaurus = this.$parent.$refs.ListThesaurus.graphData
     if (!thesaurus) {
       console.error('no thesaurus')
+      window.alert(this.$t(`"${this.localConfig.termFocus}" is not found in thesaurus.`))
       return false
     }
 

@@ -1,6 +1,6 @@
 {
-  "name": "PWA Plain TextEditor",
-  "short_name": "PlainText Editor",
+  "name": "Thesaurus Index Browser TIB",
+  "short_name": "TIB",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#E1F7F7",

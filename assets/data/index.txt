@@ -1,43 +1,43 @@
-Alternate Term, nf12Z, M3qgT
+Alternate Term
  see Variant Term
 Associative Relationship, sd3JB
  see also Equivalence Relationship
  see also Hierarchical Relationship
  see also Related Term
-Authority File, M3qgT, http://blog.pulipuli.info
+Authority File, m3qgT, http://blog.pulipuli.info
  see also Synonym Equivalence List
-Broader Term, 7kF2a
+Broader Term, a7kF2a, b3YuiJ
  see also Hierarchical Relationship
  see also Narrower Term
  see also Related Term
-Card Sorting, Svw7A
+Card Sorting, svw7A
  see also Free Listing
  see also Hierarchy
-Child Term, MJejW
+Child Term, mJejW
  see Narrower Term
-Controlled Vocabulary, Qlo2s
+Controlled Vocabulary, qlo2s
  see also Natural Language
-Entry Term, qzpMD
+Entry Term
  see Variant Term
 Equivalence Relationship, tEW2v
  see also Associative Relationship
  see also Hierarchical Relationship
  see also Variant Term
-Exhaustivity, HcNe5
+Exhaustivity, hcNe5
  see also Specificity
 Facet, oZ95t
  see also Facet Analysis
  see also Faceted Classification
-Facet Analysis, N0gTb
+Facet Analysis, n0gTb
  see also Facet
  see also Faceted Classification
 Faceted Classification, 11b8V
-Free Listing, DfnKV
+Free Listing, dfnKV
  see also Card Sorting
  see also User Warrant
-Granularity, Prll0
+Granularity, prll0
  see also Specificity
-Hierarchy, WOdFC
+Hierarchy, wOdFC
  see also Card Sorting
  see also Polyhierarchy
  see also Taxonomy
@@ -46,38 +46,38 @@ Hierarchical Relationship, mVGXD
  see also Broader Term
  see also Equivalence Relationship
  see also Narrower Term
-Literary Warrant, 3XdqE
+Literary Warrant, aXdqE
  see also User Warrant
  see also Vocabulary Term
-Narrower Term, 97sdc
+Narrower Term, a7sdc
  see also Broader Term
  see also Hierarchical Relationship
  see also Related Term
 Natural Language, 9Cd4b
  see also Controlled Vocabulary
  see also User Warrant
-Non-preferred Term, HmH4r
+Non-preferred Term
  see Variant Term
-Parent Term, 3YuiJ
+Parent Term
  see Broader Term
 Polyhierarchy, ouu5Z
  see also Hierarchy
  see also Taxonomy
-Precision, 85SXz
+Precision, a5SXz
  see also Recall
  see also Specificity
-Preferred Term, LIDrJ
+Preferred Term, lIDrJ
  see also Broader Term
  see also Narrower Term
  see also Variant Term
-Recall, Y61rF
+Recall, y61rF
  see also Precision
  see also Variant Term
-Related Term, Bj9m6
+Related Term, bj9m6, rz53G
  see also Associative Relationship
-Scope Note, 7ZE2U
+Scope Note, a7ZE2U
  see also Preferred Term
-“See Also” Term, Rz53G
+“See Also” Term
  see Related Term
 Specificity, RuCLQ
  see also Exhaustivity
@@ -85,21 +85,21 @@ Specificity, RuCLQ
 Synonym Equivalence List, swgpZ
  see also Authority File
  see also Synonym Ring
-Synonym Ring, XeEfH
+Synonym Ring, xeEfH
  see also Equivalence Relationship
  see also Synonym Equivalence List
 Taxonomy, clEjK
  see also Hierarchical Relationship
  see also Hierarchy
  see also Polyhierarchy
-Term, sWfNk
+Term
  see Vocabulary Term
 Term Relationship, s6fH1
  see also Broader Term
  see also Narrower Term
  see also Related Term
  see also Variant Term
-Thesaurus, RBkdi
+Thesaurus, rBkdi
  see also Associative Relationship
  see also Equivalence Relationship
  see also Hierarchical Relationship
@@ -107,7 +107,7 @@ User Warrant, bLutD
  see also Free Listing
  see also Literary Warrant
  see also Vocabulary Term
-Variant Term, c9SPd
+Variant Term, c9SPd, hmH4r, m3qgT, nf12Z, qzpMD
  see also Equivalence Relationship
  see also Preferred Term
-Vocabulary Term, Byh7B
+Vocabulary Term, byh7B, sWfNk

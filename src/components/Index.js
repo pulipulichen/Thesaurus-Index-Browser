@@ -6,6 +6,7 @@ import TopMenu from './TopMenu/TopMenu.vue'
 import ViewBrowse from './ViewBrowse/ViewBrowse.vue'
 import ViewConfiguration from './ViewConfiguration/ViewConfiguration.vue'
 import ViewData from './ViewData/ViewData.vue'
+import ViewSearch from './ViewSearch/ViewSearch.vue'
 import Author from './Author/Author.vue'
 
 let Index = {
@@ -22,6 +23,7 @@ let Index = {
     ViewBrowse,
     ViewConfiguration,
     ViewData,
+    ViewSearch,
     Author
   },
   computed: {

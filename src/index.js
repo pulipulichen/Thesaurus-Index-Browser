@@ -126,7 +126,7 @@ let VueController = {
         console.error(e)
       }
 
-      //console.log(data)
+      console.log(data)
       for (let key in data) {
         this.localConfig[key] = data[key]
       }

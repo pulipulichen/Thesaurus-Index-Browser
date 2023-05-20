@@ -10,15 +10,15 @@ let app = {
       this.$i18n.locale = this.localConfig.locale;
     },
   },
-  computed: {
+  // computed: {
     
-  },
-  mounted() {
+  // },
+  // mounted() {
     
-  },
-  methods: {
+  // },
+  // methods: {
     
-  }
+  // }
 }
 
 export default app

@@ -13,7 +13,7 @@ Broader Term, a7kF2a, b3YuiJ
 Card Sorting, svw7A
  see also Free Listing
  see also Hierarchy
-Child Term, mJejW
+Child Term
  see Narrower Term
 Controlled Vocabulary, qlo2s
  see also Natural Language

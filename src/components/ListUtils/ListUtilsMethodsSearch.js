@@ -180,7 +180,7 @@ module.exports = function (List) {
       }
     }
 
-    console.log(['C', scrollTop, this.termsOffsetTop, matched, matched.length])
+    // console.log(['C', scrollTop, this.termsOffsetTop, matched, matched.length])
     return 0
   }
 }

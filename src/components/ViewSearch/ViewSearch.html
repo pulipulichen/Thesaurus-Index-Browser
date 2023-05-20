@@ -1,0 +1,77 @@
+<div class="ViewSearch ui form">
+  <div class="field">
+    <div class="ui action input">
+      <input type="text" 
+        :placeholder="$t('Search...')"
+        v-model="localConfig.searchQuery" />
+      <button class="ui button" @click="doQuery">{{ $t('Search') }}</button>
+    </div>
+  </div>
+  <div class="field term-container" v-for="result in queryResults">
+    <div class="ui segment">
+      <div class="term-header">
+      <strong class="term">{{ result.term }}</strong>
+      <span v-for="item in result.locators">
+        ,
+        {{ item }}
+      </span>
+    </div>
+      <div v-if="result.sn" class="sn">
+        <strong>SN</strong> {{ result.sn }}
+      </div>
+      <template v-if="result.crossReference">
+        <div v-for="item in result.crossReference.BT" class="bt">
+          <strong>BT</strong>
+          <a @click="doQuery(item)" v-if="item !== result.term">{{ item }}</a>
+          <span v-else>{{ item }}</span>
+        </div>
+        <div v-for="item in result.crossReference.NT" class="nt">
+          <strong>NT</strong>
+          <a @click="doQuery(item)" v-if="item !== result.term">{{ item }}</a>
+          <span v-else>{{ item }}</span>
+        </div>
+        <div v-for="item in result.crossReference.UF" class="uf">
+          <strong>UF</strong>
+          <a @click="doQuery(item)" v-if="item !== result.term">{{ item }}</a>
+          <span v-else>{{ item }}</span>
+        </div>
+        <div v-for="item in result.crossReference.RT" class="rt">
+          <strong>RT</strong>
+          <a @click="doQuery(item)" v-if="item !== result.term">{{ item }}</a>
+          <span v-else>{{ item }}</span>
+        </div>
+        <div v-for="item in result.crossReference.USE" class="use">
+          <strong>USE</strong> 
+          <a @click="doQuery(item)" v-if="item !== result.term">{{ item }}</a>
+          <span v-else>{{ item }}</span>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <div class="field final-query" v-if="finalTerm">
+    <div class="ui teal segment">Final query: <strong>{{ finalTerm }}</strong></div>
+  </div>
+
+  <div class="field error-message" v-if="notFound">
+    <div class="ui red segment">
+      <div class="header">
+        <template v-if="searchQueryIsEmpty">
+          {{ $t('Your query is empty.') }}
+        </template>
+        <template v-else>
+          <strong>{{ searchQuery }}</strong>
+          {{ $t('is not found.') }}
+        </template>
+      </div>
+
+      <div class="not-found">
+        {{ $t('Maybe you can try to search: ')}}
+        <a @click="doQuery(bestQuery)" v-if="notFound === true">{{ bestQuery }}</a>
+        <template v-else v-for="(term, index) in notFound">
+          <a @click="doQuery(term)" v-html="displayMatchedTerm(term)"></a>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>

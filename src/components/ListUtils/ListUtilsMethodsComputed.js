@@ -14,7 +14,9 @@ module.exports = function (List) {
 
   List.methods.getGraphData = function (list) {
     
+    // console.log('沒有這個詞彙？', this.localConfig.termFocus)
     if (!this.localConfig.termFocus) {
+      // console.log('沒有這個詞彙？')
       return null
     }
 
@@ -24,6 +26,9 @@ module.exports = function (List) {
         return list[i]
       }
     }
+
+    // 如果都沒有找到的話
+    return list[0]
   }
 
   let locatorSizeLimit = 8

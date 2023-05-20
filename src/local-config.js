@@ -17,7 +17,9 @@ let localConfig = {
   searchThesaurusCurrentPos: -1,
 
   termFocus: null,
-  graphTerm: null
+  graphTerm: null,
+
+  searchQuery: null,
 }
 
 export default localConfig

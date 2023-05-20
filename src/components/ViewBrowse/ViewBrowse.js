@@ -19,15 +19,15 @@ let app = {
     ListThesaurus,
     ListIndex
   },
-  computed: {
+  // computed: {
     
-  },
-  mounted() {
+  // },
+  // mounted() {
     
-  },
-  methods: {
+  // },
+  // methods: {
     
-  }
+  // }
 }
 
 export default app
